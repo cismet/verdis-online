@@ -1,14 +1,18 @@
 import React, { PropTypes } from 'react';
 import { Link, IndexLink } from 'react-router';
 import { Navbar , Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button }  from 'react-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 const App = (props) => {
   return  (
     <div>
     <Navbar inverse>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="#">VerDIS</a>
+        <LinkContainer to={{ pathname: '/' }}>
+          <a>VerDIS</a>
+          </LinkContainer>
         </Navbar.Brand>
+
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
@@ -27,7 +31,9 @@ const App = (props) => {
           <MenuItem eventKey={3.3}>Info</MenuItem>
           <MenuItem eventKey={3.4}>Versickerung</MenuItem>
         </NavDropdown>
+        <LinkContainer to={{ pathname: '/foo', query: { bar: 'baz' } }}>
           <NavItem eventKey={1} href="#">Login</NavItem>
+          </LinkContainer>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
