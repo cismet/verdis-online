@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
 import { Navbar , Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button }  from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 const App = (props) => {
@@ -9,7 +8,7 @@ const App = (props) => {
       <Navbar.Header>
         <Navbar.Brand>
         <LinkContainer to={{ pathname: '/' }}>
-          <a>VerDIS</a>
+            <a href="#">VerDIS</a>
           </LinkContainer>
         </Navbar.Brand>
 
@@ -43,17 +42,6 @@ const App = (props) => {
 };
 
 
-
-//   (
-//     <div>
-//
-//         <IndexLink to="/">Home</IndexLink>
-//         {' | '}
-//         <Link to="/about">About</Link>
-//         <br/><br/>
-//         {props.children}
-//       </div>  );
-// };
 App.propTypes = {
   children: PropTypes.element
 };
