@@ -1,10 +1,17 @@
 import React, { PropTypes } from 'react';
+import { connect } from "react-redux";
 import { Navbar , Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button }  from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
 
-export default class Layout extends React.Component {
+@connect((store) => {
+  return {
+    st:store
+  };
+})
+export class Layout extends React.Component {
   render() {
+    console.log("Store:",this.props.st);
     return (
       <div>
       <Navbar inverse>
@@ -39,10 +46,12 @@ export default class Layout extends React.Component {
       </Navbar>
       {this.props.children}
       </div>
-    )
+    );
   }
 }
 
+
+export default connect(mapStateToProps)(Layout);
 
 // const Layout = (props) => {
 //   return  (

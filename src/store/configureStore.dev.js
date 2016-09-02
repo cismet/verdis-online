@@ -5,6 +5,7 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunkMiddleware from 'redux-thunk';
+import {responsiveStoreEnhancer} from 'redux-responsive';
 import rootReducer from '../reducers';
 
 export default function configureStore(initialState) {
@@ -19,7 +20,7 @@ export default function configureStore(initialState) {
     thunkMiddleware,
   ];
 
-  const store = createStore(rootReducer, initialState, compose(
+  const store = createStore(rootReducer, initialState, responsiveStoreEnhancer, compose(
     applyMiddleware(...middewares),
     window.devToolsExtension ? window.devToolsExtension() : f => f // add support for Redux dev tools
     )

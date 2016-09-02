@@ -9,10 +9,6 @@ const style = {
 };
 
 export default class HomePage extends React.Component {
-  handleResize(e) {
-    console.log("size changed",e);
-  }
-
   render() {
     return (
       // <VerdisMap>x</VerdisMap>
