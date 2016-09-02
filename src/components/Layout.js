@@ -3,12 +3,12 @@ import { connect } from "react-redux";
 import { Navbar , Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button }  from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
 
-
-@connect((store) => {
+function mapStateToProps(state) {
   return {
-    st:store
+    st:state
   };
-})
+}
+
 export class Layout extends React.Component {
   render() {
     console.log("Store:",this.props.st);
@@ -49,7 +49,6 @@ export class Layout extends React.Component {
     );
   }
 }
-
 
 export default connect(mapStateToProps)(Layout);
 
