@@ -8,14 +8,12 @@ const App = (props) => {
       <Navbar.Header>
         <Navbar.Brand>
         <LinkContainer to={{ pathname: '/' }}>
-            <a href="#">VerDIS</a>
+            <a >VerDIS</a>
           </LinkContainer>
         </Navbar.Brand>
-
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-
         <Navbar.Form pullLeft>
         <FormGroup>
           <FormControl type="text" placeholder="Kassenzeichen" />
