@@ -30,8 +30,8 @@ export class VerdisMap extends React.Component {
     return (
       <Map style={mapStyle} center={position} zoom={18}>
           <TileLayer
-            url="http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
             maxZoom={22}
           />
           <Marker position={position}>
