@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 import { connect } from "react-redux";
-import { Navbar , Nav, NavItem, NavDropdown, MenuItem, FormGroup, FormControl, Button }  from 'react-bootstrap';
+import { Navbar , Nav, NavItem, NavDropdown, MenuItem, Glyphicon }  from 'react-bootstrap';
 import {LinkContainer} from 'react-router-bootstrap';
+const FontAwesome = require('react-fontawesome');
 
 function mapStateToProps(state) {
   return {
@@ -9,93 +10,52 @@ function mapStateToProps(state) {
   };
 }
 
-export class Layout extends React.Component {
+export class Layout_ extends React.Component {
   render() {
     console.log("Store:",this.props.st);
     return (
       <div>
-      <Navbar inverse>
-        <Navbar.Header>
-          <Navbar.Brand>
-          <LinkContainer to={{ pathname: '/' }}>
-              <a >VerDIS</a>
-            </LinkContainer>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
-          <Navbar.Form pullLeft>
-          <FormGroup>
-            <FormControl type="text" placeholder="Kassenzeichen" />
-          </FormGroup>
-          {' '}
-          <Button type="submit">Suchen</Button>
-        </Navbar.Form>
-          <Nav pullRight>
-          <NavDropdown eventKey={3} title="Versiegelte Flächen" id="basic-nav-dropdown">
-            <MenuItem eventKey={3.1}>Versiegelte Flächen</MenuItem>
-            <MenuItem eventKey={3.2}>ESW</MenuItem>
-            <MenuItem eventKey={3.3}>Info</MenuItem>
-            <MenuItem eventKey={3.4}>Versickerung</MenuItem>
-          </NavDropdown>
-          <LinkContainer to={{ pathname: '/foo', query: { bar: 'baz' } }}>
-            <NavItem eventKey={1} href="#">Login</NavItem>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-      {this.props.children}
+        <Navbar inverse style={{marginBottom:0}}>
+          <Navbar.Header>
+            <Navbar.Brand>
+              <LinkContainer to={{ pathname: '/' }}>
+                <a >VerDIS</a>
+              </LinkContainer>
+            </Navbar.Brand>
+            <Navbar.Toggle />
+          </Navbar.Header>
+          <Navbar.Collapse>
+            <Nav pullLeft>
+              <NavDropdown eventKey={1} title="Versiegelte Flächen" id="basic-nav-dropdown">
+                <MenuItem eventKey={1.1}>Versiegelte Flächen</MenuItem>
+                <MenuItem eventKey={1.2}>ESW</MenuItem>
+                <MenuItem eventKey={1.3}>Info</MenuItem>
+                <MenuItem eventKey={1.4}>Versickerung</MenuItem>
+              </NavDropdown>
+            </Nav>
+            <Nav pullRight>
+              <NavItem eventKey={2.0} >Info:</NavItem>
+              <NavItem active= "true" eventKey={2.1} href="#"><FontAwesome name="info-circle" size="1x"/></NavItem>
+              <NavItem active= "true" eventKey={2.2} href="#"><FontAwesome name="pie-chart" size="1x"/></NavItem>
+              <NavItem eventKey={2.3} href="#"><FontAwesome name="tint" size="1x"/></NavItem>
+              <NavItem eventKey={2.4} href="#"><FontAwesome name="filter" size="1x"/></NavItem>
+              <NavItem active= "true" eventKey={2.5} href="#"><FontAwesome name="th-list" size="1x"/></NavItem>
+              <LinkContainer to={{ pathname: '/foo', query: { bar: 'baz' } }}>
+                <NavItem eventKey={1} href="#"><Glyphicon glyph="user" /> SteinbacherD102</NavItem>
+              </LinkContainer>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        {this.props.children}
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(Layout);
+const Layout = connect(mapStateToProps)(Layout_);
+export default Layout;
 
-// const Layout = (props) => {
-//   return  (
-//     <div>
-//     <Navbar inverse>
-//       <Navbar.Header>
-//         <Navbar.Brand>
-//         <LinkContainer to={{ pathname: '/' }}>
-//             <a >VerDIS</a>
-//           </LinkContainer>
-//         </Navbar.Brand>
-//         <Navbar.Toggle />
-//       </Navbar.Header>
-//       <Navbar.Collapse>
-//         <Navbar.Form pullLeft>
-//         <FormGroup>
-//           <FormControl type="text" placeholder="Kassenzeichen" />
-//         </FormGroup>
-//         {' '}
-//         <Button type="submit">Suchen</Button>
-//       </Navbar.Form>
-//         <Nav pullRight>
-//         <NavDropdown eventKey={3} title="Versiegelte Flächen" id="basic-nav-dropdown">
-//           <MenuItem eventKey={3.1}>Versiegelte Flächen</MenuItem>
-//           <MenuItem eventKey={3.2}>ESW</MenuItem>
-//           <MenuItem eventKey={3.3}>Info</MenuItem>
-//           <MenuItem eventKey={3.4}>Versickerung</MenuItem>
-//         </NavDropdown>
-//         <LinkContainer to={{ pathname: '/foo', query: { bar: 'baz' } }}>
-//           <NavItem eventKey={1} href="#">Login</NavItem>
-//           </LinkContainer>
-//         </Nav>
-//       </Navbar.Collapse>
-//     </Navbar>
-//     {props.children}
-//     </div>
-//   );
-// };
-
-//
-// Layout.propTypes = {
-//   children: PropTypes.element
-// };
-//
-// Layout.componentDidMount = () => {
-//   console.log("componentDidMount");
-// }
-// export default Layout;
+Layout_.propTypes = {
+  children: PropTypes.element,
+  st:PropTypes.object
+};
