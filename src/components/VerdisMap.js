@@ -76,16 +76,14 @@ export class VerdisMap_ extends React.Component {
             />
         );
       };
-
+      const click = () => {
+        alert("sjhdfk");
+      }
       return (
         <Map crs={L.CRS.EPSG900913} style={mapStyle} center={position} zoom={18}>
           <ESRILayer />
           <CartoLayer />
-          <Marker position={position}>
-            <Popup>
-              <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
-            </Popup>
-          </Marker>
+          map.on('click', this.onMapClick);
         </Map>
       );
     }
