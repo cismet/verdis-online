@@ -2,11 +2,11 @@
  import { combineReducers } from 'redux';
  import {routerReducer} from 'react-router-redux';
  import {responsiveStateReducer} from 'redux-responsive';
-//import kassenzeichenReducer from './kassenzeichenReducer';
+import kassenzeichenReducer from './kassenzeichenReducer';
 import uiStateReducer from './uiStateReducer';
 
  const rootReducer = combineReducers({
- // kassenzeichen: kassenzeichenReducer,
+  kassenzeichen: kassenzeichenReducer,
   uiState: uiStateReducer,
   browserUI: responsiveStateReducer,
   
