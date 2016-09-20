@@ -9,12 +9,10 @@ import initialState from './initialState';
 // and update values on the copy.
 export default function uiStateReducer(state = initialState.uiState, action) {
     let newState;
-    console.log("uiSTateReducer",action);
     switch (action.type) {
         case TOGGLE_INFO_ELEMENTS: {
             newState=objectAssign({},state);
             newState.infoElementsEnabled=!state.infoElementsEnabled;
-            console.log("AM ZIEL");
             return newState;
         }
         case TOGGLE_CHART_ELEMENTS: {
