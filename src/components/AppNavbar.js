@@ -50,7 +50,7 @@ export class AppNavbar_ extends React.Component {
           <Navbar.Header>
             <Navbar.Brand>
               <LinkContainer to={{ pathname: '/' }}>
-                <a >VerDIS</a>
+                <a>VerDIS</a>
               </LinkContainer>
             </Navbar.Brand>
             <Navbar.Toggle />
