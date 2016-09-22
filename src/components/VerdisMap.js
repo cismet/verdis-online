@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import L from 'leaflet';
 import proj4 from 'proj4';
 import 'proj4leaflet';
-import { Ortho2014, StadtgrundKarteABK  } from './Layers';
+import { Ortho2014, StadtgrundKarteABK, OSM } from './Layers';
 import ProjGeoJson from './ProjGeoJson';
 
 //mport  MyWMSTileLayer  from "./MyWMSTileLayer";
@@ -112,6 +112,7 @@ const fc2 = {"features":[{"type":"Feature","geometry":{"type":"Polygon","coordin
       <Map crs={rs25832} style={mapStyle} center={position} zoom={14}>    
        <Ortho2014 />
        <StadtgrundKarteABK />
+       <OSM />
        <ProjGeoJson data={fc2} style={myStyle} />
       </Map>
     );

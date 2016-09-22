@@ -41,6 +41,19 @@ export const NRWLayer = () => {
       );
     };
 
+    export const OSM = () => {
+      return (
+        <WMSTileLayer
+          url="http://ows.terrestris.de/osm/service"
+          layers="OSM-WMS"
+          format="image/png"
+          tiled="true"
+          maxZoom={22}
+          opacity={1}
+          / >
+      );
+    };
+
 
 
 export const ESRILayer = () => {
