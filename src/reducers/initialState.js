@@ -4,6 +4,7 @@ export default {
     kassenzeichen: {
         id: -1
     },
+    featureCollection: [],
     uiState: {
         mainMode: VERSIEGELTE_FLAECHEN,
         infoElementsEnabled: true,

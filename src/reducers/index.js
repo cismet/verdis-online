@@ -9,7 +9,6 @@ import uiStateReducer from './uiStateReducer';
   kassenzeichen: kassenzeichenReducer,
   uiState: uiStateReducer,
   browserUI: responsiveStateReducer,
-  
   routing: routerReducer
 });
 export default rootReducer;

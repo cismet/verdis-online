@@ -23,7 +23,7 @@ export const NRWLayer = () => {
           format="image/png"
           tiled="true"
           maxZoom={22}
-          opacity={0.5}
+          opacity={0.25}
           / >
       );
     };
@@ -36,12 +36,12 @@ export const NRWLayer = () => {
           format="image/png"
           tiled="true"
           maxZoom={22}
-          opacity={1}
+          opacity={0.5}
           / >
       );
     };
 
-    export const OSM = () => {
+    export const Osm = () => {
       return (
         <WMSTileLayer
           url="http://ows.terrestris.de/osm/service"

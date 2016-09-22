@@ -1,6 +1,7 @@
 import {SEARCH_BY_KASSENZEICHEN, SEARCH_BY_POINT} from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
+ import {MOCKDATA} from '../store/mockdata/mock';
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
@@ -11,7 +12,12 @@ export default function kassenzeichenReducer(state = initialState.kassenzeichen,
     let newState;
     switch (action.type) {
         case SEARCH_BY_KASSENZEICHEN: {
+            console.log("search for: "+action.kassenzeichen);
             newState=objectAssign({},state);
+            let test=MOCKDATA.get(action.kassenzeichen);
+            if (test) {
+                newState=test;
+            }
             return newState;
         }
         case SEARCH_BY_POINT: {

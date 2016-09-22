@@ -23,4 +23,4 @@ export default class ProjGeoJson extends Path {
 }
 ProjGeoJson.propTypes = {
     data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
-  };
+};

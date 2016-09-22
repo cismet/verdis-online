@@ -5,6 +5,7 @@ import { Navbar , Nav, NavItem, NavDropdown, MenuItem, Glyphicon }  from 'react-
 import {LinkContainer} from 'react-router-bootstrap';
 const FontAwesome = require('react-fontawesome');
 import * as UiStateActions from '../actions/uiStateActions';
+import * as KassenzeichenActions from '../actions/kassenzeichenActions';
 
 
 function mapStateToProps(state) {
@@ -14,9 +15,12 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    uiActions: bindActionCreators(UiStateActions, dispatch)
+    uiActions: bindActionCreators(UiStateActions, dispatch),
+    kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch)
   }; 
 }
+let i=0;
+const mockz=[60670411,60432515,61156717];
 
 export class AppNavbar_ extends React.Component {
   constructor(props, context) {
@@ -26,6 +30,7 @@ export class AppNavbar_ extends React.Component {
     this.toggleKanal = this.toggleKanal.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
+    this.searchkassenzeichen=this.searchkassenzeichen.bind(this);
   }
   toggleInfo() {
     this.props.uiActions.toggleInfoElements();
@@ -42,7 +47,16 @@ export class AppNavbar_ extends React.Component {
   toggleDetails() {
        this.props.uiActions.toggleDetailsElements();
   }
-
+  
+  searchkassenzeichen() {   
+    this.props.kassenzeichenActions.searchByKassenzeichen(mockz[i]);
+    if (i===2){
+      i=0;
+    }
+    else {
+      i=i+1;
+    }
+  }
   render() {
     //console.log("Props:",this.props);
     return (
@@ -50,7 +64,7 @@ export class AppNavbar_ extends React.Component {
           <Navbar.Header>
             <Navbar.Brand>
               <LinkContainer to={{ pathname: '/' }}>
-                <a>VerDIS</a>
+                <a onClick={this.searchkassenzeichen}>VerDIS</a>
               </LinkContainer>
             </Navbar.Brand>
             <Navbar.Toggle />
@@ -86,5 +100,6 @@ export default AppNavbar;
 
 AppNavbar_.propTypes = {
   uiActions: PropTypes.object,
+  kassenzeichenActions: PropTypes.object,
   uiState: PropTypes.object
 };
