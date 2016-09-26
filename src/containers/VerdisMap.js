@@ -3,8 +3,9 @@ import React, { PropTypes } from 'react';
 import { Map } from 'react-leaflet';
 import { connect } from "react-redux";
 import 'proj4leaflet';
-import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
-import ProjGeoJson from './ProjGeoJson';
+//import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
+import {  Osm } from '../components/Layers';
+import ProjGeoJson from '../components/ProjGeoJson';
  import {
      getFlaechenFeatureCollection, flaechenStyle
  } from '../utils/kassenzeichenMappingTools';
@@ -18,23 +19,13 @@ const position = [51.272399, 7.199712];
 
 function mapStateToProps(state) {
   return {
-    ui: state.browserUI,
     kassenzeichen: state.kassenzeichen  
   };
 }
 export class VerdisMap_ extends React.Component {
   render() {
-    let h;
-    if (this.props.ui.height) {
-      h = this.props.ui.height - 55;
-    }
-    else {
-      h = 50;
-    }
-
     const mapStyle = {
-      width: "100%",
-      height: h
+      height: this.props.height
     };
 
 
@@ -59,7 +50,6 @@ export class VerdisMap_ extends React.Component {
 const VerdisMap = connect(mapStateToProps)(VerdisMap_);
 
 VerdisMap_.propTypes = {
-  ui: PropTypes.object,
   kassenzeichen: PropTypes.object
 };
 

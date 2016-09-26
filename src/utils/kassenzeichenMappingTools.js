@@ -24,9 +24,9 @@ export const getKassenzeichenInfoFeatureCollection = (kassenzeichen) => {
     });
 };
 
-export const flaechenStyle = (feature) => {     
-    let color='#ff0000';
-    switch (feature.properties.art_abk) {
+export const getColorFromFlaechenArt = (art_abk) => {
+       let color='#ff0000';
+        switch (art_abk) {
             case 'DF': color="#a24c29";
             break;
             case 'GDF': color="#6a7a17";
@@ -43,7 +43,11 @@ export const flaechenStyle = (feature) => {
             break;
             default: color="#ff0000";
         } 
-    
+        return color
+};
+
+export const flaechenStyle = (feature) => {     
+    let color=getColorFromFlaechenArt(feature.properties.art_abk);
     const style = {
         "color": "#000000",
         "weight": 1,
