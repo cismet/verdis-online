@@ -6,7 +6,7 @@ import {
  } from '../utils/kassenzeichenMappingTools';
 //const FontAwesome = require('react-fontawesome');
 
-const KassenzeichenChartPanel = ({kassenzeichen}) => {
+const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
       const styleOverride={
         marginBottom: '5px',
         width: '100%'
@@ -38,26 +38,47 @@ const KassenzeichenChartPanel = ({kassenzeichen}) => {
       }else {
         locker="unlock";
       }
+      if (orientation==="vertical") {
+        return (
+          <Well bsSize="small" style={styleOverride}>
+          <h4>Veranlagung</h4>
+          <PieChart width={200} height={200}>
+          <Pie data={statsFAData} cx={120} cy={80} innerRadius={20} outerRadius={80} >
+          {
+            statsFAData.map((entry) => {
+                return (
+                  <Cell fill={getColorFromFlaechenArt(entry.name)}/>
+                );
+              })
+            }
+            </Pie>
+            <Legend />
+          <Tooltip/>
+          </PieChart>
 
-      return (
-        <Well bsSize="small" style={styleOverride}>
-        <h4>Veranlagung</h4>
-        <PieChart width={200} height={200}>
-        <Pie data={statsFAData} cx={120} cy={80} innerRadius={20} outerRadius={80} >
-        {
-          statsFAData.map((entry) => {
-              return (
-                <Cell fill={getColorFromFlaechenArt(entry.name)}/>
-              );
-            })
-          }
-          </Pie>
-          <Legend />
-        <Tooltip/>
-        </PieChart>
+          </Well>
+        );
+      }
+      else {
+          return (
+            <Well bsSize="small" style={styleOverride}>
+            <h4>Veranlagung</h4>
+            <PieChart width={140} height={100}>
+            <Pie data={statsFAData} cx={85} cy={45} innerRadius={20} outerRadius={45} >
+            {
+              statsFAData.map((entry) => {
+                  return (
+                    <Cell fill={getColorFromFlaechenArt(entry.name)}/>
+                  );
+                })
+              }
+              </Pie>
+            <Tooltip/>
+            </PieChart>
 
-        </Well>
-      );
+            </Well>
+          );
+      }
     };
  KassenzeichenChartPanel.propTypes = {
   kassenzeichen: PropTypes.object

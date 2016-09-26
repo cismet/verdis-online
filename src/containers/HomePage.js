@@ -8,6 +8,7 @@ import Flexbox from 'flexbox-react';
 
 function mapStateToProps(state) {
   return {
+    uiState:state.uiState,
     ui: state.browserUI,
     kassenzeichen: state.kassenzeichen
   };
@@ -42,8 +43,7 @@ export class HomePage_ extends React.Component {
     let flaechen=[];
     let flComps=[];
     
-
-    if (this.props.kassenzeichen.flaechen){
+    if (this.props.kassenzeichen.flaechen && this.props.uiState.detailElementsEnabled){
         flaechen=this.props.kassenzeichen.flaechen.concat().sort((fa,fb)=> {
           if (!isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung) ){
             return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung)
@@ -61,7 +61,36 @@ export class HomePage_ extends React.Component {
           }
         });
     }
-    if (this.props.ui.width < switchToBottomWhenSmallerThan) {
+    let kassenzeichenPanel;
+    let kassenzeichenHorizontalChartsPanel;
+    let kassenzeichenVerticalChartsPanel;
+
+    if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id!=-1) {
+      kassenzeichenPanel=<KassenzeichenPanel kassenzeichen={this.props.kassenzeichen}/>;
+    }
+    if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id!=-1) {
+      kassenzeichenHorizontalChartsPanel=<KassenzeichenChartPanel  kassenzeichen={this.props.kassenzeichen} orientation="vertical"/>;
+      kassenzeichenVerticalChartsPanel=(
+              <Flexbox  height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
+                <KassenzeichenChartPanel  kassenzeichen={this.props.kassenzeichen} orientation="horizontal"/>
+              </Flexbox>
+      );
+  }
+
+    let nothingEnabled= !this.props.uiState.infoElementsEnabled && 
+                        !this.props.uiState.chartElementsEnabled && 
+                        !this.props.uiState.kanalElementsEnabled && 
+                        !this.props.uiState.filterElementEnabled && 
+                        !this.props.uiState.detailElementsEnabled ;
+
+    if (this.props.kassenzeichen.id===-1 || nothingEnabled) {
+            return (
+              <div>
+                <VerdisMap height={mapHeight} />
+              </div>
+            );
+    }
+    else if (this.props.ui.width < switchToBottomWhenSmallerThan) {
       if (flaechen){
         let i=0;
         flComps=flaechen.map(function (flaeche) {
@@ -77,9 +106,10 @@ export class HomePage_ extends React.Component {
             <VerdisMap height={mapHeight-horizontalPanelHeight-25} />
             <Flexbox flexDirection="row" style={detailsStyle} >
               <Flexbox  height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
-                <KassenzeichenPanel kassenzeichen={this.props.kassenzeichen}/>
+                {kassenzeichenPanel}
               </Flexbox>
-             {flComps}   
+              {kassenzeichenVerticalChartsPanel}           
+              {flComps}   
            </Flexbox>
         </div>
       );
@@ -88,15 +118,15 @@ export class HomePage_ extends React.Component {
       if (flaechen){
         flComps=flaechen.map(function (flaeche) {
           return (
-                     <FlaechenPanel key={flaeche.id} flaeche={flaeche}/>
-                   );
+             <FlaechenPanel key={flaeche.id} flaeche={flaeche}/>
+            );
          });
       }
       return (
         <div>
           <div style={Object.assign({}, detailsStyle, { height:mapHeight+'px', width:verticalPanelWidth+'px', float: 'right'})}>
-              <KassenzeichenPanel kassenzeichen={this.props.kassenzeichen}/>
-              <KassenzeichenChartPanel  kassenzeichen={this.props.kassenzeichen}/>
+              {kassenzeichenPanel}
+              {kassenzeichenHorizontalChartsPanel}
               {flComps}   
           </div>
           <VerdisMap height={mapHeight} />
@@ -111,5 +141,7 @@ export default HomePage;
 
 HomePage_.propTypes = {
   ui: PropTypes.object,
-  kassenzeichen: PropTypes.object
+  kassenzeichen: PropTypes.object,
+  uiState: PropTypes.object
+
 };
