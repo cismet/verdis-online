@@ -11,7 +11,6 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
         marginBottom: '5px',
         width: '100%'
       }
-      let locker;
 
       const statsFA=new Map();
       if (kassenzeichen.flaechen){
@@ -33,11 +32,7 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
         statsFAData.push(o);
       }
     
-      if (kassenzeichen.sperre){
-        locker="lock";
-      }else {
-        locker="unlock";
-      }
+      
       if (orientation==="vertical") {
         return (
           <Well bsSize="small" style={styleOverride}>
