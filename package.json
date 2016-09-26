@@ -29,6 +29,7 @@
   "author": "Thorsten Hell",
   "license": "MIT",
   "dependencies": {
+    "flexbox-react": "4.0.0",
     "leaflet": "0.7.7",
     "object-assign": "4.1.0",
     "proj4": "2.3.15",
