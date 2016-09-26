@@ -2,6 +2,7 @@ import React , { PropTypes } from 'react';
 import VerdisMap from './VerdisMap';
 import { connect } from "react-redux";
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
+import KassenzeichenChartPanel from '../components/KassenzeichenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Flexbox from 'flexbox-react';
 
@@ -38,16 +39,34 @@ export class HomePage_ extends React.Component {
       'overflow': 'auto',
     };
 
-    let flaechen=this.props.kassenzeichen.flaechen;
+    let flaechen=[];
     let flComps=[];
     
 
-
+    if (this.props.kassenzeichen.flaechen){
+        flaechen=this.props.kassenzeichen.flaechen.concat().sort((fa,fb)=> {
+          if (!isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung) ){
+            return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung)
+          }else if (!isNaN(fa.flaechenbezeichnung) && isNaN(fb.flaechenbezeichnung)) {
+            return -1;
+          }else if (isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
+            return 1;
+          }else {
+            if (fa.flaechenbezeichnung < fb.flaechenbezeichnung) {
+              return -1;
+            }
+            else {
+              return 1;
+            }
+          }
+        });
+    }
     if (this.props.ui.width < switchToBottomWhenSmallerThan) {
       if (flaechen){
+        let i=0;
         flComps=flaechen.map(function (flaeche) {
           return (
-            <Flexbox  key={"flex"+flaeche.id} height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
+            <Flexbox  key={"flex"+(i++)+"."+flaeche.id} height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
               <FlaechenPanel key={flaeche.id} flaeche={flaeche}/>
             </Flexbox> 
                     );
@@ -77,6 +96,7 @@ export class HomePage_ extends React.Component {
         <div>
           <div style={Object.assign({}, detailsStyle, { height:mapHeight+'px', width:verticalPanelWidth+'px', float: 'right'})}>
               <KassenzeichenPanel kassenzeichen={this.props.kassenzeichen}/>
+              <KassenzeichenChartPanel  kassenzeichen={this.props.kassenzeichen}/>
               {flComps}   
           </div>
           <VerdisMap height={mapHeight} />

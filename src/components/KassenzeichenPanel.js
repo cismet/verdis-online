@@ -30,7 +30,7 @@ const KassenzeichenPanel = ({kassenzeichen}) => {
       );
     };
  KassenzeichenPanel.propTypes = {
-  kassenzeichen: PropTypes.object.required
+  kassenzeichen: PropTypes.object
 };
    
 export default KassenzeichenPanel;
