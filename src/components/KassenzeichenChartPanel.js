@@ -10,7 +10,7 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
       const styleOverride={
         marginBottom: '5px',
         width: '100%'
-      }
+      };
 
       const statsFA=new Map();
       if (kassenzeichen.flaechen){
@@ -25,7 +25,7 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
         });
       }
       const statsFAData=[];
-      for (var key of statsFA.keys()) {
+      for (let key of statsFA.keys()) {
         const o={
           name:key, value:statsFA.get(key)
         };
@@ -42,7 +42,7 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
           {
             statsFAData.map((entry) => {
                 return (
-                  <Cell fill={getColorFromFlaechenArt(entry.name)}/>
+                  <Cell key={"color.for."+entry.name} fill={getColorFromFlaechenArt(entry.name)}/>
                 );
               })
             }
@@ -63,7 +63,7 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
             {
               statsFAData.map((entry) => {
                   return (
-                    <Cell fill={getColorFromFlaechenArt(entry.name)}/>
+                    <Cell key={"color.for."+entry.name} fill={getColorFromFlaechenArt(entry.name)}/>
                   );
                 })
               }
@@ -76,7 +76,8 @@ const KassenzeichenChartPanel = ({kassenzeichen,orientation}) => {
       }
     };
  KassenzeichenChartPanel.propTypes = {
-  kassenzeichen: PropTypes.object
+  kassenzeichen: PropTypes.object,
+  orientation: PropTypes.string
 };
    
 export default KassenzeichenChartPanel;

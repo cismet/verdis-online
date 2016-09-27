@@ -6,7 +6,7 @@ const FlaechenPanel = ({flaeche}) => {
       const styleOverride={
         marginBottom: '5px',
         width: '100%'
-      }
+      };
       return (
         <Well bsSize="small" style={styleOverride}>
           <h5>{flaeche.flaecheninfo.flaechenart.art+' '+flaeche.flaechenbezeichnung}</h5>
@@ -21,8 +21,7 @@ const FlaechenPanel = ({flaeche}) => {
                     <td style={{textAlign:'right'}}><FontAwesome name="check-circle" /> {flaeche.datum_veranlagung}</td> 
                 </tr>
                 <tr>
-                    <td><FontAwesome name="file" /> {flaeche.feb_id}</td>
-                    <td style={{textAlign:'right'}}></td> 
+                    <td><FontAwesome name="file" /> {flaeche.feb_id}</td> 
                 </tr>
             </tbody>
           </table>

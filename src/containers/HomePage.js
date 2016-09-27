@@ -46,7 +46,7 @@ export class HomePage_ extends React.Component {
     if (this.props.kassenzeichen.flaechen && this.props.uiState.detailElementsEnabled){
         flaechen=this.props.kassenzeichen.flaechen.concat().sort((fa,fb)=> {
           if (!isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung) ){
-            return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung)
+            return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung);
           }else if (!isNaN(fa.flaechenbezeichnung) && isNaN(fb.flaechenbezeichnung)) {
             return -1;
           }else if (isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
@@ -71,7 +71,7 @@ export class HomePage_ extends React.Component {
     if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id!=-1) {
       kassenzeichenHorizontalChartsPanel=<KassenzeichenChartPanel  kassenzeichen={this.props.kassenzeichen} orientation="vertical"/>;
       kassenzeichenVerticalChartsPanel=(
-              <Flexbox  height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
+              <Flexbox  height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
                 <KassenzeichenChartPanel  kassenzeichen={this.props.kassenzeichen} orientation="horizontal"/>
               </Flexbox>
       );

@@ -6,7 +6,7 @@ const KassenzeichenPanel = ({kassenzeichen}) => {
       const styleOverride={
         marginBottom: '5px',
         width: '100%'
-      }
+      };
       let locker;
       if (kassenzeichen.sperre){
         locker="lock";

@@ -16,7 +16,8 @@ Layers.set("NRWLayer",(opacity) => {
           maxZoom={22}
           opacity={opacity}
           / >
-      )});
+      );
+    });
     
 
 Layers.set("StadtgrundKarteABK", (opacity) => {
@@ -30,7 +31,8 @@ Layers.set("StadtgrundKarteABK", (opacity) => {
           maxZoom={22}
           opacity={opacity}
           / >
-      )});
+      );
+    });
     
 
 Layers.set("Ortho2014",(opacity) => {
@@ -44,7 +46,8 @@ Layers.set("Ortho2014",(opacity) => {
           maxZoom={22}
           opacity={opacity}
           / >
-      )});
+      );
+    });
     
 
 Layers.set("Osm",(opacity) => {
@@ -58,7 +61,8 @@ Layers.set("Osm",(opacity) => {
           maxZoom={22}
           opacity={opacity}
           / >
-      )});
+      );
+    });
 
 
 
@@ -76,7 +80,8 @@ Layers.set("ESRILayer" ,(opacity) => {
           maxNativeZoom={18}
           opacity={opacity}
           />
-      )});
+      );
+    });
 
 
 Layers.set("CartoLayer",(opacity) => {
@@ -92,6 +97,7 @@ Layers.set("CartoLayer",(opacity) => {
           maxZoom={22}
           opacity={opacity}
           />
-    )});
+    );
+  });
     
 

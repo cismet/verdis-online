@@ -1,9 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Modal , Button, Checkbox, NavDropdown, MenuItem, Glyphicon }  from 'react-bootstrap';
-import {LinkContainer} from 'react-router-bootstrap';
-const FontAwesome = require('react-fontawesome');
+import { Modal , Button, Checkbox }  from 'react-bootstrap';
 import * as UiStateActions from '../actions/uiStateActions';
 
 
@@ -48,7 +46,7 @@ export class Settings_ extends React.Component {
   render() {
  
     return (
-        <Modal show={ this.props.uiState.settingsVisible } onHide={this.close}>
+        <Modal show={this.props.uiState.settingsVisible} onHide={this.close}>
           <Modal.Header closeButton>
             <Modal.Title>Einstellungen</Modal.Title>
           </Modal.Header>
@@ -58,7 +56,7 @@ export class Settings_ extends React.Component {
             <tbody>
             { this.props.uiState.layers.map((layer)=>{
                 return (
-                    <tr>
+                    <tr key={"settings.for."+layer.key}>
                     <td>
                     <Checkbox checked={layer.enabled} name={layer.key} onChange={this.changeLayerEnabledSetting} > {layer.key}  </Checkbox>
                     </td><td>

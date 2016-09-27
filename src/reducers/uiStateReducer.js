@@ -44,7 +44,6 @@ export default function uiStateReducer(state = initialState.uiState, action) {
         }
        case CHANGE_LAYER_OPACITY: {
              newState=objectAssign({},state);
-             console.log(action.opacity);
             newState.layers.map((layer)=>{
                  if (action.key===layer.key){
                     layer.opacity=action.opacity;

@@ -43,7 +43,7 @@ export const getColorFromFlaechenArt = (art_abk) => {
             break;
             default: color="#ff0000";
         } 
-        return color
+        return color;
 };
 
 export const flaechenStyle = (feature) => {     

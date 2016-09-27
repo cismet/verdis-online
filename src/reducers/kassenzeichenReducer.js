@@ -12,7 +12,6 @@ export default function kassenzeichenReducer(state = initialState.kassenzeichen,
     let newState;
     switch (action.type) {
         case SEARCH_BY_KASSENZEICHEN: {
-            console.log("search for: "+action.kassenzeichen);
             newState=objectAssign({},state);
             let test=MOCKDATA.get(action.kassenzeichen);
             if (test) {
