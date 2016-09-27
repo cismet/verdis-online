@@ -1,9 +1,13 @@
 import React from 'react';
 import { TileLayer, WMSTileLayer } from 'react-leaflet';
 
-export const NRWLayer = () => {
-      return (
+
+export const Layers=new Map();
+
+Layers.set("NRWLayer",(opacity) => {
+       return (
         <WMSTileLayer
+          key="NRWLayer"
           url="http://www.wms.nrw.de/geobasis/wms_nw_dop40"
           layers="WMS_NW_DOP40"
           format="image/png"
@@ -12,53 +16,57 @@ export const NRWLayer = () => {
           maxZoom={22}
           opacity={1.0}
           / >
-      );
-    };
+      )});
+    
 
-  export const StadtgrundKarteABK = () => {
-      return (
+Layers.set("StadtgrundKarteABK", (opacity) => {
+       return (
         <WMSTileLayer
+          key="StadtgrundKarteABK"
           url="http://s10221:7098/alkis/services"
           layers="alkomf"
           format="image/png"
           tiled="true"
           maxZoom={22}
-          opacity={0.25}
+          opacity={opacity}
           / >
-      );
-    };
+      )});
+    
 
-    export const Ortho2014 = () => {
-      return (
+Layers.set("Ortho2014",(opacity) => {
+      (
         <WMSTileLayer
+          key="Ortho2014"
           url="http://s10221:7098/orthofotos/services"
           layers="WO2014"
           format="image/png"
           tiled="true"
           maxZoom={22}
-          opacity={0.5}
+          opacity={opacity}
           / >
-      );
-    };
+      )});
+    
 
-    export const Osm = () => {
-      return (
+Layers.set("Osm",(opacity) => {
+       return (
         <WMSTileLayer
+          key="Osm"
           url="http://ows.terrestris.de/osm/service"
           layers="OSM-WMS"
           format="image/png"
           tiled="true"
           maxZoom={22}
-          opacity={1}
+          opacity={opacity}
           / >
-      );
-    };
+      )});
 
 
 
-export const ESRILayer = () => {
-      return (
+
+Layers.set("ESRILayer" ,(opacity) => {
+       return (
         <TileLayer
+          key="ESRILayer"
           urlX="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
           url="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           urlNRW="http://localhost:8080/geowebcache/service/tms/1.0.0/nrw:ortho/{z}/{y}/{x}.jpg"
@@ -66,14 +74,15 @@ export const ESRILayer = () => {
           attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
           maxZoom={22}
           maxNativeZoom={18}
-          opacity={0.8}
+          opacity={opacity}
           />
-      );
-    };
+      )});
 
-export const CartoLayer = () => {
-      return (
+
+Layers.set("CartoLayer",(opacity) => {
+      (
         <TileLayer
+          key="CartoLayer"
           urlBW="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
           urlE="http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
           urlH="http://{s}.tile.openstreetmap.se/hydda/full/{z}/{x}/{y}.png"
@@ -81,7 +90,8 @@ export const CartoLayer = () => {
           attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>'
           maxNativeZoom={19}
           maxZoom={22}
-          opacity={0.55}
+          opacity={opacity}
           />
-      );
-    };
+    )});
+    
+
