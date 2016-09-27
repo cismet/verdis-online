@@ -82,8 +82,8 @@ export class AppNavbar_ extends React.Component {
               <NavItem eventKey={2.0} >Info:</NavItem>
               <NavItem className={(this.props.uiState.infoElementsEnabled)?"active":""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><FontAwesome name="info-circle" /></NavItem>
               <NavItem className={(this.props.uiState.chartElementsEnabled)?"active":""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><FontAwesome name="pie-chart" /></NavItem>
-              <NavItem className={(this.props.uiState.kanalElementsEnabled)?"active":""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
-              <NavItem className={(this.props.uiState.filterElementEnabled)?"active":""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem>
+              <NavItem disabled className={(this.props.uiState.kanalElementsEnabled)?"active":""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
+              <NavItem disabled className={(this.props.uiState.filterElementEnabled)?"active":""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem>
               <NavItem className={(this.props.uiState.detailElementsEnabled)?"active":""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><FontAwesome name="th-list" /></NavItem>
               <LinkContainer to={{ pathname: '/foo', query: { bar: 'baz' } }}>
                 <NavItem eventKey={1} href="#"><Glyphicon glyph="user" /> SteinbacherD102</NavItem>
