@@ -9,6 +9,7 @@ import NotFoundPage from './components/NotFoundPage.js';
 export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={HomePage}/>
+    <Route path="verdis-html5" component={HomePage}/>
     <Route path="about" component={AboutPage}/>
     <Route path="*" component={NotFoundPage}/>
   </Route>
