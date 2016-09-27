@@ -12,6 +12,24 @@ export default {
         kanalElementsEnabled: false,
         filterElementEnabled: false,
         detailElementsEnabled: true,
-        user: null
+        user: null,
+        settingsVisible: false,
+        layers: [
+            {
+                key: "Osm",
+                opacity:  1,
+                enabled: true
+            },
+            {
+                key: "StadtgrundKarteABK",
+                opacity:  1,
+                enabled: false
+            },
+             {
+                key: "Ortho2014",
+                opacity:  0.6,
+                enabled: false
+            }
+        ]
     }
 };
