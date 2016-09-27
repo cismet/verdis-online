@@ -34,7 +34,7 @@ Layers.set("StadtgrundKarteABK", (opacity) => {
     
 
 Layers.set("Ortho2014",(opacity) => {
-      (
+      return (
         <WMSTileLayer
           key="Ortho2014"
           url="http://s10221:7098/orthofotos/services"
@@ -80,7 +80,7 @@ Layers.set("ESRILayer" ,(opacity) => {
 
 
 Layers.set("CartoLayer",(opacity) => {
-      (
+      return (
         <TileLayer
           key="CartoLayer"
           urlBW="http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"

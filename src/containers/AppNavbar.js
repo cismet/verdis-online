@@ -6,7 +6,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 const FontAwesome = require('react-fontawesome');
 import * as UiStateActions from '../actions/uiStateActions';
 import * as KassenzeichenActions from '../actions/kassenzeichenActions';
-
+import Settings from './Settings';
 
 function mapStateToProps(state) {
   return {
@@ -30,6 +30,7 @@ export class AppNavbar_ extends React.Component {
     this.toggleKanal = this.toggleKanal.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
+    this.showSettings = this.showSettings.bind(this);
     this.searchkassenzeichen=this.searchkassenzeichen.bind(this);
   }
   toggleInfo() {
@@ -45,9 +46,11 @@ export class AppNavbar_ extends React.Component {
        this.props.uiActions.toggleFilterElements();
   }
   toggleDetails() {
-       this.props.uiActions.toggleDetailsElements();
+      this.props.uiActions.toggleDetailsElements();
   }
-  
+  showSettings(){
+      this.props.uiActions.showSettings(true);
+  }
   searchkassenzeichen() {   
     this.props.kassenzeichenActions.searchByKassenzeichen(mockz[i]);
     if (i===2){
@@ -59,7 +62,7 @@ export class AppNavbar_ extends React.Component {
   }
   render() {
     //console.log("Props:",this.props);
-    return (
+    return (<div>
     <Navbar inverse style={{marginBottom:0}}>
           <Navbar.Header>
             <Navbar.Brand>
@@ -85,12 +88,13 @@ export class AppNavbar_ extends React.Component {
               <NavItem disabled className={(this.props.uiState.kanalElementsEnabled)?"active":""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
               <NavItem disabled className={(this.props.uiState.filterElementEnabled)?"active":""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem>
               <NavItem className={(this.props.uiState.detailElementsEnabled)?"active":""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><FontAwesome name="th-list" /></NavItem>
-              <LinkContainer to={{ pathname: '/foo', query: { bar: 'baz' } }}>
-                <NavItem eventKey={1} href="#"><Glyphicon glyph="user" /> SteinbacherD102</NavItem>
-              </LinkContainer>
+              <NavItem eventKey={3} href="#" onSelect={this.showSettings}><Glyphicon glyph="user" /> SteinbacherD102</NavItem>
+
             </Nav>
           </Navbar.Collapse>
-        </Navbar>        
+        </Navbar> 
+                <Settings key={this.props.uiState.settingsVisible}/>       
+</div>
     );
   }
 }

@@ -45,6 +45,7 @@ export class VerdisMap_ extends React.Component {
       <Map key={JSON.stringify(this.props.uiState.layers)} crs={crs25832} style={mapStyle} center={position} zoom={14}>    
         { this.props.uiState.layers.map((layer)=>{
           if (layer.enabled) {
+            console.log(layer.key+" enabled");
             return (
               Layers.get(layer.key)(layer.opacity)
             );

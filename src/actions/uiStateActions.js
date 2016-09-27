@@ -29,3 +29,25 @@ export function toggleDetailsElements() {
         type: types.TOGGLE_DETAIL_ELEMENTS
     };
 }
+
+export function showSettings(visible) {
+    return {
+        type: types.SHOW_SETTINGS,
+        visible
+    };
+}
+
+export function changeLayerOpacitySetting(key,opacity) {
+    return {
+        type: types.CHANGE_LAYER_OPACITY,
+        key,
+        opacity
+    };
+}
+export function changeLayerEnabledSetting(key,enabled) {
+    return {
+        type: types.CHANGE_LAYER_ENABLED,
+        key,
+        enabled
+    };
+}

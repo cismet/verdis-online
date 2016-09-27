@@ -13,17 +13,23 @@ export default {
         filterElementEnabled: false,
         detailElementsEnabled: true,
         user: null,
+        settingsVisible: false,
         layers: [
             {
                 key: "Osm",
-                opacity:  0.8,
+                opacity:  1,
                 enabled: true
             },
             {
                 key: "StadtgrundKarteABK",
-                opacity:  0.55,
+                opacity:  1,
                 enabled: false
             },
+             {
+                key: "Ortho2014",
+                opacity:  0.6,
+                enabled: false
+            }
         ]
     }
 };
