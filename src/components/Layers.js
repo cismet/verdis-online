@@ -14,7 +14,7 @@ Layers.set("NRWLayer",(opacity) => {
           tiled="true"
           //crs={L.CRS.EPSG3857}
           maxZoom={22}
-          opacity={1.0}
+          opacity={opacity}
           / >
       )});
     
