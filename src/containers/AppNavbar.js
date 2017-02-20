@@ -22,6 +22,11 @@ function mapDispatchToProps(dispatch) {
 let i=0;
 const mockz=[60670411,60432515,61156717];
 
+/** 
+ * @type {type}Conceptually, components are like JavaScript functions. 
+ * They accept arbitrary inputs (called "props") and return React elements 
+ * describing what should appear on the screen.´
+ */
 export class AppNavbar_ extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -62,6 +67,8 @@ export class AppNavbar_ extends React.Component {
   }
   render() {
     //console.log("Props:",this.props);
+    // eventKey ?! -> https://github.com/react-bootstrap/react-bootstrap/issues/320#issuecomment-260098771 
+    // Comment sin JSX (OMFG) -> http://wesbos.com/react-jsx-comments/ 
     return (<div>
     <Navbar inverse style={{marginBottom:0}}>
           <Navbar.Header>
