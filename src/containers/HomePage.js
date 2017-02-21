@@ -6,6 +6,14 @@ import KassenzeichenChartPanel from '../components/KassenzeichenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Flexbox from 'flexbox-react';
 
+/**
+ * Containers 
+ * 
+ * Pieces of the view that are aware of the state using react-redux. 
+ * Also known as smart components, and higher order components
+ */
+
+
 function mapStateToProps(state) {
   return {
     uiState:state.uiState,
@@ -13,8 +21,6 @@ function mapStateToProps(state) {
     kassenzeichen: state.kassenzeichen
   };
 }
-
-
 
 const verticalPanelWidth=280;
 

@@ -40,6 +40,7 @@ export default function uiStateReducer(state = initialState.uiState, action) {
        case SHOW_SETTINGS: {
              newState=objectAssign({},state);
              newState.settingsVisible=action.visible;
+             console.log('SHOW_SETTINGS: ' + action.visible);
             return newState;
         }
        case CHANGE_LAYER_OPACITY: {

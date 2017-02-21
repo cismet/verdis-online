@@ -1,6 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+/**
+ * Components 
+ * 
+ * dumb view parts which are not aware of the state directly. 
+ * Also know as presentational components.
+ * 
+ * @return {String}
+ */
+
 // Since this component is simple and static, there's no parent container for it.
 const AboutPage = () => {
   return (
