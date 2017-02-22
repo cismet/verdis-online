@@ -11,9 +11,9 @@ import logger from 'redux-logger';
 
 
 export default function configureStore(initialState) {
-  const middewares = [
+  const middlewares = [
     // Add other middleware on this line...
-    logger,
+    logger(),
     // Redux middleware that spits an error on you when you try to mutate your state either inside a dispatch or between dispatches.
     reduxImmutableStateInvariant(),
 
@@ -23,9 +23,9 @@ export default function configureStore(initialState) {
 
   ];
 
-  const store = createStore(rootReducer, initialState, responsiveStoreEnhancer, compose(
-    applyMiddleware(...middewares),
-    window.devToolsExtension ? window.devToolsExtension() : f => f // add support for Redux dev tools
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
+  const store = createStore(rootReducer, initialState, composeEnhancers(responsiveStoreEnhancer,
+    applyMiddleware(...middlewares)
     )
   );
 
