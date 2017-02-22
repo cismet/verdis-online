@@ -14,6 +14,7 @@ export default {
         detailElementsEnabled: true,
         user: null,
         settingsVisible: false,
+        waitingVisible: false,
         layers: [
             {
                 key: "Osm",
