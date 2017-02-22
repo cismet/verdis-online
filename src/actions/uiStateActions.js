@@ -31,35 +31,41 @@ export function toggleDetailsElements() {
 }
 
 export function showSettings(visible) {
-// console.log(".o.");
-//     return {
-//         type: actionTypes.SHOW_SETTINGS,
-//         visible
-//     };
-//
     return function (dispatch) {
     // thunks allow for pre-processing actions, calling apis, and dispatching multiple actions
     // in this case at this point we could call a service that would persist the fuel savings
-    console.log(dispatch);
-    console.log("showSettings: " + visible);
-    setTimeout(() => {
-        console.log("ASYNC showSettings: " + visible);
-        dispatch(showSettingsX(visible));
-    }, 1000);
+    if (visible==true) {
+      dispatch(showWaiting(true));
+      setTimeout(() => {
+          console.log("ASYNC showSettings: " + visible);
+          dispatch(showSettingsImmediately(visible));
+          dispatch(showWaiting(false));
+      }, 1000);
+    }
+    else {
+      dispatch(showSettingsImmediately(visible));
+    }
   };
 
 }
 
-export function showSettingsX(visible) {
+export function showSettingsImmediately(visible) {
     console.log("\\o/");
     return {
         type: actionTypes.SHOW_SETTINGS,
         visible
     };
+}
 
-
+export function showWaiting(visible) {
+  return {
+      type: actionTypes.SHOW_WAITING,
+      visible
+  };
 
 }
+
+
 
 export function changeLayerOpacitySetting(key,opacity) {
     return {
