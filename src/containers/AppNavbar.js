@@ -7,6 +7,7 @@ const FontAwesome = require('react-fontawesome');
 import * as UiStateActions from '../actions/uiStateActions';
 import * as KassenzeichenActions from '../actions/kassenzeichenActions';
 import Settings from './Settings';
+import Waiting from './Waiting';
 
 function mapStateToProps(state) {
   return {
@@ -17,7 +18,7 @@ function mapDispatchToProps(dispatch) {
   return {
     uiActions: bindActionCreators(UiStateActions, dispatch),
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch)
-  }; 
+  };
 }
 let i=0;
 const mockz=[60670411,60432515,61156717];
@@ -51,7 +52,7 @@ export class AppNavbar_ extends React.Component {
   showSettings(){
       this.props.uiActions.showSettings(true);
   }
-  searchkassenzeichen() {   
+  searchkassenzeichen() {
     this.props.kassenzeichenActions.searchByKassenzeichen(mockz[i]);
     if (i===2){
       i=0;
@@ -92,8 +93,9 @@ export class AppNavbar_ extends React.Component {
 
             </Nav>
           </Navbar.Collapse>
-        </Navbar> 
-                <Settings key={this.props.uiState.settingsVisible}/>       
+        </Navbar>
+        <Settings key={'Settings.visible.'+this.props.uiState.settingsVisible}/>
+        <Waiting key={'Waiting.visible.'+this.props.uiState.waitingVisible}/>
 </div>
     );
   }
