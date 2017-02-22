@@ -1,8 +1,8 @@
-import * as types from '../constants/actionTypes';
+import * as actionTypes from '../constants/actionTypes';
 
 export function searchByKassenzeichen(kassenzeichen) {
     return {
-        type: types.SEARCH_BY_KASSENZEICHEN,
+        type: actionTypes.SEARCH_BY_KASSENZEICHEN,
         kassenzeichen
     };
 }
