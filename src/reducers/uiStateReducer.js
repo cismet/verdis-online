@@ -1,4 +1,4 @@
-import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED } from '../constants/actionTypes';
+import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,SHOW_WAITING,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED } from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
 
@@ -37,11 +37,16 @@ export default function uiStateReducer(state = initialState.uiState, action) {
              newState.detailElementsEnabled=!state.detailElementsEnabled;
             return newState;
         }
-       case SHOW_SETTINGS: {
-             newState=objectAssign({},state);
-             newState.settingsVisible=action.visible;
-            return newState;
-        }
+        case SHOW_SETTINGS: {
+              newState=objectAssign({},state);
+              newState.settingsVisible=action.visible;
+             return newState;
+         }
+         case SHOW_WAITING: {
+               newState=objectAssign({},state);
+               newState.waitingVisible=action.visible;
+              return newState;
+          }
        case CHANGE_LAYER_OPACITY: {
              newState=objectAssign({},state);
             newState.layers.map((layer)=>{
