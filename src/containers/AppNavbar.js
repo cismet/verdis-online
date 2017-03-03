@@ -8,6 +8,7 @@ import * as UiStateActions from '../actions/uiStateActions';
 import * as KassenzeichenActions from '../actions/kassenzeichenActions';
 import Settings from './Settings';
 import Waiting from './Waiting';
+import Login from './Login';
 
 function mapStateToProps(state) {
   return {
@@ -94,6 +95,7 @@ export class AppNavbar_ extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        <Login key={'Login.hidden.'+this.props.uiState.succesfullLogin}/>
         <Settings key={'Settings.visible.'+this.props.uiState.settingsVisible}/>
         <Waiting key={'Waiting.visible.'+this.props.uiState.waitingVisible}/>
 </div>
