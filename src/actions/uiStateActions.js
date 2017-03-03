@@ -1,4 +1,5 @@
 import * as actionTypes from '../constants/actionTypes';
+import { SERVICE, DOMAIN } from '../constants/cids';
 
 export function toggleInfoElements() {
     return {
@@ -44,6 +45,44 @@ export function showWaiting(visible) {
   };
 
 }
+
+export function login(user, password) {
+  return function (dispatch) {
+    dispatch(setLoginInProgress());
+    fetch(SERVICE + '/classes?domain=local&limit=1&offset=0&role=all', {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Basic '+btoa(user+'@'+DOMAIN+':'+password),
+        'Content-Type': 'application/json',
+      }}).then(function (response){
+        if (response.status >= 200 && response.status <300) {
+          dispatch(setLoginInformation(user, password,true));
+        }
+        else {
+          dispatch(setLoginInformation(user, password,false));
+        }
+      });
+  };
+}
+
+
+export function setLoginInProgress() {
+  return {
+      type: actionTypes.SET_LOGIN_IN_PROGRESS
+  };
+}
+
+export function setLoginInformation(user, password,status) {
+  return {
+      type: actionTypes.SET_LOGIN_INFORMATION,
+      user,
+      password,
+      status
+  };
+
+}
+
+
 
 
 
