@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Modal , Button, Checkbox, ProgressBar }  from 'react-bootstrap';
+import { Modal , ProgressBar }  from 'react-bootstrap';
 import * as UiStateActions from '../actions/uiStateActions';
 
 
@@ -40,14 +40,9 @@ export class Waiting_ extends React.Component {
             <Modal.Title>Laden</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <table style={{width:'100%'}}>
-            <tbody>
               <ProgressBar active now={100} />
-            </tbody>
-            </table>
           </Modal.Body>
-          <Modal.Footer>
-          </Modal.Footer>
+          <Modal.Footer />
         </Modal>
     );
   }

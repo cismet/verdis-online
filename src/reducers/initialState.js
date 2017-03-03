@@ -4,7 +4,10 @@ export default {
     kassenzeichen: {
         id: -1
     },
-    featureCollection: [],
+    mapping: {
+      featureCollection: [],
+      bounds: null
+    },
     uiState: {
         mainMode: VERSIEGELTE_FLAECHEN,
         infoElementsEnabled: true,
@@ -31,6 +34,6 @@ export default {
                 opacity:  0.6,
                 enabled: false
             }
-        ]
+        ],
     }
 };

@@ -1,5 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
 import * as uiStateActions from './uiStateActions';
+import * as mappingActions from './mappingActions';
 
 
 export function searchByKassenzeichenId(kassenzeichenId) {
@@ -17,29 +18,12 @@ export function searchByKassenzeichenId(kassenzeichenId) {
         response.json().then(function(kassenzeichenData) {
           dispatch(uiStateActions.showWaiting(false));
           dispatch(setKassenzeichenObject(kassenzeichenData));
+          dispatch(mappingActions.showKassenzeichenObject(kassenzeichenData));
 
         });
       });
   };
 }
-
-// function getKassenzeichenFromService(id) {
-//   let username="SteinbacherD102@VERDIS_GRUNDIS";
-//   let pass="vds102";
-//   return fetch('http://localhost:8892/VERDIS_GRUNDIS.KASSENZEICHEN/'+id+'?role=all&omitNullValues=true&deduplicate=false', {
-//     headers: {
-//       'Authorization': 'Basic '+btoa(username+':'+pass),
-//       'Content-Type': 'application/json',
-//     }}).then((response) => response.json())
-//     .then((responseJson) => {
-//       return responseJson;
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-//
-//
-//   }
 
 export function setKassenzeichenObject(kassenzeichenObject) {
   return {
