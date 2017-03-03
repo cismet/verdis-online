@@ -16,6 +16,9 @@ export default {
         filterElementEnabled: false,
         detailElementsEnabled: true,
         user: null,
+        password: null,
+        succesfullLogin: false,
+        loginInProgress: false,
         settingsVisible: false,
         waitingVisible: false,
         layers: [
