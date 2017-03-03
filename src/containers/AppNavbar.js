@@ -21,7 +21,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 let i=0;
-const mockz=[60670411,60432515,61156717];
+const mockidz=[5152,3270,9144];
 
 export class AppNavbar_ extends React.Component {
   constructor(props, context) {
@@ -53,7 +53,7 @@ export class AppNavbar_ extends React.Component {
       this.props.uiActions.showSettings(true);
   }
   searchkassenzeichen() {
-    this.props.kassenzeichenActions.searchByKassenzeichen(mockz[i]);
+    this.props.kassenzeichenActions.searchByKassenzeichenId(mockidz[i]);
     if (i===2){
       i=0;
     }
