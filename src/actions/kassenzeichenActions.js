@@ -1,26 +1,34 @@
 import * as actionTypes from '../constants/actionTypes';
 import * as uiStateActions from './uiStateActions';
 import * as mappingActions from './mappingActions';
-
+import { SERVICE,DOMAIN } from '../constants/cids';
 
 export function searchByKassenzeichenId(kassenzeichenId) {
-  return function (dispatch) {
+  return function (dispatch, getState) {
     dispatch(uiStateActions.showWaiting(true));
-
-    let username="SteinbacherD102@VERDIS_GRUNDIS";
-    let pass="leo";
-    fetch('http://localhost:8890/VERDIS_GRUNDIS.KASSENZEICHEN/'+kassenzeichenId+'?role=all&omitNullValues=true&deduplicate=false', {
+    const state = getState();
+    let username=state.uiState.user;
+    let pass=state.uiState.password;
+    fetch(SERVICE+'/VERDIS_GRUNDIS.KASSENZEICHEN/'+kassenzeichenId+'?role=all&omitNullValues=true&deduplicate=false', {
       method: 'GET',
       headers: {
-        'Authorization': 'Basic '+btoa(username+':'+pass),
+        'Authorization': 'Basic '+btoa(username+'@'+DOMAIN+':'+pass),
         'Content-Type': 'application/json',
       }}).then(function (response){
-        response.json().then(function(kassenzeichenData) {
-          dispatch(uiStateActions.showWaiting(false));
-          dispatch(setKassenzeichenObject(kassenzeichenData));
-          dispatch(mappingActions.showKassenzeichenObject(kassenzeichenData));
 
-        });
+
+        if (response.status >= 200 && response.status <300) {
+          response.json().then(function(kassenzeichenData) {
+            dispatch(uiStateActions.showWaiting(false));
+            dispatch(setKassenzeichenObject(kassenzeichenData));
+            dispatch(mappingActions.showKassenzeichenObject(kassenzeichenData));
+
+          });
+        }
+        else if (response.status == 401){
+          dispatch(uiStateActions.showWaiting(false));
+          dispatch(uiStateActions.setLoginInformation(username, pass,false));
+        }
       });
   };
 }
