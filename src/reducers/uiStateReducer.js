@@ -1,4 +1,4 @@
-import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,SHOW_WAITING,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED } from '../constants/actionTypes';
+import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,SHOW_WAITING,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED,SET_LOGIN_INFORMATION,SET_LOGIN_IN_PROGRESS } from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
 
@@ -10,6 +10,19 @@ import initialState from './initialState';
 export default function uiStateReducer(state = initialState.uiState, action) {
     let newState;
     switch (action.type) {
+        case SET_LOGIN_INFORMATION: {
+            newState=objectAssign({},state);
+            newState.loginInProgress=false;
+            newState.user=action.user;
+            newState.password=action.password;
+            newState.succesfullLogin=action.status;
+            return newState;
+        }
+        case SET_LOGIN_IN_PROGRESS: {
+            newState=objectAssign({},state);
+            newState.loginInProgress=true;
+            return newState;
+        }
         case TOGGLE_INFO_ELEMENTS: {
             newState=objectAssign({},state);
             newState.infoElementsEnabled=!state.infoElementsEnabled;
