@@ -6,11 +6,11 @@ import 'proj4leaflet';
 import { Path}  from 'react-leaflet';
 
 export default class ProjGeoJson extends Path {
- 
+
   componentWillMount () {
     super.componentWillMount();
-    const { data, ...props } = this.props;
-    this.leafletElement = L.Proj.geoJson(data, props);
+    const { mappingProps, ...props } = this.props;
+    this.leafletElement = L.Proj.geoJson(mappingProps.featureCollection, props);
   }
 
   componentDidUpdate (prevProps) {
@@ -22,5 +22,5 @@ export default class ProjGeoJson extends Path {
   }
 }
 ProjGeoJson.propTypes = {
-    data: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+    mappingProps: PropTypes.object.isRequired,
 };
