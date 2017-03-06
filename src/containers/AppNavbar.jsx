@@ -22,8 +22,7 @@ function mapDispatchToProps(dispatch) {
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch)
   };
 }
-let i = 0;
-const mockKassZ = [60670411, 60432515, 61156717, 60432937]
+
 export class AppNavbar_ extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -55,17 +54,15 @@ export class AppNavbar_ extends React.Component {
   }
   searchkassenzeichen() {
     this.props.uiActions.showKassenzeichenSearch(true);
-    //this.props.kassenzeichenActions.searchByKassenzeichenId(mockidz[i]);
-    // this.props.kassenzeichenActions.searchByKassenzeichen(mockKassZ[i]);
-    // if (i === 3) {
-    //   i = 0;
-    // }
-    // else {
-    //   i = i + 1;
-    // }
   }
+
+
   render() {
-    //console.log("Props:",this.props);
+    let username = "nicht angemeldet";
+    if (this.props.uiState.user != null) {
+      username = this.props.uiState.user;
+    }
+
     return (<div>
       <Navbar inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>
@@ -92,7 +89,7 @@ export class AppNavbar_ extends React.Component {
             <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
             <NavItem disabled className={(this.props.uiState.filterElementEnabled) ? "active" : ""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem>
             <NavItem className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><FontAwesome name="th-list" /></NavItem>
-            <NavItem eventKey={3} href="#" onSelect={this.showSettings}><Glyphicon glyph="user" /> SteinbacherD102</NavItem>
+            <NavItem eventKey={3} href="#" onSelect={this.showSettings}><Glyphicon glyph="user" /> {username}</NavItem>
 
           </Nav>
         </Navbar.Collapse>
