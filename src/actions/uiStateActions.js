@@ -39,6 +39,13 @@ export function showSettings(visible) {
   };
 }
 
+export function showKassenzeichenSearch(visible) {
+  return {
+      type: actionTypes.SHOW_KASSENZEICHEN_SEARCH,
+      visible
+  };
+}
+
 export function showWaiting(visible, message, waitingtype) {
   return {
       type: actionTypes.SHOW_WAITING,

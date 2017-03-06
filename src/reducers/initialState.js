@@ -16,15 +16,21 @@ export default {
         kanalElementsEnabled: false,
         filterElementEnabled: false,
         detailElementsEnabled: true,
+        
         user: null,
         password: null,
         succesfullLogin: false,
         loginInProgress: false,
+        
         settingsVisible: false,
+        
         waitingVisible: false,
         waitingMessage: null,
         waitingType: WAITING_TYPE_MESSAGE,
         waitingUIAnimation: true,
+
+        searchKassenzeichenVisible: false,
+
         layers: [
             {
                 key: "Osm",
