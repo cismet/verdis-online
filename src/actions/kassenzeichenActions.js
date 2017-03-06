@@ -60,7 +60,7 @@ export function searchByKassenzeichen(kassenzeichen) {
       if (response.status >= 200 && response.status < 300) {
         response.json().then(function (queryResult) {
           if (queryResult.$collection.length == 1) {
-            dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID))
+            dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID));
           } else if (queryResult.$collection.length < 1) {
             dispatch(uiStateActions.showError("Es konnte kein Kassenzeichen " + kassenzeichen + " gefunden werden."));
           } else {
@@ -76,7 +76,6 @@ export function searchByKassenzeichen(kassenzeichen) {
       }
 
     }).catch(function (err) {
-      console.log(err);
       dispatch(uiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
     });
 
