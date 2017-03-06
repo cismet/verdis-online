@@ -22,8 +22,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 let i=0;
-const mockidz=[5152,3270,9144,3271];
-
+const mockKassZ=[60670411,60432515,61156717,60432937]
 export class AppNavbar_ extends React.Component {
   constructor(props, context) {
     super(props, context);
@@ -54,7 +53,8 @@ export class AppNavbar_ extends React.Component {
       this.props.uiActions.showSettings(true);
   }
   searchkassenzeichen() {
-    this.props.kassenzeichenActions.searchByKassenzeichenId(mockidz[i]);
+    //this.props.kassenzeichenActions.searchByKassenzeichenId(mockidz[i]);
+    this.props.kassenzeichenActions.searchByKassenzeichen(mockKassZ[i]);
     if (i===3){
       i=0;
     }
@@ -97,7 +97,7 @@ export class AppNavbar_ extends React.Component {
         </Navbar>
         <Login key={'Login.hidden.'+this.props.uiState.succesfullLogin}/>
         <Settings key={'Settings.visible.'+this.props.uiState.settingsVisible}/>
-        <Waiting key={'Waiting.visible.'+this.props.uiState.waitingVisible}/>
+        <Waiting key={'Waiting.visible.'+this.props.uiState.waitingVisible+ " ...message."+this.props.uiState.waitingMessage+ " ...type."+this.props.uiState.waitingType} />
 </div>
     );
   }
