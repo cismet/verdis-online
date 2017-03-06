@@ -4,9 +4,9 @@ import { Map } from 'react-leaflet';
 import { connect } from "react-redux";
 import 'proj4leaflet';
 //import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
-import {  Layers } from '../components/Layers';
+import { Layers } from '../components/Layers';
 import ProjGeoJson from '../components/ProjGeoJson';
- import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
+import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import { crs25832 } from '../constants/gis';
 
 //mport  MyWMSTileLayer  from "./MyWMSTileLayer";
@@ -17,7 +17,7 @@ const position = [51.272399, 7.199712];
 
 function mapStateToProps(state) {
   return {
-    uiState:state.uiState,
+    uiState: state.uiState,
     kassenzeichen: state.kassenzeichen,
     mapping: state.mapping
   };
@@ -26,8 +26,8 @@ export class VerdisMap_ extends React.Component {
   constructor(props) {
     super(props);
   }
-  componentDidUpdate () {
-    if ((typeof(this.refs.leafletMap)!='undefined' && this.refs.leafletMap!=null) && this.props.mapping.bounds!=null) {
+  componentDidUpdate() {
+    if ((typeof (this.refs.leafletMap) != 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
       this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
     }
   }
@@ -40,14 +40,14 @@ export class VerdisMap_ extends React.Component {
     // <OSM />
     return (
       <Map ref="leafletMap" key={JSON.stringify(this.props.uiState.layers)} crs={crs25832} style={mapStyle} center={position} zoom={14} >
-        { this.props.uiState.layers.map((layer)=>{
+        {this.props.uiState.layers.map((layer) => {
           if (layer.enabled) {
             return (
               Layers.get(layer.key)(layer.opacity)
             );
           }
         })}
-         <ProjGeoJson key={JSON.stringify(this.props.mapping.featureCollection)} mappingProps={this.props.mapping} style={flaechenStyle} />
+        <ProjGeoJson key={JSON.stringify(this.props.mapping.featureCollection)} mappingProps={this.props.mapping} style={flaechenStyle} />
       </Map>
     );
   }

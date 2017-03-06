@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
-import Layout from './components/Layout';
-import HomePage from './containers/HomePage';
-import AboutPage from './components/AboutPage.js';
-import NotFoundPage from './components/NotFoundPage.js';
+import Layout from './components/Layout.jsx';
+import HomePage from './containers/HomePage.jsx';
+import AboutPage from './components/AboutPage.jsx';
+import NotFoundPage from './components/NotFoundPage.jsx';
 
 export default (
   <Route path="/" component={Layout}>

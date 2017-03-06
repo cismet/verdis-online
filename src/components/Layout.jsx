@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import { connect } from "react-redux";
-import AppNavbar from '../containers/AppNavbar';
+import AppNavbar from '../containers/AppNavbar.jsx';
 
 export class Layout_ extends React.Component {
-  render(){
+  render() {
     return (
-        <div>
-          <AppNavbar/> 
-          {this.props.children}
-        </div>
+      <div>
+        <AppNavbar />
+        {this.props.children}
+      </div>
     );
   }
 }
