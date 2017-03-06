@@ -89,13 +89,18 @@ export function login(user, password) {
 }
 
 
+export function logout() {
+  return function (dispatch) {
+    dispatch(setLoginInformation(null, null, false));
+  };
+}
 export function setLoginInProgress() {
   return {
     type: actionTypes.SET_LOGIN_IN_PROGRESS
   };
 }
 
-export function setLoginInformation(user, password, status) {
+function setLoginInformation(user, password, status) {
   return {
     type: actionTypes.SET_LOGIN_INFORMATION,
     user,
