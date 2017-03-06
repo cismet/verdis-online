@@ -1,4 +1,5 @@
 import {VERSIEGELTE_FLAECHEN} from '../constants/appModes';
+import {WAITING_TYPE_MESSAGE} from '../constants/uiConstants';
 
 export default {
     kassenzeichen: {
@@ -21,6 +22,9 @@ export default {
         loginInProgress: false,
         settingsVisible: false,
         waitingVisible: false,
+        waitingMessage: null,
+        waitingType: WAITING_TYPE_MESSAGE,
+        waitingUIAnimation: true,
         layers: [
             {
                 key: "Osm",

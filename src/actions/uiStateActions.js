@@ -1,5 +1,6 @@
 import * as actionTypes from '../constants/actionTypes';
 import { SERVICE, DOMAIN } from '../constants/cids';
+import {WAITING_TYPE_ERROR} from '../constants/uiConstants';
 
 export function toggleInfoElements() {
     return {
@@ -38,12 +39,22 @@ export function showSettings(visible) {
   };
 }
 
-export function showWaiting(visible) {
+export function showWaiting(visible, message, waitingtype) {
   return {
       type: actionTypes.SHOW_WAITING,
-      visible
+      visible,
+      message,
+      waitingtype
   };
+}
 
+export function showError(message) {
+  return {
+      type: actionTypes.SHOW_WAITING,
+      visible: true,
+      message,
+      waitingtype: WAITING_TYPE_ERROR
+  };
 }
 
 export function login(user, password) {
