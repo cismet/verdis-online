@@ -1,6 +1,7 @@
 import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,SHOW_WAITING,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED,SET_LOGIN_INFORMATION,SET_LOGIN_IN_PROGRESS } from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
+import {WAITING_TYPE_MESSAGE} from '../constants/uiConstants';
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
@@ -57,7 +58,20 @@ export default function uiStateReducer(state = initialState.uiState, action) {
          }
          case SHOW_WAITING: {
                newState=objectAssign({},state);
+               if (action.visible && state.waitingVisible){
+                   newState.waitingUIAnimation=false;
+               }
+               else {
+                   newState.waitingUIAnimation=true;
+               }
                newState.waitingVisible=action.visible;
+               newState.waitingMessage=action.message;
+               if (action.waitingtype != null) {
+                 newState.waitingType=action.waitingtype;
+               }
+               else {
+                 newState.waitingType=WAITING_TYPE_MESSAGE;  
+               }
               return newState;
           }
        case CHANGE_LAYER_OPACITY: {
