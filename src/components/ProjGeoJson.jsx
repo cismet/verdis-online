@@ -3,17 +3,17 @@ import { isFunction } from 'lodash';
 import { PropTypes } from 'react';
 import 'proj4leaflet';
 
-import { Path}  from 'react-leaflet';
+import { Path } from 'react-leaflet';
 
 export default class ProjGeoJson extends Path {
 
-  componentWillMount () {
+  componentWillMount() {
     super.componentWillMount();
     const { mappingProps, ...props } = this.props;
     this.leafletElement = L.Proj.geoJson(mappingProps.featureCollection, props);
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (isFunction(this.props.style)) {
       this.setStyle(this.props.style);
     } else {
@@ -22,5 +22,5 @@ export default class ProjGeoJson extends Path {
   }
 }
 ProjGeoJson.propTypes = {
-    mappingProps: PropTypes.object.isRequired,
+  mappingProps: PropTypes.object.isRequired,
 };

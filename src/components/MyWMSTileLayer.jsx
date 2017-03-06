@@ -4,16 +4,16 @@ import { BaseTileLayer } from 'react-leaflet';
 
 export default class MyWMSTileLayer extends BaseTileLayer {
 
-  componentWillMount () {
+  componentWillMount() {
     super.componentWillMount();
-    console.log("Props",this.props);
+    console.log("Props", this.props);
 
     const wProps = Object.assign({}, this.props);
-    console.log("WPropsBefore",wProps);
+    console.log("WPropsBefore", wProps);
 
     delete wProps.map;
     delete wProps.url;
-    console.log("WProps",wProps);
+    console.log("WProps", wProps);
     const { url } = this.props;
     this.leafletElement = tileLayer.wms(url, wProps);
   }
