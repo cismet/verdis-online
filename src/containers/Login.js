@@ -36,8 +36,8 @@ export class Login_ extends React.Component {
   }
   render() {
     return (
-        <Modal show={!this.props.uiState.succesfullLogin} onHide={this.close}>
-          <Modal.Header>
+        <Modal show={!this.props.uiState.succesfullLogin} onHide={this.close} keyboard={false}>
+          <Modal.Header  >
             <Modal.Title>VerDIS - Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
@@ -71,7 +71,7 @@ export class Login_ extends React.Component {
            </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" onClick={this.close}>Login</Button>
+            <Button bsStyle="primary" type="submit" onClick={this.close}>Login</Button>
           </Modal.Footer>
         </Modal>
     );
