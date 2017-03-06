@@ -62,9 +62,9 @@ export function searchByKassenzeichen(kassenzeichen) {
           if (queryResult.$collection.length == 1) {
             dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID))
           } else if (queryResult.$collection.length < 1) {
-            dispatch(uiStateActions.showError("Es konnte kein Kassenzeichen "+kassenzeichen + " gefunden werden."));
+            dispatch(uiStateActions.showError("Es konnte kein Kassenzeichen " + kassenzeichen + " gefunden werden."));
           } else {
-            dispatch(uiStateActions.showError("Kassenzeichen "+kassenzeichen + " lieferte keinen eindeutigen Treffer."));
+            dispatch(uiStateActions.showError("Kassenzeichen " + kassenzeichen + " lieferte keinen eindeutigen Treffer."));
           }
         });
       } else if (response.status == 401) {
@@ -72,12 +72,12 @@ export function searchByKassenzeichen(kassenzeichen) {
         dispatch(uiStateActions.setLoginInformation(username, pass, false));
       } else {
         //Errorhandling
-        dispatch(uiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: "+response.status+")"));
+        dispatch(uiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
       }
 
-    }).catch(function(err) {
-        console.log(err);
-        dispatch(uiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ("+err+")"));       
+    }).catch(function (err) {
+      console.log(err);
+      dispatch(uiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
     });
 
   };

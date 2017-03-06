@@ -32,14 +32,14 @@ export class SearchKassenzeichen_ extends React.Component {
     this.props.uiActions.showKassenzeichenSearch(false);
   }
 
-  search () {
+  search() {
     this.props.uiActions.showKassenzeichenSearch(false);
     this.props.kassZActions.searchByKassenzeichen(this.input);
   }
   handleInputChange(e) {
     this.input = e.target.value;
   }
- 
+
   render() {
     return (
       <Modal show={this.props.uiState.searchKassenzeichenVisible && this.props.uiState.succesfullLogin} onHide={this.close} keyboard={true}>
@@ -54,14 +54,14 @@ export class SearchKassenzeichen_ extends React.Component {
                </Col>
               <Col sm={6} right>
                 <FormControl type="kassZ" placeholder="Geben Sie hier das Kassnzeichen an." onChange={this.handleInputChange} />
-                
+
               </Col>
             </FormGroup>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button   onClick={this.close}>Abbrechen</Button>
-          <Button bsStyle="primary"  onClick={this.search}>Suchen</Button>
+          <Button onClick={this.close}>Abbrechen</Button>
+          <Button bsStyle="primary" onClick={this.search}>Suchen</Button>
         </Modal.Footer>
       </Modal>
     );
