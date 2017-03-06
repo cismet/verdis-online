@@ -6,9 +6,10 @@ import { LinkContainer } from 'react-router-bootstrap';
 const FontAwesome = require('react-fontawesome');
 import * as UiStateActions from '../actions/uiStateActions';
 import * as KassenzeichenActions from '../actions/kassenzeichenActions';
-import Settings from './Settings';
-import Waiting from './Waiting';
-import Login from './Login';
+import Settings from './Settings.jsx';
+import Waiting from './Waiting.jsx';
+import Login from './Login.jsx';
+import SearchKassenzeichen from './SearchKassenzeichen.jsx';
 
 function mapStateToProps(state) {
   return {
@@ -53,14 +54,15 @@ export class AppNavbar_ extends React.Component {
     this.props.uiActions.showSettings(true);
   }
   searchkassenzeichen() {
+    this.props.uiActions.showKassenzeichenSearch(true);
     //this.props.kassenzeichenActions.searchByKassenzeichenId(mockidz[i]);
-    this.props.kassenzeichenActions.searchByKassenzeichen(mockKassZ[i]);
-    if (i === 3) {
-      i = 0;
-    }
-    else {
-      i = i + 1;
-    }
+    // this.props.kassenzeichenActions.searchByKassenzeichen(mockKassZ[i]);
+    // if (i === 3) {
+    //   i = 0;
+    // }
+    // else {
+    //   i = i + 1;
+    // }
   }
   render() {
     //console.log("Props:",this.props);
@@ -96,6 +98,8 @@ export class AppNavbar_ extends React.Component {
         </Navbar.Collapse>
       </Navbar>
       <Login key={'Login.hidden.' + this.props.uiState.succesfullLogin} />
+      <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchKassenzeichenVisible} />
+
       <Settings key={'Settings.visible.' + this.props.uiState.settingsVisible} />
       <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
     </div>

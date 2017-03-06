@@ -1,4 +1,4 @@
-import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,SHOW_WAITING,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED,SET_LOGIN_INFORMATION,SET_LOGIN_IN_PROGRESS } from '../constants/actionTypes';
+import {TOGGLE_INFO_ELEMENTS, TOGGLE_CHART_ELEMENTS, TOGGLE_KANAL_ELEMENTS, TOGGLE_FILTER_ELEMENT, TOGGLE_DETAIL_ELEMENTS, SHOW_SETTINGS,SHOW_WAITING,CHANGE_LAYER_OPACITY,CHANGE_LAYER_ENABLED,SET_LOGIN_INFORMATION,SET_LOGIN_IN_PROGRESS, SHOW_KASSENZEICHEN_SEARCH } from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
 import {WAITING_TYPE_MESSAGE} from '../constants/uiConstants';
@@ -54,6 +54,11 @@ export default function uiStateReducer(state = initialState.uiState, action) {
         case SHOW_SETTINGS: {
               newState=objectAssign({},state);
               newState.settingsVisible=action.visible;
+             return newState;
+         }
+        case SHOW_KASSENZEICHEN_SEARCH: {
+              newState=objectAssign({},state);
+              newState.searchKassenzeichenVisible=action.visible;
              return newState;
          }
          case SHOW_WAITING: {
