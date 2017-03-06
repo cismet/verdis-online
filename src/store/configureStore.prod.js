@@ -1,7 +1,13 @@
-import {createStore, compose, applyMiddleware} from 'redux';
+import {
+  createStore,
+  compose,
+  applyMiddleware
+} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers';
-import {responsiveStoreEnhancer} from 'redux-responsive';
+import {
+  responsiveStoreEnhancer
+} from 'redux-responsive';
 
 export default function configureStore(initialState) {
   const middlewares = [
@@ -15,6 +21,5 @@ export default function configureStore(initialState) {
   return createStore(rootReducer, initialState, compose(
     responsiveStoreEnhancer,
     applyMiddleware(...middlewares)
-    )
-  );
+  ));
 }
