@@ -22,6 +22,7 @@ export class Settings_ extends React.Component {
     this.changeLayer = this.changeLayer.bind(this);
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
+    this.logout = this.logout.bind(this);
     this.changeLayerEnabledSetting = this.changeLayerEnabledSetting.bind(this);
     this.changeLayerOpacitySetting = this.changeLayerOpacitySetting.bind(this);
   }
@@ -31,6 +32,10 @@ export class Settings_ extends React.Component {
   }
 
   close() {
+    this.props.uiActions.showSettings(false);
+  }
+  logout() {
+    this.props.uiActions.logout();
     this.props.uiActions.showSettings(false);
   }
   open() {
@@ -69,6 +74,7 @@ export class Settings_ extends React.Component {
               })}
             </tbody>
           </table>
+          <Button onClick={this.logout}>abmelden</Button>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={this.close}>Close</Button>
