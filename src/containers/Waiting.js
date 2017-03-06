@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Modal , ProgressBar }  from 'react-bootstrap';
+import { Modal , ProgressBar, Button }  from 'react-bootstrap';
 import * as UiStateActions from '../actions/uiStateActions';
+import {WAITING_TYPE_MESSAGE, WAITING_TYPE_ERROR, WAITING_TYPE_INFO} from '../constants/uiConstants';
 
 
 function mapStateToProps(state) {
@@ -32,20 +33,48 @@ export class Waiting_ extends React.Component {
     this.props.uiActions.showWaiting(true);
   }
 
+
   render() {
+    let title=null;
+    if (this.props.uiState.waitingMessage==null) {
+      title = (<Modal.Title>Laden</Modal.Title>);
+    }  
+    else {
+      title = (<Modal.Title>{this.props.uiState.waitingMessage}</Modal.Title>);
+    }
+    
+    let style=null;
+    let footer=(<Modal.Footer />);
+    if (this.props.uiState.waitingType == WAITING_TYPE_ERROR) {
+         style="danger";
+         footer=(
+          <Modal.Footer>
+            <Button onClick={this.close}>Ok</Button>
+          </Modal.Footer>
+         );
+    }
+    else if (this.props.uiState.waitingType == WAITING_TYPE_INFO) {
+      style="info";
+    }
+    else {
+      style="null";
+    }
+
+
+
 
     return (
-        <Modal show={this.props.uiState.waitingVisible} onHide={this.close}>
+        <Modal animation={this.props.uiState.waitingUIAnimation} show={this.props.uiState.waitingVisible} onHide={this.close}>
           <Modal.Header >
-            <Modal.Title>Laden</Modal.Title>
+            {title}
           </Modal.Header>
           <Modal.Body>
-              <ProgressBar active now={100} />
+              <ProgressBar bsStyle={style} active now={100} />
           </Modal.Body>
-          <Modal.Footer />
+         {footer}
         </Modal>
     );
-  }
+  } 
 }
 
 const Waiting = connect(mapStateToProps,mapDispatchToProps)(Waiting_);
