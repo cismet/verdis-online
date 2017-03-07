@@ -1,5 +1,7 @@
 import {
-  SHOW_KASSENZEICHEN
+  SHOW_KASSENZEICHEN,
+  FIT_BOUNDS
+
 } from '../constants/actionTypes';
 import objectAssign from 'object-assign';
 import initialState from './initialState';
@@ -33,7 +35,12 @@ export default function mappingReducer(state = initialState.mapping, action) {
           newState.bounds = null;
         }
         return newState;
-
+      }
+    case FIT_BOUNDS:
+      {
+        console.log("FitBOunds");
+        newState = objectAssign({}, state);
+        return newState;
       }
     default:
       return state;

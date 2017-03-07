@@ -7,3 +7,8 @@ export function showKassenzeichenObject(kassenzeichenObject) {
   };
 
 }
+export function fitBounds() {
+  return {
+    type: actionTypes.FIT_BOUNDS
+  };
+}

@@ -5,6 +5,7 @@ import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bo
 import { LinkContainer } from 'react-router-bootstrap';
 const FontAwesome = require('react-fontawesome');
 import * as UiStateActions from '../actions/uiStateActions';
+import * as MappingActions from '../actions/mappingActions';
 import * as KassenzeichenActions from '../actions/kassenzeichenActions';
 import Settings from './Settings.jsx';
 import Waiting from './Waiting.jsx';
@@ -19,7 +20,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     uiActions: bindActionCreators(UiStateActions, dispatch),
-    kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch)
+    kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
+    mappingActions: bindActionCreators(MappingActions, dispatch)
+
   };
 }
 
@@ -33,6 +36,7 @@ export class AppNavbar_ extends React.Component {
     this.toggleDetails = this.toggleDetails.bind(this);
     this.showSettings = this.showSettings.bind(this);
     this.searchkassenzeichen = this.searchkassenzeichen.bind(this);
+    this.fitBounds = this.fitBounds.bind(this);
   }
   toggleInfo() {
     this.props.uiActions.toggleInfoElements();
@@ -56,6 +60,10 @@ export class AppNavbar_ extends React.Component {
     this.props.uiActions.showKassenzeichenSearch(true);
   }
 
+  fitBounds() {
+    this.props.mappingActions.fitBounds();
+  }
+
 
   render() {
     let username = "nicht angemeldet";
@@ -64,7 +72,7 @@ export class AppNavbar_ extends React.Component {
     }
 
     return (<div>
-      <Navbar inverse style={{ marginBottom: 0 }}>
+      <Navbar onClick={this.fitBounds} inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>
           <Navbar.Brand>
             <LinkContainer to={{ pathname: '/' }}>
