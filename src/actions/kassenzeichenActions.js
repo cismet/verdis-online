@@ -30,7 +30,7 @@ export function searchByKassenzeichenId(kassenzeichenId) {
         });
       } else if (response.status === 401) {
         dispatch(uiStateActions.showWaiting(false));
-        dispatch(uiStateActions.setLoginInformation(username, pass, false));
+        dispatch(uiStateActions.invalidateLogin(username, pass, false));
       }
     });
   };
@@ -69,7 +69,7 @@ export function searchByKassenzeichen(kassenzeichen) {
         });
       } else if (response.status == 401) {
         dispatch(uiStateActions.showWaiting(false));
-        dispatch(uiStateActions.setLoginInformation(username, pass, false));
+        dispatch(uiStateActions.invalidateLogin(username, pass, false));
       } else {
         //Errorhandling
         dispatch(uiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
