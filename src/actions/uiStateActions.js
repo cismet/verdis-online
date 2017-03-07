@@ -88,6 +88,11 @@ export function login(user, password) {
   };
 }
 
+export function invalidateLogin(username, pass) {
+  return function (dispatch) {
+    dispatch(setLoginInformation(username, pass, false));
+  };
+}
 
 export function logout() {
   return function (dispatch) {
