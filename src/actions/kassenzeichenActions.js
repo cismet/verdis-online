@@ -1,6 +1,7 @@
 import * as actionTypes from '../constants/actionTypes';
 import * as uiStateActions from './uiStateActions';
 import * as mappingActions from './mappingActions';
+import 'whatwg-fetch'; 
 import {
   SERVICE,
   DOMAIN
