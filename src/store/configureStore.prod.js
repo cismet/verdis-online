@@ -18,8 +18,9 @@ export default function configureStore(initialState) {
     thunkMiddleware,
   ];
 
-  return createStore(rootReducer, initialState, compose(
-    responsiveStoreEnhancer,
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
+
+  return createStore(rootReducer, initialState, composeEnhancers(responsiveStoreEnhancer,
     applyMiddleware(...middlewares)
   ));
 }
