@@ -6,6 +6,7 @@ import {
 import {
   WAITING_TYPE_ERROR
 } from '../constants/uiConstants';
+import 'whatwg-fetch';
 
 export function toggleInfoElements() {
   return {
@@ -84,52 +85,56 @@ export function login(user, password) {
       } else {
         dispatch(setLoginInformation(user, password, false));
       }
-    });
-  };
-}
+    }).catch(function (err) {
+      console.log(err);
+        dispatch(showError("Beim Login ist ein Fehler aufgetreten. (" + err + ")"));
+        dispatch(invalidateLogin(user, password));
+        });
+    };
+  }
 
-export function invalidateLogin(username, pass) {
-  return function (dispatch) {
-    dispatch(setLoginInformation(username, pass, false));
-  };
-}
+  export function invalidateLogin(username, pass) {
+    return function (dispatch) {
+      dispatch(setLoginInformation(username, pass, false));
+    };
+  }
 
-export function logout() {
-  return function (dispatch) {
-    dispatch(setLoginInformation(null, null, false));
-  };
-}
-export function setLoginInProgress() {
-  return {
-    type: actionTypes.SET_LOGIN_IN_PROGRESS
-  };
-}
+  export function logout() {
+    return function (dispatch) {
+      dispatch(setLoginInformation(null, null, false));
+    };
+  }
+  export function setLoginInProgress() {
+    return {
+      type: actionTypes.SET_LOGIN_IN_PROGRESS
+    };
+  }
 
-function setLoginInformation(user, password, status) {
-  return {
-    type: actionTypes.SET_LOGIN_INFORMATION,
-    user,
-    password,
-    status
-  };
+  function setLoginInformation(user, password, status) {
+    return {
+      type: actionTypes.SET_LOGIN_INFORMATION,
+      user,
+      password,
+      status
+    };
 
-}
-
-
+  }
 
 
 
-export function changeLayerOpacitySetting(key, opacity) {
-  return {
-    type: actionTypes.CHANGE_LAYER_OPACITY,
-    key,
-    opacity
-  };
-}
-export function changeLayerEnabledSetting(key, enabled) {
-  return {
-    type: actionTypes.CHANGE_LAYER_ENABLED,
-    key,
-    enabled
-  };
-}
+
+
+  export function changeLayerOpacitySetting(key, opacity) {
+    return {
+      type: actionTypes.CHANGE_LAYER_OPACITY,
+      key,
+      opacity
+    };
+  }
+  export function changeLayerEnabledSetting(key, enabled) {
+    return {
+      type: actionTypes.CHANGE_LAYER_ENABLED,
+      key,
+      enabled
+    };
+  }
