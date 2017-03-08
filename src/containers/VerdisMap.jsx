@@ -7,7 +7,8 @@ import 'proj4leaflet';
 import { Layers } from '../components/Layers';
 import ProjGeoJson from '../components/ProjGeoJson';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
-import { crs25832 } from '../constants/gis';
+import { crs25832, proj4crs25832def } from '../constants/gis';
+import proj4 from 'proj4';
 
 //mport  MyWMSTileLayer  from "./MyWMSTileLayer";
 
@@ -25,12 +26,22 @@ function mapStateToProps(state) {
 export class VerdisMap_ extends React.Component {
   constructor(props) {
     super(props);
+    this.mapClick = this.mapClick.bind(this);
+
   }
+
   componentDidUpdate() {
     if ((typeof (this.refs.leafletMap) != 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
       this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
     }
   }
+
+  mapClick(event) {
+    //console.log(event);
+    const latlon = event.latlng;
+    console.log(proj4(proj4crs25832def,[latlon.lng, latlon.lat]))
+  }
+
   render() {
     const mapStyle = {
       height: this.props.height
@@ -39,7 +50,7 @@ export class VerdisMap_ extends React.Component {
     // <Ortho2014 /><StadtgrundKarteABK />
     // <OSM />
     return (
-      <Map ref="leafletMap" key={JSON.stringify(this.props.uiState.layers)} crs={crs25832} style={mapStyle} center={position} zoom={14} >
+      <Map ref="leafletMap" key={JSON.stringify(this.props.uiState.layers)} crs={crs25832} style={mapStyle} center={position} zoom={14} ondblclick={this.mapClick} doubleClickZoom={false} >
         {this.props.uiState.layers.map((layer) => {
           if (layer.enabled) {
             return (
