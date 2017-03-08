@@ -4,7 +4,7 @@ import {
   DOMAIN
 } from '../constants/cids';
 import {
-  WAITING_TYPE_ERROR
+  WAITING_TYPE_ERROR, WAITING_TYPE_INFO
 } from '../constants/uiConstants';
 import 'whatwg-fetch';
 
@@ -58,6 +58,15 @@ export function showWaiting(visible, message, waitingtype) {
     visible,
     message,
     waitingtype
+  };
+}
+
+export function showInfo(message) {
+  return {
+    type: actionTypes.SHOW_WAITING,
+    visible: true,
+    message,
+    waitingtype: WAITING_TYPE_INFO
   };
 }
 
