@@ -9,8 +9,11 @@ import ProjGeoJson from '../components/ProjGeoJson';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import { crs25832, proj4crs25832def } from '../constants/gis';
 import proj4 from 'proj4';
+import * as KassenzeichenActions from '../actions/kassenzeichenActions';
+import { bindActionCreators } from 'redux';
 
-//mport  MyWMSTileLayer  from "./MyWMSTileLayer";
+
+//import  MyWMSTileLayer  from "./MyWMSTileLayer";
 
 const position = [51.272399, 7.199712];
 
@@ -23,6 +26,13 @@ function mapStateToProps(state) {
     mapping: state.mapping
   };
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
+
+  };
+}
 export class VerdisMap_ extends React.Component {
   constructor(props) {
     super(props);
@@ -32,14 +42,15 @@ export class VerdisMap_ extends React.Component {
 
   componentDidUpdate() {
     if ((typeof (this.refs.leafletMap) != 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
-      this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
+     this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
     }
   }
 
   mapClick(event) {
     //console.log(event);
     const latlon = event.latlng;
-    console.log(proj4(proj4crs25832def,[latlon.lng, latlon.lat]))
+    const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
+    this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1]);
   }
 
   render() {
@@ -67,13 +78,15 @@ export class VerdisMap_ extends React.Component {
 //{m => { this.leafletMap = m; }}
 
 
-const VerdisMap = connect(mapStateToProps)(VerdisMap_);
+const VerdisMap = connect(mapStateToProps, mapDispatchToProps)(VerdisMap_);
 
 VerdisMap_.propTypes = {
   uiState: PropTypes.object,
   kassenzeichen: PropTypes.object,
   mapping: PropTypes.object,
-  height: PropTypes.number
+  height: PropTypes.number,
+  kassenzeichenActions: PropTypes.object,
+
 };
 
 export default VerdisMap;
