@@ -57,7 +57,7 @@ export class Waiting_ extends React.Component {
       style = "info";
     }
     else {
-      style = "null";
+      style = null;
     }
 
 
