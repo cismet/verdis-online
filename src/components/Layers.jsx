@@ -13,7 +13,7 @@ Layers.set("NRWLayer", (opacity) => {
       format="image/png"
       tiled="true"
       //crs={L.CRS.EPSG3857}
-      maxZoom={22}
+      maxZoom={19}
       opacity={opacity}
     />
   );
@@ -28,7 +28,7 @@ Layers.set("StadtgrundKarteABK", (opacity) => {
       layers="alkomf"
       format="image/png"
       tiled="true"
-      maxZoom={22}
+      maxZoom={19}
       opacity={opacity}
     />
   );
@@ -43,7 +43,7 @@ Layers.set("Ortho2014", (opacity) => {
       layers="WO2014"
       format="image/png"
       tiled="true"
-      maxZoom={22}
+      maxZoom={19}
       opacity={opacity}
     />
   );
@@ -58,7 +58,7 @@ Layers.set("Osm", (opacity) => {
       layers="OSM-WMS"
       format="image/png"
       tiled="true"
-      maxZoom={22}
+      maxZoom={19}
       opacity={opacity}
     />
   );

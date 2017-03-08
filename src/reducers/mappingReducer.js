@@ -38,7 +38,6 @@ export default function mappingReducer(state = initialState.mapping, action) {
       }
     case FIT_BOUNDS:
       {
-        console.log("FitBOunds");
         newState = objectAssign({}, state);
         return newState;
       }

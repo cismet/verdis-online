@@ -1,7 +1,7 @@
 import proj4 from 'proj4';
 import L from 'leaflet';
 
-const proj4crs25832def = '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs';
+export const proj4crs25832def = '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs';
 const origin = proj4(proj4crs25832def,
     // Upper left corner of the tile orign based on the WMTSCapabilities layer BBox
     [0.105946948013, 56.8478734515]
