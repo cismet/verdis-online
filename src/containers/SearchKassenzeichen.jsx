@@ -52,7 +52,7 @@ export class SearchKassenzeichen_ extends React.Component {
               <Col componentClass={ControlLabel} sm={4}>
                 Kassenzeichen
                </Col>
-              <Col sm={6} right>
+              <Col sm={6}>
                 <FormControl type="kassZ" placeholder="Geben Sie hier das Kassnzeichen an." onChange={this.handleInputChange} />
 
               </Col>
