@@ -42,15 +42,22 @@ export class VerdisMap_ extends React.Component {
 
   componentDidUpdate() {
     if ((typeof (this.refs.leafletMap) != 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
-     this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
+      if (this.props.mapping.boundsFittingEnabled) {
+                console.log("++++++++++++++++++++++++++++++++++++++ fitBounds()")
+
+        this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
+      }
+      else {
+        console.log("--------------------------------------- skip fitBounds()")
+      }
     }
   }
 
   mapClick(event) {
-    //console.log(event);
+    const skipFitBounds=event.originalEvent.shiftKey;
     const latlon = event.latlng;
     const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
-    this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1]);
+    this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],skipFitBounds);
   }
 
   render() {
@@ -69,7 +76,7 @@ export class VerdisMap_ extends React.Component {
             );
           }
         })}
-        <ProjGeoJson key={JSON.stringify(this.props.mapping.featureCollection)} mappingProps={this.props.mapping} style={flaechenStyle} />
+        <ProjGeoJson key={JSON.stringify(this.props.mapping)} mappingProps={this.props.mapping} style={flaechenStyle} />
       </Map>
     );
   }

@@ -30,6 +30,7 @@ export default function mappingReducer(state = initialState.mapping, action) {
           const b = projectedFc.getBounds();
           newState.featureCollection = fc;
           newState.bounds = b;
+          newState.boundsFittingEnabled= action.boundsFittingEnabled;
         } else {
           newState.featureCollection = [];
           newState.bounds = null;
@@ -39,6 +40,7 @@ export default function mappingReducer(state = initialState.mapping, action) {
     case FIT_BOUNDS:
       {
         newState = objectAssign({}, state);
+        newState.boundsFittingEnabled=action.boundsFittingEnabled;
         return newState;
       }
     default:

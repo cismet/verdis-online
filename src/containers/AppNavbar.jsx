@@ -61,6 +61,7 @@ export class AppNavbar_ extends React.Component {
   }
 
   fitBounds() {
+    console.log("---------------------------- FB")
     this.props.mappingActions.fitBounds();
   }
 
@@ -72,7 +73,7 @@ export class AppNavbar_ extends React.Component {
     }
 
     return (<div>
-      <Navbar onClick={this.fitBounds} inverse style={{ marginBottom: 0 }}>
+      <Navbar  inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>
           <Navbar.Brand>
             <LinkContainer to={{ pathname: '/' }}>
@@ -91,7 +92,7 @@ export class AppNavbar_ extends React.Component {
             </NavDropdown>
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={2.0} >Info:</NavItem>
+            <NavItem onClick={this.fitBounds} eventKey={2.0} >Info:</NavItem>
             <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><FontAwesome name="info-circle" /></NavItem>
             <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><FontAwesome name="pie-chart" /></NavItem>
             <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>

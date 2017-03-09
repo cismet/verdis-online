@@ -60,11 +60,11 @@ export class Login_ extends React.Component {
               </Col>
             </FormGroup>
 
-            <FormGroup>
+            {/*<FormGroup>
               <Col smOffset={2} sm={10}>
                 <Checkbox>Angemeldet bleiben</Checkbox>
               </Col>
-            </FormGroup>
+            </FormGroup>*/}
             <Fade in={this.props.uiState.loginInProgress}>
               <ProgressBar key={"loginInProgress showing:" + this.props.uiState.loginInProgress} active now={100} />
             </Fade>
