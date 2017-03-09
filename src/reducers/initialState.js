@@ -11,7 +11,8 @@ export default {
   },
   mapping: {
     featureCollection: [],
-    bounds: null
+    bounds: null,
+    boundsFittingEnabled: false
   },
   uiState: {
     mainMode: VERSIEGELTE_FLAECHEN,

@@ -7,7 +7,7 @@ import {
   DOMAIN
 } from '../constants/cids';
 
-export function searchByKassenzeichenId(kassenzeichenId) {
+export function searchByKassenzeichenId(kassenzeichenId, skipFitBounds) {
   return function (dispatch, getState) {
     dispatch(uiStateActions.showWaiting(true, "Kassenzeichen laden ..."));
     const state = getState();
@@ -26,8 +26,7 @@ export function searchByKassenzeichenId(kassenzeichenId) {
         response.json().then(function (kassenzeichenData) {
           dispatch(uiStateActions.showWaiting(false));
           dispatch(setKassenzeichenObject(kassenzeichenData));
-          dispatch(mappingActions.showKassenzeichenObject(kassenzeichenData));
-
+          dispatch(mappingActions.showKassenzeichenObject(kassenzeichenData,skipFitBounds));
         });
       } else if (response.status === 401) {
         dispatch(uiStateActions.showWaiting(false));
@@ -84,7 +83,7 @@ export function searchByKassenzeichen(kassenzeichen) {
 }
 
 
-export function searchByPoint(x, y) {
+export function searchByPoint(x, y, skipFitBounds) {
   return function (dispatch, getState) {
     dispatch(uiStateActions.showWaiting(true, "Kassenzeichen suchen ..."));
     const query = {
@@ -113,7 +112,7 @@ export function searchByPoint(x, y) {
       if (response.status >= 200 && response.status < 300) {
         response.json().then(function (queryResult) {
           if (queryResult.$collection.length == 1) {
-            dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID));
+            dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, skipFitBounds));
           } else if (queryResult.$collection.length < 1) {
             dispatch(uiStateActions.showInfo("Hier konnte kein Kassenzeichen gefunden werden."));
             setTimeout(() => {
@@ -121,7 +120,7 @@ export function searchByPoint(x, y) {
             }, 1000);
           } else {
             dispatch(uiStateActions.showInfo("Suche lieferte keinen eindeutigen Treffer."));
-             setTimeout(() => {
+            setTimeout(() => {
               dispatch(uiStateActions.showWaiting(false));
             }, 1000);
           }
