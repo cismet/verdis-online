@@ -24,7 +24,13 @@ const horizontalPanelWidth = 200;
 const switchToBottomWhenSmallerThan = 900;
 
 export class HomePage_ extends React.Component {
-
+  constructor(props, context) {
+      super(props, context);
+      this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
+  }
+  flaechenPanelClick() {
+    this.refs.verdismap.getWrappedInstance().fitBounds()
+  }
   render() {
     let mapHeight;
     if (this.props.ui.height) {
@@ -66,7 +72,7 @@ export class HomePage_ extends React.Component {
     let kassenzeichenVerticalChartsPanel;
 
     if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id != -1) {
-      kassenzeichenPanel = <KassenzeichenPanel kassenzeichen={this.props.kassenzeichen} />;
+      kassenzeichenPanel = <KassenzeichenPanel onClick={this.flaechenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
     }
     if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id != -1) {
       kassenzeichenHorizontalChartsPanel = <KassenzeichenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
@@ -86,7 +92,7 @@ export class HomePage_ extends React.Component {
     if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
       return (
         <div>
-          <VerdisMap height={mapHeight} />
+          <VerdisMap ref="verdismap" height={mapHeight} />
         </div>
       );
     }
@@ -103,7 +109,7 @@ export class HomePage_ extends React.Component {
       }
       return (
         <div>
-          <VerdisMap height={mapHeight - horizontalPanelHeight - 25} />
+          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} />
           <Flexbox flexDirection="row" style={detailsStyle} >
             <Flexbox height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
               {kassenzeichenPanel}
@@ -129,7 +135,7 @@ export class HomePage_ extends React.Component {
             {kassenzeichenHorizontalChartsPanel}
             {flComps}
           </div>
-          <VerdisMap height={mapHeight} />
+          <VerdisMap ref="verdismap" height={mapHeight} />
         </div>
       );
     }

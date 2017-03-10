@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Well } from 'react-bootstrap';
 const FontAwesome = require('react-fontawesome');
 
-const KassenzeichenPanel = ({kassenzeichen}) => {
+const KassenzeichenPanel = ({kassenzeichen, onClick}) => {
   const styleOverride = {
     marginBottom: '5px',
     width: '100%'
@@ -15,7 +15,7 @@ const KassenzeichenPanel = ({kassenzeichen}) => {
   }
 
   return (
-    <Well bsSize="small" style={styleOverride}>
+    <Well onClick={onClick} bsSize="small" style={styleOverride}>
       <h4>Kassenzeichen</h4>
       <small>erfasst am {kassenzeichen.datum_erfassung}</small>
       <table style={{ width: '100%' }}>
@@ -30,7 +30,8 @@ const KassenzeichenPanel = ({kassenzeichen}) => {
   );
 };
 KassenzeichenPanel.propTypes = {
-  kassenzeichen: PropTypes.object
+  kassenzeichen: PropTypes.object,
+  onClick: PropTypes.func
 };
 
 export default KassenzeichenPanel;
