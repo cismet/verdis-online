@@ -68,7 +68,7 @@ export class VerdisMap_ extends React.Component {
     // <Ortho2014 /><StadtgrundKarteABK />
     // <OSM />
     return (
-      <Map ref="leafletMap" key={JSON.stringify(this.props.uiState.layers)} crs={crs25832} style={mapStyle} center={position} zoom={14} ondblclick={this.mapClick} doubleClickZoom={false} >
+      <Map ref="leafletMap" key="leafletMap" crs={crs25832} style={mapStyle} center={position} zoom={14} ondblclick={this.mapClick} doubleClickZoom={false} >
         {this.props.uiState.layers.map((layer) => {
           if (layer.enabled) {
             return (
