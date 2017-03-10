@@ -104,7 +104,7 @@ export default function uiStateReducer(state = initialState.uiState, action) {
       }
     case CHANGE_LAYER_OPACITY:
       {
-        newState = objectAssign({}, state);
+        newState = JSON.parse(JSON.stringify(state));
         newState.layers.map((layer) => {
           if (action.key === layer.key) {
             layer.opacity = action.opacity;
@@ -114,7 +114,7 @@ export default function uiStateReducer(state = initialState.uiState, action) {
       }
     case CHANGE_LAYER_ENABLED:
       {
-        newState = objectAssign({}, state);
+        newState = JSON.parse(JSON.stringify(state));
         newState.layers.map((layer) => {
           if (action.key === layer.key) {
             layer.enabled = !layer.enabled;
