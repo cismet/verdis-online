@@ -37,20 +37,20 @@ export class VerdisMap_ extends React.Component {
   constructor(props) {
     super(props);
     this.mapClick = this.mapClick.bind(this);
+    this.fitBounds = this.fitBounds.bind(this);
 
   }
 
   componentDidUpdate() {
     if ((typeof (this.refs.leafletMap) != 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
       if (this.props.mapping.boundsFittingEnabled) {
-                console.log("++++++++++++++++++++++++++++++++++++++ fitBounds()")
-
         this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
       }
-      else {
-        console.log("--------------------------------------- skip fitBounds()")
-      }
     }
+  }
+
+  fitBounds() {
+     this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
   }
 
   mapClick(event) {
@@ -85,7 +85,7 @@ export class VerdisMap_ extends React.Component {
 //{m => { this.leafletMap = m; }}
 
 
-const VerdisMap = connect(mapStateToProps, mapDispatchToProps)(VerdisMap_);
+const VerdisMap = connect(mapStateToProps, mapDispatchToProps,null, {withRef:true})(VerdisMap_);
 
 VerdisMap_.propTypes = {
   uiState: PropTypes.object,
