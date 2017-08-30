@@ -9,6 +9,7 @@
     "object-assign": "^4.1.1",
     "proj4": "^2.4.4",
     "proj4leaflet": "^1.0.2",
+    "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.2",
     "react-dom": "^15.6.1",

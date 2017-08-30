@@ -1,6 +1,6 @@
 import L from 'leaflet';
 import { isFunction } from 'lodash';
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import 'proj4leaflet';
 
 import { Path } from 'react-leaflet';

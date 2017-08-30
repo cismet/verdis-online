@@ -1,5 +1,5 @@
 import { tileLayer } from 'leaflet';
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 import { BaseTileLayer } from 'react-leaflet';
 
 export default class MyWMSTileLayer extends BaseTileLayer {

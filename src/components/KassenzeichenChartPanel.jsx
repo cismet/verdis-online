@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { Well } from 'react-bootstrap';
 import { PieChart, Pie, Legend, Cell, Tooltip } from 'recharts';
 import {
