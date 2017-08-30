@@ -9,9 +9,7 @@ import {
 } from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunkMiddleware from 'redux-thunk';
-import {
-  responsiveStoreEnhancer
-} from 'redux-responsive';
+
 import rootReducer from '../reducers';
 import logger from 'redux-logger';
 
@@ -30,7 +28,7 @@ export default function configureStore(initialState) {
   ];
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
-  const store = createStore(rootReducer, initialState, composeEnhancers(responsiveStoreEnhancer,
+  const store = createStore(rootReducer, initialState, composeEnhancers(
     applyMiddleware(...middlewares)
   ));
 

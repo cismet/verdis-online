@@ -9,7 +9,6 @@ import Flexbox from 'flexbox-react';
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
-    ui: state.browserUI,
     kassenzeichen: state.kassenzeichen
   };
 }
@@ -33,12 +32,13 @@ export class HomePage_ extends React.Component {
   }
   render() {
     let mapHeight;
-    if (this.props.ui.height) {
-      mapHeight = this.props.ui.height - 55;
+    if (this.props.uiState.height) {
+      mapHeight = this.props.uiState.height - 55;
     }
     else {
       mapHeight = 50;
     }
+    console.log("mapHeight:"+mapHeight);
 
     const detailsStyle = {
       'backgroundColor': '#EEE',
@@ -96,7 +96,7 @@ export class HomePage_ extends React.Component {
         </div>
       );
     }
-    else if (this.props.ui.width < switchToBottomWhenSmallerThan) {
+    else if (this.props.uiState.width < switchToBottomWhenSmallerThan) {
       if (flaechen) {
         let i = 0;
         flComps = flaechen.map(function (flaeche) {

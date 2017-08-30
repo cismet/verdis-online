@@ -11,8 +11,9 @@ export default class ProjGeoJson extends Path {
     super.componentWillMount();
     const { mappingProps, ...props } = this.props;
     this.leafletElement = L.Proj.geoJson(mappingProps.featureCollection, props);
-  }
-
+  }  
+  createLeafletElement () {
+  } 
   componentDidUpdate(prevProps) {
     if (isFunction(this.props.style)) {
       this.setStyle(this.props.style);

@@ -129,10 +129,6 @@ export function login(user, password) {
 
   }
 
-
-
-
-
   export function changeLayerOpacitySetting(key, opacity) {
     return {
       type: actionTypes.CHANGE_LAYER_OPACITY,
@@ -147,3 +143,11 @@ export function login(user, password) {
       enabled
     };
   }
+
+  export function screenResize(height,width) {
+    return {
+        type: actionTypes.SCREEN_RESIZE,
+        width: width,
+        height: height,
+    };
+}

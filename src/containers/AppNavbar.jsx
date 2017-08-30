@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-const FontAwesome = require('react-fontawesome');
 import * as UiStateActions from '../actions/uiStateActions';
 import * as MappingActions from '../actions/mappingActions';
 import * as KassenzeichenActions from '../actions/kassenzeichenActions';
@@ -11,6 +10,9 @@ import Settings from './Settings.jsx';
 import Waiting from './Waiting.jsx';
 import Login from './Login.jsx';
 import SearchKassenzeichen from './SearchKassenzeichen.jsx';
+
+
+const FontAwesome = require('react-fontawesome');
 
 function mapStateToProps(state) {
   return {

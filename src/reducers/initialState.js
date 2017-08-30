@@ -15,6 +15,8 @@ export default {
     boundsFittingEnabled: false
   },
   uiState: {
+    width: -1,
+    height: -1,
     mainMode: VERSIEGELTE_FLAECHEN,
     infoElementsEnabled: true,
     chartElementsEnabled: true,
@@ -37,18 +39,18 @@ export default {
     searchKassenzeichenVisible: false,
 
     layers: [{
-        key: "Osm",
-        opacity: 1,
+        key: "ABK in Graustufen",
+        opacity: 0.5,
         enabled: true
       },
       {
-        key: "StadtgrundKarteABK",
-        opacity: 1,
+        key: "ABK in Farbe",
+        opacity: 0.5,
         enabled: false
       },
       {
-        key: "Ortho2014",
-        opacity: 0.6,
+        key: "Luftbilder (NRW)",
+        opacity: 0.5,
         enabled: false
       }
     ],

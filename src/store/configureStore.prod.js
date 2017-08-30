@@ -5,9 +5,7 @@ import {
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import rootReducer from '../reducers';
-import {
-  responsiveStoreEnhancer
-} from 'redux-responsive';
+
 
 export default function configureStore(initialState) {
   const middlewares = [
@@ -20,7 +18,7 @@ export default function configureStore(initialState) {
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
 
-  return createStore(rootReducer, initialState, composeEnhancers(responsiveStoreEnhancer,
+  return createStore(rootReducer, initialState, composeEnhancers(
     applyMiddleware(...middlewares)
   ));
 }
