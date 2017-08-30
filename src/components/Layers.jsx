@@ -1,5 +1,5 @@
 import React from 'react';
-import { TileLayer, WMSTileLayer } from 'react-leaflet';
+import { WMSTileLayer } from 'react-leaflet';
 
 export const Layers = new Map();
 

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Modal, Button, Checkbox, Form, FormGroup, Col, ControlLabel, FormControl, ProgressBar, Fade } from 'react-bootstrap';
+import { Modal, Button, Form, FormGroup, Col, ControlLabel, FormControl, ProgressBar, Fade } from 'react-bootstrap';
 import * as UiStateActions from '../actions/uiStateActions';
 
 
