@@ -15,7 +15,8 @@ const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
 
   const statsFA = new Map();
   if (kassenzeichen.flaechen) {
-    kassenzeichen.flaechen.map((flaeche) => {
+    
+    kassenzeichen.flaechen.forEach((flaeche) => {
       let sumFA = statsFA.get(flaeche.flaecheninfo.flaechenart.art_abkuerzung);
       if (sumFA) {
         statsFA.set(flaeche.flaecheninfo.flaechenart.art_abkuerzung, flaeche.flaecheninfo.groesse_korrektur + sumFA);

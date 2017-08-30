@@ -76,6 +76,9 @@ export class VerdisMap_ extends React.Component {
               Layers.get(layer.key)(layer.opacity)
             );
           }
+          else {
+            return (<div/>);
+          }
         })}
         <ProjGeoJson key={JSON.stringify(this.props.mapping)} mappingProps={this.props.mapping} style={flaechenStyle} />
       </Map>
