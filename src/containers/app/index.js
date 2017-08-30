@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Link, Switch } from 'react-router-dom'
+import { Route,  Switch } from 'react-router-dom'
 import XHome from '../example-home'
 import XAbout from '../example-about'
 import NotFoundPage from '../../components/NotFoundPage.jsx';
