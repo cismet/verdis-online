@@ -72,10 +72,10 @@ export class HomePage_ extends React.Component {
     let kassenzeichenHorizontalChartsPanel;
     let kassenzeichenVerticalChartsPanel;
 
-    if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id != -1) {
+    if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
       kassenzeichenPanel = <KassenzeichenPanel onClick={this.flaechenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
     }
-    if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id != -1) {
+    if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
       kassenzeichenHorizontalChartsPanel = <KassenzeichenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
       kassenzeichenVerticalChartsPanel = (
         <Flexbox height={"" + horizontalPanelHeight} minWidth={"" + horizontalPanelWidth}>

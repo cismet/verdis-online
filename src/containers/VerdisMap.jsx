@@ -43,7 +43,7 @@ export class VerdisMap_ extends React.Component {
   }
 
   componentDidUpdate() {
-    if ((typeof (this.refs.leafletMap) != 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
+    if ((typeof (this.refs.leafletMap) !== 'undefined' && this.refs.leafletMap != null) && this.props.mapping.bounds != null) {
       if (this.props.mapping.boundsFittingEnabled) {
         this.refs.leafletMap.leafletElement.fitBounds(this.props.mapping.bounds);
       }

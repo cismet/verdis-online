@@ -46,7 +46,7 @@ export class Waiting_ extends React.Component {
 
     let style = null;
     let footer = (<Modal.Footer />);
-    if (this.props.uiState.waitingType == WAITING_TYPE_ERROR) {
+    if (this.props.uiState.waitingType === WAITING_TYPE_ERROR) {
       style = "danger";
       footer = (
         <Modal.Footer>
@@ -54,7 +54,7 @@ export class Waiting_ extends React.Component {
         </Modal.Footer>
       );
     }
-    else if (this.props.uiState.waitingType == WAITING_TYPE_INFO) {
+    else if (this.props.uiState.waitingType === WAITING_TYPE_INFO) {
       style = "info";
     }
     else {

@@ -59,7 +59,7 @@ export function searchByKassenzeichen(kassenzeichen) {
     }).then(function (response) {
       if (response.status >= 200 && response.status < 300) {
         response.json().then(function (queryResult) {
-          if (queryResult.$collection.length == 1) {
+          if (queryResult.$collection.length === 1) {
             dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID));
           } else if (queryResult.$collection.length < 1) {
             dispatch(uiStateActions.showError("Es konnte kein Kassenzeichen " + kassenzeichen + " gefunden werden."));
@@ -67,7 +67,7 @@ export function searchByKassenzeichen(kassenzeichen) {
             dispatch(uiStateActions.showError("Kassenzeichen " + kassenzeichen + " lieferte keinen eindeutigen Treffer."));
           }
         });
-      } else if (response.status == 401) {
+      } else if (response.status === 401) {
         dispatch(uiStateActions.showWaiting(false));
         dispatch(uiStateActions.invalidateLogin(username, pass, false));
       } else {
@@ -111,7 +111,7 @@ export function searchByPoint(x, y, skipFitBounds) {
     }).then(function (response) {
       if (response.status >= 200 && response.status < 300) {
         response.json().then(function (queryResult) {
-          if (queryResult.$collection.length == 1) {
+          if (queryResult.$collection.length === 1) {
             dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, skipFitBounds));
           } else if (queryResult.$collection.length < 1) {
             dispatch(uiStateActions.showInfo("Hier konnte kein Kassenzeichen gefunden werden."));
@@ -125,7 +125,7 @@ export function searchByPoint(x, y, skipFitBounds) {
             }, 1000);
           }
         });
-      } else if (response.status == 401) {
+      } else if (response.status === 401) {
         dispatch(uiStateActions.showWaiting(false));
         dispatch(uiStateActions.invalidateLogin(username, pass, false));
       } else {
