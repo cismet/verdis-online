@@ -40,7 +40,7 @@ const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
       <Well bsSize="small" style={styleOverride}>
         <h4>Veranlagung</h4>
         <PieChart width={210} height={200}>
-          <Pie data={statsFAData} cx={120} cy={80} innerRadius={20} outerRadius={80} >
+          <Pie data={statsFAData}  cx={120} cy={80} innerRadius={20} outerRadius={80} dataKey="value">
             {
               statsFAData.map((entry) => {
                 return (

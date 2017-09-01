@@ -39,7 +39,6 @@ export class HomePage_ extends React.Component {
     else {
       mapHeight = 50;
     }
-    console.log("mapHeight:"+mapHeight);
 
     const detailsStyle = {
       'backgroundColor': '#EEE',
