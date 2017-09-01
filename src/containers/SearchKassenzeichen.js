@@ -3,8 +3,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Modal, Button, Form, FormGroup, Col, ControlLabel, FormControl } from 'react-bootstrap';
-import * as UiStateActions from '../actions/uiStateActions';
-import * as KassenzeichenActions from '../actions/kassenzeichenActions';
+import { actions as UiStateActions } from '../redux/modules/uiState';
+import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 
 
 function mapStateToProps(state) {

@@ -3,7 +3,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Modal, Button, Checkbox } from 'react-bootstrap';
-import * as UiStateActions from '../actions/uiStateActions';
+import { actions as UiStateActions } from '../redux/modules/uiState';
+
 
 
 function mapStateToProps(state) {

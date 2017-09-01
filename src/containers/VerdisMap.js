@@ -10,7 +10,7 @@ import ProjGeoJson from '../components/ProjGeoJson';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import { crs25832, proj4crs25832def } from '../constants/gis';
 import proj4 from 'proj4';
-import * as KassenzeichenActions from '../actions/kassenzeichenActions';
+import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { bindActionCreators } from 'redux';
 
 
@@ -77,7 +77,7 @@ export class VerdisMap_ extends React.Component {
             );
           }
           else {
-            return (<div/>);
+            return (<div key={"empty_div_for_disabled_layer"+JSON.stringify(layer)}/>);
           }
         })}
         <ProjGeoJson key={JSON.stringify(this.props.mapping)} mappingProps={this.props.mapping} style={flaechenStyle} />

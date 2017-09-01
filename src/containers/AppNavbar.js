@@ -4,13 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import * as UiStateActions from '../actions/uiStateActions';
-import * as MappingActions from '../actions/mappingActions';
-import * as KassenzeichenActions from '../actions/kassenzeichenActions';
-import Settings from './Settings.jsx';
-import Waiting from './Waiting.jsx';
-import Login from './Login.jsx';
-import SearchKassenzeichen from './SearchKassenzeichen.jsx';
+import { actions as UiStateActions } from '../redux/modules/uiState'
+import { actions as MappingActions } from '../redux/modules/mapping'
+import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen'
+import Settings from './Settings';
+import Waiting from './Waiting';
+import Login from './Login';
+import SearchKassenzeichen from './SearchKassenzeichen';
 
 
 const FontAwesome = require('react-fontawesome');

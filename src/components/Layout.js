@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { connect } from "react-redux";
-import AppNavbar from '../containers/AppNavbar.jsx';
+import AppNavbar from '../containers/AppNavbar';
 
 export class Layout_ extends React.Component {
   render() {

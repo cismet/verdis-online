@@ -2,10 +2,10 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
-import rootReducer from './reducers'
+import rootReducer from './reducer'
 import logger from 'redux-logger';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
-import * as UiStateActions from './actions/uiStateActions';
+import { actions as UiStateActions } from './modules/uiState'
 
 export const history = createHistory()
 

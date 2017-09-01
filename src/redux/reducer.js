@@ -1,10 +1,9 @@
-// Set up your root reducer here...
 import {  combineReducers} from 'redux';
 import {  routerReducer} from 'react-router-redux';
-import kassenzeichenReducer from './kassenzeichenReducer';
-import mappingReducer from './mappingReducer';
-import uiStateReducer from './uiStateReducer';
-import counter from './counter'
+import kassenzeichenReducer from './modules/kassenzeichen';
+import mappingReducer from './modules/mapping';
+import uiStateReducer from './modules/uiState';
+import counter from './modules/counter';
 
 const rootReducer = combineReducers({
   kassenzeichen: kassenzeichenReducer,
