@@ -21,7 +21,7 @@ export function getGeoJsonFeatureFromCidsObject(input, selector, propCreator = (
   } else if (typeCheck('Object', input)) {
     return getGeoJsonFeatureFromCidsGeom(deepAccessUsingString(input, selector), propCreator(input));
   } else {
-    throw "getGeoJsonFromCidsObject has to be called either with an cidsObject or an Array of cidsObjects";
+    throw new Error("getGeoJsonFromCidsObject has to be called either with an cidsObject or an Array of cidsObjects");
   }
 }
 
