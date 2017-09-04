@@ -4,16 +4,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Modal, Button, Form, FormGroup, Col, ControlLabel, FormControl, ProgressBar, Fade } from 'react-bootstrap';
 import { actions as UiStateActions } from '../redux/modules/uiState';
+import { actions as AuthActions } from '../redux/modules/auth';
 
 
 function mapStateToProps(state) {
   return {
-    uiState: state.uiState
+    uiState: state.uiState,
+    auth: state.auth
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
     uiActions: bindActionCreators(UiStateActions, dispatch),
+    authActions: bindActionCreators(AuthActions, dispatch),
   };
 }
 
@@ -27,7 +30,7 @@ export class Login_ extends React.Component {
   }
 
   close() {
-    this.props.uiActions.login(this.user, this.pw);
+    this.props.authActions.login(this.user, this.pw);
   }
   handleUserChange(e) {
     this.user = e.target.value;
@@ -37,7 +40,7 @@ export class Login_ extends React.Component {
   }
   render() {
     return (
-      <Modal show={!this.props.uiState.succesfullLogin} onHide={this.close} keyboard={false}>
+      <Modal show={!this.props.auth.succesfullLogin} onHide={this.close} keyboard={false}>
         <Modal.Header  >
           <Modal.Title>VerDIS - Login</Modal.Title>
         </Modal.Header>
@@ -86,5 +89,6 @@ export default Login;
 
 Login_.propTypes = {
   uiActions: PropTypes.object,
+  authActions: PropTypes.object,
   uiState: PropTypes.object
 };

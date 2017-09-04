@@ -1,5 +1,4 @@
 import objectAssign from 'object-assign';
-import 'whatwg-fetch';
 
 import {
     VERSIEGELTE_FLAECHEN
@@ -9,10 +8,6 @@ import {
     WAITING_TYPE_ERROR,
     WAITING_TYPE_INFO
 } from '../../constants/uiConstants';
-import {
-    SERVICE,
-    DOMAIN
-} from '../../constants/cids';
 
 
 ///TYPES
@@ -26,8 +21,6 @@ export const types = {
     CHANGE_LAYER_ENABLED: 'UI_STATE/CHANGE_LAYER_ENABLED',
     SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
     SHOW_WAITING: 'UI_STATE/SHOW_WAITING',
-    SET_LOGIN_INFORMATION: 'UI_STATE/SET_LOGIN_INFORMATION',
-    SET_LOGIN_IN_PROGRESS: 'UI_STATE/SET_LOGIN_IN_PROGRESS',
     SHOW_KASSENZEICHEN_SEARCH: 'UI_STATE/SHOW_KASSENZEICHEN_SEARCH',
     SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE'
 };
@@ -43,11 +36,6 @@ const initialState = {
     kanalElementsEnabled: false,
     filterElementEnabled: false,
     detailElementsEnabled: true,
-
-    user: null,
-    password: null,
-    succesfullLogin: false,
-    loginInProgress: false,
 
     settingsVisible: false,
 
@@ -86,22 +74,6 @@ export default function uiStateReducer(state = initialState, action) {
                 newState = objectAssign({}, state);
                 newState.width = action.width;
                 newState.height = action.height;
-                return newState;
-            }
-
-        case types.SET_LOGIN_INFORMATION:
-            {
-                newState = objectAssign({}, state);
-                newState.loginInProgress = false;
-                newState.user = action.user;
-                newState.password = action.password;
-                newState.succesfullLogin = action.status;
-                return newState;
-            }
-        case types.SET_LOGIN_IN_PROGRESS:
-            {
-                newState = objectAssign({}, state);
-                newState.loginInProgress = true;
                 return newState;
             }
         case types.TOGGLE_INFO_ELEMENTS:
@@ -264,21 +236,7 @@ export function showError(message) {
         waitingtype: WAITING_TYPE_ERROR
     };
 }
-export function setLoginInProgress() {
-    return {
-        type: types.SET_LOGIN_IN_PROGRESS
-    };
-}
 
-function setLoginInformation(user, password, status) {
-    return {
-        type: types.SET_LOGIN_INFORMATION,
-        user,
-        password,
-        status
-    };
-
-}
 
 export function changeLayerOpacitySetting(key, opacity) {
     return {
@@ -305,40 +263,6 @@ export function screenResize(height, width) {
 
 //COMPLEXACTIONS
 
-function login(user, password) {
-    return function (dispatch) {
-        dispatch(setLoginInProgress());
-        fetch(SERVICE + '/classes?domain=local&limit=1&offset=0&role=all', {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Basic ' + btoa(user + '@' + DOMAIN + ':' + password),
-                'Content-Type': 'application/json',
-            }
-        }).then(function (response) {
-            if (response.status >= 200 && response.status < 300) {
-                dispatch(setLoginInformation(user, password, true));
-            } else {
-                dispatch(setLoginInformation(user, password, false));
-            }
-        }).catch(function (err) {
-            console.log(err);
-            dispatch(showError("Beim Login ist ein Fehler aufgetreten. (" + err + ")"));
-            dispatch(invalidateLogin(user, password));
-        });
-    };
-}
-
-function invalidateLogin(username, pass) {
-    return function (dispatch) {
-        dispatch(setLoginInformation(username, pass, false));
-    };
-}
-
-function logout() {
-    return function (dispatch) {
-        dispatch(setLoginInformation(null, null, false));
-    };
-}
 
 //EXPORT ACTIONS
 
@@ -353,12 +277,7 @@ export const actions = {
     showWaiting,
     showInfo,
     showError,
-    setLoginInProgress,
-    setLoginInformation,
     changeLayerOpacitySetting,
     changeLayerEnabledSetting,
     screenResize,
-    login,
-    logout,
-    invalidateLogin
 };

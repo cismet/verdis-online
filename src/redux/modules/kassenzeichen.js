@@ -56,8 +56,8 @@ function searchByKassenzeichenId(kassenzeichenId, skipFitBounds) {
     return function (dispatch, getState) {
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen laden ..."));
         const state = getState();
-        let username = state.uiState.user;
-        let pass = state.uiState.password;
+        let username = state.auth.user;
+        let pass = state.auth.password;
         fetch(SERVICE + '/VERDIS_GRUNDIS.KASSENZEICHEN/' + kassenzeichenId + '?role=all&omitNullValues=true&deduplicate=false', {
             method: 'GET',
             headers: {
@@ -91,8 +91,8 @@ function searchByKassenzeichen(kassenzeichen) {
             }]
         };
         const state = getState();
-        let username = state.uiState.user;
-        let pass = state.uiState.password;
+        let username = state.auth.user;
+        let pass = state.auth.password;
 
         fetch(SERVICE + '/searches/VERDIS_GRUNDIS.de.cismet.verdis.server.search.KassenzeichenSearchStatement/results?role=all&limit=100&offset=0', {
             method: 'post',
@@ -143,9 +143,8 @@ function searchByPoint(x, y, skipFitBounds) {
             ]
         };
         const state = getState();
-        let username = state.uiState.user;
-        let pass = state.uiState.password;
-        console.log(JSON.stringify(query))
+        let username = state.auth.user;
+        let pass = state.auth.password;
         fetch(SERVICE + '/searches/VERDIS_GRUNDIS.de.cismet.verdis.server.search.KassenzeichenNodeByWKTSearch/results?role=all&limit=100&offset=0', {
             method: 'post',
             headers: {

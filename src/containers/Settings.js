@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Modal, Button, Checkbox } from 'react-bootstrap';
 import { actions as UiStateActions } from '../redux/modules/uiState';
+import { actions as AuthActions } from '../redux/modules/auth';
 
 
 
@@ -15,6 +16,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     uiActions: bindActionCreators(UiStateActions, dispatch),
+    authActions: bindActionCreators(AuthActions, dispatch),
   };
 }
 
@@ -37,7 +39,7 @@ export class Settings_ extends React.Component {
     this.props.uiActions.showSettings(false);
   }
   logout() {
-    this.props.uiActions.logout();
+    this.props.authActions.logout();
     this.props.uiActions.showSettings(false);
   }
   open() {

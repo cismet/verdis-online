@@ -17,7 +17,8 @@ const FontAwesome = require('react-fontawesome');
 
 function mapStateToProps(state) {
   return {
-    uiState: state.uiState
+    uiState: state.uiState,
+    auth: state.auth
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -71,8 +72,8 @@ export class AppNavbar_ extends React.Component {
 
   render() {
     let username = "nicht angemeldet";
-    if (this.props.uiState.user != null) {
-      username = this.props.uiState.user;
+    if (this.props.auth.user != null) {
+      username = this.props.auth.user;
     }
 
     return (<div>
@@ -106,7 +107,7 @@ export class AppNavbar_ extends React.Component {
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Login key={'Login.hidden.' + this.props.uiState.succesfullLogin} />
+      <Login key={'Login.hidden.' + this.props.auth.succesfullLogin} />
       <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchKassenzeichenVisible} />
 
       <Settings key={'Settings.visible.' + this.props.uiState.settingsVisible} />
