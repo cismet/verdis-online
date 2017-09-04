@@ -9,14 +9,14 @@ import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen'
 
 function mapStateToProps(state) {
   return {
-    uiState: state.uiState
+    uiState: state.uiState,
+    auth: state.auth
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
     kassZActions: bindActionCreators(KassenzeichenActions, dispatch),
     uiActions: bindActionCreators(UiStateActions, dispatch),
-
   };
 }
 
@@ -43,7 +43,7 @@ export class SearchKassenzeichen_ extends React.Component {
 
   render() {
     return (
-      <Modal show={this.props.uiState.searchKassenzeichenVisible && this.props.uiState.succesfullLogin} onHide={this.close} keyboard={true}>
+      <Modal show={this.props.uiState.searchKassenzeichenVisible && this.props.auth.succesfullLogin} onHide={this.close} keyboard={true}>
         <Modal.Header  >
           <Modal.Title>Kassenzeichen Suche</Modal.Title>
         </Modal.Header>

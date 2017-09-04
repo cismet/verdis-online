@@ -55,7 +55,7 @@ export class VerdisMap_ extends React.Component {
   }
 
   mapClick(event) {
-    const skipFitBounds=true;//event.originalEvent.shiftKey;
+    const skipFitBounds=true;//event.originalEvent.shiftKey; 
     const latlon = event.latlng;
     const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
     this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],skipFitBounds);
