@@ -6,7 +6,9 @@ import {
 
 import { actions as UiStateActions } from './uiState';
 import { actions as MappingActions } from './mapping';
-
+import {
+    getFlaechenFeatureCollection
+} from '../../utils/kassenzeichenMappingTools';
 
 ///TYPES
 export const types = {
@@ -71,7 +73,7 @@ function searchByKassenzeichenId(kassenzeichenId, skipFitBounds) {
                 response.json().then(function (kassenzeichenData) {
                     dispatch(UiStateActions.showWaiting(false));
                     dispatch(setKassenzeichenObject(kassenzeichenData));
-                    dispatch(MappingActions.showKassenzeichenObject(kassenzeichenData, skipFitBounds));
+                    dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));//  dispatch(MappingActions.showKassenzeichenObject(kassenzeichenData, skipFitBounds));
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));

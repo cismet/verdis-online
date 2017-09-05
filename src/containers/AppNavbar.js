@@ -66,7 +66,7 @@ export class AppNavbar_ extends React.Component {
 
   fitBounds() {
     console.log("---------------------------- FB")
-    this.props.mappingActions.fitBounds();
+    this.props.mappingActions.fitAll();
   }
 
 
