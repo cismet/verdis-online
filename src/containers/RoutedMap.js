@@ -149,7 +149,7 @@ render() {
   }
 }
 
-const RoutedMap = connect(mapStateToProps, mapDispatchToProps, null, {withRef:true})(RoutedMap_);
+const RoutedMap = connect(mapStateToProps, mapDispatchToProps)(RoutedMap_);
 
 RoutedMap_.propTypes = {
   mapping: PropTypes.object,
