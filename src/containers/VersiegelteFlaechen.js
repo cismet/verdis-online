@@ -3,7 +3,9 @@ import React from 'react';
 import VerdisMap from './VerdisMap';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-
+import {
+    getQueryObject
+} from '../utils/routingHelper';
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
 import KassenzeichenChartPanel from '../components/KassenzeichenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
@@ -41,10 +43,24 @@ export class VersiegelteFlaechen_ extends React.Component {
   
   componentDidMount() {
       if (parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
-          console.log("LOAD");
-          this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen);
-          console.log(this.props.match.params.kassenzeichen);
-          console.log(this.props.kassenzeichen.kassenzeichennummer8);
+        
+console.log(this.props)
+        if (typeof getQueryObject(this.props.routing.location.search).lat  == "undefined" ||
+                typeof getQueryObject(this.props.routing.location.search).lng   == "undefined" ||
+                typeof getQueryObject(this.props.routing.location.search).zoom  == "undefined"  ) {
+            console.log("positin parameter not sufficient. will autozoom")
+                        console.log("this.props.routing.location.search.lat"+this.props.routing.location.search.lat)
+                        console.log("this.props.routing.location.search.lng"+this.props.routing.location.search.lng)
+                        console.log("this.props.routing.location.search.zoom"+this.props.routing.location.search.zoom)
+
+            this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
+        }
+        else {
+            console.log("positin parameter sufficient. will keep position")
+            this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen,false);
+        }
+
+        
       } else {
           console.log("SKIP");
       }
