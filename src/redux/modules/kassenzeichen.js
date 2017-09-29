@@ -63,7 +63,6 @@ function setKassenzeichenObject(kassenzeichenObject) {
 
 //ACTIONS
 function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
-    console.log("searchByKassenzeichenId.fitBounds"+fitBounds)
     return function (dispatch, getState) {
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen laden ..."));
         const state = getState();
@@ -96,9 +95,7 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
     };
 }
 
-function searchByKassenzeichen(kassenzeichen, fitBounds) {
-    console.log("searchByKassenzeichen.fitBounds"+fitBounds)
-    
+function searchByKassenzeichen(kassenzeichen, fitBounds) {    
     return function (dispatch, getState) {
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen suchen ..."));
         const query = {
