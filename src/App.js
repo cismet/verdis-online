@@ -12,21 +12,27 @@ import ReactLoading from 'react-loading';
 
 export default class App extends React.Component {
   constructor() {
-    super()
-    this.state = { rehydrated: false }
+    super();
+    this.state = { rehydrated: false };
   }
+
   componentWillMount(){
     persistStore(store,{whitelist: ['auth']}, () => {
-      this.setState({ rehydrated: true });
+      let thisHere=this;
+      setTimeout(()=>{
+        thisHere.setState({ rehydrated: true });
+      },1);
     }); 
   }
+
+  
+
   render() {
     if (!this.state.rehydrated){
      return (
         <div>
           <main>   
-            <Route component={Layout}/>  
-            <ReactLoading style={{margin: "auto",width: "20%", padding: "50px"}} type="spin" color="#444" />
+            <ReactLoading style={{margin: "auto",width: "30%" , height: "60%", padding: "50px"}} type="spin" color="#444" />
           </main>
         </div>
       );
