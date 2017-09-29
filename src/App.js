@@ -5,6 +5,7 @@ import {
 import { Route,  Switch } from 'react-router-dom'
 import NotFoundPage from './components/NotFoundPage';
 import Layout from './components/Layout';
+import RedirectVersiegelteFlaechen from './components/RedirectVersiegelteFlaechen';
 //import HomePage from './containers/HomePage';
 import VersiegelteFlaechen from './containers/VersiegelteFlaechen';
 import store from './redux/store';
@@ -40,6 +41,7 @@ export default class App extends React.Component {
             <main>   
               <Route component={Layout}/>   
               <Switch>
+                <Route  exact path="/" component={RedirectVersiegelteFlaechen} />  
                 <Route exact path="/versiegelteflaechen/:kassenzeichen?" component={VersiegelteFlaechen} />
                 <Route exact path="/esw/:kassenzeichen?" component={VersiegelteFlaechen} />
                 <Route exact path="/info/:kassenzeichen?" component={VersiegelteFlaechen} />
