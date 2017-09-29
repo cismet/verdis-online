@@ -5,10 +5,18 @@ import {
 } from '../../constants/cids';
 
 import { actions as UiStateActions } from './uiState';
+import { actions as AuthActions } from './auth';
 import { actions as MappingActions } from './mapping';
+import { routerActions as RoutingActions } from 'react-router-redux';
 import {
     getFlaechenFeatureCollection
 } from '../../utils/kassenzeichenMappingTools';
+import {
+    changeKassenzeichenInLocation
+} from '../../utils/routingHelper';
+
+
+
 
 ///TYPES
 export const types = {
@@ -73,11 +81,12 @@ function searchByKassenzeichenId(kassenzeichenId, skipFitBounds) {
                 response.json().then(function (kassenzeichenData) {
                     dispatch(UiStateActions.showWaiting(false));
                     dispatch(setKassenzeichenObject(kassenzeichenData));
+                    dispatch(RoutingActions.push(changeKassenzeichenInLocation(state.routing.location,kassenzeichenData.kassenzeichennummer8)));
                     dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));//  dispatch(MappingActions.showKassenzeichenObject(kassenzeichenData, skipFitBounds));
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
-                dispatch(UiStateActions.invalidateLogin(username, pass, false));
+                dispatch(AuthActions.invalidateLogin(username, pass, false));
             }
         });
     };
@@ -116,7 +125,7 @@ function searchByKassenzeichen(kassenzeichen) {
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
-                dispatch(UiStateActions.invalidateLogin(username, pass, false));
+                dispatch(AuthActions.invalidateLogin(username, pass, false));
             } else {
                 //Errorhandling
                 dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
@@ -173,7 +182,7 @@ function searchByPoint(x, y, skipFitBounds) {
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
-                dispatch(UiStateActions.invalidateLogin(username, pass, false));
+                dispatch(AuthActions.invalidateLogin(username, pass, false));
             } else {
                 //Errorhandling
                 dispatch(UiStateActions.showError("Bei der Suche an dem Punkt " + x + " ," + y + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));

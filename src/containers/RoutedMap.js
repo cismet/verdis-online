@@ -10,8 +10,8 @@ import { bindActionCreators } from 'redux';
 import 'url-search-params-polyfill';
 
 
-import { routerActions as RoutingActions } from 'react-router-redux'
-import { modifyQueryPart } from '../utils/routingHelper'
+import { routerActions as RoutingActions } from 'react-router-redux';
+import { modifyQueryPart } from '../utils/routingHelper';
 import { actions as MappingActions, constants as MappingConstants } from '../redux/modules/mapping';
 
 
@@ -45,7 +45,6 @@ export class RoutedMap_ extends React.Component {
         this.featureClick = this.featureClick.bind(this);        
       }
   componentDidMount() {
-    console.log(this.leafletMap);
     this.leafletMap.leafletElement.on('moveend', () => {
 
       if ((typeof (this.leafletMap) != 'undefined' && this.leafletMap != null)) {

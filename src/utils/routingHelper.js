@@ -20,3 +20,10 @@ export function modifyQueryPart(search,modifiedParts) {
   }
   return querypart;  
 }
+
+
+export function changeKassenzeichenInLocation(location,kasznr)  {
+    let splitted=location.pathname.split("/");
+    let out= "/"+splitted[1]+"/"+kasznr+location.search;
+    return out;
+}

@@ -60,7 +60,6 @@ export class VerdisMap_ extends React.Component {
 
   fitBounds() {
       this.props.mappingActions.fitAll();
-     //this.refs.leafletRoutedMap.leafletElement.fitBounds(this.props.mapping.boundingBox);
   }
 
   mapClick(event) {
