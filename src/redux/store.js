@@ -16,7 +16,6 @@ import {
     actions as UiStateActions
 } from './modules/uiState';
 import {
-    persistStore,
     autoRehydrate
 } from 'redux-persist';
 
@@ -57,6 +56,5 @@ window.addEventListener('resize', () => {
 //Fire a first screenResize to initially fill the uiState
 store.dispatch(UiStateActions.screenResize(window.innerHeight, window.innerWidth));
 
-persistStore(store,{whitelist: ['auth']});
 
 export default store;
