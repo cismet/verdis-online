@@ -42,11 +42,12 @@ export class VersiegelteFlaechen_ extends React.Component {
   }
   
   componentDidMount() {
-      if (parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
-        
-        if (typeof getQueryObject(this.props.routing.location.search).lat  == "undefined" ||
-                typeof getQueryObject(this.props.routing.location.search).lng   == "undefined" ||
-                typeof getQueryObject(this.props.routing.location.search).zoom  == "undefined"  ) {
+      if (typeof this.props.match.params.kassenzeichen  != "undefined" && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
+        let queryO=getQueryObject(this.props.routing.location.search);
+
+        if (typeof queryO.lat  == "undefined" ||
+                typeof queryO.lng   == "undefined" ||
+                typeof queryO.zoom  == "undefined"  ) {
 
             this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
         }
@@ -60,6 +61,32 @@ export class VersiegelteFlaechen_ extends React.Component {
       }
 
   }
+  componentDidUpdate() {
+       console.log(this.props.match);
+    //    if (this.props.uiState.waitingVisible==false && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
+    //               console.log("REFRESH");
+
+    //    let queryO=getQueryObject(this.props.routing.location.search);
+
+    //     if (typeof queryO.lat  == "undefined" ||
+    //             typeof queryO.lng   == "undefined" ||
+    //             typeof queryO.zoom  == "undefined"  ) {
+
+    //         this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
+    //     }
+    //     else {
+    //         this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen,false);
+    //     }
+
+        
+    //   } else {
+    //       console.log("SKIP");
+    //   }
+
+  }
+
+
+
   flaechenPanelClick() {
       this.refs.verdismap.getWrappedInstance().fitBounds()
   }

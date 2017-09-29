@@ -56,7 +56,6 @@ export class RoutedMap_ extends React.Component {
         const zoomFromUrl = parseInt(searchO.zoom);
         let lat = center.lat;
         let lng = center.lng;
-console.log("ZOOOOOOOMM:"+zoomFromUrl);    
         if (Math.abs(latFromUrl - center.lat) < 0.0001) {
           lat = latFromUrl;
         }
