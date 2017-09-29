@@ -11,7 +11,7 @@ import 'url-search-params-polyfill';
 
 
 import { routerActions as RoutingActions } from 'react-router-redux';
-import { modifyQueryPart } from '../utils/routingHelper';
+import { modifyQueryPart, getQueryObject } from '../utils/routingHelper';
 import { actions as MappingActions, constants as MappingConstants } from '../redux/modules/mapping';
 
 
@@ -50,12 +50,13 @@ export class RoutedMap_ extends React.Component {
       if ((typeof (this.leafletMap) != 'undefined' && this.leafletMap != null)) {
         const zoom = this.leafletMap.leafletElement.getZoom();
         const center = this.leafletMap.leafletElement.getCenter();
-        const latFromUrl = parseFloat(this.props.routing.location.search.lat);
-        const lngFromUrl = parseFloat(this.props.routing.location.search.lng);
-        const zoomFromUrl = parseInt(this.props.routing.location.search.zoom);
+        let searchO=getQueryObject(this.props.routing.location.search);
+        const latFromUrl = parseFloat(searchO.lat);
+        const lngFromUrl = parseFloat(searchO.lng);
+        const zoomFromUrl = parseInt(searchO.zoom);
         let lat = center.lat;
         let lng = center.lng;
-
+console.log("ZOOOOOOOMM:"+zoomFromUrl);    
         if (Math.abs(latFromUrl - center.lat) < 0.0001) {
           lat = latFromUrl;
         }
