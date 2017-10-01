@@ -5,7 +5,17 @@ import {
 } from '../../constants/cids';
 
 import { actions as UiStateActions } from './uiState';
+import { actions as AuthActions } from './auth';
 import { actions as MappingActions } from './mapping';
+import { routerActions as RoutingActions } from 'react-router-redux';
+import {
+    getFlaechenFeatureCollection
+} from '../../utils/kassenzeichenMappingTools';
+import {
+    changeKassenzeichenInLocation
+} from '../../utils/routingHelper';
+
+
 
 
 ///TYPES
@@ -52,7 +62,7 @@ function setKassenzeichenObject(kassenzeichenObject) {
 
 
 //ACTIONS
-function searchByKassenzeichenId(kassenzeichenId, skipFitBounds) {
+function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
     return function (dispatch, getState) {
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen laden ..."));
         const state = getState();
@@ -71,17 +81,21 @@ function searchByKassenzeichenId(kassenzeichenId, skipFitBounds) {
                 response.json().then(function (kassenzeichenData) {
                     dispatch(UiStateActions.showWaiting(false));
                     dispatch(setKassenzeichenObject(kassenzeichenData));
-                    dispatch(MappingActions.showKassenzeichenObject(kassenzeichenData, skipFitBounds));
+                    dispatch(RoutingActions.push(changeKassenzeichenInLocation(state.routing.location,kassenzeichenData.kassenzeichennummer8)));
+                    dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                    if (fitBounds) {
+                        dispatch(MappingActions.fitAll());
+                    }
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
-                dispatch(UiStateActions.invalidateLogin(username, pass, false));
+                dispatch(AuthActions.invalidateLogin(username, pass, false));
             }
         });
     };
 }
 
-function searchByKassenzeichen(kassenzeichen) {
+function searchByKassenzeichen(kassenzeichen, fitBounds) {    
     return function (dispatch, getState) {
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen suchen ..."));
         const query = {
@@ -105,7 +119,7 @@ function searchByKassenzeichen(kassenzeichen) {
             if (response.status >= 200 && response.status < 300) {
                 response.json().then(function (queryResult) {
                     if (queryResult.$collection.length === 1) {
-                        dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID));
+                        dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, fitBounds));
                     } else if (queryResult.$collection.length < 1) {
                         dispatch(UiStateActions.showError("Es konnte kein Kassenzeichen " + kassenzeichen + " gefunden werden."));
                     } else {
@@ -114,7 +128,7 @@ function searchByKassenzeichen(kassenzeichen) {
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
-                dispatch(UiStateActions.invalidateLogin(username, pass, false));
+                dispatch(AuthActions.invalidateLogin(username, pass, false));
             } else {
                 //Errorhandling
                 dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
@@ -128,7 +142,7 @@ function searchByKassenzeichen(kassenzeichen) {
 }
 
 
-function searchByPoint(x, y, skipFitBounds) {
+function searchByPoint(x, y, fitBounds) {
     return function (dispatch, getState) {
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen suchen ..."));
         const query = {
@@ -156,7 +170,7 @@ function searchByPoint(x, y, skipFitBounds) {
             if (response.status >= 200 && response.status < 300) {
                 response.json().then(function (queryResult) {
                     if (queryResult.$collection.length === 1) {
-                        dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, skipFitBounds));
+                        dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, fitBounds));
                     } else if (queryResult.$collection.length < 1) {
                         dispatch(UiStateActions.showInfo("Hier konnte kein Kassenzeichen gefunden werden."));
                         setTimeout(() => {
@@ -171,7 +185,7 @@ function searchByPoint(x, y, skipFitBounds) {
                 });
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
-                dispatch(UiStateActions.invalidateLogin(username, pass, false));
+                dispatch(AuthActions.invalidateLogin(username, pass, false));
             } else {
                 //Errorhandling
                 dispatch(UiStateActions.showError("Bei der Suche an dem Punkt " + x + " ," + y + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
