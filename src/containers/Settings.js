@@ -94,6 +94,6 @@ export default Settings;
 Settings_.propTypes = {
   uiActions: PropTypes.object.isRequired,
   uiState: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
+  auth: PropTypes.object,
   authActions: PropTypes.object.isRequired,
 };

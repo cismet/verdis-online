@@ -14,6 +14,7 @@ import { actions as MappingActions } from '../redux/modules/mapping';
 import { bindActionCreators } from 'redux';
 //import  CismapBaseMap  from './CismapBaseMap';
 import RoutedMap from './RoutedMap';
+import L from 'leaflet';
 
 
 const position = [51.272399, 7.199712];
@@ -34,28 +35,35 @@ function mapDispatchToProps(dispatch) {
   };
 }
 export class VerdisMap_ extends React.Component {
-  constructor(props) {
-    super(props);
-    this.mapClick = this.mapClick.bind(this);
-    this.fitBounds = this.fitBounds.bind(this);
+    constructor(props) {
+        super(props);
+        this.mapClick = this.mapClick.bind(this);
+        this.featureClick = this.featureClick.bind(this);
+        this.fitBounds = this.fitBounds.bind(this);
 
-  }
+    }
 
-  fitBounds() {
-      this.props.mappingActions.fitAll();
-  }
+    fitBounds() {
+        this.props.mappingActions.fitAll();
+    }
 
-  mapClick(event) {
-    const skipFitBounds=true;//event.originalEvent.shiftKey; 
-    const latlon = event.latlng;
-    const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
-    this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],!skipFitBounds);
-  }
+    mapClick(event) {
+        console.log(event);
+        const skipFitBounds=true;//event.originalEvent.shiftKey; 
+        const latlon = event.latlng;
+        const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
+        this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],!skipFitBounds);
+    }
 
-  render() {
-    const mapStyle = {
-      height: this.props.height
-    };
+    featureClick(event) {
+
+        L.DomEvent.stopPropagation(event)
+        console.log(event);
+    }
+    render() {
+        const mapStyle = {
+            height: this.props.height
+        };
 
     // <Ortho2014 /><StadtgrundKarteABK />
     // <OSM />
@@ -71,7 +79,7 @@ export class VerdisMap_ extends React.Component {
             return (<div key={"empty_div_for_disabled_layer"+JSON.stringify(layer)}/>);
           }
         })}
-        <ProjGeoJson key={JSON.stringify(this.props.mapping)} mappingProps={this.props.mapping} style={flaechenStyle} />
+        <ProjGeoJson key={JSON.stringify(this.props.mapping)} mappingProps={this.props.mapping} style={flaechenStyle} featureClickHandler={this.featureClick}/>
       </RoutedMap>
     );
   }

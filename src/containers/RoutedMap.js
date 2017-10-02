@@ -157,10 +157,11 @@ RoutedMap_.propTypes = {
     layers: PropTypes.string.isRequired,
     routingActions: PropTypes.object.isRequired,
     mappingActions: PropTypes.object.isRequired,
-    featureClickHandler: PropTypes.function,
+    featureClickHandler: PropTypes.func,
     style: PropTypes.object.isRequired,
-    ondblclick: PropTypes.function,
-    children: PropTypes.object.isRequired,
+    ondblclick: PropTypes.func,
+    children: PropTypes.array,
+    
 };
 
 RoutedMap_.defaultProps = {
