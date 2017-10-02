@@ -187,7 +187,6 @@ export class VersiegelteFlaechen_ extends React.Component {
       console.log(this.props.uiState.searchInProgress)
       return (
         <div>
-            <h1>{this.props.match.params.kassenzeichen} {this.props.uiState.searchInProgress}</h1>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
             {kassenzeichenHorizontalChartsPanel}
