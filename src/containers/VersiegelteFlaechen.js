@@ -78,13 +78,13 @@ export class VersiegelteFlaechen_ extends React.Component {
                 }
 
             } else {
-                console.log("SKIP");
+                //console.log("SKIP");
             }
         }
     }
 
   flaechenPanelClick() {
-      this.refs.verdismap.getWrappedInstance().fitBounds()
+      this.refs.verdismap.getWrappedInstance().fitBounds();
   }
 
   render() {
@@ -184,7 +184,7 @@ export class VersiegelteFlaechen_ extends React.Component {
           );
         });
       }
-      console.log(this.props.uiState.searchInProgress)
+
       return (
         <div>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
@@ -205,6 +205,11 @@ export default VersiegelteFlaechen;
 VersiegelteFlaechen_.propTypes = {
   ui: PropTypes.object,
   kassenzeichen: PropTypes.object,
-  uiState: PropTypes.object
+  uiState: PropTypes.object,
+  match: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
+  routing: PropTypes.object.isRequired,
+  kassenzeichenActions: PropTypes.object.isRequired,
+  uiStateActions: PropTypes.object.isRequired,
 
 };

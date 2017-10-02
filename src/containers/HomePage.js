@@ -29,7 +29,7 @@ export class HomePage_ extends React.Component {
       this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
   }
   flaechenPanelClick() {
-    this.refs.verdismap.getWrappedInstance().fitBounds()
+    this.refs.verdismap.getWrappedInstance().fitBounds();
   }
   render() {
     let mapHeight;

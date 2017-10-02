@@ -77,5 +77,6 @@ export default SearchKassenzeichen;
 SearchKassenzeichen_.propTypes = {
   uiActions: PropTypes.object,
   kassZActions: PropTypes.object,
-  uiState: PropTypes.object
+  uiState: PropTypes.object,
+  auth: PropTypes.object.isRequired,
 };

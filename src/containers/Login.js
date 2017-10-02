@@ -101,5 +101,8 @@ export default Login;
 Login_.propTypes = {
   uiActions: PropTypes.object,
   authActions: PropTypes.object,
-  uiState: PropTypes.object
+  uiState: PropTypes.object,
+  routing: PropTypes.object,
+  kassenzeichenActions: PropTypes.object,
+  auth: PropTypes.object
 };

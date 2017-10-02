@@ -77,7 +77,7 @@ export class RoutedMap_ extends React.Component {
         this.storeBoundingBox(this.leafletMap);
       }
       else {
-        console.log("this.leafletMap is null");
+        //console.log("this.leafletMap is null");
       }
 
     });
@@ -103,9 +103,9 @@ componentDidUpdate() {
 
 storeBoundingBox(leafletMap){
   //store the projected bounds in the store
-  const bounds=leafletMap.leafletElement.getBounds()
-  const projectedNE=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._northEast.lng,bounds._northEast.lat])
-  const projectedSW=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._southWest.lng,bounds._southWest.lat])
+  const bounds=leafletMap.leafletElement.getBounds();
+  const projectedNE=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._northEast.lng,bounds._northEast.lat]);
+  const projectedSW=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._southWest.lng,bounds._southWest.lat]);
   const bbox = {left: projectedSW[0], top: projectedNE[1], right: projectedNE[0], bottom: projectedSW[1]};
   //console.log(getPolygon(bbox));
   this.props.mappingActions.mappingBoundsChanged(bbox);
@@ -126,7 +126,7 @@ render() {
 
     return (
       <Map 
-        ref={leafletMap => {this.leafletMap = leafletMap}}
+        ref={leafletMap => {this.leafletMap = leafletMap;}}
         key={"leafletMap"} 
         crs={crs25832}  
         style={this.props.style}
@@ -149,20 +149,25 @@ render() {
 }
 
 const RoutedMap = connect(mapStateToProps, mapDispatchToProps)(RoutedMap_);
-
 RoutedMap_.propTypes = {
-  mapping: PropTypes.object,
-  routing: PropTypes.object,
-  height: PropTypes.number,
-  width: PropTypes.number,
-  layers: PropTypes.string.isRequired,
+    mapping: PropTypes.object,
+    routing: PropTypes.object,
+    height: PropTypes.number,
+    width: PropTypes.number,
+    layers: PropTypes.string.isRequired,
+    routingActions: PropTypes.object.isRequired,
+    mappingActions: PropTypes.object.isRequired,
+    featureClickHandler: PropTypes.function,
+    style: PropTypes.object.isRequired,
+    ondblclick: PropTypes.function.isRequired,
+    children: PropTypes.object.isRequired,
 };
 
 RoutedMap_.defaultProps = {
-  layers: "",
-  gazeteerHitTrigger: function(){},
-  searchButtonTrigger: function(){},
-  featureClickHandler: function(){},
-}
+    layers: "",
+    gazeteerHitTrigger: function () {},
+    searchButtonTrigger: function () {},
+    featureClickHandler: function () {}
+};
 
 export default RoutedMap;

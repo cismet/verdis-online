@@ -11,7 +11,7 @@ import { actions as UiStateActions } from './uiState';
 export const types = {
     SET_LOGIN_INFORMATION: 'AUTH/SET_LOGIN_INFORMATION',
     SET_LOGIN_IN_PROGRESS: 'AUTH/SET_LOGIN_IN_PROGRESS',
-}
+};
 
 
 ///INITIAL STATE
@@ -97,7 +97,6 @@ function login(user, password , succesfulHandler) {
                 dispatch(setLoginInformation(user, password, false));
             }
         }).catch(function (err) {
-            console.log(err);
             dispatch(UiStateActions.showError("Beim Login ist ein Fehler aufgetreten. (" + err + ")"));
             dispatch(invalidateLogin(user, password));
         });

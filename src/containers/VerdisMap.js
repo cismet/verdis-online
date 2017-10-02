@@ -104,7 +104,7 @@ VerdisMap_.propTypes = {
   mapping: PropTypes.object,
   height: PropTypes.number,
   kassenzeichenActions: PropTypes.object,
-
+  mappingActions: PropTypes.object.isRequired,
 };
 
 export default VerdisMap;

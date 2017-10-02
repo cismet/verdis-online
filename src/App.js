@@ -2,7 +2,7 @@ import React from 'react';
 import {
   persistStore  
 } from 'redux-persist';
-import { Route,  Switch } from 'react-router-dom'
+import { Route,  Switch } from 'react-router-dom';
 import NotFoundPage from './components/NotFoundPage';
 import Layout from './components/Layout';
 import RedirectVersiegelteFlaechen from './components/RedirectVersiegelteFlaechen';

@@ -21,7 +21,7 @@ import {
 ///TYPES
 export const types = {
     SET_KASSENZEICHEN: 'KASSENZEICHEN/SET_KASSENZEICHEN'
-}
+};
 
 
 ///INITIAL STATE

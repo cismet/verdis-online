@@ -15,11 +15,11 @@ export const types = {
     SET_AUTO_FIT: 'MAPPING/SET_AUTO_FIT',
     GAZETTEER_HIT: 'MAPPING/GAZETTEER_HIT'
 
-}
+};
 export const constants = {
     AUTO_FIT_MODE_STRICT: 'MAPPING/AUTO_FIT_MODE_STRICT',
     AUTO_FIT_MODE_NO_ZOOM_IN: 'MAPPING/AUTO_FIT_MODE_NO_ZOOM_IN',
-}
+};
 
 
 
