@@ -41,22 +41,6 @@ export class VerdisMap_ extends React.Component {
 
   }
 
-//  componentDidUpdate() {
-//     if ((typeof (this.refs.leafletRoutedMap) !== 'undefined' && this.refs.leafletRoutedMap !== null)) {
-//       if (this.props.mapping.autoFitBounds) {
-//         if (this.props.mapping.autoFitMode===MappingConstants.AUTO_FIT_MODE_NO_ZOOM_IN) {
-//           if (!this.refs.leafletRoutedMap.leafletElement.getBounds().contains(this.props.mapping.autoFitBoundsTarget)) {
-//             this.refs.leafletRoutedMap.leafletElement.fitBounds(this.props.mapping.autoFitBoundsTarget);         
-//           }
-//         }
-//         else {
-//           this.refs.leafletRoutedMap.leafletElement.fitBounds(this.props.mapping.autoFitBoundsTarget);        
-//         }
-//         this.props.mappingActions.setAutoFit(false);
-//       }
-//     }
-//   }
-
   fitBounds() {
       this.props.mappingActions.fitAll();
   }
