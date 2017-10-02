@@ -159,7 +159,7 @@ RoutedMap_.propTypes = {
     mappingActions: PropTypes.object.isRequired,
     featureClickHandler: PropTypes.function,
     style: PropTypes.object.isRequired,
-    ondblclick: PropTypes.function.isRequired,
+    ondblclick: PropTypes.function,
     children: PropTypes.object.isRequired,
 };
 
