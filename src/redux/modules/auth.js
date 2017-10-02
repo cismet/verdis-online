@@ -16,7 +16,6 @@ export const types = {
 
 ///INITIAL STATE
 const initialState = {
-    rehydrated: false,
     user: null,
     password: null,
     succesfullLogin: false,

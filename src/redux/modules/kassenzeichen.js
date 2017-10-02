@@ -56,14 +56,14 @@ function setKassenzeichenObject(kassenzeichenObject) {
     return {
         type: types.SET_KASSENZEICHEN,
         kassenzeichenObject
-    };
-
+    };    
 }
 
 
 //ACTIONS
 function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
     return function (dispatch, getState) {
+        dispatch(UiStateActions.setKassenzeichenSearchInProgress(true));        
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen laden ..."));
         const state = getState();
         let username = state.auth.user;
@@ -79,10 +79,11 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
 
             if (response.status >= 200 && response.status < 300) {
                 response.json().then(function (kassenzeichenData) {
-                    dispatch(UiStateActions.showWaiting(false));
+                    dispatch(UiStateActions.showWaiting(false));                    
                     dispatch(setKassenzeichenObject(kassenzeichenData));
                     dispatch(RoutingActions.push(changeKassenzeichenInLocation(state.routing.location,kassenzeichenData.kassenzeichennummer8)));
                     dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                    dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
                     if (fitBounds) {
                         dispatch(MappingActions.fitAll());
                     }
@@ -90,13 +91,19 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
             } else if (response.status === 401) {
                 dispatch(UiStateActions.showWaiting(false));
                 dispatch(AuthActions.invalidateLogin(username, pass, false));
+                dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                                            
             }
+        }).catch(function (err) {
+            dispatch(UiStateActions.showError("Bem Öffnen des Kassenzeichens mit der Id " + kassenzeichenId + " ist ein Fehler aufgetreten. (" + err + ")"));
+            dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
+            
         });
     };
 }
 
 function searchByKassenzeichen(kassenzeichen, fitBounds) {    
     return function (dispatch, getState) {
+        dispatch(UiStateActions.setKassenzeichenSearchInProgress(true));
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen suchen ..."));
         const query = {
             "list": [{
@@ -131,13 +138,16 @@ function searchByKassenzeichen(kassenzeichen, fitBounds) {
                 dispatch(UiStateActions.showWaiting(false));
                 dispatch(UiStateActions.setKassenzeichenToSearchFor(kassenzeichen));
                 dispatch(AuthActions.invalidateLogin(username, pass, false));
+                dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                                            
             } else {
                 //Errorhandling
                 dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
+                dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
             }
 
         }).catch(function (err) {
             dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
+            dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
         });
 
     };
@@ -146,6 +156,7 @@ function searchByKassenzeichen(kassenzeichen, fitBounds) {
 
 function searchByPoint(x, y, fitBounds) {
     return function (dispatch, getState) {
+        dispatch(UiStateActions.setKassenzeichenSearchInProgress(true));        
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen suchen ..."));
         const query = {
             "list": [{

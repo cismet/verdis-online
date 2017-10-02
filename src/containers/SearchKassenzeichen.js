@@ -30,11 +30,11 @@ export class SearchKassenzeichen_ extends React.Component {
   }
 
   close() {
-    this.props.uiActions.showKassenzeichenSearch(false);
+    this.props.uiActions.setKassenzeichenSearchInProgress(false);
   }
 
   search() {
-    this.props.uiActions.showKassenzeichenSearch(false);
+    this.props.uiActions.setKassenzeichenSearchInProgress(false);
     this.props.kassZActions.searchByKassenzeichen(this.input);
   }
   handleInputChange(e) {

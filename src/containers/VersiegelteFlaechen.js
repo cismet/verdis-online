@@ -42,57 +42,46 @@ export class VersiegelteFlaechen_ extends React.Component {
   constructor(props, context) {
       super(props, context);
       this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
-  }
+      this.checkRouteAndSearch = this.checkRouteAndSearch.bind(this);
+    }
 
-  componentDidMount() {
-      if (typeof this.props.match.params.kassenzeichen != "undefined" && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
-          if (this.props.auth.user !== null) {
-
-              let queryO = getQueryObject(this.props.routing.location.search);
-
-              if (typeof queryO.lat == "undefined" ||
-                  typeof queryO.lng == "undefined" ||
-                  typeof queryO.zoom == "undefined") {
-
-                  this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
-              }
-              else {
-                  this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, false);
-              }
-          }
-          else {
-              this.props.uiStateActions.setKassenzeichenToSearchFor(this.props.match.params.kassenzeichen);
-          }
-
-      } else {
-          console.log("SKIP");
-      }
-  }
-  componentDidUpdate() {
-       console.log(this.props.match);
-    //    if (this.props.uiState.waitingVisible==false && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
-    //               console.log("REFRESH");
-
-    //    let queryO=getQueryObject(this.props.routing.location.search);
-
-    //     if (typeof queryO.lat  == "undefined" ||
-    //             typeof queryO.lng   == "undefined" ||
-    //             typeof queryO.zoom  == "undefined"  ) {
-
-    //         this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
-    //     }
-    //     else {
-    //         this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen,false);
-    //     }
-
-        
-    //   } else {
-    //       console.log("SKIP");
-    //   }
-
-  }
+//   componentDidMount() {
+//     this.checkRouteAndSearch();
+//   }
+    componentWillMount() {
+        this.checkRouteAndSearch();
+    }
+    componentDidUpdate() {
+        this.checkRouteAndSearch();
+    }
 
 
+    checkRouteAndSearch() {
+        if (this.props.uiState.searchInProgress === false) {
+            if (typeof this.props.match.params.kassenzeichen != "undefined" && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
+                if (this.props.auth.user !== null) {
+
+                    let queryO = getQueryObject(this.props.routing.location.search);
+
+                    if (typeof queryO.lat == "undefined" ||
+                        typeof queryO.lng == "undefined" ||
+                        typeof queryO.zoom == "undefined") {
+
+                        this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
+                    }
+                    else {
+                        this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, false);
+                    }
+                }
+                else {
+                    this.props.uiStateActions.setKassenzeichenToSearchFor(this.props.match.params.kassenzeichen);
+                }
+
+            } else {
+                console.log("SKIP");
+            }
+        }
+    }
 
   flaechenPanelClick() {
       this.refs.verdismap.getWrappedInstance().fitBounds()
@@ -195,8 +184,10 @@ export class VersiegelteFlaechen_ extends React.Component {
           );
         });
       }
+      console.log(this.props.uiState.searchInProgress)
       return (
         <div>
+            <h1>{this.props.match.params.kassenzeichen} {this.props.uiState.searchInProgress}</h1>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
             {kassenzeichenHorizontalChartsPanel}

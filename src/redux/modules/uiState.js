@@ -21,7 +21,7 @@ export const types = {
     CHANGE_LAYER_ENABLED: 'UI_STATE/CHANGE_LAYER_ENABLED',
     SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
     SHOW_WAITING: 'UI_STATE/SHOW_WAITING',
-    SHOW_KASSENZEICHEN_SEARCH: 'UI_STATE/SHOW_KASSENZEICHEN_SEARCH',
+    SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: 'UI_STATE/SET_KASSENZEICHEN_SEARCH_IN_PROGRESS',
     SET_KASSENZEICHEN_TOSEARCH_FOR: 'UI_STATE/SET_KASSENZEICHEN_TOSEARCH_FOR',
     SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE'
 };
@@ -45,7 +45,7 @@ const initialState = {
     waitingType: WAITING_TYPE_MESSAGE,
     waitingUIAnimation: true,
 
-    searchKassenzeichenVisible: false,
+    searchInProgress: false,
     kassenzeichenToSearchFor: null,
     layers: [{
             key: "ABK in Graustufen",
@@ -115,10 +115,10 @@ export default function uiStateReducer(state = initialState, action) {
                 newState.settingsVisible = action.visible;
                 return newState;
             }
-        case types.SHOW_KASSENZEICHEN_SEARCH:
+        case types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS:
             {
                 newState = objectAssign({}, state);
-                newState.searchKassenzeichenVisible = action.visible;
+                newState.searchInProgress = action.progress;
                 return newState;
             }
         case types.SET_KASSENZEICHEN_TOSEARCH_FOR:
@@ -210,10 +210,10 @@ export function showSettings(visible) {
     };
 }
 
-export function showKassenzeichenSearch(visible) {
+export function setKassenzeichenSearchInProgress(progress) {
     return {
-        type: types.SHOW_KASSENZEICHEN_SEARCH,
-        visible
+        type: types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS,
+        progress
     };
 }
 
@@ -287,7 +287,7 @@ export const actions = {
     toggleFilterElements,
     toggleDetailsElements,
     showSettings,
-    showKassenzeichenSearch,
+    setKassenzeichenSearchInProgress,
     setKassenzeichenToSearchFor,
     showWaiting,
     showInfo,

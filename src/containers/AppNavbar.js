@@ -61,7 +61,7 @@ export class AppNavbar_ extends React.Component {
     this.props.uiActions.showSettings(true);
   }
   searchkassenzeichen() {
-    this.props.uiActions.showKassenzeichenSearch(true);
+    this.props.uiActions.setKassenzeichenSearchInProgress(true);
   }
 
   fitBounds() {
@@ -108,7 +108,7 @@ export class AppNavbar_ extends React.Component {
         </Navbar.Collapse>
       </Navbar>
       <Login key={'Login.hidden.' + this.props.auth.succesfullLogin} />
-      <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchKassenzeichenVisible} />
+      <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchInProgress} />
 
       <Settings key={'Settings.visible.' + this.props.uiState.settingsVisible} />
       <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
