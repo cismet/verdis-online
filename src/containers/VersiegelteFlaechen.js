@@ -58,14 +58,14 @@ export class VersiegelteFlaechen_ extends React.Component {
 
     checkRouteAndSearch() {
         if (this.props.uiState.searchInProgress === false) {
-            if (typeof this.props.match.params.kassenzeichen != "undefined" && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
+            if (typeof this.props.match.params.kassenzeichen !== "undefined" && parseInt(this.props.match.params.kassenzeichen,10) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8,10)) {
                 if (this.props.auth.user !== null) {
 
                     let queryO = getQueryObject(this.props.routing.location.search);
 
-                    if (typeof queryO.lat == "undefined" ||
-                        typeof queryO.lng == "undefined" ||
-                        typeof queryO.zoom == "undefined") {
+                    if (typeof queryO.lat === "undefined" ||
+                        typeof queryO.lng === "undefined" ||
+                        typeof queryO.zoom === "undefined") {
 
                         this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
                     }

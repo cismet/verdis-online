@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 //import { render } from 'react-dom';
-import { Map } from 'react-leaflet';
 import { connect } from "react-redux";
 import 'proj4leaflet';
 //import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
@@ -11,7 +10,7 @@ import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import { crs25832, proj4crs25832def } from '../constants/gis';
 import proj4 from 'proj4';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
-import { actions as MappingActions, constants as MappingConstants  } from '../redux/modules/mapping';
+import { actions as MappingActions } from '../redux/modules/mapping';
 import { bindActionCreators } from 'redux';
 //import  CismapBaseMap  from './CismapBaseMap';
 import RoutedMap from './RoutedMap';

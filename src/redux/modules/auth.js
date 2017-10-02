@@ -78,7 +78,7 @@ function setLoginInformation(user, password, status) {
 //COMPLEXACTIONS
 
 function login(user, password , succesfulHandler) {
-    if (typeof succesfulHandler == "undefined" ) {
+    if (typeof succesfulHandler === "undefined" ) {
         succesfulHandler = () => {};
     }
     return function (dispatch) {

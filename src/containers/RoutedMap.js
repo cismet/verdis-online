@@ -47,13 +47,13 @@ export class RoutedMap_ extends React.Component {
   componentDidMount() {
     this.leafletMap.leafletElement.on('moveend', () => {
 
-      if ((typeof (this.leafletMap) != 'undefined' && this.leafletMap != null)) {
+      if ((typeof (this.leafletMap) !== 'undefined' && this.leafletMap !== null)) {
         const zoom = this.leafletMap.leafletElement.getZoom();
         const center = this.leafletMap.leafletElement.getCenter();
         let searchO=getQueryObject(this.props.routing.location.search);
         const latFromUrl = parseFloat(searchO.lat);
         const lngFromUrl = parseFloat(searchO.lng);
-        const zoomFromUrl = parseInt(searchO.zoom);
+        const zoomFromUrl = parseInt(searchO.zoom,10);
         let lat = center.lat;
         let lng = center.lng;
         if (Math.abs(latFromUrl - center.lat) < 0.000001) {
@@ -85,9 +85,9 @@ export class RoutedMap_ extends React.Component {
   }
 
 componentDidUpdate() {
-    if ((typeof (this.leafletMap) != 'undefined' && this.leafletMap != null)) {
+    if ((typeof (this.leafletMap) !== 'undefined' && this.leafletMap != null)) {
       if (this.props.mapping.autoFitBounds) {
-        if (this.props.mapping.autoFitMode==MappingConstants.AUTO_FIT_MODE_NO_ZOOM_IN) {
+        if (this.props.mapping.autoFitMode===MappingConstants.AUTO_FIT_MODE_NO_ZOOM_IN) {
           if (!this.leafletMap.leafletElement.getBounds().contains(this.props.mapping.autoFitBoundsTarget)) {
             this.leafletMap.leafletElement.fitBounds(this.props.mapping.autoFitBoundsTarget);         
           }
@@ -120,7 +120,7 @@ render() {
    const positionByUrl=[
      parseFloat(new URLSearchParams(this.props.routing.location.search).get('lat'))||fallbackposition.lat,
      parseFloat(new URLSearchParams(this.props.routing.location.search).get('lng'))||fallbackposition.lng];
-   const zoomByUrl= parseInt(new URLSearchParams(this.props.routing.location.search).get('zoom'))||14;
+   const zoomByUrl= parseInt(new URLSearchParams(this.props.routing.location.search).get('zoom'),10)||14;
 
 
 
