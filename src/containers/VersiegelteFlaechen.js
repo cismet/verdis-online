@@ -11,19 +11,22 @@ import KassenzeichenChartPanel from '../components/KassenzeichenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
+import { actions as UiStateActions } from '../redux/modules/uiState';
 
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
     kassenzeichen: state.kassenzeichen,
-    routing: state.routing
-  };
+    routing: state.routing,
+    auth: state.auth
+};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
-
+    uiStateActions: bindActionCreators(UiStateActions, dispatch),
+    
   };
 }
 
@@ -40,26 +43,30 @@ export class VersiegelteFlaechen_ extends React.Component {
       super(props, context);
       this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
   }
-  
+
   componentDidMount() {
-      if (typeof this.props.match.params.kassenzeichen  != "undefined" && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
-        let queryO=getQueryObject(this.props.routing.location.search);
+      if (typeof this.props.match.params.kassenzeichen != "undefined" && parseInt(this.props.match.params.kassenzeichen) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8)) {
+          if (this.props.auth.user !== null) {
 
-        if (typeof queryO.lat  == "undefined" ||
-                typeof queryO.lng   == "undefined" ||
-                typeof queryO.zoom  == "undefined"  ) {
+              let queryO = getQueryObject(this.props.routing.location.search);
 
-            this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
-        }
-        else {
-            this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen,false);
-        }
+              if (typeof queryO.lat == "undefined" ||
+                  typeof queryO.lng == "undefined" ||
+                  typeof queryO.zoom == "undefined") {
 
-        
+                  this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
+              }
+              else {
+                  this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, false);
+              }
+          }
+          else {
+              this.props.uiStateActions.setKassenzeichenToSearchFor(this.props.match.params.kassenzeichen);
+          }
+
       } else {
           console.log("SKIP");
       }
-
   }
   componentDidUpdate() {
        console.log(this.props.match);
