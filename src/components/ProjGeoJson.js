@@ -14,6 +14,17 @@ export default class ProjGeoJson extends Path {
         layer.on('click',function(event) {
             props.featureClickHandler(event,feature,layer);
         });        
+        if (feature.selected) {
+            //ugly winning: a direct call of bringToFront has no effect -.-
+            setTimeout(function () {
+              try {
+                layer.bringToFront();
+              }
+              catch (err) {
+                //ugly winning
+              }
+            }, 10);
+          } 
     };
     this.leafletElement = L.Proj.geoJson(mappingProps.featureCollection, props);
   }  
