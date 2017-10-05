@@ -11,12 +11,11 @@ import { actions as UiStateActions } from './uiState';
 export const types = {
     SET_LOGIN_INFORMATION: 'AUTH/SET_LOGIN_INFORMATION',
     SET_LOGIN_IN_PROGRESS: 'AUTH/SET_LOGIN_IN_PROGRESS',
-}
+};
 
 
 ///INITIAL STATE
 const initialState = {
-    rehydrated: false,
     user: null,
     password: null,
     succesfullLogin: false,
@@ -78,7 +77,10 @@ function setLoginInformation(user, password, status) {
 }
 //COMPLEXACTIONS
 
-function login(user, password) {
+function login(user, password , succesfulHandler) {
+    if (typeof succesfulHandler === "undefined" ) {
+        succesfulHandler = () => {};
+    }
     return function (dispatch) {
         dispatch(setLoginInProgress());
         fetch(SERVICE + '/classes?domain=local&limit=1&offset=0&role=all', {
@@ -90,11 +92,11 @@ function login(user, password) {
         }).then(function (response) {
             if (response.status >= 200 && response.status < 300) {
                 dispatch(setLoginInformation(user, password, true));
+                dispatch(succesfulHandler);
             } else {
                 dispatch(setLoginInformation(user, password, false));
             }
         }).catch(function (err) {
-            console.log(err);
             dispatch(UiStateActions.showError("Beim Login ist ein Fehler aufgetreten. (" + err + ")"));
             dispatch(invalidateLogin(user, password));
         });

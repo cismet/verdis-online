@@ -7,7 +7,7 @@ import {
     routerMiddleware
 } from 'react-router-redux';
 import thunk from 'redux-thunk';
-import createHistory from 'history/createBrowserHistory';
+import createHistory from 'history/createHashHistory';
 
 import rootReducer from './reducer';
 import logger from 'redux-logger';
@@ -19,7 +19,7 @@ import {
     autoRehydrate
 } from 'redux-persist';
 
-export const history = createHistory()
+export const history = createHistory();
 
 const initialState = {};
 const enhancers = [];
@@ -31,7 +31,7 @@ const middleware = [
 ];
 
 if (process.env.NODE_ENV === 'development') {
-    const devToolsExtension = window.devToolsExtension
+    const devToolsExtension = window.devToolsExtension;
 
     if (typeof devToolsExtension === 'function') {
         enhancers.push(devToolsExtension());

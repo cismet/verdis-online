@@ -92,6 +92,8 @@ const Settings = connect(mapStateToProps, mapDispatchToProps)(Settings_);
 export default Settings;
 
 Settings_.propTypes = {
-  uiActions: PropTypes.object,
-  uiState: PropTypes.object
+  uiActions: PropTypes.object.isRequired,
+  uiState: PropTypes.object.isRequired,
+  auth: PropTypes.object,
+  authActions: PropTypes.object.isRequired,
 };

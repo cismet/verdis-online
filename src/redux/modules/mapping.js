@@ -15,11 +15,11 @@ export const types = {
     SET_AUTO_FIT: 'MAPPING/SET_AUTO_FIT',
     GAZETTEER_HIT: 'MAPPING/GAZETTEER_HIT'
 
-}
+};
 export const constants = {
     AUTO_FIT_MODE_STRICT: 'MAPPING/AUTO_FIT_MODE_STRICT',
     AUTO_FIT_MODE_NO_ZOOM_IN: 'MAPPING/AUTO_FIT_MODE_NO_ZOOM_IN',
-}
+};
 
 
 
@@ -95,7 +95,9 @@ export default function mappingReducer(state = initialState, action) {
                 for (let feature of newState.featureCollection) {
                     feature.selected = false;
                 }
-                newState.featureCollection[action.index].selected = true;
+                if (typeof action.index !== undefined && action.index !== null) {
+                    newState.featureCollection[action.index].selected = true;
+                }
                 newState.selectedIndex = action.index;
                 return newState;
             }
@@ -155,6 +157,19 @@ export default function mappingReducer(state = initialState, action) {
     return {
         type: types.FEATURE_SELECTION_INDEX_CHANGED,
         index
+    };
+}
+
+
+function setSelectedFeatureIndexWithSelector(selector) {
+    return function (dispatch, getState) {
+        const featureCollection = getState().mapping.featureCollection;
+        for (let i=0, l=featureCollection.length; i<l; i++) { 
+            if (selector(featureCollection[i])){
+                dispatch(setSelectedFeatureIndex(i));
+                break;
+            }
+          }
     };
 }
 
@@ -242,10 +257,11 @@ export const actions = {
     mappingBoundsChanged,
     setFeatureCollection,
     setSelectedFeatureIndex,
+    setSelectedFeatureIndexWithSelector,
     setAutoFit,
     gazetteerHit,
     fitSelectedFeatureBounds,
     fitFeatureBounds,
     fitAll,
-    fitFeatureCollection
+    fitFeatureCollection,
 };

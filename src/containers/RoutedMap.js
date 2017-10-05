@@ -47,19 +47,19 @@ export class RoutedMap_ extends React.Component {
   componentDidMount() {
     this.leafletMap.leafletElement.on('moveend', () => {
 
-      if ((typeof (this.leafletMap) != 'undefined' && this.leafletMap != null)) {
+      if ((typeof (this.leafletMap) !== 'undefined' && this.leafletMap !== null)) {
         const zoom = this.leafletMap.leafletElement.getZoom();
         const center = this.leafletMap.leafletElement.getCenter();
         let searchO=getQueryObject(this.props.routing.location.search);
         const latFromUrl = parseFloat(searchO.lat);
         const lngFromUrl = parseFloat(searchO.lng);
-        const zoomFromUrl = parseInt(searchO.zoom);
+        const zoomFromUrl = parseInt(searchO.zoom,10);
         let lat = center.lat;
         let lng = center.lng;
-        if (Math.abs(latFromUrl - center.lat) < 0.0001) {
+        if (Math.abs(latFromUrl - center.lat) < 0.000001) {
           lat = latFromUrl;
         }
-        if (Math.abs(lngFromUrl - center.lng) < 0.0001) {
+        if (Math.abs(lngFromUrl - center.lng) < 0.000001) {
           lng = lngFromUrl;
         }
 
@@ -77,7 +77,7 @@ export class RoutedMap_ extends React.Component {
         this.storeBoundingBox(this.leafletMap);
       }
       else {
-        console.log("this.leafletMap is null");
+        //console.log("this.leafletMap is null");
       }
 
     });
@@ -85,9 +85,9 @@ export class RoutedMap_ extends React.Component {
   }
 
 componentDidUpdate() {
-    if ((typeof (this.leafletMap) != 'undefined' && this.leafletMap != null)) {
+    if ((typeof (this.leafletMap) !== 'undefined' && this.leafletMap != null)) {
       if (this.props.mapping.autoFitBounds) {
-        if (this.props.mapping.autoFitMode==MappingConstants.AUTO_FIT_MODE_NO_ZOOM_IN) {
+        if (this.props.mapping.autoFitMode===MappingConstants.AUTO_FIT_MODE_NO_ZOOM_IN) {
           if (!this.leafletMap.leafletElement.getBounds().contains(this.props.mapping.autoFitBoundsTarget)) {
             this.leafletMap.leafletElement.fitBounds(this.props.mapping.autoFitBoundsTarget);         
           }
@@ -103,9 +103,9 @@ componentDidUpdate() {
 
 storeBoundingBox(leafletMap){
   //store the projected bounds in the store
-  const bounds=leafletMap.leafletElement.getBounds()
-  const projectedNE=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._northEast.lng,bounds._northEast.lat])
-  const projectedSW=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._southWest.lng,bounds._southWest.lat])
+  const bounds=leafletMap.leafletElement.getBounds();
+  const projectedNE=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._northEast.lng,bounds._northEast.lat]);
+  const projectedSW=proj4(proj4.defs('EPSG:4326'),proj4crs25832def,[bounds._southWest.lng,bounds._southWest.lat]);
   const bbox = {left: projectedSW[0], top: projectedNE[1], right: projectedNE[0], bottom: projectedSW[1]};
   //console.log(getPolygon(bbox));
   this.props.mappingActions.mappingBoundsChanged(bbox);
@@ -120,13 +120,13 @@ render() {
    const positionByUrl=[
      parseFloat(new URLSearchParams(this.props.routing.location.search).get('lat'))||fallbackposition.lat,
      parseFloat(new URLSearchParams(this.props.routing.location.search).get('lng'))||fallbackposition.lng];
-   const zoomByUrl= parseInt(new URLSearchParams(this.props.routing.location.search).get('zoom'))||14;
+   const zoomByUrl= parseInt(new URLSearchParams(this.props.routing.location.search).get('zoom'),10)||14;
 
 
 
     return (
       <Map 
-        ref={leafletMap => {this.leafletMap = leafletMap}}
+        ref={leafletMap => {this.leafletMap = leafletMap;}}
         key={"leafletMap"} 
         crs={crs25832}  
         style={this.props.style}
@@ -136,6 +136,7 @@ render() {
         attributionControl={false} 
         doubleClickZoom={false}
         ondblclick={this.props.ondblclick}
+       
         minZoom={7} 
         maxZoom={18}
         >
@@ -149,20 +150,27 @@ render() {
 }
 
 const RoutedMap = connect(mapStateToProps, mapDispatchToProps)(RoutedMap_);
-
 RoutedMap_.propTypes = {
-  mapping: PropTypes.object,
-  routing: PropTypes.object,
-  height: PropTypes.number,
-  width: PropTypes.number,
-  layers: PropTypes.string.isRequired,
+    mapping: PropTypes.object,
+    routing: PropTypes.object,
+    height: PropTypes.number,
+    width: PropTypes.number,
+    layers: PropTypes.string.isRequired,
+    routingActions: PropTypes.object.isRequired,
+    mappingActions: PropTypes.object.isRequired,
+    featureClickHandler: PropTypes.func,
+    style: PropTypes.object.isRequired,
+    ondblclick: PropTypes.func,
+    children: PropTypes.array,
+    
 };
 
 RoutedMap_.defaultProps = {
-  layers: "",
-  gazeteerHitTrigger: function(){},
-  searchButtonTrigger: function(){},
-  featureClickHandler: function(){},
-}
+    layers: "",
+    gazeteerHitTrigger: function () {},
+    searchButtonTrigger: function () {},
+    featureClickHandler: function () {},
+    ondblclick: function () {},
+};
 
 export default RoutedMap;

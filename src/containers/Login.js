@@ -5,18 +5,21 @@ import { connect } from "react-redux";
 import { Modal, Button, Form, FormGroup, Col, ControlLabel, FormControl, ProgressBar, Fade } from 'react-bootstrap';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as AuthActions } from '../redux/modules/auth';
-
+import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
+import { getQueryObject } from '../utils/routingHelper';
 
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
-    auth: state.auth
+    auth: state.auth,
+    routing: state.routing
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
     uiActions: bindActionCreators(UiStateActions, dispatch),
-    authActions: bindActionCreators(AuthActions, dispatch),
+    authActions: bindActionCreators(AuthActions, dispatch),    
+    kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),    
   };
 }
 
@@ -30,7 +33,15 @@ export class Login_ extends React.Component {
   }
 
   close() {
-    this.props.authActions.login(this.user, this.pw);
+    if (typeof this.props.uiState.kassenzeichenToSearchFor !== "undefined" && this.props.uiState.kassenzeichenToSearchFor !== null) {
+        let queryO=getQueryObject(this.props.routing.location.search);
+        let fitBounds=typeof queryO.lat  === "undefined" || typeof queryO.lng   === "undefined" ||  typeof queryO.zoom  === "undefined";
+        this.props.authActions.login(this.user, this.pw, () => {
+            this.props.kassenzeichenActions.searchByKassenzeichen(this.props.uiState.kassenzeichenToSearchFor,fitBounds);
+        });
+    } else {
+        this.props.authActions.login(this.user, this.pw);        
+    }
   }
   handleUserChange(e) {
     this.user = e.target.value;
@@ -90,5 +101,8 @@ export default Login;
 Login_.propTypes = {
   uiActions: PropTypes.object,
   authActions: PropTypes.object,
-  uiState: PropTypes.object
+  uiState: PropTypes.object,
+  routing: PropTypes.object,
+  kassenzeichenActions: PropTypes.object,
+  auth: PropTypes.object
 };

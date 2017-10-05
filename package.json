@@ -27,6 +27,7 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^4.9.1",
     "redux-thunk": "^2.2.0",
+    "scroll-into-view-if-needed": "1.2.1",
     "url-search-params-polyfill": "^2.0.0",
     "wellknown": "^0.5.0",
     "whatwg-fetch": "^2.0.3"

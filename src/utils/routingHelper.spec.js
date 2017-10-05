@@ -155,5 +155,52 @@ describe("routingHelper", () => {
             expect(result).not.to.deep.equal(queryObject);
         });
     });
+    describe('modifyQueryPart', () => {
+        it('modifyQueryPart with empty query and some parameters', () => {
+            let expected="?lat=51.272399843756354&lng=7.199690727407299&zoom=14";
+            const modifiedParts={
+                lat: '51.272399843756354',
+                lng: '7.199690727407299',
+                zoom: '14',
+                
+            };
+            const modifiedQuery=modifyQueryPart("",modifiedParts);
+            expect(expected).equal(modifiedQuery);
+        });
+        it('modifyQueryPart with full query and no parameters', () => {
+            let query="?lat=51.272399843756354&lng=7.199690727407299&zoom=14";
+            const modifiedQuery=modifyQueryPart(query,{});
+            expect(query).equal(modifiedQuery);
+        });
+        it('modifyQueryPart with full query and some parameters', () => {
+            let query="?lat=51.272399843756354&lng=7.199690727407299&zoom=14";
+            let expected="?lat=52.272399843756354&lng=8.199690727407299&zoom=14";
+            const modifiedParts={
+                lat: '52.272399843756354',
+                lng: '8.199690727407299',
+            };
+            const modifiedQuery=modifyQueryPart(query,modifiedParts);
+            expect(expected).equal(modifiedQuery);
+        });
+        it('modifyQueryPart with full query and some parameters', () => {
+            let query="?lat=51.272399843756354&lng=7.199690727407299&zoom=14";
+            let expected="?lat=51.272399843756354&lng=7.199690727407299&zoom=20";
+            const modifiedParts={
+                zoom: 20,
+            };
+            const modifiedQuery=modifyQueryPart(query,modifiedParts);
+            expect(expected).equal(modifiedQuery);
+        });
+        it('modifyQueryPart with full query and some parameters', () => {
+            let query="?lat=51.272399843756354&lng=7.199690727407299&zoom=14";
+            let expected="?lat=51.272399843756354&lng=7.199690727407299&zoom=14&new=99";
+            const modifiedParts={
+                new: 99,
+            };
+            const modifiedQuery=modifyQueryPart(query,modifiedParts);
+            expect(expected).equal(modifiedQuery);
+        });
+
+    });
         
 });

@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { actions as UiStateActions } from '../redux/modules/uiState'
-import { actions as MappingActions } from '../redux/modules/mapping'
-import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen'
+import { actions as UiStateActions } from '../redux/modules/uiState';
+import { actions as MappingActions } from '../redux/modules/mapping';
+import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import Settings from './Settings';
 import Waiting from './Waiting';
 import Login from './Login';
@@ -61,11 +61,10 @@ export class AppNavbar_ extends React.Component {
     this.props.uiActions.showSettings(true);
   }
   searchkassenzeichen() {
-    this.props.uiActions.showKassenzeichenSearch(true);
+    this.props.uiActions.setKassenzeichenSearchInProgress(true);
   }
 
   fitBounds() {
-    console.log("---------------------------- FB")
     this.props.mappingActions.fitAll();
   }
 
@@ -108,7 +107,7 @@ export class AppNavbar_ extends React.Component {
         </Navbar.Collapse>
       </Navbar>
       <Login key={'Login.hidden.' + this.props.auth.succesfullLogin} />
-      <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchKassenzeichenVisible} />
+      <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchInProgress} />
 
       <Settings key={'Settings.visible.' + this.props.uiState.settingsVisible} />
       <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
@@ -123,5 +122,7 @@ export default AppNavbar;
 AppNavbar_.propTypes = {
   uiActions: PropTypes.object,
   kassenzeichenActions: PropTypes.object,
-  uiState: PropTypes.object
+  uiState: PropTypes.object,
+  mappingActions: PropTypes.object,
+  auth: PropTypes.object
 };
