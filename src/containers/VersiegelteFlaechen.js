@@ -12,11 +12,13 @@ import FlaechenPanel from '../components/FlaechenPanel';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
+import { actions as MappingActions } from '../redux/modules/mapping';
 
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
     kassenzeichen: state.kassenzeichen,
+    mapping: state.mapping,
     routing: state.routing,
     auth: state.auth
 };
@@ -26,10 +28,12 @@ function mapDispatchToProps(dispatch) {
   return {
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
     uiStateActions: bindActionCreators(UiStateActions, dispatch),
+    mappingActions: bindActionCreators(MappingActions, dispatch),
     
   };
 }
 
+let flaechenPanelRefs={};
 
 const verticalPanelWidth = 280;
 
@@ -41,13 +45,17 @@ const switchToBottomWhenSmallerThan = 900;
 export class VersiegelteFlaechen_ extends React.Component {
   constructor(props, context) {
       super(props, context);
+      this.kassenZeichenPanelClick = this.kassenZeichenPanelClick.bind(this);
       this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
       this.checkRouteAndSearch = this.checkRouteAndSearch.bind(this);
+      this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
+      this.flaechenPanelClick = this.flaechenPanelClick.bind(this);        
+      this.flaechenMapClick = this.flaechenMapClick.bind(this);   
+      this.flaechenPanelRefs={};   
     }
 
-//   componentDidMount() {
-//     this.checkRouteAndSearch();
-//   }
+           
+    
     componentWillMount() {
         this.checkRouteAndSearch();
     }
@@ -83,9 +91,36 @@ export class VersiegelteFlaechen_ extends React.Component {
         }
     }
 
-  flaechenPanelClick() {
-      this.refs.verdismap.getWrappedInstance().fitBounds();
-  }
+    kassenZeichenPanelClick() {
+        this.refs.verdismap.getWrappedInstance().fitBounds();
+    }
+
+    flaechenPanelClick(flaeche) {
+        this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature)=>{
+            return (feature.properties.id===flaeche.id);
+        });
+        
+         this.flaechenPanelRefs[flaeche.id].scrollToVisible();
+        
+    }
+
+    flaechenMapClick(event,feature,layer) {
+        this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
+            return (testfeature.properties.id===feature.properties.id);
+        });
+        this.flaechenPanelRefs[feature.properties.id].scrollToVisible();
+    }
+
+    
+
+    isFlaecheSelected(flaeche) {
+        return (typeof this.props.mapping.featureCollection !== "undefined" 
+            && this.props.mapping.featureCollection.length > 0 
+            && typeof this.props.mapping.selectedIndex !== "undefined" 
+            && this.props.mapping.featureCollection.length > this.props.mapping.selectedIndex 
+            && typeof this.props.mapping.featureCollection[this.props.mapping.selectedIndex] !== "undefined" 
+            && this.props.mapping.featureCollection[this.props.mapping.selectedIndex].properties.id === flaeche.id);
+    }
 
   render() {
     let mapHeight;
@@ -128,7 +163,7 @@ export class VersiegelteFlaechen_ extends React.Component {
     let kassenzeichenVerticalChartsPanel;
 
     if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
-      kassenzeichenPanel = <KassenzeichenPanel onClick={this.flaechenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
+      kassenzeichenPanel = <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
     }
     if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
       kassenzeichenHorizontalChartsPanel = <KassenzeichenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
@@ -155,12 +190,15 @@ export class VersiegelteFlaechen_ extends React.Component {
     else if (this.props.uiState.width < switchToBottomWhenSmallerThan) {
       if (flaechen) {
         let i = 0;
-        flComps = flaechen.map(function (flaeche) {
-          return (
-            <Flexbox key={"flex" + (i++) + "." + flaeche.id} height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
-              <FlaechenPanel key={flaeche.id} flaeche={flaeche} />
-            </Flexbox>
-          );
+        const that=this;
+        flaechenPanelRefs={};
+        flComps = flaechen.map(function (flaeche) {            
+            const sel=that.isFlaecheSelected(flaeche);
+            return (
+                <Flexbox key={"flex" + (i++) + "." + flaeche.id} height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
+                <FlaechenPanel ref={c => {that.flaechenPanelRefs[flaeche.id]=c;}} key={flaeche.id+"."+sel} selected={sel} flaechenPanelClickHandler={that.flaechenPanelClick} flaeche={flaeche} />
+                </Flexbox>
+            );
         });
       }
       return (
@@ -178,10 +216,13 @@ export class VersiegelteFlaechen_ extends React.Component {
     }
     else {
       if (flaechen) {
+        const that=this;        
+        this.flaechenPanelRefs={};        
         flComps = flaechen.map(function (flaeche) {
-          return (
-            <FlaechenPanel key={flaeche.id} flaeche={flaeche} />
-          );
+            const sel=that.isFlaecheSelected(flaeche);            
+            return (
+                <FlaechenPanel ref={c => {that.flaechenPanelRefs[flaeche.id]=c;}} key={flaeche.id+"."+sel} selected={sel} flaechenPanelClickHandler={that.flaechenPanelClick} flaeche={flaeche} />
+            );
         });
       }
 
@@ -192,7 +233,7 @@ export class VersiegelteFlaechen_ extends React.Component {
             {kassenzeichenHorizontalChartsPanel}
             {flComps}
           </div>
-          <VerdisMap ref="verdismap" height={mapHeight} />
+          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
         </div>
       );
     }
@@ -205,11 +246,13 @@ export default VersiegelteFlaechen;
 VersiegelteFlaechen_.propTypes = {
   ui: PropTypes.object,
   kassenzeichen: PropTypes.object,
+  mapping: PropTypes.object,
   uiState: PropTypes.object,
   match: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   routing: PropTypes.object.isRequired,
   kassenzeichenActions: PropTypes.object.isRequired,
   uiStateActions: PropTypes.object.isRequired,
+  mappingActions: PropTypes.object.isRequired,
 
 };

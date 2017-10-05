@@ -57,15 +57,25 @@ export const getColorFromFlaechenArt = (art_abk) => {
 };
 
 export const flaechenStyle = (feature) => {
-  let color = getColorFromFlaechenArt(feature.properties.art_abk);
-  const style = {
-    "color": "#000000",
-    "weight": 1,
-    "opacity": 1.0,
-    "fillColor": color,
-    "fillOpacity": 0.6
-  };
+    let color = getColorFromFlaechenArt(feature.properties.art_abk);
+    let opacity=0.6;
+    let linecolor="#000000";
+    let weight=1;
 
+    if (feature.selected === true) {
+        opacity=0.9;
+        linecolor="#0C7D9D";
+        weight="2";
+    }
+
+    const style = {
+        "color": linecolor,
+        "weight": weight,
+        "opacity": 1.0,
+        "fillColor": color,
+        "fillOpacity": opacity
+      };
+    
   return style;
 };
 

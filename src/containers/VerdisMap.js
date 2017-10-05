@@ -37,28 +37,30 @@ function mapDispatchToProps(dispatch) {
 export class VerdisMap_ extends React.Component {
     constructor(props) {
         super(props);
-        this.mapClick = this.mapClick.bind(this);
+        this.mapDblClick = this.mapDblClick.bind(this);
         this.featureClick = this.featureClick.bind(this);
         this.fitBounds = this.fitBounds.bind(this);
-
     }
 
     fitBounds() {
         this.props.mappingActions.fitAll();
     }
 
-    mapClick(event) {
-        console.log(event);
+    mapDblClick(event) {
         const skipFitBounds=true;//event.originalEvent.shiftKey; 
         const latlon = event.latlng;
         const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
         this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],!skipFitBounds);
     }
+    // mapClick(event) {
+    //     console.log(event);
+    //    // this.props.mappingActions.setSelectedFeatureIndex(null);
+    // }
 
-    featureClick(event) {
-
-        L.DomEvent.stopPropagation(event)
-        console.log(event);
+    featureClick(event,feature,layer) {
+        L.DomEvent.stopPropagation(event.originalEvent);
+        event.originalEvent.preventDefault();
+        this.props.featureClickHandler(event,feature,layer);
     }
     render() {
         const mapStyle = {
@@ -68,7 +70,14 @@ export class VerdisMap_ extends React.Component {
     // <Ortho2014 /><StadtgrundKarteABK />
     // <OSM />
     return (
-      <RoutedMap ref="leafletRoutedMap" key={"leafletRoutedMap"}  layers="" crs={crs25832} style={mapStyle} center={position} zoom={14} ondblclick={this.mapClick} doubleClickZoom={false} >
+      <RoutedMap ref="leafletRoutedMap" 
+            key={"leafletRoutedMap"}  
+            layers="" crs={crs25832} 
+            style={mapStyle} 
+            center={position}  
+            zoom={14} 
+            ondblclick={this.mapDblClick} 
+            doubleClickZoom={false} >
         {this.props.uiState.layers.map((layer) => {
           if (layer.enabled) {
             return (
@@ -79,7 +88,10 @@ export class VerdisMap_ extends React.Component {
             return (<div key={"empty_div_for_disabled_layer"+JSON.stringify(layer)}/>);
           }
         })}
-        <ProjGeoJson key={JSON.stringify(this.props.mapping)} mappingProps={this.props.mapping} style={flaechenStyle} featureClickHandler={this.featureClick}/>
+        <ProjGeoJson key={JSON.stringify(this.props.mapping)} 
+            mappingProps={this.props.mapping} 
+            style={flaechenStyle} 
+            featureClickHandler={this.featureClick}/>
       </RoutedMap>
     );
   }
@@ -97,6 +109,7 @@ VerdisMap_.propTypes = {
   height: PropTypes.number,
   kassenzeichenActions: PropTypes.object,
   mappingActions: PropTypes.object.isRequired,
+  featureClickHandler: PropTypes.func,
 };
 
 export default VerdisMap;

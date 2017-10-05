@@ -136,6 +136,7 @@ render() {
         attributionControl={false} 
         doubleClickZoom={false}
         ondblclick={this.props.ondblclick}
+       
         minZoom={7} 
         maxZoom={18}
         >
@@ -168,7 +169,8 @@ RoutedMap_.defaultProps = {
     layers: "",
     gazeteerHitTrigger: function () {},
     searchButtonTrigger: function () {},
-    featureClickHandler: function () {}
+    featureClickHandler: function () {},
+    ondblclick: function () {},
 };
 
 export default RoutedMap;

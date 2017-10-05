@@ -11,8 +11,10 @@ export default class ProjGeoJson extends Path {
     super.componentWillMount();
     const { mappingProps, ...props } = this.props;
     props.onEachFeature=function (feature, layer) {
-        layer.on('click',props.featureClickHandler);        
-    }
+        layer.on('click',function(event) {
+            props.featureClickHandler(event,feature,layer);
+        });        
+    };
     this.leafletElement = L.Proj.geoJson(mappingProps.featureCollection, props);
   }  
   createLeafletElement () {

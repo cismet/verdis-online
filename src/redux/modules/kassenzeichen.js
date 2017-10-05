@@ -83,6 +83,8 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
                     dispatch(setKassenzeichenObject(kassenzeichenData));
                     dispatch(RoutingActions.push(changeKassenzeichenInLocation(state.routing.location,kassenzeichenData.kassenzeichennummer8)));
                     dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                    dispatch(MappingActions.setSelectedFeatureIndex(null));
+                    
                     dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
                     if (fitBounds) {
                         dispatch(MappingActions.fitAll());
