@@ -183,7 +183,7 @@ export class VersiegelteFlaechen_ extends React.Component {
     if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight} />
+          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
         </div>
       );
     }
@@ -195,7 +195,7 @@ export class VersiegelteFlaechen_ extends React.Component {
         flComps = flaechen.map(function (flaeche) {            
             const sel=that.isFlaecheSelected(flaeche);
             return (
-                <Flexbox key={"flex" + (i++) + "." + flaeche.id} height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
+                <Flexbox key={"flex" + (i++) + "." + flaeche.id} height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
                 <FlaechenPanel ref={c => {that.flaechenPanelRefs[flaeche.id]=c;}} key={flaeche.id+"."+sel} selected={sel} flaechenPanelClickHandler={that.flaechenPanelClick} flaeche={flaeche} />
                 </Flexbox>
             );
@@ -203,9 +203,9 @@ export class VersiegelteFlaechen_ extends React.Component {
       }
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} />
+          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick}/>
           <Flexbox flexDirection="row" style={detailsStyle} >
-            <Flexbox height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
+            <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
               {kassenzeichenPanel}
             </Flexbox>
             {kassenzeichenVerticalChartsPanel}
