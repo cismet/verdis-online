@@ -1,6 +1,6 @@
 # verdis HTML5 Client
 
-![docker status](https://img.shields.io/docker/build/cismet/verdis-html5-wupp.svg)
+[![docker](https://img.shields.io/docker/build/cismet/verdis-html5-wupp.svg)](https://hub.docker.com/r/cismet/verdis-html5-wupp/builds/)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
