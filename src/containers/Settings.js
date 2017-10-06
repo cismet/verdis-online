@@ -55,7 +55,7 @@ export class Settings_ extends React.Component {
   render() {
 
     return (
-      <Modal show={this.props.uiState.settingsVisible} onHide={this.close}>
+      <Modal show={this.props.uiState.settingsVisible} onHide={this.close} keyboard={true}>
         <Modal.Header closeButton>
           <Modal.Title>Einstellungen</Modal.Title>
         </Modal.Header>

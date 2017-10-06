@@ -65,7 +65,7 @@ export class VersiegelteFlaechen_ extends React.Component {
 
 
     checkRouteAndSearch() {
-        if (this.props.uiState.searchInProgress === false) {
+        if (this.props.uiState.searchForKassenzeichenVisible === false && this.props.uiState.searchInProgress === false) {
             if (typeof this.props.match.params.kassenzeichen !== "undefined" && parseInt(this.props.match.params.kassenzeichen,10) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8,10)) {
                 if (this.props.auth.user !== null) {
 

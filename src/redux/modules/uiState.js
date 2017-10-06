@@ -22,6 +22,7 @@ export const types = {
     SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
     SHOW_WAITING: 'UI_STATE/SHOW_WAITING',
     SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: 'UI_STATE/SET_KASSENZEICHEN_SEARCH_IN_PROGRESS',
+    SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE: 'UI_STATE/SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE',
     SET_KASSENZEICHEN_TOSEARCH_FOR: 'UI_STATE/SET_KASSENZEICHEN_TOSEARCH_FOR',
     SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE'
 };
@@ -39,7 +40,8 @@ const initialState = {
     detailElementsEnabled: true,
 
     settingsVisible: false,
-
+    searchForKassenzeichenVisible: false,
+    
     waitingVisible: false,
     waitingMessage: null,
     waitingType: WAITING_TYPE_MESSAGE,
@@ -121,6 +123,12 @@ export default function uiStateReducer(state = initialState, action) {
                 newState.searchInProgress = action.progress;
                 return newState;
             }
+        case types.SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE:
+            {
+                newState = objectAssign({}, state);
+                newState.searchForKassenzeichenVisible = action.visible;
+                return newState;
+            }
         case types.SET_KASSENZEICHEN_TOSEARCH_FOR:
             {
                 newState = objectAssign({}, state);
@@ -173,58 +181,64 @@ export default function uiStateReducer(state = initialState, action) {
 
 
 ///SIMPLEACTIONCREATORS
-export function toggleInfoElements() {
+function toggleInfoElements() {
     return {
         type: types.TOGGLE_INFO_ELEMENTS
     };
 }
 
-export function toggleChartsElements() {
+function toggleChartsElements() {
     return {
         type: types.TOGGLE_CHART_ELEMENTS
     };
 }
 
-export function toggleKanalElements() {
+function toggleKanalElements() {
     return {
         type: types.TOGGLE_KANAL_ELEMENTS
     };
 }
 
-export function toggleFilterElements() {
+function toggleFilterElements() {
     return {
         type: types.TOGGLE_FILTER_ELEMENT
     };
 }
 
-export function toggleDetailsElements() {
+function toggleDetailsElements() {
     return {
         type: types.TOGGLE_DETAIL_ELEMENTS
     };
 }
 
-export function showSettings(visible) {
+function showSettings(visible) {
     return {
         type: types.SHOW_SETTINGS,
         visible
     };
 }
 
-export function setKassenzeichenSearchInProgress(progress) {
+function setKassenzeichenSearchInProgress(progress) {
     return {
         type: types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS,
         progress
     };
 }
+function setKassenzeichenTextSearchVisible(visible) {
+    return {
+        type: types.SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE,
+        visible
+    };
+}
 
-export function setKassenzeichenToSearchFor(kassenzeichen) {
+function setKassenzeichenToSearchFor(kassenzeichen) {
     return {
         type: types.SET_KASSENZEICHEN_TOSEARCH_FOR,
         kassenzeichen
     };
 }
 
-export function showWaiting(visible, message, waitingtype) {
+function showWaiting(visible, message, waitingtype) {
     return {
         type: types.SHOW_WAITING,
         visible,
@@ -233,7 +247,7 @@ export function showWaiting(visible, message, waitingtype) {
     };
 }
 
-export function showInfo(message) {
+function showInfo(message) {
     return {
         type: types.SHOW_WAITING,
         visible: true,
@@ -242,7 +256,7 @@ export function showInfo(message) {
     };
 }
 
-export function showError(message) {
+function showError(message) {
     return {
         type: types.SHOW_WAITING,
         visible: true,
@@ -252,14 +266,14 @@ export function showError(message) {
 }
 
 
-export function changeLayerOpacitySetting(key, opacity) {
+function changeLayerOpacitySetting(key, opacity) {
     return {
         type: types.CHANGE_LAYER_OPACITY,
         key,
         opacity
     };
 }
-export function changeLayerEnabledSetting(key, enabled) {
+function changeLayerEnabledSetting(key, enabled) {
     return {
         type: types.CHANGE_LAYER_ENABLED,
         key,
@@ -267,7 +281,7 @@ export function changeLayerEnabledSetting(key, enabled) {
     };
 }
 
-export function screenResize(height, width) {
+function screenResize(height, width) {
     return {
         type: types.SCREEN_RESIZE,
         width: width,
@@ -288,6 +302,7 @@ export const actions = {
     toggleDetailsElements,
     showSettings,
     setKassenzeichenSearchInProgress,
+    setKassenzeichenTextSearchVisible,
     setKassenzeichenToSearchFor,
     showWaiting,
     showInfo,

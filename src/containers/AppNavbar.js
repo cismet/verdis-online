@@ -18,7 +18,8 @@ const FontAwesome = require('react-fontawesome');
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
-    auth: state.auth
+    auth: state.auth,
+    routing: state.routing
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -39,7 +40,7 @@ export class AppNavbar_ extends React.Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
     this.showSettings = this.showSettings.bind(this);
-    this.searchkassenzeichen = this.searchkassenzeichen.bind(this);
+    this.textsearchkassenzeichen = this.textsearchkassenzeichen.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
   }
   toggleInfo() {
@@ -60,8 +61,8 @@ export class AppNavbar_ extends React.Component {
   showSettings() {
     this.props.uiActions.showSettings(true);
   }
-  searchkassenzeichen() {
-    this.props.uiActions.setKassenzeichenSearchInProgress(true);
+  textsearchkassenzeichen() {
+    this.props.uiActions.setKassenzeichenTextSearchVisible(true);
   }
 
   fitBounds() {
@@ -78,10 +79,8 @@ export class AppNavbar_ extends React.Component {
     return (<div>
       <Navbar  inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>
-          <Navbar.Brand>
-            <LinkContainer to={{ pathname: '#' }}>
-              <a onClick={this.searchkassenzeichen}>VerDIS</a>
-            </LinkContainer>
+          <Navbar.Brand>  
+              <a href={'#'+this.props.routing.location.pathname+this.props.routing.location.search} onClick={this.textsearchkassenzeichen}>VerDIS</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
@@ -107,8 +106,7 @@ export class AppNavbar_ extends React.Component {
         </Navbar.Collapse>
       </Navbar>
       <Login key={'Login.hidden.' + this.props.auth.succesfullLogin} />
-      <SearchKassenzeichen key={'SearchKassenzeichen.hidden.' + this.props.uiState.searchInProgress} />
-
+      <SearchKassenzeichen key={'SearchKassenzeichen.visible.' + this.props.uiState.searchForKassenzeichenVisible} />
       <Settings key={'Settings.visible.' + this.props.uiState.settingsVisible} />
       <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
     </div>
@@ -123,6 +121,7 @@ AppNavbar_.propTypes = {
   uiActions: PropTypes.object,
   kassenzeichenActions: PropTypes.object,
   uiState: PropTypes.object,
+  routing: PropTypes.object,
   mappingActions: PropTypes.object,
   auth: PropTypes.object
 };
