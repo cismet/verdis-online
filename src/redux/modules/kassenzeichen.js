@@ -192,10 +192,9 @@ function searchByPoint(x, y, fitBounds) {
                             dispatch(UiStateActions.showWaiting(false));
                         }, 1000);
                     } else {
-                        dispatch(UiStateActions.showInfo("Suche lieferte keinen eindeutigen Treffer."));
-                        setTimeout(() => {
-                            dispatch(UiStateActions.showWaiting(false));
-                        }, 1000);
+                        //TODO: could show a list with hits but for now just the first hit
+                        dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, fitBounds));
+                        
                     }
                 });
             } else if (response.status === 401) {
