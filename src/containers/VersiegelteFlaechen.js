@@ -33,6 +33,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+//eslint-disable-next-line
 let flaechenPanelRefs={};
 
 const verticalPanelWidth = 280;
