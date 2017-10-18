@@ -29,23 +29,33 @@ export default class FlaechenPanel extends React.Component {
             width: '100%',
             background: background
         };
+        console.log(this.props.flaeche);
+        let area=(<div/>);
+        if (this.props.flaeche.anteil) {
+            area=(<div>{this.props.flaeche.anteil} m&sup2; von {this.props.flaeche.flaecheninfo.groesse_korrektur} m&sup2;</div>);
+        } else {
+            area=(<div>{this.props.flaeche.flaecheninfo.groesse_korrektur} m&sup2;</div>);
+        }
+        let beschreibung=(<div/>);
+        if (this.props.flaeche.flaecheninfo.beschreibung) {
+            beschreibung=(<div>{this.props.flaeche.flaecheninfo.beschreibung.beschreibung}</div>);
+        }
         return (
             <div ref={c=>this.theDiv=c}>
             <Well  onClick={()=>{this.props.flaechenPanelClickHandler(this.props.flaeche);}} bsSize="small" style={styleOverride}>
-            <h5>{this.props.flaeche.flaecheninfo.flaechenart.art + ' ' + this.props.flaeche.flaechenbezeichnung}</h5>
+            
             <table style={{ width: '100%' }}>
                 <tbody>
                 <tr>
-                    <td>{this.props.flaeche.flaecheninfo.groesse_korrektur} m&sup2;</td>
+                    <td><b>{this.props.flaeche.flaecheninfo.flaechenart.art + ' ' + this.props.flaeche.flaechenbezeichnung}</b></td>
+                    <td style={{ textAlign: 'right' }}>{beschreibung}</td>
+                </tr>
+                <tr>
+                    <td>{area}</td>
                     <td style={{ textAlign: 'right' }}>{this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung}</td>
                 </tr>
-                <tr>
-                    <td><FontAwesome name="edit" /> {this.props.flaeche.datum_erfassung}</td>
-                    <td style={{ textAlign: 'right' }}><FontAwesome name="check-circle" /> {this.props.flaeche.datum_veranlagung}</td>
-                </tr>
-                <tr>
-                    <td><FontAwesome name="file" /> {this.props.flaeche.feb_id}</td>
-                </tr>
+                
+               
                 </tbody>
             </table>
             </Well>
