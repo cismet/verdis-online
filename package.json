@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "color-hash": "1.0.3",
     "flexbox-react": "^4.4.0",
     "immutable": "^3.8.1",
     "leaflet": "^1.2.0",
