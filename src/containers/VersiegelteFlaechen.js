@@ -7,7 +7,7 @@ import {
     getQueryObject
 } from '../utils/routingHelper';
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
-import KassenzeichenChartPanel from '../components/KassenzeichenChartPanel';
+import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
@@ -160,17 +160,17 @@ export class VersiegelteFlaechen_ extends React.Component {
       });
     }
     let kassenzeichenPanel;
-    let kassenzeichenHorizontalChartsPanel;
-    let kassenzeichenVerticalChartsPanel;
+    let kassenzeichenHorizontalFlaechenChartsPanel;
+    let kassenzeichenVerticalFlaechenChartsPanel;
 
     if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
       kassenzeichenPanel = <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
     }
     if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
-      kassenzeichenHorizontalChartsPanel = <KassenzeichenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
-      kassenzeichenVerticalChartsPanel = (
+      kassenzeichenHorizontalFlaechenChartsPanel = <KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
+      kassenzeichenVerticalFlaechenChartsPanel = (
         <Flexbox height={"" + horizontalPanelHeight} minWidth={"" + horizontalPanelWidth}>
-          <KassenzeichenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="horizontal" />
+          <KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="horizontal" />
         </Flexbox>
       );
     }
@@ -209,7 +209,7 @@ export class VersiegelteFlaechen_ extends React.Component {
             <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
               {kassenzeichenPanel}
             </Flexbox>
-            {kassenzeichenVerticalChartsPanel}
+            {kassenzeichenVerticalFlaechenChartsPanel}
             {flComps}
           </Flexbox>
         </div>
@@ -231,7 +231,7 @@ export class VersiegelteFlaechen_ extends React.Component {
         <div>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
-            {kassenzeichenHorizontalChartsPanel}
+            {kassenzeichenHorizontalFlaechenChartsPanel}
             {flComps}
           </div>
           <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
