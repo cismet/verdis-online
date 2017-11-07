@@ -6,7 +6,6 @@ import 'proj4leaflet';
 //import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
 import { Layers } from '../components/Layers';
 import ProjGeoJson from '../components/ProjGeoJson';
-import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import { crs25832, proj4crs25832def } from '../constants/gis';
 import proj4 from 'proj4';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
@@ -90,7 +89,7 @@ export class VerdisMap_ extends React.Component {
         })}
         <ProjGeoJson key={JSON.stringify(this.props.mapping)} 
             mappingProps={this.props.mapping} 
-            style={flaechenStyle} 
+            style={this.props.featureCollectionStyle} 
             featureClickHandler={this.featureClick}/>
       </RoutedMap>
     );
@@ -110,6 +109,7 @@ VerdisMap_.propTypes = {
   kassenzeichenActions: PropTypes.object,
   mappingActions: PropTypes.object.isRequired,
   featureClickHandler: PropTypes.func,
+  featureCollectionStyle: PropTypes.func,
 };
 
 export default VerdisMap;

@@ -7,7 +7,7 @@ import {
 } from '../utils/kassenzeichenMappingTools';
 //const FontAwesome = require('react-fontawesome');
 
-const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
+const KassenzeichenFlaechenChartPanel = ({kassenzeichen, orientation}) => {
   const styleOverride = {
     marginBottom: '5px',
     width: '100%'
@@ -77,10 +77,10 @@ const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
     );
   }
 };
-KassenzeichenChartPanel.propTypes = {
+KassenzeichenFlaechenChartPanel.propTypes = {
   kassenzeichen: PropTypes.object,
   orientation: PropTypes.string
 };
 
-export default KassenzeichenChartPanel;
+export default KassenzeichenFlaechenChartPanel;
 

@@ -1,12 +1,11 @@
 import objectAssign from 'object-assign';
 
-import {
-    VERSIEGELTE_FLAECHEN
-} from '../../constants/appModes';
+
 import {
     WAITING_TYPE_MESSAGE,
     WAITING_TYPE_ERROR,
-    WAITING_TYPE_INFO
+    WAITING_TYPE_INFO,
+    appModes as APP_MODES
 } from '../../constants/uiConstants';
 
 
@@ -24,7 +23,8 @@ export const types = {
     SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: 'UI_STATE/SET_KASSENZEICHEN_SEARCH_IN_PROGRESS',
     SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE: 'UI_STATE/SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE',
     SET_KASSENZEICHEN_TOSEARCH_FOR: 'UI_STATE/SET_KASSENZEICHEN_TOSEARCH_FOR',
-    SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE'
+    SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE',
+    SET_MODE: 'UI_STATE/SET_MODE',
 };
 
 
@@ -32,7 +32,8 @@ export const types = {
 const initialState = {
     width: -1,
     height: -1,
-    mainMode: VERSIEGELTE_FLAECHEN,
+    mainMode: APP_MODES.VERSIEGELTE_FLAECHEN,
+    mode: APP_MODES.VERSIEGELTE_FLAECHEN,
     infoElementsEnabled: true,
     chartElementsEnabled: true,
     kanalElementsEnabled: false,
@@ -172,6 +173,12 @@ export default function uiStateReducer(state = initialState, action) {
                 });
                 return newState;
             }
+        case types.SET_MODE:
+            {
+                newState = objectAssign({}, state);
+                newState.mode = action.mode;
+                return newState;
+            }
         default:
             return state;
 
@@ -288,6 +295,12 @@ function screenResize(height, width) {
         height: height,
     };
 }
+function setMode(mode) {
+    return {
+        type: types.SET_MODE,        
+        mode: mode
+    };
+}
 
 //COMPLEXACTIONS
 
@@ -310,4 +323,5 @@ export const actions = {
     changeLayerOpacitySetting,
     changeLayerEnabledSetting,
     screenResize,
+    setMode,
 };
