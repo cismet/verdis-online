@@ -8,6 +8,7 @@ import Layout from './components/Layout';
 import RedirectVersiegelteFlaechen from './components/RedirectVersiegelteFlaechen';
 //import HomePage from './containers/HomePage';
 import VersiegelteFlaechen from './containers/VersiegelteFlaechen';
+import ESW from './containers/ESW';
 import store from './redux/store';
 import ReactLoading from 'react-loading';
 
@@ -43,7 +44,7 @@ export default class App extends React.Component {
               <Switch>
                 <Route  exact path="/" component={RedirectVersiegelteFlaechen} />  
                 <Route exact path="/versiegelteflaechen/:kassenzeichen?" component={VersiegelteFlaechen} />
-                <Route exact path="/esw/:kassenzeichen?" component={VersiegelteFlaechen} />
+                <Route exact path="/esw/:kassenzeichen?" component={ESW} />
                 <Route exact path="/info/:kassenzeichen?" component={VersiegelteFlaechen} />
                 <Route exact path="/versickerung/:kassenzeichen?" component={VersiegelteFlaechen} />
                 <Route component={NotFoundPage} />

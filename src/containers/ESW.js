@@ -7,14 +7,16 @@ import {
     getQueryObject
 } from '../utils/routingHelper';
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
-import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
-import FlaechenPanel from '../components/FlaechenPanel';
+import KassenzeichenFrontenChartPanel from '../components/KassenzeichenFrontenChartPanel';
+import FrontenPanel from '../components/FrontenPanel';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { appModes as APP_MODES } from '../constants/uiConstants';
-import { flaechenStyle, getFlaechenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+import { frontenStyle,getFrontenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+
+
 
 function mapStateToProps(state) {
   return {
@@ -36,7 +38,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 //eslint-disable-next-line
-let flaechenPanelRefs={};
+let frontenPanelRefs={};
 
 const verticalPanelWidth = 280;
 
@@ -45,16 +47,15 @@ const horizontalPanelWidth = 200;
 
 const switchToBottomWhenSmallerThan = 900;
 
-export class VersiegelteFlaechen_ extends React.Component {
+export class ESW_ extends React.Component {
   constructor(props, context) {
       super(props, context);
       this.kassenZeichenPanelClick = this.kassenZeichenPanelClick.bind(this);
-      this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
+      this.frontenPanelClick = this.frontenPanelClick.bind(this);
       this.checkRouteAndSearch = this.checkRouteAndSearch.bind(this);
-      this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
-      this.flaechenPanelClick = this.flaechenPanelClick.bind(this);        
-      this.flaechenMapClick = this.flaechenMapClick.bind(this);   
-      this.flaechenPanelRefs={};   
+      this.isFrontSelected = this.isFrontSelected.bind(this);
+      this.frontenMapClick = this.frontenMapClick.bind(this);   
+      this.frontenPanelRefs={};   
     }
 
            
@@ -68,13 +69,15 @@ export class VersiegelteFlaechen_ extends React.Component {
 
 
     checkRouteAndSearch() {
-        if (this.props.uiState.mode!==APP_MODES.VERSIEGELTE_FLAECHEN) {
-            this.props.uiStateActions.setMode(APP_MODES.VERSIEGELTE_FLAECHEN);
+        
+        if (this.props.uiState.mode!==APP_MODES.ESW) {
+            this.props.uiStateActions.setMode(APP_MODES.ESW);
             if (this.props.kassenzeichen.id!==-1) {
-                this.props.mappingActions.setFeatureCollection(getFlaechenFeatureCollection(this.props.kassenzeichen));
-                this.props.mappingActions.setSelectedFeatureIndex(null);                
+                this.props.mappingActions.setFeatureCollection(getFrontenFeatureCollection(this.props.kassenzeichen));
+                this.props.mappingActions.setSelectedFeatureIndex(null);
             }            
         }
+        
         if (this.props.uiState.searchForKassenzeichenVisible === false && this.props.uiState.searchInProgress === false) {
             if (typeof this.props.match.params.kassenzeichen !== "undefined" && parseInt(this.props.match.params.kassenzeichen,10) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8,10) ) {
                 if (this.props.auth.user !== null) {
@@ -105,31 +108,29 @@ export class VersiegelteFlaechen_ extends React.Component {
         this.refs.verdismap.getWrappedInstance().fitBounds();
     }
 
-    flaechenPanelClick(flaeche) {
-        this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature)=>{
-            return (feature.properties.id===flaeche.id);
-        });
-        
-         this.flaechenPanelRefs[flaeche.id].scrollToVisible();
-        
+    frontenPanelClick(front) {
+       this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature)=>{
+            return (feature.properties.id===front.id);
+        });     
+         this.frontenPanelRefs[front.id].scrollToVisible();
     }
 
-    flaechenMapClick(event,feature,layer) {
+    frontenMapClick(event,feature,layer) {
         this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
             return (testfeature.properties.id===feature.properties.id);
         });
-        this.flaechenPanelRefs[feature.properties.id].scrollToVisible();
+        this.frontenPanelRefs[feature.properties.id].scrollToVisible();
     }
 
     
 
-    isFlaecheSelected(flaeche) {
+    isFrontSelected(front) {
         return (typeof this.props.mapping.featureCollection !== "undefined" 
             && this.props.mapping.featureCollection.length > 0 
             && typeof this.props.mapping.selectedIndex !== "undefined" 
             && this.props.mapping.featureCollection.length > this.props.mapping.selectedIndex 
             && typeof this.props.mapping.featureCollection[this.props.mapping.selectedIndex] !== "undefined" 
-            && this.props.mapping.featureCollection[this.props.mapping.selectedIndex].properties.id === flaeche.id);
+            && this.props.mapping.featureCollection[this.props.mapping.selectedIndex].properties.id === front.id);
     }
 
   render() {
@@ -147,19 +148,19 @@ export class VersiegelteFlaechen_ extends React.Component {
       'overflow': 'auto',
     };
 
-    let flaechen = [];
-    let flComps = [];
+    let fronten = [];
+    let frComps = [];
 
-    if (this.props.kassenzeichen.flaechen && this.props.uiState.detailElementsEnabled) {
-      flaechen = this.props.kassenzeichen.flaechen.concat().sort((fa, fb) => {
-        if (!isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
-          return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung);
-        } else if (!isNaN(fa.flaechenbezeichnung) && isNaN(fb.flaechenbezeichnung)) {
+    if (this.props.kassenzeichen.fronten && this.props.uiState.detailElementsEnabled) {
+        fronten = this.props.kassenzeichen.fronten.concat().sort((fa, fb) => {
+        if (!isNaN(fa.nummer) && !isNaN(fb.nummer)) {
+          return (+fa.nummer) - (+fb.nummer);
+        } else if (!isNaN(fa.nummer) && isNaN(fb.nummer)) {
           return -1;
-        } else if (isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
+        } else if (isNaN(fa.nummer) && !isNaN(fb.nummer)) {
           return 1;
         } else {
-          if (fa.flaechenbezeichnung < fb.flaechenbezeichnung) {
+          if (fa.nummer < fb.nummer) {
             return -1;
           }
           else {
@@ -169,17 +170,17 @@ export class VersiegelteFlaechen_ extends React.Component {
       });
     }
     let kassenzeichenPanel;
-    let kassenzeichenHorizontalFlaechenChartsPanel;
-    let kassenzeichenVerticalFlaechenChartsPanel;
+    let kassenzeichenFrontenHorizontalChartsPanel;
+    let kassenzeichenFrontenVerticalChartsPanel;
 
     if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
       kassenzeichenPanel = <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
     }
     if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
-      kassenzeichenHorizontalFlaechenChartsPanel = <KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
-      kassenzeichenVerticalFlaechenChartsPanel = (
+      kassenzeichenFrontenHorizontalChartsPanel = <KassenzeichenFrontenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
+      kassenzeichenFrontenVerticalChartsPanel = (
         <Flexbox height={"" + horizontalPanelHeight} minWidth={"" + horizontalPanelWidth}>
-          <KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="horizontal" />
+          <KassenzeichenFrontenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="horizontal" />
         </Flexbox>
       );
     }
@@ -193,45 +194,45 @@ export class VersiegelteFlaechen_ extends React.Component {
     if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
+          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.frontenMapClick}/>
         </div>
       );
     }
     else if (this.props.uiState.width < switchToBottomWhenSmallerThan) {
-      if (flaechen) {
+      if (fronten) {
         let i = 0;
         const that=this;
-        flaechenPanelRefs={};
-        flComps = flaechen.map(function (flaeche) {            
-            const sel=that.isFlaecheSelected(flaeche);
+        frontenPanelRefs={};
+        frComps = fronten.map(function (front) {            
+            const sel=that.isFrontSelected(front);
             return (
-                <Flexbox key={"flex" + (i++) + "." + flaeche.id} height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
-                <FlaechenPanel ref={c => {that.flaechenPanelRefs[flaeche.id]=c;}} key={flaeche.id+"."+sel} selected={sel} flaechenPanelClickHandler={that.flaechenPanelClick} flaeche={flaeche} />
+                <Flexbox key={"flex" + (i++) + "." + front.id} height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
+                <FrontenPanel ref={c => {that.frontenPanelRefs[front.id]=c;}} key={front.id+"."+sel} selected={sel} frontenPanelClickHandler={that.frontenPanelClick} front={front} />
                 </Flexbox>
             );
         });
       }
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
           <Flexbox flexDirection="row" style={detailsStyle} >
             <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
               {kassenzeichenPanel}
             </Flexbox>
-            {kassenzeichenVerticalFlaechenChartsPanel}
-            {flComps}
+            {kassenzeichenFrontenVerticalChartsPanel}
+            {frComps}
           </Flexbox>
         </div>
       );
     }
     else {
-      if (flaechen) {
+      if (fronten) {
         const that=this;        
-        this.flaechenPanelRefs={};        
-        flComps = flaechen.map(function (flaeche) {
-            const sel=that.isFlaecheSelected(flaeche);            
+        this.frontenPanelRefs={};        
+        frComps = fronten.map(function (front) {
+            const sel=that.isFrontSelected(front);            
             return (
-                <FlaechenPanel ref={c => {that.flaechenPanelRefs[flaeche.id]=c;}} key={flaeche.id+"."+sel} selected={sel} flaechenPanelClickHandler={that.flaechenPanelClick} flaeche={flaeche} />
+                <FrontenPanel ref={c => {that.frontenPanelRefs[front.id]=c;}} key={front.id+"."+sel} selected={sel} frontenPanelClickHandler={that.frontenPanelClick} front={front} />
             );
         });
       }
@@ -240,20 +241,20 @@ export class VersiegelteFlaechen_ extends React.Component {
         <div>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
-            {kassenzeichenHorizontalFlaechenChartsPanel}
-            {flComps}
+            {kassenzeichenFrontenHorizontalChartsPanel}
+            {frComps}
           </div>
-          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
         </div>
       );
     }
   }
 }
 
-const VersiegelteFlaechen = connect(mapStateToProps,mapDispatchToProps)(VersiegelteFlaechen_);
-export default VersiegelteFlaechen;
+const ESW = connect(mapStateToProps,mapDispatchToProps)(ESW_);
+export default ESW;
 
-VersiegelteFlaechen_.propTypes = {
+ESW_.propTypes = {
   ui: PropTypes.object,
   kassenzeichen: PropTypes.object,
   mapping: PropTypes.object,
@@ -264,5 +265,4 @@ VersiegelteFlaechen_.propTypes = {
   kassenzeichenActions: PropTypes.object.isRequired,
   uiStateActions: PropTypes.object.isRequired,
   mappingActions: PropTypes.object.isRequired,
-
 };

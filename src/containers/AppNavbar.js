@@ -10,6 +10,7 @@ import Settings from './Settings';
 import Waiting from './Waiting';
 import Login from './Login';
 import SearchKassenzeichen from './SearchKassenzeichen';
+import { appModes as APP_MODES } from '../constants/uiConstants';
 
 
 const FontAwesome = require('react-fontawesome');
@@ -18,8 +19,9 @@ function mapStateToProps(state) {
   return {
     uiState: state.uiState,
     auth: state.auth,
-    routing: state.routing
-  };
+    routing: state.routing,
+    kassenzeichen: state.kassenzeichen
+};
 }
 function mapDispatchToProps(dispatch) {
   return {
@@ -75,6 +77,29 @@ export class AppNavbar_ extends React.Component {
       username = this.props.auth.user;
     }
 
+
+    let modeMenuTitle;
+
+    switch (this.props.uiState.mode){
+        case APP_MODES.VERSIEGELTE_FLAECHEN:
+            modeMenuTitle="Versiegelte Flächen";
+            break;
+        case APP_MODES.ESW:
+            modeMenuTitle="ESW";
+            break;
+        case APP_MODES.INFO:
+            modeMenuTitle="Info";
+            break;
+        case APP_MODES.VERSICKERUNG:
+            modeMenuTitle="Versickerung";
+    }
+
+    let kassz="";
+
+    if (this.props.kassenzeichen.id!==-1) {
+        kassz="/"+this.props.kassenzeichen.kassenzeichennummer8;
+    }
+    
     return (<div>
       <Navbar  inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>
@@ -85,9 +110,9 @@ export class AppNavbar_ extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav pullLeft>
-            <NavDropdown eventKey={1} title="Versiegelte Flächen" id="basic-nav-dropdown">
-              <MenuItem eventKey={1.1} href="#/versiegelteflaechen">Versiegelte Flächen</MenuItem>
-              <MenuItem eventKey={1.2} href="#/esw">ESW</MenuItem>
+            <NavDropdown eventKey={1} title={modeMenuTitle} id="basic-nav-dropdown">
+              <MenuItem eventKey={1.1} href={"#/versiegelteflaechen"+kassz+this.props.routing.location.search}>Versiegelte Flächen</MenuItem>
+              <MenuItem eventKey={1.2} href={"#/esw"+kassz+this.props.routing.location.search}>ESW</MenuItem>
               <MenuItem eventKey={1.3} href="#/info">Info</MenuItem>
               <MenuItem eventKey={1.4} href="#/versickerung">Versickerung</MenuItem>
             </NavDropdown>
@@ -121,6 +146,7 @@ AppNavbar_.propTypes = {
   kassenzeichenActions: PropTypes.object,
   uiState: PropTypes.object,
   routing: PropTypes.object,
+  kassenzeichen: PropTypes.object,
   mappingActions: PropTypes.object,
   auth: PropTypes.object
 };

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Well } from 'react-bootstrap';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
-const FontAwesome = require('react-fontawesome');
+//const FontAwesome = require('react-fontawesome');
 
 
 //const FlaechenPanel = ({flaeche,selected,flaechenPanelClickHandler,inputRef}) => {
@@ -29,7 +29,6 @@ export default class FlaechenPanel extends React.Component {
             width: '100%',
             background: background
         };
-        console.log(this.props.flaeche);
         let area=(<div/>);
         if (this.props.flaeche.anteil) {
             area=(<div>{this.props.flaeche.anteil} m&sup2; von {this.props.flaeche.flaecheninfo.groesse_korrektur} m&sup2;</div>);

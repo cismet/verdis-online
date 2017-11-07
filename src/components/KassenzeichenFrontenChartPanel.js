@@ -3,28 +3,38 @@ import React from 'react';
 import { Well } from 'react-bootstrap';
 import { PieChart, Pie, Legend, Cell, Tooltip } from 'recharts';
 import {
-  getColorFromFlaechenArt
+  getColorForFront
 } from '../utils/kassenzeichenMappingTools';
+
+import { get } from 'lodash';
 //const FontAwesome = require('react-fontawesome');
 
-const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
+const KassenzeichenFrontenChartPanel = ({kassenzeichen, orientation}) => {
+  
   const styleOverride = {
     marginBottom: '5px',
     width: '100%'
   };
 
   const statsFA = new Map();
-  if (kassenzeichen.flaechen) {
+  if (kassenzeichen.fronten) {
     
-    kassenzeichen.flaechen.forEach((flaeche) => {
-      let sumFA = statsFA.get(flaeche.flaecheninfo.flaechenart.art_abkuerzung);
-      if (sumFA) {
-        statsFA.set(flaeche.flaecheninfo.flaechenart.art_abkuerzung, flaeche.flaecheninfo.groesse_korrektur + sumFA);
-      }
-      else {
-        statsFA.set(flaeche.flaecheninfo.flaechenart.art_abkuerzung, flaeche.flaecheninfo.groesse_korrektur);
-      }
-    });
+    for (let i=0; i < kassenzeichen.fronten.length; i++) {
+        let front=kassenzeichen.fronten[i];
+        let laenge=front.frontinfo.laenge_korrektur;
+        let rkey="keine Reinigung";
+        if (front.frontinfo.lage_sr && front.frontinfo.lage_sr.sr_klasse && front.frontinfo.lage_sr.sr_klasse.key) {
+            rkey=front.frontinfo.lage_sr.sr_klasse.key
+        }
+        let key= rkey + " " + get(front,"frontinfo.strasse.name","");
+        let sumFA= statsFA.get(key);
+        if (sumFA) {
+            statsFA.set(key, laenge + sumFA);
+        }
+        else{
+            statsFA.set(key, laenge);
+        } 
+    }
   }
   const statsFAData = [];
   for (let key of statsFA.keys()) {
@@ -34,22 +44,21 @@ const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
     statsFAData.push(o);
   }
 
-
   if (orientation === "vertical") {
     return (
       <Well bsSize="small" style={styleOverride}>
         <h4>Veranlagung</h4>
-        <PieChart width={210} height={200}>
-          <Pie data={statsFAData}  cx={120} cy={80} innerRadius={20} outerRadius={80} dataKey="value">
+        <PieChart width={210} height={170+statsFAData.length*20}>
+          <Pie data={statsFAData}   cx={120} cy={75} innerRadius={20} outerRadius={80} dataKey="value">
             {
               statsFAData.map((entry) => {
                 return (
-                  <Cell key={"color.for." + entry.name} fill={getColorFromFlaechenArt(entry.name)} />
+                  <Cell key={"color.for." + entry.name} fill={getColorForFront(entry.name)} />
                 );
               })
             }
           </Pie>
-          <Legend />
+          <Legend  verticalAlign="bottom" align="left" />
           <Tooltip />
         </PieChart>
 
@@ -65,22 +74,23 @@ const KassenzeichenChartPanel = ({kassenzeichen, orientation}) => {
             {
               statsFAData.map((entry) => {
                 return (
-                  <Cell key={"color.for." + entry.name} fill={getColorFromFlaechenArt(entry.name)} />
+                  <Cell key={"color.for." + entry.name} fill={getColorForFront(entry.name)} />
                 );
               })
             }
           </Pie>
           <Tooltip />
+          
         </PieChart>
 
       </Well>
     );
   }
 };
-KassenzeichenChartPanel.propTypes = {
+KassenzeichenFrontenChartPanel.propTypes = {
   kassenzeichen: PropTypes.object,
   orientation: PropTypes.string
 };
 
-export default KassenzeichenChartPanel;
+export default KassenzeichenFrontenChartPanel;
 

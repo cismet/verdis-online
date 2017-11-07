@@ -4,12 +4,14 @@ import {
     DOMAIN
 } from '../../constants/cids';
 
+import { appModes as APP_MODES } from '../../constants/uiConstants';
 import { actions as UiStateActions } from './uiState';
 import { actions as AuthActions } from './auth';
 import { actions as MappingActions } from './mapping';
 import { routerActions as RoutingActions } from 'react-router-redux';
 import {
-    getFlaechenFeatureCollection
+    getFlaechenFeatureCollection,
+    getFrontenFeatureCollection,
 } from '../../utils/kassenzeichenMappingTools';
 import {
     changeKassenzeichenInLocation
@@ -82,7 +84,16 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
                     dispatch(UiStateActions.showWaiting(false));                    
                     dispatch(setKassenzeichenObject(kassenzeichenData));
                     dispatch(RoutingActions.push(changeKassenzeichenInLocation(state.routing.location,kassenzeichenData.kassenzeichennummer8)));
-                    dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                    switch (state.uiState.mode) {
+                        case APP_MODES.VERSIEGELTE_FLAECHEN:
+                            dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                            break;                    
+                        case APP_MODES.ESW:
+                            dispatch(MappingActions.setFeatureCollection(getFrontenFeatureCollection(kassenzeichenData)));
+                            break;                    
+                        case APP_MODES.INFO:
+                        case APP_MODES.VERSICKERUNG:
+                    }
                     dispatch(MappingActions.setSelectedFeatureIndex(null));
                     
                     dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
