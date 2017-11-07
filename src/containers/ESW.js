@@ -207,7 +207,7 @@ export class ESW_ extends React.Component {
             const sel=that.isFrontSelected(front);
             return (
                 <Flexbox key={"flex" + (i++) + "." + front.id} height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
-                <FrontenPanel ref={c => {that.frontenPanelRefs[front.id]=c;}} key={front.id+"."+sel} selected={sel} frontenPanelClickHandler={that.frontenPanelClick} front={front} />
+                <FrontenPanel ref={c => {that.frontenPanelRefs[front.id]=c;}} key={front.id+"."+sel} selected={sel} frontenPanelClickHandler={that.frontenPanelClick} front={front} orientation="horizontal"/>
                 </Flexbox>
             );
         });
@@ -230,9 +230,9 @@ export class ESW_ extends React.Component {
         const that=this;        
         this.frontenPanelRefs={};        
         frComps = fronten.map(function (front) {
-            const sel=that.isFrontSelected(front);            
+            const sel=that.isFrontSelected(front); 
             return (
-                <FrontenPanel ref={c => {that.frontenPanelRefs[front.id]=c;}} key={front.id+"."+sel} selected={sel} frontenPanelClickHandler={that.frontenPanelClick} front={front} />
+                <FrontenPanel ref={c => {that.frontenPanelRefs[front.id]=c;}} key={front.id+"."+sel} selected={sel} frontenPanelClickHandler={that.frontenPanelClick} front={front} orientation="vertical"/>
             );
         });
       }

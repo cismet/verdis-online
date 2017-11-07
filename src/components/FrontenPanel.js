@@ -44,6 +44,7 @@ export default class FrontenPanel extends React.Component {
         const styleOverride = {
             marginBottom: '5px',
             width: '100%',
+            height: '100%',
             background: background
         };
 
@@ -59,7 +60,6 @@ export default class FrontenPanel extends React.Component {
         if (this.props.front.frontinfo.lage_sr && this.props.front.frontinfo.lage_sr.strasse.name) {
             strasse=this.props.front.frontinfo.lage_sr.strasse.name;
         }
-
         return (
             <div ref={c=>this.theDiv=c}>
             <Well  onClick={()=>{this.props.frontenPanelClickHandler(this.props.front);}} bsSize="small" style={styleOverride}>
@@ -91,8 +91,8 @@ export default class FrontenPanel extends React.Component {
                 </tbody>
             </table>
             <div style={{ textAlign: 'right' }}>{get(this,"props.front.frontinfo.lage_sr.sr_bem")}</div>
-            <div style={this.hideOrShowStyle((this.props.selected && this.props.front.frontinfo.sr_bem),{ textAlign: 'left' })}><br/><b>Bemerkung:</b><br/>{this.props.front.frontinfo.sr_bem}</div>
-            <div style={this.hideOrShowStyle((this.props.selected && this.props.front.frontinfo.winkel),{ textAlign: 'left' })}><br/><b>Winkel:</b>&nbsp;{this.props.front.frontinfo.winkel}</div>
+            <div style={this.hideOrShowStyle(((this.props.selected||this.props.orientation==="horizontal") && this.props.front.frontinfo.sr_bem),{ textAlign: 'left' })}><br/><b>Bemerkung:</b><br/>{this.props.front.frontinfo.sr_bem}</div>
+            <div style={this.hideOrShowStyle(((this.props.selected||this.props.orientation==="horizontal") && this.props.front.frontinfo.winkel),{ textAlign: 'left' })}><br/><b>Winkel:</b>&nbsp;{this.props.front.frontinfo.winkel}</div>
             </Well>
             </div>
         );
@@ -104,5 +104,6 @@ FrontenPanel.propTypes = {
     inputRef: PropTypes.object,
     selected: PropTypes.bool,
     frontenPanelClickHandler: PropTypes.func,
+    orientation: PropTypes.string
 };
 

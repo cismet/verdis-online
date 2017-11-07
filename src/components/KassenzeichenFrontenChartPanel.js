@@ -65,12 +65,12 @@ const KassenzeichenFrontenChartPanel = ({kassenzeichen, orientation}) => {
       </Well>
     );
   }
-  else {
+  else { //horizontal
     return (
       <Well bsSize="small" style={styleOverride}>
         <h4>Veranlagung</h4>
         <PieChart width={140} height={100}>
-          <Pie data={statsFAData} cx={85} cy={45} innerRadius={20} outerRadius={45} dataKey="value" >
+          <Pie data={statsFAData} cx={70} cy={45} innerRadius={20} outerRadius={45} dataKey="value" >
             {
               statsFAData.map((entry) => {
                 return (
