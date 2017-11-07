@@ -27,6 +27,7 @@ export default class FlaechenPanel extends React.Component {
         const styleOverride = {
             marginBottom: '5px',
             width: '100%',
+            height: '100%',
             background: background
         };
         let area=(<div/>);

@@ -41,7 +41,13 @@ export default class FrontenPanel extends React.Component {
             background = 'grey';
         }
 
-        const styleOverride = {
+        const styleOverrideHorizontal = {
+            marginBottom: '5px',
+            width: '250',
+            height: '100%',
+            background: background
+        };
+        const styleOverrideVertical = {
             marginBottom: '5px',
             width: '100%',
             height: '100%',
@@ -60,6 +66,17 @@ export default class FrontenPanel extends React.Component {
         if (this.props.front.frontinfo.lage_sr && this.props.front.frontinfo.lage_sr.strasse.name) {
             strasse=this.props.front.frontinfo.lage_sr.strasse.name;
         }
+
+        let styleOverride;
+        if (this.props.orientation==="vertical") {
+            styleOverride=styleOverrideVertical;
+        }
+        else {
+            styleOverride=styleOverrideHorizontal;
+            
+        }
+
+
         return (
             <div ref={c=>this.theDiv=c}>
             <Well  onClick={()=>{this.props.frontenPanelClickHandler(this.props.front);}} bsSize="small" style={styleOverride}>
