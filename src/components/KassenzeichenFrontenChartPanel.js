@@ -17,7 +17,7 @@ const KassenzeichenFrontenChartPanel = ({kassenzeichen, orientation}) => {
   };
 
   const statsFA = new Map();
-  if (kassenzeichen.fronten) {
+  if (kassenzeichen.fronten && kassenzeichen.fronten.length>0) {
     
     for (let i=0; i < kassenzeichen.fronten.length; i++) {
         let front=kassenzeichen.fronten[i];
@@ -35,6 +35,13 @@ const KassenzeichenFrontenChartPanel = ({kassenzeichen, orientation}) => {
             statsFA.set(key, laenge);
         } 
     }
+  }
+  else {
+    return (
+        <Well bsSize="small" style={styleOverride}>
+          <h4>Es sind keine Fronten für die Erhebung von Stra&szlig;enreinigungsgeb&uuml;hren vorhanden</h4>
+        </Well>
+      );      
   }
   const statsFAData = [];
   for (let key of statsFA.keys()) {

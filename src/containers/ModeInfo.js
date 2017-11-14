@@ -17,7 +17,6 @@ import { appModes as APP_MODES } from '../constants/uiConstants';
 import { kassenzeichenGeometrienStyle,getKassenzeichenInfoFeatureCollection } from '../utils/kassenzeichenMappingTools';
 
 
-
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
