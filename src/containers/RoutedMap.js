@@ -93,7 +93,9 @@ componentDidUpdate() {
           }
         }
         else {
-          this.leafletMap.leafletElement.fitBounds(this.props.mapping.autoFitBoundsTarget);        
+            if (this.props.mapping.autoFitBoundsTarget && this.props.mapping.autoFitBoundsTarget.isValid()){
+                this.leafletMap.leafletElement.fitBounds(this.props.mapping.autoFitBoundsTarget);        
+            }
         }
         this.props.mappingActions.setAutoFit(false);
       }
