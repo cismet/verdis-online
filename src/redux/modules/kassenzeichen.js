@@ -12,6 +12,7 @@ import { routerActions as RoutingActions } from 'react-router-redux';
 import {
     getFlaechenFeatureCollection,
     getFrontenFeatureCollection,
+    getKassenzeichenInfoFeatureCollection,
 } from '../../utils/kassenzeichenMappingTools';
 import {
     changeKassenzeichenInLocation
@@ -92,7 +93,13 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
                             dispatch(MappingActions.setFeatureCollection(getFrontenFeatureCollection(kassenzeichenData)));
                             break;                    
                         case APP_MODES.INFO:
+                            dispatch(MappingActions.setFeatureCollection(getKassenzeichenInfoFeatureCollection(kassenzeichenData)));
+                            break;                    
                         case APP_MODES.VERSICKERUNG:
+                            dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                            break;
+                        default:
+
                     }
                     dispatch(MappingActions.setSelectedFeatureIndex(null));
                     

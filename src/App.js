@@ -7,8 +7,9 @@ import NotFoundPage from './components/NotFoundPage';
 import Layout from './components/Layout';
 import RedirectVersiegelteFlaechen from './components/RedirectVersiegelteFlaechen';
 //import HomePage from './containers/HomePage';
-import VersiegelteFlaechen from './containers/VersiegelteFlaechen';
-import ESW from './containers/ESW';
+import ModeVersiegelteFlaechen from './containers/ModeVersiegelteFlaechen';
+import ModeESW from './containers/ModeESW';
+import ModeInfo from './containers/ModeInfo';
 import store from './redux/store';
 import ReactLoading from 'react-loading';
 
@@ -43,10 +44,10 @@ export default class App extends React.Component {
               <Route component={Layout}/>   
               <Switch>
                 <Route  exact path="/" component={RedirectVersiegelteFlaechen} />  
-                <Route exact path="/versiegelteflaechen/:kassenzeichen?" component={VersiegelteFlaechen} />
-                <Route exact path="/esw/:kassenzeichen?" component={ESW} />
-                <Route exact path="/info/:kassenzeichen?" component={VersiegelteFlaechen} />
-                <Route exact path="/versickerung/:kassenzeichen?" component={VersiegelteFlaechen} />
+                <Route exact path="/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
+                <Route exact path="/esw/:kassenzeichen?" component={ModeESW} />
+                <Route exact path="/info/:kassenzeichen?" component={ModeInfo} />
+                <Route exact path="/versickerung/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
                 <Route component={NotFoundPage} />
               </Switch>
             </main>
