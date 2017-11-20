@@ -49,6 +49,7 @@ export class VersiegelteFlaechen_ extends React.Component {
   constructor(props, context) {
       super(props, context);
       this.kassenZeichenPanelClick = this.kassenZeichenPanelClick.bind(this);
+      this.kassenZeichenPanelD3Click = this.kassenZeichenPanelD3Click.bind(this);
       this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
       this.checkRouteAndSearch = this.checkRouteAndSearch.bind(this);
       this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
@@ -103,6 +104,10 @@ export class VersiegelteFlaechen_ extends React.Component {
 
     kassenZeichenPanelClick() {
         this.refs.verdismap.getWrappedInstance().fitBounds();
+    }
+
+    kassenZeichenPanelD3Click() {
+        this.props.kassenzeichenActions.openD3();
     }
 
     flaechenPanelClick(flaeche) {
@@ -173,7 +178,7 @@ export class VersiegelteFlaechen_ extends React.Component {
     let kassenzeichenVerticalFlaechenChartsPanel;
 
     if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
-      kassenzeichenPanel = <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} kassenzeichen={this.props.kassenzeichen} />;
+      kassenzeichenPanel = <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} d3Enabled={this.props.uiState.d3Available} d3Click={this.kassenZeichenPanelD3Click} kassenzeichen={this.props.kassenzeichen} />;
     }
     if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
       kassenzeichenHorizontalFlaechenChartsPanel = <KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;

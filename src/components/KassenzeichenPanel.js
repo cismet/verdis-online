@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Well } from 'react-bootstrap';
-const FontAwesome = require('react-fontawesome');
+import { Well,Button } from 'react-bootstrap';
+import {Icon} from 'react-fa';
 
-const KassenzeichenPanel = ({kassenzeichen, onClick}) => {
+const KassenzeichenPanel = ({kassenzeichen, onClick, d3Click, d3Enabled}) => {
   const styleOverride = {
     marginBottom: '5px',
     width: '100%'
@@ -14,6 +14,16 @@ const KassenzeichenPanel = ({kassenzeichen, onClick}) => {
   } else {
     locker = "unlock";
   }
+  let d3;
+  if (d3Enabled) {
+      d3=(
+        <Button block show={d3Enabled} onClick={d3Click}> <Icon name="file-pdf-o" /> in d.3 &ouml;ffnen</Button>
+      )
+      
+  }
+  else {
+      d3=(<div/>);
+  }
 
   return (
     <Well onClick={onClick} bsSize="small" style={styleOverride}>
@@ -23,16 +33,20 @@ const KassenzeichenPanel = ({kassenzeichen, onClick}) => {
         <tbody>
           <tr>
             <td><h2>{kassenzeichen.kassenzeichennummer8}</h2></td>
-            <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}><FontAwesome name={locker} /></td>
+            <td style={{ textAlign: 'right', verticalAlign: 'bottom' }}><Icon name={locker} /></td>
           </tr>
         </tbody>
       </table>
+      {d3}
     </Well>
   );
 };
 KassenzeichenPanel.propTypes = {
   kassenzeichen: PropTypes.object,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  d3Click: PropTypes.func,
+  d3Enabled: PropTypes.bool
+  
 };
 
 export default KassenzeichenPanel;

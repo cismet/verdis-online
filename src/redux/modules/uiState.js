@@ -25,6 +25,7 @@ export const types = {
     SET_KASSENZEICHEN_TOSEARCH_FOR: 'UI_STATE/SET_KASSENZEICHEN_TOSEARCH_FOR',
     SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE',
     SET_MODE: 'UI_STATE/SET_MODE',
+    SET_D3_AVAILABILITY: "UI_STATE/SET_D3_AVAILABILITY",
 };
 
 
@@ -47,6 +48,8 @@ const initialState = {
     waitingMessage: null,
     waitingType: WAITING_TYPE_MESSAGE,
     waitingUIAnimation: true,
+
+    d3Available:false,
 
     searchInProgress: false,
     kassenzeichenToSearchFor: null,
@@ -179,6 +182,12 @@ export default function uiStateReducer(state = initialState, action) {
                 newState.mode = action.mode;
                 return newState;
             }
+        case types.SET_D3_AVAILABILITY:
+            {
+                newState = objectAssign({}, state);
+                newState.d3Available = action.available;
+                return newState;
+            }
         default:
             return state;
 
@@ -301,6 +310,12 @@ function setMode(mode) {
         mode: mode
     };
 }
+function setD3Availability(available) {
+    return {
+        type: types.SET_D3_AVAILABILITY,        
+        available: available
+    };
+}
 
 //COMPLEXACTIONS
 
@@ -324,4 +339,5 @@ export const actions = {
     changeLayerEnabledSetting,
     screenResize,
     setMode,
+    setD3Availability,
 };
