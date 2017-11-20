@@ -234,7 +234,7 @@ function openD3() {
     return function (dispatch, getState) {
         const state = getState();
      
-            fetch("https:/localhost.certified.by.cismet.de:3033/open-d3?kassenzeichen=" + state.kassenzeichen.kassenzeichennummer8, {method: 'get'})
+            fetch("https://localhost.certified.by.cismet.de:3033/open-d3?kassenzeichen=" + state.kassenzeichen.kassenzeichennummer8, {method: 'get'})
                 .then(function (response) {
                     if (response.status === 200) {
                         //console.log(response);
