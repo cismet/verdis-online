@@ -234,7 +234,7 @@ function openD3() {
     return function (dispatch, getState) {
         const state = getState();
      
-            fetch("http://localhost:3033/open-d3?kassenzeichen=" + state.kassenzeichen.kassenzeichennummer8, {method: 'get'})
+            fetch("https:/localhost.certified.by.cismet.de:3033/open-d3?kassenzeichen=" + state.kassenzeichen.kassenzeichennummer8, {method: 'get'})
                 .then(function (response) {
                     if (response.status === 200) {
                         //console.log(response);
@@ -248,7 +248,7 @@ function openD3() {
 }
 function d3AvailabilityCheck() {
     return function (dispatch) {
-        fetch("http://localhost:3033/open-d3-available", {method: 'head'})
+        fetch("https://localhost.certified.by.cismet.de:3033/open-d3-available", {method: 'head'})
             .then(function (response) {
                 dispatch(UiStateActions.setD3Availability(response.status === 200));
             })
