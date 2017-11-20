@@ -66,6 +66,7 @@ function setKassenzeichenObject(kassenzeichenObject) {
 //ACTIONS
 function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
     return function (dispatch, getState) {
+        dispatch(d3AvailabilityCheck());
         dispatch(UiStateActions.setKassenzeichenSearchInProgress(true));        
         dispatch(UiStateActions.showWaiting(true, "Kassenzeichen laden ..."));
         const state = getState();
@@ -229,10 +230,40 @@ function searchByPoint(x, y, fitBounds) {
 
     };
 }
+function openD3() {
+    return function (dispatch, getState) {
+        const state = getState();
+     
+            fetch("http://localhost:3033/open-d3?kassenzeichen=" + state.kassenzeichen.kassenzeichennummer8, {method: 'get'})
+                .then(function (response) {
+                    if (response.status === 200) {
+                        //console.log(response);
+                    } else {
+                        dispatch(UiStateActions.setD3Availability(false));
+                    }
+                }).catch(()=>{
+            dispatch(UiStateActions.setD3Availability(false));
+        });
+    };
+}
+function d3AvailabilityCheck() {
+    return function (dispatch) {
+        fetch("http://localhost:3033/open-d3-available", {method: 'head'})
+            .then(function (response) {
+                dispatch(UiStateActions.setD3Availability(response.status === 200));
+            })
+            .catch(() => {
+                dispatch(UiStateActions.setD3Availability(false));
+            });
+    };
+}
+
 
 export const actions = {
     setKassenzeichenObject,
     searchByKassenzeichenId,
     searchByKassenzeichen,
-    searchByPoint
+    searchByPoint,
+    openD3,
+    d3AvailabilityCheck,
 };
