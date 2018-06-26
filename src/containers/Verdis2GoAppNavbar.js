@@ -111,10 +111,10 @@ export class AppNavbar_ extends React.Component {
         <Navbar.Collapse>
           <Nav pullLeft>
             <NavDropdown eventKey={1} title={modeMenuTitle} id="basic-nav-dropdown">
-              <MenuItem eventKey={1.1} href={"#/versiegelteflaechen"+kassz+this.props.routing.location.search}>Versiegelte Flächen</MenuItem>
-              <MenuItem eventKey={1.2} href={"#/esw"+kassz+this.props.routing.location.search}>ESW</MenuItem>
-              <MenuItem eventKey={1.3} href="#/info">Info</MenuItem>
-              <MenuItem eventKey={1.4} href="#/versickerung">Versickerung</MenuItem>
+              <MenuItem eventKey={1.1} href={"#/2go/versiegelteflaechen"+kassz+this.props.routing.location.search}>Versiegelte Flächen</MenuItem>
+              <MenuItem eventKey={1.2} href={"#/2go/esw"+kassz+this.props.routing.location.search}>ESW</MenuItem>
+              <MenuItem eventKey={1.3} href="#/2go/info">Info</MenuItem>
+              <MenuItem eventKey={1.4} href="#/2go/versickerung">Versickerung</MenuItem>
             </NavDropdown>
           </Nav>
           <Nav pullRight>

@@ -15,6 +15,7 @@ import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { frontenStyle,getFrontenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+import AppNavbar from '../containers/Verdis2GoAppNavbar';
 
 
 
@@ -115,7 +116,7 @@ export class ESW_ extends React.Component {
          this.frontenPanelRefs[front.id].scrollToVisible();
     }
 
-    frontenMapClick(event,feature,layer) {
+    frontenMapClick(event,feature) {
         this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
             return (testfeature.properties.id===feature.properties.id);
         });
@@ -134,6 +135,7 @@ export class ESW_ extends React.Component {
     }
 
   render() {
+    let map;
     let mapHeight;
     if (this.props.uiState.height) {
       mapHeight = this.props.uiState.height - 55;
@@ -212,7 +214,7 @@ export class ESW_ extends React.Component {
             );
         });
       }
-      return (
+      map = (
         <div>
           <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
           <Flexbox flexDirection="row" style={detailsStyle} >
@@ -237,7 +239,7 @@ export class ESW_ extends React.Component {
         });
       }
 
-      return (
+      map = (
         <div>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
@@ -248,6 +250,12 @@ export class ESW_ extends React.Component {
         </div>
       );
     }
+    return (
+        <div>
+            <AppNavbar />
+            {map}
+        </div>
+      );
   }
 }
 

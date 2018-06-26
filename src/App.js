@@ -43,11 +43,13 @@ export default class App extends React.Component {
             <main>   
               <Route component={Layout}/>   
               <Switch>
-                <Route  exact path="/" component={RedirectVersiegelteFlaechen} />  
-                <Route exact path="/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
-                <Route exact path="/esw/:kassenzeichen?" component={ModeESW} />
-                <Route exact path="/info/:kassenzeichen?" component={ModeInfo} />
-                <Route exact path="/versickerung/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
+                {/* <Route  exact path="/2go" component={RedirectVersiegelteFlaechen} />   */}
+
+                <Route  exact path="/2go" component={RedirectVersiegelteFlaechen} />  
+                <Route exact path="/2go/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
+                <Route exact path="/2go/esw/:kassenzeichen?" component={ModeESW} />
+                <Route exact path="/2go/info/:kassenzeichen?" component={ModeInfo} />
+                <Route exact path="/2go/versickerung/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
                 <Route component={NotFoundPage} />
               </Switch>
             </main>

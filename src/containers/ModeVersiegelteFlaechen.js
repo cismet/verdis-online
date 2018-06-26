@@ -15,6 +15,7 @@ import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle, getFlaechenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+import AppNavbar from '../containers/Verdis2GoAppNavbar';
 
 function mapStateToProps(state) {
   return {
@@ -119,7 +120,7 @@ export class VersiegelteFlaechen_ extends React.Component {
         
     }
 
-    flaechenMapClick(event,feature,layer) {
+    flaechenMapClick(event,feature) {
         this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
             return (testfeature.properties.id===feature.properties.id);
         });
@@ -138,6 +139,7 @@ export class VersiegelteFlaechen_ extends React.Component {
     }
 
   render() {
+    let map;
     let mapHeight;
     if (this.props.uiState.height) {
       mapHeight = this.props.uiState.height - 55;
@@ -196,7 +198,7 @@ export class VersiegelteFlaechen_ extends React.Component {
       !this.props.uiState.detailElementsEnabled;
 
     if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
-      return (
+      map = (
         <div>
           <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
         </div>
@@ -216,7 +218,7 @@ export class VersiegelteFlaechen_ extends React.Component {
             );
         });
       }
-      return (
+      map = (
         <div>
           <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
           <Flexbox flexDirection="row" style={detailsStyle} >
@@ -241,7 +243,7 @@ export class VersiegelteFlaechen_ extends React.Component {
         });
       }
 
-      return (
+      map=(
         <div>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
@@ -252,6 +254,13 @@ export class VersiegelteFlaechen_ extends React.Component {
         </div>
       );
     }
+
+    return (
+        <div>
+            <AppNavbar />
+            {map}
+        </div>
+      );
   }
 }
 

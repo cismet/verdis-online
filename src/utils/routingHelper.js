@@ -32,7 +32,13 @@ export function getQueryObject(search) {
 }
 
 export function changeKassenzeichenInLocation(location,kasznr)  {
-    let splitted=location.pathname.split("/");
-    let out= "/"+splitted[1]+"/"+kasznr+location.search;
+    let withoutKassz=location.pathname.replace(/\d+$/, "");
+    let lastSlash=withoutKassz.lastIndexOf("/");
+    let out;
+    if (lastSlash+1===withoutKassz.length){
+        out=withoutKassz+kasznr+location.search;
+    } else {
+        out=withoutKassz+"/"+kasznr+location.search;
+    }
     return out;
 }
