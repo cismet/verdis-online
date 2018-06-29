@@ -20,7 +20,6 @@ import {
 
 
 
-
 ///TYPES
 export const types = {
     SET_KASSENZEICHEN: 'KASSENZEICHEN/SET_KASSENZEICHEN'
@@ -121,6 +120,86 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
         });
     };
 }
+
+function getKassenzeichenbySTAC(stac, callback) {
+    return function (dispatch, getState) {
+        let taskParameters={
+           parameters: {
+                STAC: stac
+            }
+        };
+ 
+        let fd = new FormData();
+        fd.append('taskparams',  new Blob([JSON.stringify(taskParameters)], {
+            type: "application/json"
+        }));
+    dispatch(AuthActions.logout());
+    dispatch(AuthActions.setLoginInProgress());
+
+    fetch("http://localhost:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result", {
+        method: 'post',
+        body: fd
+    }).then(function (response) {
+        if (response.status >= 200 && response.status < 300) {
+            response.json().then(function (actionResult) {
+                console.log(actionResult);
+
+                const kassenzeichenData=JSON.parse(actionResult.res);
+                console.log(kassenzeichenData);
+                if (kassenzeichenData.nothing) {
+                    dispatch(AuthActions.logout());
+                    if (typeof callback === "function") { 
+                        callback(false);
+                    }
+                    
+                }else {
+                    dispatch(setKassenzeichenObject(kassenzeichenData));
+                    dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                    dispatch(AuthActions.setStac(stac));
+                    if (typeof callback === "function") { 
+                        callback(true);
+                    }
+                }
+            });                                        
+        } else {
+            //Errorhandling
+            dispatch(AuthActions.logout());
+            if (typeof callback === "function") { 
+                callback(false);
+            }
+            // dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. ( ErrorCode: " + response.status + ")"));
+            // dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));                            
+        }
+
+    }).catch(function (err) {
+        // dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
+        // dispatch(UiStateActions.setKassenzeichenSearchInProgress(false)); 
+        console.log("Error in action" +err)    
+        dispatch(AuthActions.logout());
+        if (typeof callback === "function") { 
+            callback(false);
+        }                       
+    });
+                
+    
+    
+                // const body = new FormData();
+                // body.append("taskparams", "{'parameters':{'STAC':'AAAABBBBCCCC'}};type=application/json");
+                
+                // fetch("http://localhost:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result", {
+                // body,
+                // headers: {
+                //     "Content-Type": "multipart/form-data"
+                // },
+                // method: "POST"
+                // }).then(function (response) {
+                //     console.log(response);
+                // });
+    }
+    
+    
+}    
+
 
 function searchByKassenzeichen(kassenzeichen, fitBounds) {    
     return function (dispatch, getState) {
@@ -266,4 +345,5 @@ export const actions = {
     searchByPoint,
     openD3,
     d3AvailabilityCheck,
+    getKassenzeichenbySTAC
 };

@@ -13,6 +13,9 @@ import ModeInfo from './containers/ModeInfo';
 import store from './redux/store';
 import ReactLoading from 'react-loading';
 
+import Landing from './containers/Landing';
+import KassenzeichenViewer from './containers/KassenzeichenViewer';
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -43,8 +46,8 @@ export default class App extends React.Component {
             <main>   
               <Route component={Layout}/>   
               <Switch>
-                {/* <Route  exact path="/2go" component={RedirectVersiegelteFlaechen} />   */}
-
+                <Route  exact path="/" component={Landing} />  
+                <Route  exact path="/meinkassenzeichen" component={KassenzeichenViewer} />  
                 <Route  exact path="/2go" component={RedirectVersiegelteFlaechen} />  
                 <Route exact path="/2go/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
                 <Route exact path="/2go/esw/:kassenzeichen?" component={ModeESW} />
