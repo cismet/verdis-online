@@ -9,10 +9,13 @@ import {
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
 import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
+import Waiting from './Waiting';
+
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
+import { actions as AuthActions } from '../redux/modules/auth';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle, getFlaechenFeatureCollection } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
@@ -33,6 +36,7 @@ function mapDispatchToProps(dispatch) {
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
     uiStateActions: bindActionCreators(UiStateActions, dispatch),
     mappingActions: bindActionCreators(MappingActions, dispatch),
+    authActions: bindActionCreators(AuthActions, dispatch),
     
   };
 }
@@ -49,41 +53,58 @@ const horizontalPanelWidth = 200;
 const switchToBottomWhenSmallerThan = 900;
 
 export class KassenzeichenViewer_ extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.kassenZeichenPanelClick = this.kassenZeichenPanelClick.bind(this);
-        this.kassenZeichenPanelD3Click = this.kassenZeichenPanelD3Click.bind(this);
-        this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
-        this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
-        this.flaechenPanelClick = this.flaechenPanelClick.bind(this);        
-        this.flaechenMapClick = this.flaechenMapClick.bind(this);   
-        this.flaechenPanelRefs={};   
-      }
-  
-             
-      
-    //   componentWillMount() {
-    //   }
-    //   componentDidUpdate() {
-    //   }
-  
-  
-      kassenZeichenPanelClick() {
-          this.refs.verdismap.getWrappedInstance().fitBounds();
-      }
-  
-      kassenZeichenPanelD3Click() {
-          this.props.kassenzeichenActions.openD3();
-      }
-  
-      flaechenPanelClick(flaeche) {
-          this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature)=>{
-              return (feature.properties.id===flaeche.id);
-          });
-          
-           this.flaechenPanelRefs[flaeche.id].scrollToVisible();
-          
-      }
+        constructor(props, context) {
+            super(props, context);
+            this.kassenZeichenPanelClick = this.kassenZeichenPanelClick.bind(this);
+            this.kassenZeichenPanelD3Click = this.kassenZeichenPanelD3Click.bind(this);
+            this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
+            this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
+            this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
+            this.flaechenMapClick = this.flaechenMapClick.bind(this);
+            this.flaechenPanelRefs = {};
+        }
+
+
+
+        //   componentWillMount() {
+        //   }
+        //   componentDidUpdate() {
+        //   }
+
+        componentDidMount() {
+            if (this.props.auth.stac && this.props.auth.succesfullLogin===false){
+                this.props.authActions.setLoginInProgress();
+                this.props.uiStateActions.showInfo("Kassenzeichen wird wieder geladen");
+                this.props.kassenzeichenActions.getKassenzeichenbySTAC(this.props.auth.stac, (success)=> {
+                    if (success===true) {
+                        setTimeout(()=>{
+                            this.props.uiStateActions.showWaiting(false);
+                            this.props.mappingActions.fitAll();
+                        },300);
+                        }
+                });
+            }
+            else {
+                this.props.mappingActions.fitAll();
+            }
+        }
+
+        kassenZeichenPanelClick() {
+            this.refs.verdismap.getWrappedInstance().fitBounds();
+        }
+
+        kassenZeichenPanelD3Click() {
+            this.props.kassenzeichenActions.openD3();
+        }
+
+        flaechenPanelClick(flaeche) {
+            this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature) => {
+                return (feature.properties.id === flaeche.id);
+            });
+
+            this.flaechenPanelRefs[flaeche.id].scrollToVisible();
+
+        }
   
       flaechenMapClick(event,feature) {
           this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
@@ -224,6 +245,7 @@ export class KassenzeichenViewer_ extends React.Component {
         return (
             <div>
                 <AppNavbar />
+                <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
                 <VerdisOnlineModalHelpComponent />
                 {map}
             </div>
@@ -246,4 +268,5 @@ KassenzeichenViewer_.propTypes = {
   kassenzeichenActions: PropTypes.object.isRequired,
   uiStateActions: PropTypes.object.isRequired,
   mappingActions: PropTypes.object.isRequired,
+  authActions: PropTypes.object.isRequired,
 };

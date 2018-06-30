@@ -71,35 +71,7 @@ export class AppNavbar_ extends React.Component {
   }
 
 
-  render() {
-    let username = "nicht angemeldet";
-    if (this.props.auth.user != null) {
-      username = this.props.auth.user;
-    }
-
-
-    let modeMenuTitle;
-
-    switch (this.props.uiState.mode){
-        case APP_MODES.VERSIEGELTE_FLAECHEN:
-            modeMenuTitle="Versiegelte Flächen";
-            break;
-        case APP_MODES.ESW:
-            modeMenuTitle="ESW";
-            break;
-        case APP_MODES.INFO:
-            modeMenuTitle="Info";
-            break;
-        case APP_MODES.VERSICKERUNG:
-            modeMenuTitle="Versickerung";
-    }
-
-    let kassz="";
-
-    if (this.props.kassenzeichen.id!==-1) {
-        kassz="/"+this.props.kassenzeichen.kassenzeichennummer8;
-    }
-    
+  render() {    
     return (<div>
       <Navbar  inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>

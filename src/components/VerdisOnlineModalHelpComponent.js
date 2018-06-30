@@ -93,59 +93,59 @@ export class VerdisOnlineModalHelpComponent_ extends React.Component {
       <Panel.Title toggle>Häufig gestellte Fragen</Panel.Title>
     </Panel.Heading>
     <Panel.Body collapsible>
-        <div>
-            <Link to="hintergrund" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="warning">Hintergrund</Label>{' '}</Link>
+    <font size="3" >
+            <Link  to="hintergrund" containerId="myMenu" style={{textDecoration: 'none'}}>
+            <Label style={{ cursor: "pointer"}}  style={{ cursor: "pointer"}} bsStyle="default">Hintergrund</Label>{' '}</Link>
 
             <Link to="kriterienfrdiebeurteilungvonflchen" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="warning">Kriterien für die Beurteilung von Flächen</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="success">Kriterien für die Beurteilung von Flächen</Label>{' '}</Link>
 
             <Link to="wasbedeutetversiegelt" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="default">Was bedeutet versiegelt?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was bedeutet versiegelt?</Label>{' '}</Link>
 
             <Link to="wasbedeutetindenkanalentwssernd" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="default">Was bedeutet „in den Kanal entwässernd“</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was bedeutet „in den Kanal entwässernd“</Label>{' '}</Link>
 
             <Link to="wannisteineflcheversickernd" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="default">Wann ist eine Fläche versickernd?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Wann ist eine Fläche versickernd?</Label>{' '}</Link>
 
             <Link to="wasisteinedirekteinleitungingewsser" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="primary">Was ist eine „Direkteinleitung in Gewässer“?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was ist eine „Direkteinleitung in Gewässer“?</Label>{' '}</Link>
 
             <Link to="mussmanineinenkanalentwssern" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Muss man in einen Kanal entwässern?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Muss man in einen Kanal entwässern?</Label>{' '}</Link>
 
             <Link to="wasbedeutetabflusswirksamkeit" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Was bedeutet Abflusswirksamkeit?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was bedeutet Abflusswirksamkeit?</Label>{' '}</Link>
 
             <Link to="wasisteinedachflche" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Was ist eine Dachfläche?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was ist eine Dachfläche?</Label>{' '}</Link>
 
             <Link to="wasisteingrndach" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Was ist ein Gründach?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was ist ein Gründach?</Label>{' '}</Link>
 
             <Link to="wasistkopflaster" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Was ist Ökopflaster?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Was ist Ökopflaster?</Label>{' '}</Link>
 
             <Link to="welchenachweisewerdenanerkannt" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Welche Nachweise werden anerkannt?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Welche Nachweise werden anerkannt?</Label>{' '}</Link>
 
             <Link to="wannmssennachweiseeingereichtwerden" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Wann müssen Nachweise eingereicht werden?</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="primary">Wann müssen Nachweise eingereicht werden?</Label>{' '}</Link>
 
             <Link to="regenwasseralsbrauchwasser" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Regenwasser als Brauchwasser</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="warning">Regenwasser als Brauchwasser</Label>{' '}</Link>
 
             <Link to="wasserrechtlicheerlaubnisanzeigeneinerflchenversickerung" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Wasserrechtliche Erlaubnis/Anzeigen einer Flächenversickerung</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="warning">Wasserrechtliche Erlaubnis/Anzeigen einer Flächenversickerung</Label>{' '}</Link>
 
             <Link to="anschluss-undbenutzungszwanggebhrengerechtigkeit" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Anschluss- und Benutzungszwang / Gebührengerechtigkeit</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="warning">Anschluss- und Benutzungszwang / Gebührengerechtigkeit</Label>{' '}</Link>
 
             <Link to="Personalisierung" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label bsStyle="success">Mitwirkungspflicht</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="warning">Mitwirkungspflicht</Label>{' '}</Link>
            
-        </div>
+        </font>
 
 
         <div name="hintergrund">

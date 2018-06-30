@@ -42,6 +42,7 @@ export class Landing_ extends React.Component {
         this.handleSTACInput = this.handleSTACInput.bind(this);   
         this.handleSTAC = this.handleSTAC.bind(this);   
         this.currentSTAC;
+        this.background="background.jpg";
     }
     componentDidMount() {
         if (this.stacInput) {
@@ -59,6 +60,11 @@ export class Landing_ extends React.Component {
         let stac=queryString.parse(this.props.routing.location.search).stac;
 
         this.handleSTAC(stac);
+        if (queryString.parse(this.props.routing.location.search).bg) {
+            this.background=queryString.parse(this.props.routing.location.search).bg;
+        }
+      
+        console.log(this.background);
     }
 
     handleSTACInput(e) {
@@ -88,11 +94,12 @@ export class Landing_ extends React.Component {
                 this.handleSTAC(stac);
             }
         }
+        console.log("url('"+this.background+"')")
         let landingStyle={
             backgroundColor: "red",
             height: this.props.uiState.height,
             width: "100%",
-            background: "url('/images/background.jpg')",
+            background: "url('/images/"+this.background+"')",
             backgroundSize : 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'

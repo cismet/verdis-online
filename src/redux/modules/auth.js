@@ -59,6 +59,7 @@ export default function uiStateReducer(state = initialState, action) {
             newState = objectAssign({}, state);
             newState.stac = action.stac;
             newState.loginInProgress = false;
+            newState.succesfullLogin = true;
 
             return newState;
         }
