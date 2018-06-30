@@ -1,7 +1,8 @@
 import objectAssign from 'object-assign';
 import {
     SERVICE,
-    DOMAIN
+    DOMAIN,
+    STAC_SERVICE
 } from '../../constants/cids';
 
 import { appModes as APP_MODES } from '../../constants/uiConstants';
@@ -71,7 +72,7 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
         const state = getState();
         let username = state.auth.user;
         let pass = state.auth.password;
-        fetch(SERVICE + '/VERDIS_GRUNDIS.KASSENZEICHEN/' + kassenzeichenId + '?role=all&omitNullValues=true&deduplicate=false', {
+        fetch(SERVICE + '/'+DOMAIN+'.KASSENZEICHEN/' + kassenzeichenId + '?role=all&omitNullValues=true&deduplicate=false', {
             method: 'GET',
             headers: {
                 'Authorization': 'Basic ' + btoa(username + '@' + DOMAIN + ':' + pass),
@@ -136,7 +137,7 @@ function getKassenzeichenbySTAC(stac, callback) {
     dispatch(AuthActions.logout());
     dispatch(AuthActions.setLoginInProgress());
 
-    fetch("http://localhost:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result", {
+    fetch(STAC_SERVICE + "/actions/"+DOMAIN+".getMyKassenzeichen/tasks?role=all&resultingInstanceType=result", {
         method: 'post',
         body: fd
     }).then(function (response) {
