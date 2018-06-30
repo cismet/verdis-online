@@ -8,6 +8,7 @@ import { Layers } from '../components/Layers';
 import ProjGeoJson from '../components/ProjGeoJson';
 import { crs25832, proj4crs25832def } from '../constants/gis';
 import proj4 from 'proj4';
+import { appModes as APP_MODES } from '../constants/uiConstants';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { bindActionCreators } from 'redux';
@@ -46,10 +47,12 @@ export class VerdisMap_ extends React.Component {
     }
 
     mapDblClick(event) {
-        const skipFitBounds=true;//event.originalEvent.shiftKey; 
-        const latlon = event.latlng;
-        const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
-        this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],!skipFitBounds);
+        if (this.props.authMode===APP_MODES.USER_PW) {
+            const skipFitBounds=true;//event.originalEvent.shiftKey; 
+            const latlon = event.latlng;
+            const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
+            this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],!skipFitBounds);
+        }
     }
     // mapClick(event) {
     //     console.log(event);
@@ -110,6 +113,12 @@ VerdisMap_.propTypes = {
   mappingActions: PropTypes.object.isRequired,
   featureClickHandler: PropTypes.func,
   featureCollectionStyle: PropTypes.func,
+  authMode: PropTypes.object,
+};
+
+
+VerdisMap_.defaultProps = {
+    authMode: APP_MODES.USER_PW
 };
 
 export default VerdisMap;

@@ -7,5 +7,7 @@ export const appModes = {
     ESW : 'APP_MODE/ESW',
     INFO : 'APP_MODE/INFO',
     VERSICKERUNG : 'APP_MODE/VERSICKERUNG',
+    STAC: 'APP_MODE/STAC',
+    USER_PW: 'APP_MODE/USER_PW',
 };
 

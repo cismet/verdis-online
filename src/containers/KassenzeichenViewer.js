@@ -187,7 +187,7 @@ export class KassenzeichenViewer_ extends React.Component {
         if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
           map = (
             <div>
-              <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
+              <VerdisMap ref="verdismap" authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
             </div>
           );
         }
@@ -207,7 +207,7 @@ export class KassenzeichenViewer_ extends React.Component {
           }
           map = (
             <div>
-              <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+              <VerdisMap ref="verdismap" authMode={APP_MODES.STAC} height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
               <Flexbox flexDirection="row" style={detailsStyle} >
                 <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
                   {kassenzeichenPanel}
@@ -237,7 +237,7 @@ export class KassenzeichenViewer_ extends React.Component {
                 {kassenzeichenHorizontalFlaechenChartsPanel}
                 {flComps}
               </div>
-              <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+              <VerdisMap ref="verdismap" authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
             </div>
           );
         }
