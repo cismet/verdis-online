@@ -9,7 +9,7 @@ import { Panel, Form, FormGroup, Grid, Row,Col } from 'react-bootstrap';
 import Loadable from 'react-loading-overlay';
 
 import { routerActions as RoutingActions } from 'react-router-redux';
-import { actions as MappingActions, constants as MappingConstants } from '../redux/modules/mapping';
+import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as AuthActions } from '../redux/modules/auth';
 import MaskedFormControl from 'react-bootstrap-maskedinput';
@@ -41,7 +41,7 @@ export class Landing_ extends React.Component {
         super(props, context);
         this.handleSTACInput = this.handleSTACInput.bind(this);   
         this.handleSTAC = this.handleSTAC.bind(this);   
-        this.currentSTAC;
+        this.currentSTAC=null;
         this.background="background.jpg";
     }
     componentDidMount() {
@@ -63,8 +63,6 @@ export class Landing_ extends React.Component {
         if (queryString.parse(this.props.routing.location.search).bg) {
             this.background=queryString.parse(this.props.routing.location.search).bg;
         }
-      
-        console.log(this.background);
     }
 
     handleSTACInput(e) {
@@ -94,7 +92,6 @@ export class Landing_ extends React.Component {
                 this.handleSTAC(stac);
             }
         }
-        console.log("url('"+this.background+"')")
         let landingStyle={
             backgroundColor: "red",
             height: this.props.uiState.height,
@@ -118,7 +115,7 @@ export class Landing_ extends React.Component {
                 <Grid>
                     <Row className="show-grid">
                         <Col xs={12} md={12}>
-                            <h1 style={{color:"white"}}><img width={100} src="/images/wuppertal-white.svg"/> verdis-online</h1>
+                            <h1 style={{color:"white"}}><img alt="" width={100} src="/images/wuppertal-white.svg"/> verdis-online</h1>
                         </Col>
                     </Row>
 
@@ -129,7 +126,7 @@ export class Landing_ extends React.Component {
                     <Loadable
                         active={this.props.auth.loginInProgress}
                         spinner
-                        text='Laden der Daten ...'
+                        text="Laden der Daten ..."
                         >
                     <Panel style={panelStyle}>
                         <h3>Zugangscode:</h3>
@@ -180,4 +177,6 @@ Landing_.propTypes = {
   kassenzeichenActions: PropTypes.object.isRequired,
   uiStateActions: PropTypes.object.isRequired,
   mappingActions: PropTypes.object.isRequired,
+  authActions: PropTypes.object.isRequired,
+  routingActions: PropTypes.object.isRequired,
 };

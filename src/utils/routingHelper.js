@@ -2,7 +2,7 @@ import objectAssign from 'object-assign';
 import 'url-search-params-polyfill';
 
 export function modifyQueryPart(search, modifiedParts) {
-    let query = getQueryObject(search)
+    let query = getQueryObject(search);
     let newQuery = objectAssign( query, modifiedParts);
     let pNames = Object.getOwnPropertyNames(newQuery);
     let querypart = "?";
@@ -23,8 +23,10 @@ export function modifyQueryPart(search, modifiedParts) {
 export function getQueryObject(search) {
     let obj = {};
     if(search) {
+        // eslint-disable-next-line
         search.slice(1).split('&').map((item) => {
         const [ k, v ] = item.split('=');
+        // eslint-disable-next-line
         v ? obj[k] = v : null;
       });
     }

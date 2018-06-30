@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {bindActionCreators} from 'redux';
 import {connect} from "react-redux";
-import {Modal, Button, Accordion, Panel, PanelGroup, Label} from 'react-bootstrap';
+import {Modal, Button, Panel, PanelGroup, Label} from 'react-bootstrap';
 import {actions as UiStateActions} from '../redux/modules/uiState';
 import {Icon} from 'react-fa';
 import { Link } from 'react-scroll';
@@ -34,7 +34,7 @@ export class VerdisOnlineModalHelpComponent_ extends React.Component {
         let modalBodyStyle = {
             "overflowY": "auto",
             "maxHeight": this.props.uiState.height - 200
-        }
+        };
 
         return (
             <Modal
@@ -95,7 +95,7 @@ export class VerdisOnlineModalHelpComponent_ extends React.Component {
     <Panel.Body collapsible>
     <font size="3" >
             <Link  to="hintergrund" containerId="myMenu" style={{textDecoration: 'none'}}>
-            <Label style={{ cursor: "pointer"}}  style={{ cursor: "pointer"}} bsStyle="default">Hintergrund</Label>{' '}</Link>
+            <Label style={{ cursor: "pointer"}}  bsStyle="default">Hintergrund</Label>{' '}</Link>
 
             <Link to="kriterienfrdiebeurteilungvonflchen" containerId="myMenu" style={{textDecoration: 'none'}}>
             <Label style={{ cursor: "pointer"}}  bsStyle="success">Kriterien für die Beurteilung von Flächen</Label>{' '}</Link>
@@ -444,7 +444,7 @@ export class VerdisOnlineModalHelpComponent_ extends React.Component {
                                     <a>WebAtlasDE &copy; GeoBasis-DE / BKG 2017</a>, jeweils &uuml;berlagert mit
                                     den jeweils für Ihr Kassenzeichen erfassten versiegelten Flächen.<br/>
                                     <b>Technische Realisierung</b>: <a href="https://cismet.de/" target="_cismet">cismet GmbH</a> auf Basis von <a  href="http://leafletjs.com/" target="_leaflet">Leaflet</a> und <a href="https://cismet.de/#refs" target="_cismet">cids | WuNDa</a><br/>
-                                    <a target="_blank" href="https://cismet.de/datenschutzerklaerung.html">Datenschutzerklärung (Privacy Policy)</a>
+                                    <a target="_blank" rel="noopener noreferrer" href="https://cismet.de/datenschutzerklaerung.html">Datenschutzerklärung (Privacy Policy)</a>
                                     </span>
                             </td>
                             <td>

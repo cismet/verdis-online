@@ -92,6 +92,9 @@ export class AppNavbar_ extends React.Component {
             break;
         case APP_MODES.VERSICKERUNG:
             modeMenuTitle="Versickerung";
+            break;
+        default:
+            modeMenuTitle="-";
     }
 
     let kassz="";

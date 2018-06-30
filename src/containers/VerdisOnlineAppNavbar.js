@@ -2,15 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, Glyphicon } from 'react-bootstrap';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
-import Settings from './Settings';
 import Waiting from './Waiting';
-import Login from './Login';
-import SearchKassenzeichen from './SearchKassenzeichen';
-import { appModes as APP_MODES } from '../constants/uiConstants';
 
 
 const FontAwesome = require('react-fontawesome');

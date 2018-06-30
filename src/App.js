@@ -13,7 +13,7 @@ import ModeInfo from './containers/ModeInfo';
 import store from './redux/store';
 import ReactLoading from 'react-loading';
 
-import Landing from './containers/Landing';
+import Landing from './containers/VerdisOnlineLanding';
 import KassenzeichenViewer from './containers/KassenzeichenViewer';
 
 export default class App extends React.Component {

@@ -3,9 +3,6 @@ import React from 'react';
 import VerdisMap from './VerdisMap';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import {
-    getQueryObject
-} from '../utils/routingHelper';
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
 import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
@@ -17,7 +14,7 @@ import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as AuthActions } from '../redux/modules/auth';
 import { appModes as APP_MODES } from '../constants/uiConstants';
-import { flaechenStyle, getFlaechenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
 import VerdisOnlineModalHelpComponent from '../components/VerdisOnlineModalHelpComponent';
 
