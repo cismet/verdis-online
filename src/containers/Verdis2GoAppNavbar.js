@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem, Glyphicon } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
@@ -11,9 +11,8 @@ import Waiting from './Waiting';
 import Login from './Login';
 import SearchKassenzeichen from './SearchKassenzeichen';
 import { appModes as APP_MODES } from '../constants/uiConstants';
+import {Icon} from 'react-fa';
 
-
-const FontAwesome = require('react-fontawesome');
 
 function mapStateToProps(state) {
   return {
@@ -122,12 +121,12 @@ export class AppNavbar_ extends React.Component {
           </Nav>
           <Nav pullRight>
             <NavItem onClick={this.fitBounds} eventKey={2.0} >Info:</NavItem>
-            <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><FontAwesome name="info-circle" /></NavItem>
-            <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><FontAwesome name="pie-chart" /></NavItem>
-            <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
-            <NavItem disabled className={(this.props.uiState.filterElementEnabled) ? "active" : ""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem>
-            <NavItem className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><FontAwesome name="th-list" /></NavItem>
-            <NavItem eventKey={3} href="#" onSelect={this.showSettings}><Glyphicon glyph="user" /> {username}</NavItem>
+            <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
+            <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" /></NavItem>
+            <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><Icon name="tint" /></NavItem>
+            <NavItem disabled className={(this.props.uiState.filterElementEnabled) ? "active" : ""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><Icon name="filter" /></NavItem>
+            <NavItem className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
+            <NavItem eventKey={3} href="#" onSelect={this.showSettings}><Icon name="user" /> {username}</NavItem>
 
           </Nav>
         </Navbar.Collapse>

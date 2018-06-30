@@ -2,14 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from "react-redux";
-import { Navbar, Nav, NavItem, Glyphicon } from 'react-bootstrap';
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import Waiting from './Waiting';
+import {Icon} from 'react-fa'
 
-
-const FontAwesome = require('react-fontawesome');
 
 function mapStateToProps(state) {
   return {
@@ -77,16 +76,16 @@ export class AppNavbar_ extends React.Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-         
+        
           <Nav pullRight>
             <NavItem onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
-            <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><FontAwesome name="info-circle" /></NavItem>
-            <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><FontAwesome name="pie-chart" /></NavItem>
+            <NavItem onClick={this.showSettings} eventKey={2.3} ><Icon name="file-pdf-o" /></NavItem>
+            <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
+            <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" /></NavItem>
             {/* <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
             <NavItem disabled className={(this.props.uiState.filterElementEnabled) ? "active" : ""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem> */}
-            <NavItem className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><FontAwesome name="th-list" /></NavItem>
-            <NavItem eventKey={3} href="/#/" ><Glyphicon glyph="off" /></NavItem>
-
+            <NavItem className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
+            <NavItem eventKey={3} href="/#/" ><Icon name="power-off" /></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
