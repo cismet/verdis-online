@@ -113,7 +113,7 @@ VerdisMap_.propTypes = {
   mappingActions: PropTypes.object.isRequired,
   featureClickHandler: PropTypes.func,
   featureCollectionStyle: PropTypes.func,
-  authMode: PropTypes.object,
+  authMode: PropTypes.string,
 };
 
 
