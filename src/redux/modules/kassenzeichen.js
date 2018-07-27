@@ -181,26 +181,62 @@ function getKassenzeichenbySTAC(stac, callback) {
             callback(false);
         }                       
     });
-                
-    
-    
-                // const body = new FormData();
-                // body.append("taskparams", "{'parameters':{'STAC':'AAAABBBBCCCC'}};type=application/json");
-                
-                // fetch("http://localhost:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result", {
-                // body,
-                // headers: {
-                //     "Content-Type": "multipart/form-data"
-                // },
-                // method: "POST"
-                // }).then(function (response) {
-                //     console.log(response);
-                // });
-    }
-    
-    
+    };
 }    
 
+function getFEBByStac(stac, callback) {
+    return function (dispatch, getState) {
+        dispatch(UiStateActions.showInfo("FEB wird erzeugt"));        
+
+        let taskParameters={
+            parameters: {
+                STAC: stac
+            }
+        };
+
+        let fd = new FormData();
+        fd.append('taskparams',  new Blob([JSON.stringify(taskParameters)], {
+            type: "application/json"
+        }));
+        console.log("downloadFEB()");
+
+        fetch(STAC_SERVICE + "/actions/"+DOMAIN+".getMyFEB/tasks?role=all&resultingInstanceType=result", {
+            method: 'post',
+            body: fd
+    
+        }).then((response)=>{
+            
+            if (response.status >= 200 && response.status < 300) {
+            return response.json();
+            }
+            else {
+                console.log("Error:" +response.status+ " -> "+response.statusText);
+            
+            }}).catch((e)=>{
+                console.log(e);
+            
+            }).then((result)=> {
+            if (result && !result.error) { 
+
+                let byteCharacters = atob(result.res);
+                let byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);  
+                }   
+
+                let byteArray = new Uint8Array(byteNumbers);
+
+                console.log(result);
+                var blob = new Blob([byteArray], { type: 'application/pdf' });
+                callback(blob);
+                dispatch(UiStateActions.showWaiting(false));        
+
+
+            }
+            
+        });
+    };
+}
 
 function searchByKassenzeichen(kassenzeichen, fitBounds) {    
     return function (dispatch, getState) {
@@ -346,5 +382,6 @@ export const actions = {
     searchByPoint,
     openD3,
     d3AvailabilityCheck,
-    getKassenzeichenbySTAC
+    getKassenzeichenbySTAC,
+    getFEBByStac
 };

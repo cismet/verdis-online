@@ -7,8 +7,7 @@ import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import Waiting from './Waiting';
-import {Icon} from 'react-fa'
-
+import {Icon} from 'react-fa';
 
 function mapStateToProps(state) {
   return {
@@ -20,7 +19,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    uiActions: bindActionCreators(UiStateActions, dispatch),
+    uiStateActions: bindActionCreators(UiStateActions, dispatch),
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
     mappingActions: bindActionCreators(MappingActions, dispatch)
 
@@ -36,29 +35,42 @@ export class AppNavbar_ extends React.Component {
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
     this.showSettings = this.showSettings.bind(this);
+    this.downloadFEB = this.downloadFEB.bind(this);
     this.textsearchkassenzeichen = this.textsearchkassenzeichen.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
   }
   toggleInfo() {
-    this.props.uiActions.toggleInfoElements();
+    this.props.uiStateActions.toggleInfoElements();
   }
   toggleCharts() {
-    this.props.uiActions.toggleChartsElements();
+    this.props.uiStateActions.toggleChartsElements();
   }
   toggleKanal() {
-    this.props.uiActions.toggleKanalElements();
+    this.props.uiStateActions.toggleKanalElements();
   }
   toggleFilter() {
-    this.props.uiActions.toggleFilterElements();
+    this.props.uiStateActions.toggleFilterElements();
   }
   toggleDetails() {
-    this.props.uiActions.toggleDetailsElements();
+    this.props.uiStateActions.toggleDetailsElements();
   }
   showSettings() {
-    this.props.uiActions.showSettings(true);
+    this.props.uiStateActions.showSettings(true);
+  }
+  downloadFEB() {
+    
+    this.props.kassenzeichenActions.getFEBByStac(this.props.auth.stac, (blob) => {
+        console.log("callback");
+        let link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = "FEB."+this.props.kassenzeichen.kassenzeichennummer+".STAC."+this.props.auth.stac+".pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); 
+    });
   }
   textsearchkassenzeichen() {
-    this.props.uiActions.setKassenzeichenTextSearchVisible(true);
+    this.props.uiStateActions.setKassenzeichenTextSearchVisible(true);
   }
 
   fitBounds() {
@@ -79,7 +91,7 @@ export class AppNavbar_ extends React.Component {
         
           <Nav pullRight>
             <NavItem onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
-            <NavItem onClick={this.showSettings} eventKey={2.3} ><Icon name="file-pdf-o" /></NavItem>
+            <NavItem onClick={this.downloadFEB} eventKey={2.3} ><Icon name="file-pdf-o" /></NavItem>
             <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
             <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" /></NavItem>
             {/* <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
@@ -99,7 +111,7 @@ const AppNavbar = connect(mapStateToProps, mapDispatchToProps)(AppNavbar_);
 export default AppNavbar;
 
 AppNavbar_.propTypes = {
-  uiActions: PropTypes.object,
+  uiStateActions: PropTypes.object,
   kassenzeichenActions: PropTypes.object,
   uiState: PropTypes.object,
   routing: PropTypes.object,
