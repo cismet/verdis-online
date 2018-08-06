@@ -136,8 +136,11 @@ function getKassenzeichenbySTAC(stac, callback) {
         }));
     dispatch(AuthActions.logout());
     dispatch(AuthActions.setLoginInProgress());
-
-    fetch(STAC_SERVICE + "/actions/"+DOMAIN+".getMyKassenzeichen/tasks?role=all&resultingInstanceType=result", {
+    const url=STAC_SERVICE + "/actions/"+DOMAIN+".getMyKassenzeichen/tasks?role=all&resultingInstanceType=result";
+    
+   
+    
+    fetch(url, {
         method: 'post',
         body: fd
     }).then(function (response) {
@@ -146,7 +149,7 @@ function getKassenzeichenbySTAC(stac, callback) {
                 console.log(actionResult);
 
                 const kassenzeichenData=JSON.parse(actionResult.res);
-                console.log(kassenzeichenData);
+                console.log(JSON.stringify(kassenzeichenData,null,2));
                 if (kassenzeichenData.nothing) {
                     dispatch(AuthActions.logout());
                     if (typeof callback === "function") { 
@@ -175,7 +178,7 @@ function getKassenzeichenbySTAC(stac, callback) {
     }).catch(function (err) {
         // dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
         // dispatch(UiStateActions.setKassenzeichenSearchInProgress(false)); 
-        console.log("Error in action" +err)    
+        console.log("Error in action" +err)    ;
         dispatch(AuthActions.logout());
         if (typeof callback === "function") { 
             callback(false);

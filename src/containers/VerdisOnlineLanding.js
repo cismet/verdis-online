@@ -43,6 +43,7 @@ export class Landing_ extends React.Component {
         this.handleSTAC = this.handleSTAC.bind(this);   
         this.currentSTAC=null;
         this.background="background.jpg";
+        
     }
     componentDidMount() {
         if (this.stacInput) {
@@ -67,6 +68,7 @@ export class Landing_ extends React.Component {
 
     handleSTACInput(e) {
         this.handleSTAC(e.target.value);
+        this.stacInputField=e.target;
     }
 
     handleSTAC(rawSTAC) {
@@ -78,18 +80,29 @@ export class Landing_ extends React.Component {
                     if (success===true) {
                         setTimeout(()=>{
                             this.props.routingActions.push("/meinkassenzeichen");
+                        },100);
+                    } else {
+                        setTimeout(()=>{
+                            if (this.stacInputField) {
+                                //ugly winning. should be done either via state or via ref
+                                this.stacInputField.value="";
+                            }   
+                            else {
+                                this.props.routingActions.push("/");
+                            }                         
                         },1000);
-                        }
+
+                    }
                 });
             }
         }
     }
 
     render() {
-        let stac=queryString.parse(this.props.routing.location.search).stac;
-        if (stac) {
-            if (this.currentSTAC!==stac){
-                this.handleSTAC(stac);
+        this.stac=queryString.parse(this.props.routing.location.search).stac;
+        if (this.stac) {
+            if (this.currentSTAC!==this.stac){
+                this.handleSTAC(this.stac);
             }
         }
         let landingStyle={
@@ -133,6 +146,7 @@ export class Landing_ extends React.Component {
                         <Form horizontal className="LoginForm" id="loginForm">
                             <FormGroup controlId="stacInput">
                             <MaskedFormControl 
+                                key={"MaskedFormControl.with"+this.stac}
                                 style={{
                                     height: "50px",
                                     border: "1px solid #9999992",
@@ -145,7 +159,7 @@ export class Landing_ extends React.Component {
                                 type="text" 
                                 name="stac" 
                                 mask="AAAA-AAAA-AAAA"
-                                value={stac}
+                                value={this.stac}
                                 onChange={this.handleSTACInput}/>
                             </FormGroup>                         
                         </Form>
