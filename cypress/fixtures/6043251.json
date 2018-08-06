@@ -1,0 +1,1056 @@
+{
+    "$self": "/VERDIS_GRUNDIS.KASSENZEICHEN/3270",
+    "id": 3270,
+    "datum_erfassung": "2003-01-01",
+    "datum_veranlagung": "03/01",
+    "bemerkung": null,
+    "sperre": true,
+    "bemerkung_sperre": "beim letzten Speichern nicht veranlagt",
+    "dms_urls": [
+      {
+        "$self": "/VERDIS_GRUNDIS.DMS_URL/3",
+        "id": 3,
+        "typ": 0,
+        "name": "DMS",
+        "description": "DMS Link",
+        "url_id": {
+          "$self": "/VERDIS_GRUNDIS.URL/3",
+          "id": 3,
+          "url_base_id": {
+            "$self": "/VERDIS_GRUNDIS.URL_BASE/1",
+            "id": 1,
+            "prot_prefix": "http://",
+            "server": "s4021029",
+            "path": "/weblink/default.asp?Mode=SearchDirect&Channel=WTAL&Archive=VORN&Query="
+          },
+          "object_name": ""
+        }
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.DMS_URL/238705",
+        "id": 238705,
+        "typ": 2,
+        "name": "02.02.2006 EF",
+        "description": null,
+        "url_id": {
+          "$self": "/VERDIS_GRUNDIS.URL/53922",
+          "id": 53922,
+          "url_base_id": {
+            "$self": "/VERDIS_GRUNDIS.URL_BASE/303",
+            "id": 303,
+            "prot_prefix": "\\\\",
+            "server": "s402x023",
+            "path": "\\EasyArchiv-Migration$\\Export_2012_01.114\\"
+          },
+          "object_name": "261.TIF"
+        }
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.DMS_URL/627685",
+        "id": 627685,
+        "typ": 2,
+        "name": "24.01.2014 STR",
+        "description": null,
+        "url_id": {
+          "$self": "/VERDIS_GRUNDIS.URL/413248",
+          "id": 413248,
+          "url_base_id": {
+            "$self": "/VERDIS_GRUNDIS.URL_BASE/1658",
+            "id": 1658,
+            "prot_prefix": "\\\\",
+            "server": "s402x023",
+            "path": "\\EasyArchiv-Migration$\\FF_1_2014\\"
+          },
+          "object_name": "055.PDF"
+        }
+      }
+    ],
+    "flaechen": [
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589226",
+        "id": 589226,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587951",
+          "id": 587951,
+          "groesse_aus_grafik": 1439,
+          "groesse_korrektur": 1439,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645327",
+            "geo_field": "SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))",
+            "id": 645327
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "1",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589228",
+        "id": 589228,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587953",
+          "id": 587953,
+          "groesse_aus_grafik": 629,
+          "groesse_korrektur": 629,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645329",
+            "geo_field": "SRID=25832;POLYGON ((374374.44496824965 5681668.141103344, 374373.5636382215 5681670.398277476, 374370.3864017278 5681678.538660744, 374369.84194113314 5681679.9327761475, 374368.7586121708 5681682.707541707, 374364.5880611874 5681693.39535087, 374357.3498981334 5681711.930402555, 374362.02178449556 5681722.267127572, 374367.8520328663 5681724.537155593, 374370.6056430824 5681725.610275846, 374398.67506117374 5681736.541539618, 374419.24566970393 5681744.552331944, 374426.2487922609 5681741.406558446, 374435.0392575823 5681718.444796346, 374432.84918912314 5681713.375438858, 374431.3764658645 5681717.166099008, 374427.1594889499 5681728.050702512, 374423.4436060935 5681737.6362369135, 374416.3682115525 5681740.728864615, 374408.7560755983 5681737.75935382, 374367.7922964059 5681721.801216054, 374363.2468686253 5681711.49434835, 374369.5769530609 5681695.245395789, 374378.45250927284 5681672.500879675, 374388.7985139042 5681667.87650333, 374381.56089483574 5681665.173623611, 374376.58572147787 5681667.249051013, 374374.44496824965 5681668.141103344))",
+            "id": 645329
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "3",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589234",
+        "id": 589234,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587959",
+          "id": 587959,
+          "groesse_aus_grafik": 921,
+          "groesse_korrektur": 921,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645335",
+            "geo_field": "SRID=25832;POLYGON ((374369.5769530609 5681695.245395789, 374363.2468686253 5681711.49434835, 374367.7922964059 5681721.801216054, 374408.7560755983 5681737.75935382, 374416.3682115525 5681740.728864615, 374423.4436060935 5681737.6362369135, 374427.1594889499 5681728.050702512, 374419.31595605984 5681725.170663593, 374415.80162252486 5681734.051718642, 374407.10246491805 5681730.567339886, 374410.5685532801 5681721.474190737, 374407.27580372244 5681720.352106105, 374406.51868823916 5681722.323029593, 374387.410209395 5681715.053484189, 374380.30833624676 5681712.352118315, 374375.8031506762 5681702.275660359, 374377.3835603334 5681698.2688674955, 374369.5769530609 5681695.245395789))",
+            "id": 645335
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "2",
+        "bemerkung": null,
+        "datum_erfassung": "2003-01-01",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589235",
+        "id": 589235,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587960",
+          "id": 587960,
+          "groesse_aus_grafik": 176,
+          "groesse_korrektur": 176,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645336",
+            "geo_field": "SRID=25832;POLYGON ((374410.5685532801 5681721.474190737, 374407.10246491805 5681730.567339886, 374415.80162252486 5681734.051718642, 374419.31595605984 5681725.170663593, 374422.6200171821 5681716.820486266, 374413.7243855968 5681713.191018979, 374410.5685532801 5681721.474190737))",
+            "id": 645336
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "8",
+        "bemerkung": null,
+        "datum_erfassung": "2003-01-01",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589236",
+        "id": 589236,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587961",
+          "id": 587961,
+          "groesse_aus_grafik": 307,
+          "groesse_korrektur": 307,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645337",
+            "geo_field": "SRID=25832;POLYGON ((374402.7263194043 5681707.721177129, 374393.44273030385 5681704.150256776, 374387.410209395 5681715.053484189, 374406.51868823916 5681722.323029593, 374410.9620341733 5681710.78136942, 374412.0159482844 5681708.02086718, 374405.2701534666 5681692.783884902, 374402.80293780565 5681694.254542452, 374407.1656307094 5681703.824685163, 374406.36455147713 5681705.960600799, 374402.7263194043 5681707.721177129))",
+            "id": 645337
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "7",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589244",
+        "id": 589244,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587969",
+          "id": 587969,
+          "groesse_aus_grafik": 329,
+          "groesse_korrektur": 329,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645345",
+            "geo_field": "SRID=25832;POLYGON ((374384.26506664976 5681680.825143035, 374377.3835603334 5681698.2688674955, 374375.8031506762 5681702.275660359, 374380.30833624676 5681712.352118315, 374387.410209395 5681715.053484189, 374393.44273030385 5681704.150256776, 374390.66428945214 5681703.081283116, 374389.1451023184 5681699.624360003, 374386.76286727935 5681698.723144764, 374385.3738457896 5681695.4869631305, 374382.7783773765 5681694.439405516, 374385.9094628282 5681687.051446496, 374389.336277578 5681685.308438372, 374400.75179905444 5681689.754791658, 374402.80293780565 5681694.254542452, 374405.2701534666 5681692.783884902, 374403.19203012437 5681688.089174278, 374384.26506664976 5681680.825143035))",
+            "id": 645345
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "5",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589245",
+        "id": 589245,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587970",
+          "id": 587970,
+          "groesse_aus_grafik": 316,
+          "groesse_korrektur": 316,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645346",
+            "geo_field": "SRID=25832;POLYGON ((374393.44273030385 5681704.150256776, 374402.7263194043 5681707.721177129, 374406.36455147713 5681705.960600799, 374407.1656307094 5681703.824685163, 374402.80293780565 5681694.254542452, 374400.75179905444 5681689.754791658, 374389.336277578 5681685.308438372, 374385.9094628282 5681687.051446496, 374382.7783773765 5681694.439405516, 374385.3738457896 5681695.4869631305, 374386.76286727935 5681698.723144764, 374389.1451023184 5681699.624360003, 374390.66428945214 5681703.081283116, 374393.44273030385 5681704.150256776))",
+            "id": 645346
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "6",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589258",
+        "id": 589258,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587983",
+          "id": 587983,
+          "groesse_aus_grafik": 54,
+          "groesse_korrektur": 54,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645359",
+            "geo_field": "SRID=25832;POLYGON ((374424.05835617706 5681656.480910969, 374423.78805617616 5681656.3790162485, 374424.4986653589 5681654.551878816, 374422.5528591573 5681653.796827279, 374416.79505143315 5681671.419142242, 374414.6316594295 5681678.042241155, 374416.4917460494 5681678.77451399, 374419.1694616154 5681670.883769487, 374423.52084916085 5681658.065775536, 374424.05835617706 5681656.480910969))",
+            "id": 645359
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "9",
+        "bemerkung": null,
+        "datum_erfassung": "2003-01-01",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589259",
+        "id": 589259,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587984",
+          "id": 587984,
+          "groesse_aus_grafik": 389,
+          "groesse_korrektur": 389,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645360",
+            "geo_field": "SRID=25832;POLYGON ((374438.9843366742 5681719.429045144, 374439.31738610193 5681718.594871075, 374437.0052772127 5681713.644746346, 374437.0622850619 5681713.498355743, 374438.277008865 5681710.416162215, 374439.9440947436 5681706.186650011, 374438.4164100401 5681702.708169715, 374438.067838341 5681701.917135054, 374430.2876061052 5681684.213144288, 374422.9765875824 5681681.326124268, 374434.773388274 5681708.410269481, 374432.84918912314 5681713.375438858, 374435.0392575823 5681718.444796346, 374426.2487922609 5681741.406558446, 374419.24566970393 5681744.552331944, 374398.67506117374 5681736.541539618, 374399.86592690274 5681739.729557182, 374399.8928622827 5681739.800391025, 374400.1165688392 5681739.888343877, 374420.5968449861 5681747.946765413, 374423.6485084444 5681746.601364936, 374429.35076127946 5681744.088157359, 374435.87735934183 5681727.382140706, 374436.01063338295 5681727.040499203, 374438.0179240741 5681721.902826812, 374438.0883890204 5681721.720851653, 374438.9843366742 5681719.429045144))",
+            "id": 645360
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "4",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589260",
+        "id": 589260,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587985",
+          "id": 587985,
+          "groesse_aus_grafik": 155,
+          "groesse_korrektur": 155,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645361",
+            "geo_field": "SRID=25832;POLYGON ((374441.872718852 5681682.358928161, 374439.0428243689 5681683.52517316, 374434.45888034254 5681685.415413512, 374430.2876061052 5681684.213144288, 374438.067838341 5681701.917135054, 374447.37297398224 5681678.2848375235, 374444.01502615213 5681677.028271179, 374441.872718852 5681682.358928161))",
+            "id": 645361
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "B",
+        "bemerkung": null,
+        "datum_erfassung": "2003-01-01",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589267",
+        "id": 589267,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587992",
+          "id": 587992,
+          "groesse_aus_grafik": 44,
+          "groesse_korrektur": 44,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645368",
+            "geo_field": "SRID=25832;POLYGON ((374448.34704221785 5681665.694086004, 374444.01502615213 5681677.028271179, 374447.37297398224 5681678.2848375235, 374451.7795132138 5681667.031672541, 374448.34704221785 5681665.694086004))",
+            "id": 645368
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "D",
+        "bemerkung": null,
+        "datum_erfassung": "2003-01-01",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589268",
+        "id": 589268,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587993",
+          "id": 587993,
+          "groesse_aus_grafik": 119,
+          "groesse_korrektur": 119,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645369",
+            "geo_field": "SRID=25832;POLYGON ((374393.73802766576 5681738.577201981, 374399.14659609646 5681740.786340162, 374399.2788811065 5681740.840011077, 374400.11757387593 5681739.888613413, 374399.8928622827 5681739.800391025, 374399.86592690274 5681739.729557182, 374398.67506117374 5681736.541539618, 374370.6056430824 5681725.610275846, 374369.21204315126 5681729.197034158, 374393.73802766576 5681738.577201981))",
+            "id": 645369
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "C",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589269",
+        "id": 589269,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587994",
+          "id": 587994,
+          "groesse_aus_grafik": 15,
+          "groesse_korrektur": 15,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645370",
+            "geo_field": "SRID=25832;POLYGON ((374365.8305132389 5681729.283010954, 374366.02055614814 5681729.354448804, 374368.7311877087 5681730.4341595825, 374369.21204315126 5681729.197034158, 374370.6056430824 5681725.610275846, 374367.8520328663 5681724.537155593, 374366.2129754685 5681728.384045822, 374365.8305132389 5681729.283010954))",
+            "id": 645370
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "G",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589270",
+        "id": 589270,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587995",
+          "id": 587995,
+          "groesse_aus_grafik": 536,
+          "groesse_korrektur": 536,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645371",
+            "geo_field": "SRID=25832;POLYGON ((374344.09438306093 5681715.230340637, 374345.35669221357 5681715.731144162, 374346.59224063903 5681718.424098632, 374346.0431711525 5681719.875365897, 374345.7641399428 5681720.614134393, 374356.9129065536 5681724.726902298, 374366.2129754685 5681728.384045822, 374367.8520328663 5681724.537155593, 374362.02178449556 5681722.267127572, 374357.3498981334 5681711.930402555, 374368.50126809254 5681683.365317244, 374362.0644330904 5681680.99293704, 374361.1643503383 5681681.370029756, 374358.74844454974 5681682.440297763, 374356.122931052 5681689.099155584, 374356.4423026182 5681690.109632516, 374354.62134232 5681694.984658604, 374350.36493941396 5681696.876503316, 374343.91414150596 5681713.436883952, 374343.43532256037 5681713.304375382, 374343.0868450068 5681712.685166408, 374342.35876584426 5681714.626994218, 374343.00633756816 5681714.437468985, 374343.16717547923 5681714.898108158, 374343.1789768152 5681714.867621651, 374344.09438306093 5681715.230340637))",
+            "id": 645371
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "A",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589271",
+        "id": 589271,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587996",
+          "id": 587996,
+          "groesse_aus_grafik": 2,
+          "groesse_korrektur": 2,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645372",
+            "geo_field": "SRID=25832;POLYGON ((374343.30248974264 5681716.887586805, 374342.3851960115 5681716.944073604, 374343.9084826298 5681720.010476677, 374344.4317427948 5681719.227811539, 374343.30248974264 5681716.887586805))",
+            "id": 645372
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "11",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589272",
+        "id": 589272,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587997",
+          "id": 587997,
+          "groesse_aus_grafik": 9,
+          "groesse_korrektur": 9,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645373",
+            "geo_field": "SRID=25832;POLYGON ((374343.30248974264 5681716.887586805, 374344.4317427948 5681719.227811539, 374346.0431711525 5681719.875365897, 374346.59224063903 5681718.424098632, 374345.35669221357 5681715.731144162, 374344.09438306093 5681715.230340637, 374343.30248974264 5681716.887586805))",
+            "id": 645373
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "10",
+        "bemerkung": null,
+        "datum_erfassung": "2003-01-01",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589273",
+        "id": 589273,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587998",
+          "id": 587998,
+          "groesse_aus_grafik": 1,
+          "groesse_korrektur": 1,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645374",
+            "geo_field": "SRID=25832;POLYGON ((374344.4317427948 5681719.227811539, 374343.9084826298 5681720.010476677, 374345.75790125504 5681720.6302299965, 374345.7641399428 5681720.614134393, 374346.0431711525 5681719.875365897, 374344.4317427948 5681719.227811539))",
+            "id": 645374
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "12",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589274",
+        "id": 589274,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/587999",
+          "id": 587999,
+          "groesse_aus_grafik": 1,
+          "groesse_korrektur": 1,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/1",
+            "id": 1,
+            "art": "Dachfläche",
+            "art_abkuerzung": "DF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645375",
+            "geo_field": "SRID=25832;POLYGON ((374343.1789768152 5681714.867621651, 374343.16717547923 5681714.898108158, 374342.3851960115 5681716.944073604, 374343.30248974264 5681716.887586805, 374344.09438306093 5681715.230340637, 374343.1789768152 5681714.867621651))",
+            "id": 645375
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "13",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589279",
+        "id": 589279,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/588004",
+          "id": 588004,
+          "groesse_aus_grafik": 30,
+          "groesse_korrektur": 30,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645381",
+            "geo_field": "SRID=25832;POLYGON ((374429.35076127946 5681744.088157359, 374423.6485084444 5681746.601364936, 374421.96136830375 5681751.275613877, 374425.98729366064 5681752.696932491, 374428.00007299706 5681747.545152778, 374429.35076127946 5681744.088157359))",
+            "id": 645381
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "E",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FLAECHE/589280",
+        "id": 589280,
+        "flaecheninfo": {
+          "$self": "/VERDIS_GRUNDIS.FLAECHENINFO/588005",
+          "id": 588005,
+          "groesse_aus_grafik": 20,
+          "groesse_korrektur": 20,
+          "flaechenart": {
+            "$self": "/VERDIS_GRUNDIS.FLAECHENART/3",
+            "id": 3,
+            "art": "versiegelte Fläche",
+            "art_abkuerzung": "VF"
+          },
+          "anschlussgrad": {
+            "$self": "/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1",
+            "id": 1,
+            "grad": "Am Kanal angeschlossen",
+            "grad_abkuerzung": "angeschl."
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/645382",
+            "geo_field": "SRID=25832;POLYGON ((374368.7586121708 5681682.707541707, 374369.84194113314 5681679.9327761475, 374362.7808068618 5681677.90404628, 374361.75991524756 5681680.346010336, 374368.7586121708 5681682.707541707))",
+            "id": 645382
+          },
+          "beschreibung": null
+        },
+        "anteil": null,
+        "flaechenbezeichnung": "F",
+        "bemerkung": null,
+        "datum_erfassung": "2017-11-10",
+        "datum_veranlagung": "03/01",
+        "sperre": null,
+        "bemerkung_sperre": "",
+        "feb_id": "20113214"
+      }
+    ],
+    "kanalanschluss": {
+      "$self": "/VERDIS_GRUNDIS.KANALANSCHLUSS/43410",
+      "id": 43410,
+      "rkvorhanden": false,
+      "mkrvorhanden": false,
+      "mksvorhanden": false,
+      "skvorhanden": false,
+      "rkangeschlossen": {
+        "$self": "/VERDIS_GRUNDIS.ANSCHLUSSSTATUS/-1",
+        "id": -1,
+        "name": ""
+      },
+      "mkrangeschlossen": {
+        "$self": "/VERDIS_GRUNDIS.ANSCHLUSSSTATUS/-1",
+        "id": -1,
+        "name": ""
+      },
+      "mksangeschlossen": {
+        "$self": "/VERDIS_GRUNDIS.ANSCHLUSSSTATUS/-1",
+        "id": -1,
+        "name": ""
+      },
+      "skangeschlossen": {
+        "$self": "/VERDIS_GRUNDIS.ANSCHLUSSSTATUS/-1",
+        "id": -1,
+        "name": ""
+      },
+      "sgvorhanden": false,
+      "kkavorhanden": false,
+      "sgentleerung": false,
+      "kkaentleerung": false,
+      "evg": false,
+      "befreiungenunderlaubnisse": []
+    },
+    "letzte_aenderung_ts": 1510294570189,
+    "letzte_aenderung_von": "PienischB102@VORN_schreiben_KA",
+    "fronten": [
+      {
+        "$self": "/VERDIS_GRUNDIS.FRONT/43721",
+        "id": 43721,
+        "frontinfo": {
+          "$self": "/VERDIS_GRUNDIS.FRONTINFO/43697",
+          "id": 43697,
+          "strasse": {
+            "$self": "/VERDIS_GRUNDIS.STRASSE/609",
+            "id": 609,
+            "name": "Große Flurstr.",
+            "schluessel": 1175
+          },
+          "sr_klasse_or": {
+            "$self": "/VERDIS_GRUNDIS.STRASSENREINIGUNG/15",
+            "id": 15,
+            "name": "keine Straßenreinigung",
+            "schluessel": -100,
+            "key": null
+          },
+          "wd_prio_or": {
+            "$self": "/VERDIS_GRUNDIS.WINTERDIENST/3",
+            "id": 3,
+            "name": "kein Winterdienst",
+            "schluessel": -200,
+            "key": null
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/867028",
+            "geo_field": "SRID=25832;LINESTRING (374355.4369945103 5681690.026377187, 374364.8381782347 5681693.535560023, 374382.6739999043 5681700.158999544, 374389.5795672635 5681702.765802995, 374407.3559999044 5681709.346999545, 374416.27099990356 5681712.611999545, 374439.09199990606 5681719.503999545)",
+            "id": 867028
+          },
+          "wd_veranlagung": null,
+          "sr_veranlagung": null,
+          "laenge_grafik": 88,
+          "laenge_korrektur": 88,
+          "sr_bem": null,
+          "wd_bem": null,
+          "lage_sr": {
+            "$self": "/VERDIS_GRUNDIS.SATZUNG/828",
+            "id": 828,
+            "sr_klasse": {
+              "$self": "/VERDIS_GRUNDIS.STRASSENREINIGUNG/3",
+              "id": 3,
+              "name": "Straßenreinigung (Klasse A1V 5 x wöchentlich)",
+              "schluessel": 310,
+              "key": "A1V"
+            },
+            "sr_bem": null,
+            "wd_prio": null,
+            "wd_bem": null,
+            "strasse": {
+              "$self": "/VERDIS_GRUNDIS.STRASSE/609",
+              "id": 609,
+              "name": "Große Flurstr.",
+              "schluessel": 1175
+            }
+          },
+          "lage_wd": null,
+          "garage_stellplatz": null,
+          "baulasten": null,
+          "grunddienstbarkeit": null,
+          "anteil": null,
+          "quadratwurzel": null,
+          "winkel": null
+        },
+        "nummer": 1,
+        "bearbeitet_durch": null,
+        "erfassungsdatum": "2014-01-08"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FRONT/43802",
+        "id": 43802,
+        "frontinfo": {
+          "$self": "/VERDIS_GRUNDIS.FRONTINFO/43778",
+          "id": 43778,
+          "strasse": {
+            "$self": "/VERDIS_GRUNDIS.STRASSE/730",
+            "id": 730,
+            "name": "Heubruch",
+            "schluessel": 1393
+          },
+          "sr_klasse_or": {
+            "$self": "/VERDIS_GRUNDIS.STRASSENREINIGUNG/15",
+            "id": 15,
+            "name": "keine Straßenreinigung",
+            "schluessel": -100,
+            "key": null
+          },
+          "wd_prio_or": {
+            "$self": "/VERDIS_GRUNDIS.WINTERDIENST/3",
+            "id": 3,
+            "name": "kein Winterdienst",
+            "schluessel": -200,
+            "key": null
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/867372",
+            "geo_field": "SRID=25832;LINESTRING (374355.4369945103 5681690.026377187, 374353.5564779141 5681694.843625032, 374349.88653297577 5681696.09804583, 374345.63818123424 5681707.375964309, 374342.0055343568 5681716.651951704, 374342.7733606756 5681718.364790014)",
+            "id": 867372
+          },
+          "wd_veranlagung": null,
+          "sr_veranlagung": null,
+          "laenge_grafik": 32,
+          "laenge_korrektur": 32,
+          "sr_bem": null,
+          "wd_bem": null,
+          "lage_sr": {
+            "$self": "/VERDIS_GRUNDIS.SATZUNG/982",
+            "id": 982,
+            "sr_klasse": {
+              "$self": "/VERDIS_GRUNDIS.STRASSENREINIGUNG/7",
+              "id": 7,
+              "name": "Straßenreinigung (Klasse A3 1 x wöchentlich)",
+              "schluessel": 321,
+              "key": "A3"
+            },
+            "sr_bem": "von Paul-Humburg-Str. bis Treppe",
+            "wd_prio": null,
+            "wd_bem": null,
+            "strasse": {
+              "$self": "/VERDIS_GRUNDIS.STRASSE/730",
+              "id": 730,
+              "name": "Heubruch",
+              "schluessel": 1393
+            }
+          },
+          "lage_wd": null,
+          "garage_stellplatz": null,
+          "baulasten": null,
+          "grunddienstbarkeit": null,
+          "anteil": null,
+          "quadratwurzel": null,
+          "winkel": null
+        },
+        "nummer": 2,
+        "bearbeitet_durch": null,
+        "erfassungsdatum": "2014-01-10"
+      },
+      {
+        "$self": "/VERDIS_GRUNDIS.FRONT/43803",
+        "id": 43803,
+        "frontinfo": {
+          "$self": "/VERDIS_GRUNDIS.FRONTINFO/43779",
+          "id": 43779,
+          "strasse": {
+            "$self": "/VERDIS_GRUNDIS.STRASSE/1160",
+            "id": 1160,
+            "name": "Mühlenweg",
+            "schluessel": 2289
+          },
+          "sr_klasse_or": {
+            "$self": "/VERDIS_GRUNDIS.STRASSENREINIGUNG/15",
+            "id": 15,
+            "name": "keine Straßenreinigung",
+            "schluessel": -100,
+            "key": null
+          },
+          "wd_prio_or": {
+            "$self": "/VERDIS_GRUNDIS.WINTERDIENST/3",
+            "id": 3,
+            "name": "kein Winterdienst",
+            "schluessel": -200,
+            "key": null
+          },
+          "geometrie": {
+            "$self": "/VERDIS_GRUNDIS.GEOM/867373",
+            "geo_field": "SRID=25832;LINESTRING (374342.7733606756 5681718.364790014, 374343.55068847025 5681720.309805679, 374365.82392145187 5681728.935630103, 374369.60294143355 5681730.351083457, 374401.2081215257 5681742.605514395, 374426.09899990517 5681752.776999546)",
+            "id": 867373
+          },
+          "wd_veranlagung": null,
+          "sr_veranlagung": null,
+          "laenge_grafik": 90,
+          "laenge_korrektur": 90,
+          "sr_bem": null,
+          "wd_bem": null,
+          "lage_sr": {
+            "$self": "/VERDIS_GRUNDIS.SATZUNG/1538",
+            "id": 1538,
+            "sr_klasse": {
+              "$self": "/VERDIS_GRUNDIS.STRASSENREINIGUNG/3",
+              "id": 3,
+              "name": "Straßenreinigung (Klasse A1V 5 x wöchentlich)",
+              "schluessel": 310,
+              "key": "A1V"
+            },
+            "sr_bem": "westl. Bachstr.",
+            "wd_prio": null,
+            "wd_bem": null,
+            "strasse": {
+              "$self": "/VERDIS_GRUNDIS.STRASSE/1160",
+              "id": 1160,
+              "name": "Mühlenweg",
+              "schluessel": 2289
+            }
+          },
+          "lage_wd": null,
+          "garage_stellplatz": null,
+          "baulasten": null,
+          "grunddienstbarkeit": null,
+          "anteil": null,
+          "quadratwurzel": null,
+          "winkel": null
+        },
+        "nummer": 3,
+        "bearbeitet_durch": null,
+        "erfassungsdatum": "2014-01-10"
+      }
+    ],
+    "bemerkung_zu_abgaben": null,
+    "grundsteuer": null,
+    "schmutzwasser": null,
+    "abfallgebuehr": null,
+    "kassenzeichennummer": 6043251,
+    "kassenzeichennummer7": 6043251,
+    "kassenzeichennummer8": 60432515,
+    "veranlagungszettel": "<hr>   <h3>Datum: 10.11.2017</h3>   <center>      <table cellspacing=\"10\">         <thead>            <tr>               <th align=\"left\">ABS</th>               <th align=\"right\">alt</th>               <th align=\"right\">neu</th>               <th align=\"center\">Monat VA</th>               <th align=\"center\">Jahr VA</th>            </tr>         </thead>         <tbody>            <tr>               <td align=\"left\">720-VF</td>               <td align=\"right\">923.0</td>               <td align=\"right\">919.0</td>               <td align=\"center\">12</td>               <td align=\"center\">2017</td>            </tr>            <tr>               <td align=\"left\">710-DF</td>               <td align=\"right\">4581.0</td>               <td align=\"right\">4573.0</td>               <td align=\"center\">12</td>               <td align=\"center\">2017</td>            </tr>         </tbody>      </table><hr>   <h3>Datum: 10.01.2014</h3>   <center>      <table cellspacing=\"10\">         <thead>            <tr>               <th align=\"left\">ABS</th>               <th align=\"right\">alt</th>               <th align=\"right\">neu</th>               <th align=\"center\">Monat VA</th>               <th align=\"center\">Jahr VA</th>            </tr>         </thead>         <tbody>            <tr>               <td align=\"left\">A1V-310</td>               <td align=\"right\">207.0</td>               <td align=\"right\">178.0</td>               <td align=\"center\">02</td>               <td align=\"center\">2014</td>            </tr>            <tr>               <td align=\"left\">A3-321</td>               <td align=\"right\">36.0</td>               <td align=\"right\">32.0</td>               <td align=\"center\">02</td>               <td align=\"center\">2014</td>            </tr>            <tr>               <td align=\"left\">null--200</td>               <td align=\"right\">243.0</td>               <td align=\"right\">210.0</td>               <td align=\"center\">02</td>               <td align=\"center\">2014</td>            </tr>         </tbody>      </table><hr>   <h3>Datum: 08.01.2014</h3>   <center>      <table cellspacing=\"10\">         <thead>            <tr>               <th align=\"left\">ABS</th>               <th align=\"right\">alt</th>               <th align=\"right\">neu</th>               <th align=\"center\">Monat VA</th>               <th align=\"center\">Jahr VA</th>            </tr>         </thead>         <tbody>            <tr>               <td align=\"left\">A1V-310</td>               <td align=\"right\">0.0</td>               <td align=\"right\">207.0</td>               <td align=\"center\">02</td>               <td align=\"center\">2014</td>            </tr>            <tr>               <td align=\"left\">A3-321</td>               <td align=\"right\">0.0</td>               <td align=\"right\">36.0</td>               <td align=\"center\">02</td>               <td align=\"center\">2014</td>            </tr>            <tr>               <td align=\"left\">null--200</td>               <td align=\"right\">0.0</td>               <td align=\"right\">243.0</td>               <td align=\"center\">02</td>               <td align=\"center\">2014</td>            </tr>         </tbody>      </table>",
+    "kassenzeichen_geometrien": [
+      {
+        "$self": "/VERDIS_GRUNDIS.KASSENZEICHEN_GEOMETRIE/27599",
+        "id": 27599,
+        "istfrei": false,
+        "name": "053001-118-00089",
+        "geometrie": {
+          "$self": "/VERDIS_GRUNDIS.GEOM/867031",
+          "geo_field": "SRID=25832;POLYGON ((374435.6067561768 5681756.226160761, 374433.9457641989 5681755.622898915, 374432.2839052193 5681755.022327786, 374430.6212626733 5681754.424491476, 374429.10948160663 5681753.8849794045, 374427.597040914 5681753.347624327, 374426.0838730149 5681752.812388713, 374436.10165951774 5681727.148815787, 374438.17845418677 5681721.828563822, 374439.0744397491 5681719.536539812, 374438.7774341181 5681719.447530033, 374416.2603362091 5681712.647381321, 374407.3488859646 5681709.38477553, 374389.57989263907 5681702.770888709, 374382.66388241574 5681700.195397349, 374364.8385040276 5681693.540647293, 374355.4373221211 5681690.031461259, 374351.9467402473 5681688.728146494, 374350.70656920597 5681688.26805495, 374344.67011412233 5681704.374466115, 374341.8027498871 5681711.575561926, 374337.42403195426 5681722.710621634, 374360.49837159365 5681731.906693369, 374380.0881271027 5681739.372719426, 374404.2329887785 5681748.74165115, 374413.066167891 5681752.151224559, 374432.41782138497 5681757.4693390075, 374445.5090127364 5681760.986159291, 374445.8169980198 5681759.759107424, 374445.1699764915 5681759.539111009, 374441.98607679456 5681758.423637555, 374438.7983046323 5681757.319306743, 374435.6067561768 5681756.226160761))",
+          "id": 867031
+        }
+      }
+    ]
+  }

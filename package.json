@@ -48,10 +48,13 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject-dont-do-this-since-the-way-back-could-be-problematic": "react-scripts eject",
+    "cy": "cypress open",
+    "cy-run": "cypress run"
   },
   "devDependencies": {
     "chai": "^4.1.2",
+    "cypress": "3.0.2",
     "mocha": "^3.5.0"
   }
 }
