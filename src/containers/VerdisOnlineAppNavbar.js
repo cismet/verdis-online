@@ -60,7 +60,6 @@ export class AppNavbar_ extends React.Component {
   downloadFEB() {
     
     this.props.kassenzeichenActions.getFEBByStac(this.props.auth.stac, (blob) => {
-        console.log("callback");
         let link = document.createElement('a');
         link.href = window.URL.createObjectURL(blob);
         link.download = "FEB."+this.props.kassenzeichen.kassenzeichennummer+".STAC."+this.props.auth.stac+".pdf";
@@ -83,21 +82,21 @@ export class AppNavbar_ extends React.Component {
       <Navbar  inverse style={{ marginBottom: 0 }}>
         <Navbar.Header>
           <Navbar.Brand>  
-              <a style={{ cursor: "pointer"}} onClick={this.fitBounds}>VerDIS-online</a>
+              <a id="verdis_online_brand" style={{ cursor: "pointer"}} onClick={this.fitBounds}>VerDIS-online</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
         
           <Nav pullRight>
-            <NavItem onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
-            <NavItem onClick={this.downloadFEB} eventKey={2.3} ><Icon name="file-pdf-o" /></NavItem>
-            <NavItem className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
-            <NavItem className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" /></NavItem>
+            <NavItem id="navitem_showSettings" onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
+            <NavItem id="navitem_downloadFEB" onClick={this.downloadFEB} eventKey={2.3} ><Icon name="file-pdf-o" /></NavItem>
+            <NavItem id="navitem_infoElementsEnabled" className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
+            <NavItem id="navitem_chartElementsEnabled" className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" /></NavItem>
             {/* <NavItem disabled className={(this.props.uiState.kanalElementsEnabled) ? "active" : ""} eventKey={2.3} href="#" onSelect={this.toggleKanal} ><FontAwesome name="tint" /></NavItem>
             <NavItem disabled className={(this.props.uiState.filterElementEnabled) ? "active" : ""} eventKey={2.4} href="#" onSelect={this.toggleFilter} ><FontAwesome name="filter" /></NavItem> */}
-            <NavItem className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
-            <NavItem eventKey={3} href="/#/" ><Icon name="power-off" /></NavItem>
+            <NavItem id="navitem_detailElementsEnabled" className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
+            <NavItem id="navitem_logout" eventKey={3} href="/#/" ><Icon name="power-off" /></NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
