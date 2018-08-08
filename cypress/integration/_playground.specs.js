@@ -1,54 +1,46 @@
+import {
+    actions as MappingActions
+} from '../../src/redux/modules/mapping';
+import {
+    getFlaechenFeatureCollection,
+} from '../../src/utils/kassenzeichenMappingTools';
+
+
+
 
 describe('Playground tests', () => {
-    it('text Input tests', () => {
-        cy.visit("/");
-        cy.get('input').should('be.enabled');
-        cy.get('input').should('have.class', 'form-control');
-        cy.get('input').should('have.attr', 'name', 'stac');
-        cy.focused().should('have.class', 'form-control');
-        cy.get('input').type("111").should('have.value', '');
-        cy.get('input').type("%$§").should('have.value', '');
-        cy.get('input').type("1aa1").should('have.value', 'AA  -    -    ');
-        cy.get('input').type("aaaa").should('have.value', 'AAAA-    -    ');
+
+    it('connects to the store', () => {
+        cy.visit("/") //for app init
+        cy.window().its('__store__').then((store) => {
+            const s=store.getState();
+            expect(s).to.be.an('object');
+            expect(s).to.have.property('kassenzeichen')
+            expect(s).to.have.property('auth')
+            expect(s).to.have.property('mapping')
+            expect(s).to.have.property('uiState')
+        })
+        
     });
 
-    it.only('Input invalid STAC', () => {
-        cy.visit("/");
-        cy.server();
-            let nope= {
-                nothing: "at all"
-            };
-            let result={
-                res: JSON.stringify(nope)
-            };
-            cy.route(
-                'POST', 
-                'http://192.168.178.69:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
-                result
-            );
-            cy.get('input').type("WRON-WRON-GWRO");
-
+    it('Fake logged in state', () => {
+        cy.visit("/") //for app init
+        cy.fixture('6043251').then((json) => {
+            cy.window().its('__store__').then((store) => {
+                store.dispatch({
+                    type: "AUTH/SET_STAC",
+                    stac: "XXXXYYYYZZZZ"
+                });
+                store.dispatch({
+                    type: "KASSENZEICHEN/SET_KASSENZEICHEN",
+                    kassenzeichenObject: json
+                });
+                store.dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(json)));
+                cy.visit("/#/meinKassenzeichen");
+            })
+        })
     });
-
-    it('Input valid STAC', () => {
-        cy.fixture('6043251').as('6043251.JSON').then((kassenzeichen) => {
-            cy.visit("/");
-
-            cy.server();
-            let result={
-                res: JSON.stringify(kassenzeichen)
-            };
-            cy.route(
-                'POST', 
-                'http:/*:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
-                result
-            ).as('getKasszViaStac');
-            cy.get('input').type("STACSTACSTAC");
-            cy.wait('@getKasszViaStac');
-            cy.hash().should('match', /#\/meinkassenzeichen\?lat=51\..*&lng=7\..*&zoom=.*/); 
-            
-        });
+    it.only('logs in via command', () => {
+        cy.login();
     });
 });
-
-

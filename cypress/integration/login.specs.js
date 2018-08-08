@@ -84,4 +84,10 @@ describe('Login Page Tests', () => {
         cy.hash().should('eq', "#/"); 
     });
 
+    it('tries to log out', ()  => {
+        cy.login();
+        cy.get('#navitem_logout').click();
+        cy.hash().should('eq', "#/"); 
+    });
+
 });

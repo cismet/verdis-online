@@ -24,4 +24,27 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+import {
+    actions as MappingActions
+} from '../../src/redux/modules/mapping';
+import {
+    getFlaechenFeatureCollection,
+} from '../../src/utils/kassenzeichenMappingTools';
 
+Cypress.Commands.add("login", (email, password) => {
+    cy.visit("/") //for app init
+    cy.fixture('6043251').then((json) => {
+        cy.window().its('__store__').then((store) => {
+            store.dispatch({
+                type: "AUTH/SET_STAC",
+                stac: "XXXXYYYYZZZZ"
+            });
+            store.dispatch({
+                type: "KASSENZEICHEN/SET_KASSENZEICHEN",
+                kassenzeichenObject: json
+            });
+            store.dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(json)));
+            cy.visit("/#/meinkassenzeichen");
+        })
+    })
+})
