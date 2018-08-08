@@ -137,19 +137,14 @@ function getKassenzeichenbySTAC(stac, callback) {
     dispatch(AuthActions.logout());
     dispatch(AuthActions.setLoginInProgress());
     const url=STAC_SERVICE + "/actions/"+DOMAIN+".getMyKassenzeichen/tasks?role=all&resultingInstanceType=result";
-    
-   
-    
+
     fetch(url, {
         method: 'post',
         body: fd
     }).then(function (response) {
         if (response.status >= 200 && response.status < 300) {
             response.json().then(function (actionResult) {
-                console.log(actionResult);
-
                 const kassenzeichenData=JSON.parse(actionResult.res);
-                console.log(JSON.stringify(kassenzeichenData,null,2));
                 if (kassenzeichenData.nothing) {
                     dispatch(AuthActions.logout());
                     if (typeof callback === "function") { 
@@ -203,7 +198,8 @@ function getFEBByStac(stac, callback) {
         }));
         console.log("downloadFEB()");
 
-        fetch(STAC_SERVICE + "/actions/"+DOMAIN+".getMyFEB/tasks?role=all&resultingInstanceType=result", {
+        const url=STAC_SERVICE + "/actions/"+DOMAIN+".getMyFEB/tasks?role=all&resultingInstanceType=result";
+        fetch(url, {
             method: 'post',
             body: fd
     
@@ -219,7 +215,7 @@ function getFEBByStac(stac, callback) {
                 console.log(e);
             
             }).then((result)=> {
-            if (result && !result.error) { 
+            if (result && !result.error &&  result.res!=='{"nothing":"at all"}') { 
 
                 let byteCharacters = atob(result.res);
                 let byteNumbers = new Array(byteCharacters.length);
@@ -229,12 +225,12 @@ function getFEBByStac(stac, callback) {
 
                 let byteArray = new Uint8Array(byteNumbers);
 
-                console.log(result);
                 var blob = new Blob([byteArray], { type: 'application/pdf' });
                 callback(blob);
                 dispatch(UiStateActions.showWaiting(false));        
-
-
+            } else {
+                dispatch(UiStateActions.showWaiting(false));        
+                console.log(result);
             }
             
         });
