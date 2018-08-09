@@ -46,6 +46,7 @@ export default function uiStateReducer(state = initialState, action) {
                 newState.user = action.user;
                 newState.password = action.password;
                 newState.succesfullLogin = action.status;
+                newState.stac= null;
                 return newState;
             }
         case types.SET_LOGIN_IN_PROGRESS:

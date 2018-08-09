@@ -26,6 +26,8 @@ export const types = {
     SCREEN_RESIZE: 'UI_STATE/SCREEN_RESIZE',
     SET_MODE: 'UI_STATE/SET_MODE',
     SET_D3_AVAILABILITY: "UI_STATE/SET_D3_AVAILABILITY",
+    SET_STAC_INPUT: 'UI_STATE/SET_STAC_INPUT',
+
 };
 
 
@@ -68,7 +70,10 @@ const initialState = {
             opacity: 0.5,
             enabled: false
         }
-    ]
+    ],
+
+    stacInput: ''
+
 };
 
 
@@ -186,6 +191,12 @@ export default function uiStateReducer(state = initialState, action) {
             {
                 newState = objectAssign({}, state);
                 newState.d3Available = action.available;
+                return newState;
+            }
+        case types.SET_STAC_INPUT:
+            {
+                newState = objectAssign({}, state);
+                newState.stacInput = action.input;
                 return newState;
             }
         default:
@@ -316,6 +327,12 @@ function setD3Availability(available) {
         available: available
     };
 }
+function setStacInput(input) {
+    return {
+        type: types.SET_STAC_INPUT,        
+        input
+    };
+}
 
 //COMPLEXACTIONS
 
@@ -340,4 +357,5 @@ export const actions = {
     screenResize,
     setMode,
     setD3Availability,
+    setStacInput
 };

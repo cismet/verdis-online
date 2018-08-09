@@ -12,6 +12,7 @@ import { routerActions as RoutingActions } from 'react-router-redux';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as AuthActions } from '../redux/modules/auth';
+import { actions as UIStateActions } from '../redux/modules/uiState';
 import MaskedFormControl from 'react-bootstrap-maskedinput';
 import queryString from 'query-string';
 
@@ -31,6 +32,7 @@ function mapDispatchToProps(dispatch) {
     routingActions: bindActionCreators(RoutingActions,dispatch),
     kassenzeichenActions: bindActionCreators(KassenzeichenActions,dispatch),
     authActions: bindActionCreators(AuthActions,dispatch),
+    uiActions: bindActionCreators(UIStateActions,dispatch),
   };
 }
 
@@ -41,41 +43,44 @@ export class Landing_ extends React.Component {
         super(props, context);
         this.handleSTACInput = this.handleSTACInput.bind(this);   
         this.handleSTAC = this.handleSTAC.bind(this);   
-        this.currentSTAC=null;
         this.background="background.jpg";
         
     }
     componentDidMount() {
-        if (this.stacInput) {
+        // set the focus to the input box
+        if (this.stacInput) { //checks whether the ref has been set down in the render method
             const input=ReactDOM.findDOMNode(this.stacInput);
             if (input) {
                 input.focus();
                 input.selectionStart=input.value.trim().length;
                 input.selectionEnd=input.value.trim().length;
             }
-
         }
         this.props.authActions.logout();
 
 
         let stac=queryString.parse(this.props.routing.location.search).stac;
-
+        this.props.uiActions.setStacInput(stac);
         this.handleSTAC(stac);
         if (queryString.parse(this.props.routing.location.search).bg) {
             this.background=queryString.parse(this.props.routing.location.search).bg;
         }
     }
+    
 
     handleSTACInput(e) {
+        this.props.uiActions.setStacInput(e.target.value);
         this.handleSTAC(e.target.value);
-        this.stacInputField=e.target;
+
     }
 
     handleSTAC(rawSTAC) {
+        console.log("handleStac"+ rawSTAC);
         if (rawSTAC){
-            let stac = rawSTAC.trim().replace(/-/g, '');
-            this.currentSTAC=rawSTAC;
+            let stac = rawSTAC.trim().replace(/[- ]/g, '');
             if (stac.length===12){
+                console.log("try to login");
+
                 this.props.kassenzeichenActions.getKassenzeichenbySTAC(stac, (success)=> {
                     if (success===true) {
                         setTimeout(()=>{
@@ -83,28 +88,32 @@ export class Landing_ extends React.Component {
                         },100);
                     } else {
                         setTimeout(()=>{
-                            if (this.stacInputField) {
-                                //ugly winning. should be done either via state or via ref
-                                this.stacInputField.value="";
-                            }   
-                            else {
-                                this.props.routingActions.push("/");
-                            }                         
+                            this.props.uiActions.setStacInput("");
+                            this.props.routingActions.push("/");
                         },1000);
 
                     }
                 });
             }
+            else {
+                console.log("stac to short: "+"|"+stac+"|"+stac.length);
+
+            }
         }
     }
 
     render() {
-        this.stac=queryString.parse(this.props.routing.location.search).stac;
-        if (this.stac) {
-            if (this.currentSTAC!==this.stac){
-                this.handleSTAC(this.stac);
-            }
-        }
+        // if (this.properties.uiState.stacInput!==queryString.parse(this.props.routing.location.search).stac) {
+
+        // }
+
+
+        // this.stac=queryString.parse(this.props.routing.location.search).stac;
+        // if (this.stac) {
+        //     if (this.currentSTAC!==this.stac){
+        //         this.handleSTAC(this.stac);
+        //     }
+        // }
         let landingStyle={
             backgroundColor: "red",
             height: this.props.uiState.height,
@@ -159,7 +168,7 @@ export class Landing_ extends React.Component {
                                 type="text" 
                                 name="stac" 
                                 mask="AAAA-AAAA-AAAA"
-                                value={this.stac}
+                                value={this.props.uiState.stacInput}
                                 onChange={this.handleSTACInput}/>
                             </FormGroup>                         
                         </Form>

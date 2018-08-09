@@ -22,12 +22,14 @@ describe('Login Page Tests', () => {
             };
             cy.route(
                 'POST', 
-                'http://192.168.178.69:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
+                'http://*:*/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
                 result
             );
             cy.get('input').type("WRON-WRON-GWRO");
+            // input should be empty
             cy.get('input').should('have.value', '');
-
+            // input should be possible again
+            cy.get('input').type("aaaa").should('have.value', 'AAAA-    -    ');
     });
 
     it('inputs valid STAC', () => {
@@ -39,7 +41,7 @@ describe('Login Page Tests', () => {
             };
             cy.route(
                 'POST', 
-                'http:/*:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
+                'http:/*:*/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
                 result
             ).as('getKasszViaStac');
             cy.get('input').type("STACSTACSTAC");
@@ -57,7 +59,7 @@ describe('Login Page Tests', () => {
             };
             cy.route(
                 'POST', 
-                'http:/*:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
+                'http:/*:*/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
                 result
             ).as('getKasszViaStac');
             cy.visit("/#?stac=AAAABBBBAAAA");
@@ -76,18 +78,27 @@ describe('Login Page Tests', () => {
         };
         cy.route(
             'POST', 
-            'http:/*:8890/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
+            'http:/*:*/actions/VERDIS_GRUNDIS.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result', 
             result
         ).as('getKasszViaStac');
         cy.visit("/#?stac=AAAABBBBAAAA");
         cy.wait('@getKasszViaStac');
         cy.hash().should('eq', "#/"); 
+        // input should be empty
+        cy.get('input').should('have.value', '');
+        // input should be possible again
+        cy.get('input').type("aaaa").should('have.value', 'AAAA-    -    ');
     });
 
     it('tries to log out', ()  => {
         cy.login();
         cy.get('#navitem_logout').click();
         cy.hash().should('eq', "#/"); 
+        // input should be empty
+        cy.get('input').should('have.value', '');
+        // input should be possible again
+        cy.get('input').type("aaaa").should('have.value', 'AAAA-    -    ');
+
     });
 
 });
