@@ -18,7 +18,7 @@
     "proj4": "^2.4.4",
     "proj4leaflet": "^1.0.2",
     "prop-types": "^15.5.10",
-    "query-string": "6.1.0",
+    "query-string": "^5.1.0",
     "react": "^15.6.1",
     "react-bootstrap": "0.32.1",
     "react-bootstrap-maskedinput": "0.4.0",
