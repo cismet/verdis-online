@@ -1,22 +1,41 @@
-FROM nginx:1.13.5
+# builder container
+#   - builds the frontend app (Vue, React, Webpack, ...)
 
-RUN apt-get update -y 
-RUN apt-get install -y curl gnupg
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs build-essential
+# Use an official node image
+FROM node:8-alpine AS builder
 
-COPY ./src /app/src
-COPY ./public /app/public
-COPY package.json /app
-COPY yarn.lock /app
+# Reads args and use them to configure the build, setting
+# them as env vars
+ARG NODE_ENV
+ARG API_URL
+
+ENV NODE_ENV $NODE_ENV
+ENV API_URL $API_URL
 
 WORKDIR /app
 
-RUN npm install -g yarn 
-RUN npm install -g create-react-app
-RUN yarn
-RUN yarn build
-RUN rm -rf /usr/share/nginx/html
-RUN ln -s /app/build/ /usr/share/nginx/html
+# Install dependencies
+COPY . .
+RUN rm -rf node_modules
+RUN yarn install
+RUN yarn cache clean
+RUN yarn run build
 
-COPY .docker/nginx.default.conf /etc/nginx/conf.d/default.conf
+
+# ---
+
+
+# runner container
+#  - nginx, to serve static built Vue app
+
+# Use an official nginx image
+FROM nginx:1.13-alpine
+
+# COPY dist from builder container to nginx html dir
+COPY --from=builder /app/build /usr/share/nginx/html
+
+#COPY config/nginx.default.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+# No need for CMD. It'll fallback to nginx image's one, which
