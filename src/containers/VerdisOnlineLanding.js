@@ -75,12 +75,9 @@ export class Landing_ extends React.Component {
     }
 
     handleSTAC(rawSTAC) {
-        console.log("handleStac"+ rawSTAC);
         if (rawSTAC){
             let stac = rawSTAC.trim().replace(/[- ]/g, '');
             if (stac.length===12){
-                console.log("try to login");
-
                 this.props.kassenzeichenActions.getKassenzeichenbySTAC(stac, (success)=> {
                     if (success===true) {
                         setTimeout(()=>{
@@ -94,10 +91,6 @@ export class Landing_ extends React.Component {
 
                     }
                 });
-            }
-            else {
-                console.log("stac to short: "+"|"+stac+"|"+stac.length);
-
             }
         }
     }
