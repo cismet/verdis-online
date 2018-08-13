@@ -95,19 +95,27 @@ export class KassenzeichenViewer_ extends React.Component {
         }
 
         flaechenPanelClick(flaeche) {
-            this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature) => {
-                return (feature.properties.id === flaeche.id);
-            });
-
-            this.flaechenPanelRefs[flaeche.id].scrollToVisible();
-
+            if(this.isFlaecheSelected(flaeche)===true) {
+                this.props.mappingActions.fitSelectedFeatureBounds();
+            }  
+            else {
+                this.props.mappingActions.setSelectedFeatureIndexWithSelector((feature) => {
+                    return (feature.properties.id === flaeche.id);
+                });
+                this.flaechenPanelRefs[flaeche.id].scrollToVisible();
+            }
         }
   
       flaechenMapClick(event,feature) {
-          this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
-              return (testfeature.properties.id===feature.properties.id);
-          });
-          this.flaechenPanelRefs[feature.properties.id].scrollToVisible();
+        if(this.isFlaecheSelected(feature.properties)===true) {
+            this.props.mappingActions.fitSelectedFeatureBounds();
+        }  
+        else {
+            this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
+                return (testfeature.properties.id===feature.properties.id);
+            });
+            this.flaechenPanelRefs[feature.properties.id].scrollToVisible();
+        }
       }
   
       
