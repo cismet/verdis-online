@@ -145,7 +145,7 @@ function getKassenzeichenbySTAC(stac, callback) {
         if (response.status >= 200 && response.status < 300) {
             response.json().then(function (actionResult) {
                 const kassenzeichenData=JSON.parse(actionResult.res);
-                //.log(JSON.stringify(kassenzeichenData,2,null))
+                //console.log(JSON.stringify(kassenzeichenData,2,null))
                 if (kassenzeichenData.nothing) {
                     dispatch(AuthActions.logout());
                     if (typeof callback === "function") { 
