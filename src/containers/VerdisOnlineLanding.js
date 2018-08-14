@@ -130,12 +130,14 @@ export class Landing_ extends React.Component {
                 <Grid>
                     <Row className="show-grid">
                         <Col xs={12} md={12}>
-                            <h1 style={{color:"white"}}><img alt="" width={100} src="/images/wuppertal-white.svg"/> verdis-online</h1>
+                            <h1 style={{color:"white"}}><img alt="" width={180} src="/images/wuppertal-white.svg"/></h1>
+                            <h3  style={{color:"white"}}>VerDIS - Online / Versiegelungsdaten</h3>
+                            <h3  style={{color:"white"}}>Flächenentwässerung</h3>
                         </Col>
                     </Row>
 
                     <Row className="show-grid">
-                        <Col xs={12} md={12}>
+                        <Col xs={6} md={6}>
                             <div style={{position: 'fixed',top:this.props.uiState.height-200}}>
 
                     <Loadable
@@ -170,6 +172,19 @@ export class Landing_ extends React.Component {
 
                             </div>
                         </Col>
+                        <Col xs={2} md={2}>
+                        </Col>
+
+                        <Col xs={4} md={4}>
+                        <div style={{position: 'fixed',top:this.props.uiState.height-200}}>
+
+                            <h4 style={{color:"white"}}>Stadt Wuppertal</h4>
+                            <h4 style={{color:"white"}}>Vermessung, Katasteramt und Geodaten</h4>
+                            <h4 style={{color:"white"}}>102.23 Kommunalservice Liegenschaftskataster</h4>
+                            <h4 style={{color:"white"}}><a style={{color:"white"}} href="mailto:regengeld@stadt.wuppertal.de">regengeld@stadt.wuppertal.de</a></h4>
+                        </div>
+                        </Col>
+    
                     </Row>
                 </Grid>
 
