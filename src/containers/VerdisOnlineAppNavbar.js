@@ -132,7 +132,7 @@ export class AppNavbar_ extends React.Component {
         <Navbar.Collapse>
           <Nav pullRight>
             <NavItem id="navitem_showSettings" onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">Flächenerfassungsbogen erzeugen (PDF)</Tooltip>)}>
+            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">Flächenerfassungsbogen herunterladen (PDF)</Tooltip>)}>
                 <NavItem id="navitem_downloadFEB" onClick={this.downloadFEB} eventKey={2.3} ><Icon  style={pdfIconStyle} name="file-pdf-o" /></NavItem>
             </OverlayTrigger>
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.infoElementsEnabled) ? "Kassenzeichen-Info ausblenden" : "Kassenzeichen-Info einblenden"}</Tooltip>)}>
