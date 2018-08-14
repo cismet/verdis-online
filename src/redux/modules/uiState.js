@@ -27,6 +27,8 @@ export const types = {
     SET_MODE: 'UI_STATE/SET_MODE',
     SET_D3_AVAILABILITY: "UI_STATE/SET_D3_AVAILABILITY",
     SET_STAC_INPUT: 'UI_STATE/SET_STAC_INPUT',
+    SET_FEB_BLOB: 'UI_STATE/SET_FEB_BLOB',
+    SET_WAIT4FEB: 'UI_STATE/SET_WAIT4FEB',
 
 };
 
@@ -72,7 +74,10 @@ const initialState = {
         }
     ],
 
-    stacInput: ''
+    stacInput: '',
+
+    febBlob: null,
+    waitForFEB: false,
 
 };
 
@@ -197,6 +202,18 @@ export default function uiStateReducer(state = initialState, action) {
             {
                 newState = objectAssign({}, state);
                 newState.stacInput = action.input;
+                return newState;
+            }
+            case types.SET_FEB_BLOB:
+            {
+                newState = objectAssign({}, state);
+                newState.febBlob = action.febBlob;
+                return newState;
+            }
+        case types.SET_WAIT4FEB:
+            {
+                newState = objectAssign({}, state);
+                newState.waitForFEB = action.waitForFEB;
                 return newState;
             }
         default:
@@ -333,6 +350,19 @@ function setStacInput(input) {
         input
     };
 }
+function setFebBlob(febBlob) {
+    return {
+        type: types.SET_FEB_BLOB,        
+        febBlob
+    };
+}
+
+function setWaitForFEB(waitForFEB) {
+    return {
+        type: types.SET_WAIT4FEB,        
+        waitForFEB
+    };
+}
 
 //COMPLEXACTIONS
 
@@ -357,5 +387,7 @@ export const actions = {
     screenResize,
     setMode,
     setD3Availability,
-    setStacInput
+    setStacInput,
+    setFebBlob,
+    setWaitForFEB
 };

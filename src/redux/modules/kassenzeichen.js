@@ -156,6 +156,11 @@ function getKassenzeichenbySTAC(stac, callback) {
                     dispatch(setKassenzeichenObject(kassenzeichenData));
                     dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
                     dispatch(AuthActions.setStac(stac));
+                    dispatch(getFEBByStac(stac,(blob)=>{
+                        dispatch(UiStateActions.setFebBlob(blob));
+
+                    },true));
+
                     if (typeof callback === "function") { 
                         callback(true);
                     }
@@ -183,10 +188,11 @@ function getKassenzeichenbySTAC(stac, callback) {
     };
 }    
 
-function getFEBByStac(stac, callback) {
+function getFEBByStac(stac, callback, silent=false) {
     return function (dispatch, getState) {
-        dispatch(UiStateActions.showInfo("FEB wird erzeugt"));        
-
+        if (silent===false) {
+            dispatch(UiStateActions.showInfo("FEB wird erzeugt"));        
+        }
         let taskParameters={
             parameters: {
                 STAC: stac
@@ -228,9 +234,13 @@ function getFEBByStac(stac, callback) {
 
                 var blob = new Blob([byteArray], { type: 'application/pdf' });
                 callback(blob);
-                dispatch(UiStateActions.showWaiting(false));        
+                if (silent===false) {
+                    dispatch(UiStateActions.showWaiting(false));        
+                }
             } else {
-                dispatch(UiStateActions.showWaiting(false));        
+                if (silent===false) {
+                    dispatch(UiStateActions.showWaiting(false));        
+                }
                 console.log(result);
             }
             

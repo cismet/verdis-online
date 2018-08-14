@@ -40,6 +40,26 @@ export class AppNavbar_ extends React.Component {
     this.textsearchkassenzeichen = this.textsearchkassenzeichen.bind(this);
     this.fitBounds = this.fitBounds.bind(this);
   }
+
+  componentDidUpdate() {
+    // console.log("componentDidUpdate()");
+    // console.log("  this.props.uiState.waitForFEB:"+this.props.uiState.waitForFEB);
+    // console.log("  this.props.uiState.febBlob:"+this.props.uiState.febBlob);
+    // console.log("  this.props.uiState.waitingVisible:"+this.props.uiState.waitingVisible);
+    // console.log("-----------");
+    
+    if (this.props.uiState.waitForFEB===true)  { //dh downloadFeb() wurde aufgerufen aber der Download ist noch nicht fertig
+        if (this.props.uiState.febBlob===null && this.props.uiState.waitingVisible===false) {
+            this.props.uiStateActions.showInfo("FEB wird erzeugt");
+        } else if (this.props.uiState.febBlob!==null && this.props.uiState.waitingVisible===true) {
+            this.props.uiStateActions.showWaiting(false);
+            this.props.uiStateActions.setWaitForFEB(false);
+            this.downloadFEB();
+            
+  
+        }
+      }
+  }
   toggleInfo() {
     this.props.uiStateActions.toggleInfoElements();
   }
@@ -58,16 +78,20 @@ export class AppNavbar_ extends React.Component {
   showSettings() {
     this.props.uiStateActions.showSettings(true);
   }
+  
+  
   downloadFEB() {
-    
-    this.props.kassenzeichenActions.getFEBByStac(this.props.auth.stac, (blob) => {
+    if (this.props.uiState.febBlob!==null) {
         let link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
+        link.href = window.URL.createObjectURL(this.props.uiState.febBlob);
         link.download = "FEB."+this.props.kassenzeichen.kassenzeichennummer+".STAC."+this.props.auth.stac+".pdf";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link); 
-    });
+    }
+    else {
+        this.props.uiStateActions.setWaitForFEB(true);
+    }
   }
   textsearchkassenzeichen() {
     this.props.uiStateActions.setKassenzeichenTextSearchVisible(true);
@@ -86,9 +110,17 @@ export class AppNavbar_ extends React.Component {
     else {
         kassenzeichennummer="";
     } 
+
+    let pdfIconStyle;
+    if (this.props.uiState.febBlob!==null) {
+        pdfIconStyle={color:"white"};
+    }else {
+        pdfIconStyle={color:"grey"};
+    }
+
     return (<div>
       <Navbar  inverse style={{ marginBottom: 0 }}>
-      <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">Kassenzeichen ganz auf der Karte darstellen</Tooltip>)}>
+      <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">alle Teilflächen zum Kassenzeichen anzeigen</Tooltip>)}>
         <Navbar.Header>
           <Navbar.Brand>  
               <a id="verdis_online_brand" style={{ cursor: "pointer"}} onClick={this.fitBounds}>VerDIS-online{kassenzeichennummer}</a>
@@ -98,11 +130,10 @@ export class AppNavbar_ extends React.Component {
         </Navbar.Header>
         </OverlayTrigger>
         <Navbar.Collapse>
-        
           <Nav pullRight>
             <NavItem id="navitem_showSettings" onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">Flächenerfassungsbogen erzeugen (PDF)</Tooltip>)}>
-                <NavItem id="navitem_downloadFEB" onClick={this.downloadFEB} eventKey={2.3} ><Icon name="file-pdf-o" /></NavItem>
+                <NavItem id="navitem_downloadFEB" onClick={this.downloadFEB} eventKey={2.3} ><Icon  style={pdfIconStyle} name="file-pdf-o" /></NavItem>
             </OverlayTrigger>
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.infoElementsEnabled) ? "Kassenzeichen-Info ausblenden" : "Kassenzeichen-Info einblenden"}</Tooltip>)}>
                 <NavItem id="navitem_infoElementsEnabled" className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
