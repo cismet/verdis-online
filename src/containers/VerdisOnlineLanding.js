@@ -126,13 +126,17 @@ export class Landing_ extends React.Component {
            
           };
         return (
+            <div style={{position: "relative"}}>
+            <div style={{position: "absolute", top: "0px", left:"0px", width:"100%", height:"200px" ,backgroundColor: "rgba(0,0,0,0.4)" }}/>
+            <div style={{position: "absolute", bottom: "0px", left:"0px", width:"100%", height:"250px" ,backgroundColor: "rgba(0,0,0,0.4)" }}/>
+
             <div style={landingStyle}>
                 <Grid>
                     <Row className="show-grid">
                         <Col xs={12} md={12}>
                             <h1 style={{color:"white"}}><img alt="" width={180} src="/images/wuppertal-white.svg"/></h1>
-                            <h3  style={{color:"white"}}>VerDIS - Online / Versiegelungsdaten</h3>
-                            <h3  style={{color:"white"}}>Flächenentwässerung</h3>
+                            <h2  style={{color:"white"}}>VerDIS - online</h2>
+                            <h3  style={{color:"white"}}>Versiegelungsdaten | Flächenentwässerung</h3>
                         </Col>
                     </Row>
 
@@ -172,10 +176,10 @@ export class Landing_ extends React.Component {
 
                             </div>
                         </Col>
-                        <Col xs={2} md={2}>
+                        <Col xs={1} md={1}>
                         </Col>
 
-                        <Col xs={4} md={4}>
+                        <Col xs={5} md={5}>
                         <div style={{position: 'fixed',top:this.props.uiState.height-200}}>
 
                             <h4 style={{color:"white"}}>Stadt Wuppertal</h4>
@@ -188,6 +192,7 @@ export class Landing_ extends React.Component {
                     </Row>
                 </Grid>
 
+            </div>
             </div>
         );
     }
