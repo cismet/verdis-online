@@ -155,6 +155,7 @@ function getKassenzeichenbySTAC(stac, callback) {
                 }else {
                     dispatch(setKassenzeichenObject(kassenzeichenData));
                     dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
+                    dispatch(MappingActions.setSelectedFeatureIndex(null));
                     dispatch(AuthActions.setStac(stac));
                     dispatch(getFEBByStac(stac,(blob)=>{
                         dispatch(UiStateActions.setFebBlob(blob));

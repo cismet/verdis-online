@@ -17,6 +17,7 @@ import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
 import VerdisOnlineModalHelpComponent from '../components/VerdisOnlineModalHelpComponent';
+import{ kassenzeichenFlaechenSorter } from '../utils/kassenzeichenHelper';
 
 function mapStateToProps(state) {
   return {
@@ -150,22 +151,7 @@ export class KassenzeichenViewer_ extends React.Component {
         let flComps = [];
     
         if (this.props.kassenzeichen.flaechen && this.props.uiState.detailElementsEnabled) {
-          flaechen = this.props.kassenzeichen.flaechen.concat().sort((fa, fb) => {
-            if (!isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
-              return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung);
-            } else if (!isNaN(fa.flaechenbezeichnung) && isNaN(fb.flaechenbezeichnung)) {
-              return -1;
-            } else if (isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
-              return 1;
-            } else {
-              if (fa.flaechenbezeichnung < fb.flaechenbezeichnung) {
-                return -1;
-              }
-              else {
-                return 1;
-              }
-            }
-          });
+          flaechen = this.props.kassenzeichen.flaechen.concat().sort(kassenzeichenFlaechenSorter);
         }
         let kassenzeichenPanel;
         let kassenzeichenHorizontalFlaechenChartsPanel;

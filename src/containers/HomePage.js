@@ -6,6 +6,7 @@ import KassenzeichenPanel from '../components/KassenzeichenPanel';
 import KassenzeichenChartPanel from '../components/KassenzeichenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Flexbox from 'flexbox-react';
+import{ kassenzeichenFlaechenSorter } from '../utils/kassenzeichenHelper';
 
 function mapStateToProps(state) {
   return {
@@ -17,6 +18,7 @@ function mapStateToProps(state) {
 
 
 const verticalPanelWidth = 280;
+
 
 const horizontalPanelHeight = 150;
 const horizontalPanelWidth = 200;
@@ -50,23 +52,9 @@ export class HomePage_ extends React.Component {
     let flComps = [];
 
     if (this.props.kassenzeichen.flaechen && this.props.uiState.detailElementsEnabled) {
-      flaechen = this.props.kassenzeichen.flaechen.concat().sort((fa, fb) => {
-        if (!isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
-          return (+fa.flaechenbezeichnung) - (+fb.flaechenbezeichnung);
-        } else if (!isNaN(fa.flaechenbezeichnung) && isNaN(fb.flaechenbezeichnung)) {
-          return -1;
-        } else if (isNaN(fa.flaechenbezeichnung) && !isNaN(fb.flaechenbezeichnung)) {
-          return 1;
-        } else {
-          if (fa.flaechenbezeichnung < fb.flaechenbezeichnung) {
-            return -1;
-          }
-          else {
-            return 1;
-          }
-        }
-      });
+      flaechen = this.props.kassenzeichen.flaechen.concat().sort(kassenzeichenFlaechenSorter);
     }
+    console.log(flaechen)
     let kassenzeichenPanel;
     let kassenzeichenHorizontalChartsPanel;
     let kassenzeichenVerticalChartsPanel;

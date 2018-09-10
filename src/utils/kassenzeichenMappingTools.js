@@ -9,6 +9,7 @@ export const getFlaechenFeatureCollection = (kassenzeichen) => {
   return getGeoJsonFeatureFromCidsObject(kassenzeichen.flaechen, 'flaecheninfo.geometrie', (flaeche) => {
     return {
       'id': flaeche.id,
+      "bez": flaeche.flaechenbezeichnung,
       'art_abk': flaeche.flaecheninfo.flaechenart.art_abkuerzung,
       'flaechenart': flaeche.flaecheninfo.flaechenart.art,
       'anschlussgrad': flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung,
@@ -107,13 +108,13 @@ export const getColorFromFlaechenArt = (art_abk) => {
         linecolor="#0C7D9D";
         weight="2";
     }
-
     const style = {
         "color": linecolor,
         "weight": weight,
         "opacity": 1.0,
         "fillColor": color,
-        "fillOpacity": opacity
+        "fillOpacity": opacity,
+        "className": "verdis-flaeche-"+feature.properties.bez,
       };
     
   return style;

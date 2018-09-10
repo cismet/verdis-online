@@ -15,6 +15,7 @@
     "localforage": "1.7.2",
     "lodash": "4.17.4",
     "object-assign": "^4.1.1",
+    "polylabel": "1.0.2",
     "proj4": "^2.4.4",
     "proj4leaflet": "^1.0.2",
     "prop-types": "^15.5.10",
@@ -41,6 +42,7 @@
     "redux-persist": "^5.4.0",
     "redux-thunk": "^2.2.0",
     "scroll-into-view-if-needed": "1.2.1",
+    "svg-path-parser": "1.1.0",
     "url-search-params-polyfill": "^2.0.0",
     "wellknown": "^0.5.0",
     "whatwg-fetch": "^2.0.3"
@@ -55,7 +57,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "cypress": "3.0.2",
+    "cypress": "3.1.0",
     "mocha": "^3.5.0"
   }
 }
