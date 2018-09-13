@@ -88,7 +88,9 @@ export class KassenzeichenViewer_ extends React.Component {
         }
 
         kassenZeichenPanelClick() {
-            this.refs.verdismap.getWrappedInstance().fitBounds();
+            // this.props.mappingActions.fitAll();
+            // or
+            this.verdisMap.getWrappedInstance().fitBounds();
         }
 
         kassenZeichenPanelD3Click() {
@@ -178,7 +180,7 @@ export class KassenzeichenViewer_ extends React.Component {
         if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
           map = (
             <div>
-              <VerdisMap ref="verdismap" authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
+              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
             </div>
           );
         }
@@ -198,7 +200,7 @@ export class KassenzeichenViewer_ extends React.Component {
           }
           map = (
             <div>
-              <VerdisMap ref="verdismap" authMode={APP_MODES.STAC} height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
               <Flexbox flexDirection="row" style={detailsStyle} >
                 <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
                   {kassenzeichenPanel}
@@ -228,7 +230,7 @@ export class KassenzeichenViewer_ extends React.Component {
                 {kassenzeichenHorizontalFlaechenChartsPanel}
                 {flComps}
               </div>
-              <VerdisMap ref="verdismap" authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
             </div>
           );
         }

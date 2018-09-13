@@ -31,7 +31,7 @@ export class HomePage_ extends React.Component {
       this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
   }
   flaechenPanelClick() {
-    this.refs.verdismap.getWrappedInstance().fitBounds();
+    this.verdisMap.getWrappedInstance().fitBounds();
   }
   render() {
     let mapHeight;
@@ -80,7 +80,7 @@ export class HomePage_ extends React.Component {
     if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight} />
+          <VerdisMap  ref={verdisMapRef => {this.verdisMap = verdisMapRef;}} height={mapHeight} />
         </div>
       );
     }
@@ -97,7 +97,7 @@ export class HomePage_ extends React.Component {
       }
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} />
+          <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  height={mapHeight - horizontalPanelHeight - 25} />
           <Flexbox flexDirection="row" style={detailsStyle} >
             <Flexbox height={horizontalPanelHeight} minWidth={horizontalPanelWidth}>
               {kassenzeichenPanel}
@@ -123,7 +123,7 @@ export class HomePage_ extends React.Component {
             {kassenzeichenHorizontalChartsPanel}
             {flComps}
           </div>
-          <VerdisMap ref="verdismap" height={mapHeight} />
+          <VerdisMap height={mapHeight} />
         </div>
       );
     }

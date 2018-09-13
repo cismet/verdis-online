@@ -68,7 +68,7 @@ describe("Mapping component tests", () => {
     });
 
 
-    it.only("checks zoom in an out", () => {
+    it("checks zoom in an out", () => {
         cy.login();
         cy.wait(1000);
         cy.hash().should((hash)=>{

@@ -1,46 +1,26 @@
-import objectAssign from 'object-assign';
-import 'url-search-params-polyfill';
+import "url-search-params-polyfill";
 
 export function modifyQueryPart(search, modifiedParts) {
-    let query = getQueryObject(search);
-    let newQuery = objectAssign( query, modifiedParts);
-    let pNames = Object.getOwnPropertyNames(newQuery);
-    let querypart = "?";
-    let first = true;
-    for (let nidx in pNames) {
-        let connector;
-        if (first) {
-            connector = "";
+    let original = new URLSearchParams(search);
+    let pNames = Object.getOwnPropertyNames(modifiedParts);
+    for (let n of pNames) {
+        if (original.has(n)) {
+            original.set(n, modifiedParts[n]);
         } else {
-            connector = "&";
+            original.append(n, modifiedParts[n]);
         }
-        querypart = querypart.concat(connector,pNames[nidx],"=",newQuery[pNames[nidx]]);
-        first = false;
     }
-    return querypart;
+    return "?" + original.toString();
 }
 
-export function getQueryObject(search) {
-    let obj = {};
-    if(search) {
-        // eslint-disable-next-line
-        search.slice(1).split('&').map((item) => {
-        const [ k, v ] = item.split('=');
-        // eslint-disable-next-line
-        v ? obj[k] = v : null;
-      });
-    }
-    return obj;
-}
-
-export function changeKassenzeichenInLocation(location,kasznr)  {
-    let withoutKassz=location.pathname.replace(/\d+$/, "");
-    let lastSlash=withoutKassz.lastIndexOf("/");
+export function changeKassenzeichenInLocation(location, kasznr) {
+    let withoutKassz = location.pathname.replace(/\d+$/, "");
+    let lastSlash = withoutKassz.lastIndexOf("/");
     let out;
-    if (lastSlash+1===withoutKassz.length){
-        out=withoutKassz+kasznr+location.search;
+    if (lastSlash + 1 === withoutKassz.length) {
+        out = withoutKassz + kasznr + location.search;
     } else {
-        out=withoutKassz+"/"+kasznr+location.search;
+        out = withoutKassz + "/" + kasznr + location.search;
     }
     return out;
 }

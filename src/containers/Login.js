@@ -6,7 +6,6 @@ import { Modal, Button, Form, FormGroup, Col, ControlLabel, FormControl, Progres
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as AuthActions } from '../redux/modules/auth';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
-import { getQueryObject } from '../utils/routingHelper';
 
 function mapStateToProps(state) {
   return {
@@ -34,8 +33,8 @@ export class Login_ extends React.Component {
 
   close() {
     if (typeof this.props.uiState.kassenzeichenToSearchFor !== "undefined" && this.props.uiState.kassenzeichenToSearchFor !== null) {
-        let queryO=getQueryObject(this.props.routing.location.search);
-        let fitBounds=typeof queryO.lat  === "undefined" || typeof queryO.lng   === "undefined" ||  typeof queryO.zoom  === "undefined";
+        let urlSearchParams=new URLSearchParams(this.props.routing.location.search);
+        let fitBounds=typeof urlSearchParams.get('lat')  === "undefined" || typeof urlSearchParams.get('lng')   === "undefined" ||  typeof urlSearchParams.get('zoom')  === "undefined";
         this.props.authActions.login(this.user, this.pw, () => {
             this.props.kassenzeichenActions.searchByKassenzeichen(this.props.uiState.kassenzeichenToSearchFor,fitBounds);
         });

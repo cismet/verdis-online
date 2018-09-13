@@ -156,6 +156,7 @@ function getKassenzeichenbySTAC(stac, callback) {
                     dispatch(setKassenzeichenObject(kassenzeichenData));
                     dispatch(MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData)));
                     dispatch(MappingActions.setSelectedFeatureIndex(null));
+                    dispatch(MappingActions.fitAll());
                     dispatch(AuthActions.setStac(stac));
                     dispatch(getFEBByStac(stac,(blob)=>{
                         dispatch(UiStateActions.setFebBlob(blob));
@@ -204,7 +205,6 @@ function getFEBByStac(stac, callback, silent=false) {
         fd.append('taskparams',  new Blob([JSON.stringify(taskParameters)], {
             type: "application/json"
         }));
-        console.log("downloadFEB()");
 
         const url=STAC_SERVICE + "/actions/"+DOMAIN+".getMyFEB/tasks?role=all&resultingInstanceType=result";
         fetch(url, {

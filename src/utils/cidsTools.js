@@ -31,9 +31,11 @@ export function getGeoJsonFeatureFromCidsGeom(geom, properties) {
   delete gj_geometry.crs;
   return {
     "type": "Feature",
+    "id":properties.id || JSON.stringify(properties), //better hash this value
     "geometry": gj_geometry,
     "crs": crs,
-    "properties": properties
+    "properties": properties,
+
   };
 }
 

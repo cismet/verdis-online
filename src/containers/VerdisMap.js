@@ -5,25 +5,28 @@ import { connect } from "react-redux";
 import 'proj4leaflet';
 //import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
 import { Layers } from '../components/Layers';
-import ProjGeoJson from '../components/ProjGeoJson';
-import { crs25832, proj4crs25832def } from '../constants/gis';
 import proj4 from 'proj4';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { bindActionCreators } from 'redux';
-//import  CismapBaseMap  from './CismapBaseMap';
-import RoutedMap from './RoutedMap';
+
+import { RoutedMap, MappingConstants, FeatureCollectionDisplay } from '../components/react-cismap';
+import { routerActions as RoutingActions } from 'react-router-redux';
+import { modifyQueryPart } from '../utils/routingHelper';
+
+import { getMarkerStyleFromFeatureConsideringSelection,flaechenLabeler } from '../utils/kassenzeichenMappingTools';
+
 import L from 'leaflet';
 
 
 const position = [51.272399, 7.199712];
-
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
     kassenzeichen: state.kassenzeichen,
-    mapping: state.mapping
+    mapping: state.mapping,
+    routing: state.routing
   };
 }
 
@@ -31,6 +34,7 @@ function mapDispatchToProps(dispatch) {
   return {
     kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
     mappingActions: bindActionCreators(MappingActions, dispatch),
+    routingActions: bindActionCreators(RoutingActions  , dispatch),
 
   };
 }
@@ -50,18 +54,15 @@ export class VerdisMap_ extends React.Component {
         if (this.props.authMode===APP_MODES.USER_PW) {
             const skipFitBounds=true;//event.originalEvent.shiftKey; 
             const latlon = event.latlng;
-            const pos=(proj4(proj4crs25832def, [latlon.lng, latlon.lat]));
+            const pos=(proj4(MappingConstants.proj4crs25832def, [latlon.lng, latlon.lat]));
             this.props.kassenzeichenActions.searchByPoint(pos[0],pos[1],!skipFitBounds);
         }
     }
-    // mapClick(event) {
-    //     console.log(event);
-    //    // this.props.mappingActions.setSelectedFeatureIndex(null);
-    // }
 
     featureClick(event,feature,layer) {
         L.DomEvent.stopPropagation(event.originalEvent);
         event.originalEvent.preventDefault();
+        
         this.props.featureClickHandler(event,feature,layer);
     }
     render() {
@@ -70,17 +71,38 @@ export class VerdisMap_ extends React.Component {
         };
 
 
+    let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
+     
+
+
     // <Ortho2014 /><StadtgrundKarteABK />
     // <OSM />
     return (
-      <RoutedMap ref="leafletRoutedMap" 
-            key={"leafletRoutedMap"}  
-            layers="" crs={crs25832} 
+      <RoutedMap 
+            key={"leafletRoutedMap"} 
+            referenceSystem= {MappingConstants.crs25832}
+            referenceSystemDefinition={MappingConstants.proj4crs25832def}
+            ref={leafletMap => {this.leafletRoutedMap = leafletMap;}}
+            layers="" 
             style={mapStyle} 
             center={position}  
             zoom={14} 
             ondblclick={this.mapDblClick} 
-            doubleClickZoom={false} >
+            doubleClickZoom={false} 
+            locationChangedHandler={(location)=>{
+                this.props.routingActions.push(
+                    this.props.routing.location.pathname
+                    + modifyQueryPart(this.props.routing.location.search, location));
+            }}
+            autoFitConfiguration={{
+                autoFitBounds: this.props.mapping.autoFitBounds,
+                autoFitMode: this.props.mapping.autoFitMode,
+                autoFitBoundsTarget: this.props.mapping.autoFitBoundsTarget
+            }}
+            autoFitProcessedHandler={()=>this.props.mappingActions.setAutoFit(false)}
+            urlSearchparams={urlSearchParams}
+            boundingBoxChangedHandler={(bbox)=>this.props.mappingActions.mappingBoundsChanged(bbox)}
+            >
         {this.props.uiState.layers.map((layer) => {
           if (layer.enabled) {
             return (
@@ -91,10 +113,28 @@ export class VerdisMap_ extends React.Component {
             return (<div key={"empty_div_for_disabled_layer"+JSON.stringify(layer)}/>);
           }
         })}
-        <ProjGeoJson key={JSON.stringify(this.props.mapping)} 
-            mappingProps={this.props.mapping} 
+       
+        <FeatureCollectionDisplay
+            key={
+              JSON.stringify(this.props.mapping.featureCollection) + ""
+            //   this.props.featureKeySuffixCreator() +
+            //   "clustered:" +
+            //   this.props.clustered +
+            //   ".customPostfix:" +
+            //   this.props.mapping.featureCollectionKeyPostfix
+            }
+            featureCollection={this.props.mapping.featureCollection}
+            boundingBox={this.props.mapping.boundingBox}
+            clusteringEnabled={false}
             style={this.props.featureCollectionStyle} 
-            featureClickHandler={this.featureClick}/>
+            // labeler={flaechenLabeler}
+            hoverer={this.props.hoverer}
+            featureClickHandler={this.featureClick}
+            mapRef={this.leafletRoutedMap}
+            showMarkerCollection={true}
+            markerStyle={getMarkerStyleFromFeatureConsideringSelection}
+          />
+          
       </RoutedMap>
     );
   }
@@ -103,7 +143,7 @@ export class VerdisMap_ extends React.Component {
 //{m => { this.leafletRoutedMap = m; }}
 
 
-const VerdisMap = connect(mapStateToProps, mapDispatchToProps,null, {withRef:true})(VerdisMap_);
+const VerdisMap = connect(mapStateToProps, mapDispatchToProps,null,{ withRef: true })(VerdisMap_);
 
 VerdisMap_.propTypes = {
   uiState: PropTypes.object,
