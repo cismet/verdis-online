@@ -131,7 +131,7 @@ export class VerdisMap_ extends React.Component {
             hoverer={this.props.hoverer}
             featureClickHandler={this.featureClick}
             mapRef={this.leafletRoutedMap}
-            showMarkerCollection={true}
+            showMarkerCollection={urlSearchParams.get('zoom')>=15}
             markerStyle={getMarkerStyleFromFeatureConsideringSelection}
           />
           
