@@ -1,17 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-//import { render } from 'react-dom';
 import { connect } from "react-redux";
 import 'proj4leaflet';
-//import { Ortho2014, StadtgrundKarteABK, Osm } from './Layers';
-import { Layers } from '../components/Layers';
 import proj4 from 'proj4';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as MappingActions } from '../redux/modules/mapping';
-import { bindActionCreators } from 'redux';
-
-import { RoutedMap, MappingConstants, FeatureCollectionDisplay } from '../components/react-cismap';
+import { bindActionCreators } from 'redux'
+import { RoutedMap, MappingConstants, FeatureCollectionDisplay } from 'react-cismap';
 import { routerActions as RoutingActions } from 'react-router-redux';
 import { modifyQueryPart } from '../utils/routingHelper';
 
@@ -72,6 +68,7 @@ export class VerdisMap_ extends React.Component {
 
 
     let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
+
     return (
       <RoutedMap 
             key={"leafletRoutedMap"} 
