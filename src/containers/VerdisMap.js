@@ -15,7 +15,7 @@ import { RoutedMap, MappingConstants, FeatureCollectionDisplay } from '../compon
 import { routerActions as RoutingActions } from 'react-router-redux';
 import { modifyQueryPart } from '../utils/routingHelper';
 
-import { getMarkerStyleFromFeatureConsideringSelection,flaechenLabeler } from '../utils/kassenzeichenMappingTools';
+import { getMarkerStyleFromFeatureConsideringSelection } from '../utils/kassenzeichenMappingTools';
 
 import L from 'leaflet';
 
@@ -72,11 +72,6 @@ export class VerdisMap_ extends React.Component {
 
 
     let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
-     
-
-
-    // <Ortho2014 /><StadtgrundKarteABK />
-    // <OSM />
     return (
       <RoutedMap 
             key={"leafletRoutedMap"} 
@@ -102,18 +97,9 @@ export class VerdisMap_ extends React.Component {
             autoFitProcessedHandler={()=>this.props.mappingActions.setAutoFit(false)}
             urlSearchparams={urlSearchParams}
             boundingBoxChangedHandler={(bbox)=>this.props.mappingActions.mappingBoundsChanged(bbox)}
+            backgroundlayers={this.props.backgroundlayers || "bplan_abkg@30"}
             >
-        {this.props.uiState.layers.map((layer) => {
-          if (layer.enabled) {
-            return (
-              Layers.get(layer.key)(layer.opacity)
-            );
-          }
-          else {
-            return (<div key={"empty_div_for_disabled_layer"+JSON.stringify(layer)}/>);
-          }
-        })}
-       
+    
         <FeatureCollectionDisplay
             key={
               JSON.stringify(this.props.mapping.featureCollection) + ""
@@ -155,6 +141,7 @@ VerdisMap_.propTypes = {
   featureClickHandler: PropTypes.func,
   featureCollectionStyle: PropTypes.func,
   authMode: PropTypes.string,
+  backgroundlayers: PropTypes.string, 
 };
 
 

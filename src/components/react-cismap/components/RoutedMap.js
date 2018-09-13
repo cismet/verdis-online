@@ -8,11 +8,15 @@ import "url-search-params-polyfill";
 
 import { constants as MappingConstants } from "../../../redux/modules/mapping";
 
+import getLayersByNames from '../tools/layerFactory'; 
+
 export class RoutedMap extends React.Component {
     constructor(props) {
         super(props);
         this.featureClick = this.featureClick.bind(this);
     }
+     
+    // add a handler for detecting map changes
     componentDidMount() {
         this.leafletMap.leafletElement.on("moveend", () => {
             if (
@@ -59,6 +63,7 @@ export class RoutedMap extends React.Component {
         this.storeBoundingBox(this.leafletMap);
     }
 
+    //Handle a autoFit Command if needed
     componentDidUpdate() {
         if (typeof this.leafletMap !== "undefined" && this.leafletMap != null) {
             if (this.props.autoFitConfiguration.autoFitBounds) {
@@ -152,6 +157,7 @@ export class RoutedMap extends React.Component {
                     zoomInTitle="Vergr&ouml;ßern"
                     zoomOutTitle="Verkleinern"
                 />
+                {getLayersByNames(this.props.backgroundlayers,this.props.urlSearchParams)}
                 {this.props.children}
             </Map>
         );
@@ -178,6 +184,7 @@ RoutedMap.propTypes = {
     fallbackZoom: PropTypes.number,
     referenceSystem: PropTypes.object,
     referenceSystemDefinition: PropTypes.object,
+    backgroundlayers: PropTypes.string
 
 };
 
@@ -199,6 +206,8 @@ RoutedMap.defaultProps = {
     fallbackZoom: 14,
     referenceSystem: crs25832,
     referenceSystemDefinition: proj4crs25832def,
+    backgroundlayers: "default"
+
 };
 
 export default RoutedMap;

@@ -47,7 +47,7 @@ export default class App extends React.Component {
               <Route component={Layout}/>   
               <Switch>
                 <Route  exact path="/" component={Landing} />  
-                <Route  exact path="/meinkassenzeichen" component={KassenzeichenViewer} />  
+                <Route  exact path="/meinkassenzeichen/:layers?" component={KassenzeichenViewer} />  
                 <Route  exact path="/2go" component={RedirectVersiegelteFlaechen} />  
                 <Route exact path="/2go/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
                 <Route exact path="/2go/esw/:kassenzeichen?" component={ModeESW} />

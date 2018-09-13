@@ -134,7 +134,7 @@ export class KassenzeichenViewer_ extends React.Component {
   
 
     render() {
-        let map;
+        let verdisMapWithAdditionalComponents;
         let mapHeight;
         if (this.props.uiState.height) {
           mapHeight = this.props.uiState.height - 55;
@@ -178,9 +178,9 @@ export class KassenzeichenViewer_ extends React.Component {
           !this.props.uiState.detailElementsEnabled;
     
         if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
-          map = (
+          verdisMapWithAdditionalComponents = (
             <div>
-              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick}/>
+              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} backgroundlayers={this.props.match.params.layers}/>
             </div>
           );
         }
@@ -198,9 +198,9 @@ export class KassenzeichenViewer_ extends React.Component {
                 );
             });
           }
-          map = (
+          verdisMapWithAdditionalComponents = (
             <div>
-              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle} backgroundlayers={this.props.match.params.layers}/>
               <Flexbox flexDirection="row" style={detailsStyle} >
                 <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
                   {kassenzeichenPanel}
@@ -223,24 +223,23 @@ export class KassenzeichenViewer_ extends React.Component {
             });
           }
     
-          map=(
+          verdisMapWithAdditionalComponents=(
             <div>
               <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
                 {kassenzeichenPanel}
                 {kassenzeichenHorizontalFlaechenChartsPanel}
                 {flComps}
               </div>
-              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle}/>
+              <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle} backgroundlayers={this.props.match.params.layers}/>
             </div>
           );
         }
-    
         return (
             <div>
                 <AppNavbar />
                 <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
                 <VerdisOnlineModalHelpComponent />
-                {map}
+                {verdisMapWithAdditionalComponents}
             </div>
           );
       }
