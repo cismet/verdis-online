@@ -148,7 +148,7 @@ export class AppNavbar_ extends React.Component {
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.detailElementsEnabled) ? "Teilflächenliste ausblenden" : "Teilflächenliste einblenden"}</Tooltip>)}>
                 <NavItem id="navitem_detailElementsEnabled" className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
             </OverlayTrigger>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.detailElementsEnabled) ? "Ansprechpartner ausblenden" : "Ansprechpartner anzeigen"}</Tooltip>)}>
+            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.contactElementEnabled) ? "Ansprechpartner ausblenden" : "Ansprechpartner einblenden"}</Tooltip>)}>
                 <NavItem id="navitem_contact" className={(this.props.uiState.contactElementEnabled) ? "active" : ""} eventKey={2.6} href="#" onSelect={this.toggleContact} ><Icon name="user" /></NavItem>
             </OverlayTrigger>
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">VerDIS-online beenden</Tooltip>)}>
