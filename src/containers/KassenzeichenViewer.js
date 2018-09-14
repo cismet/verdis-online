@@ -4,6 +4,8 @@ import VerdisMap from './VerdisMap';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
+import ContactPanel from '../components/ContactPanel';
+
 import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Waiting from './Waiting';
@@ -18,7 +20,7 @@ import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
 import VerdisOnlineModalHelpComponent from '../components/VerdisOnlineModalHelpComponent';
 import{ kassenzeichenFlaechenSorter } from '../utils/kassenzeichenHelper';
-
+import CONTACTS_MAP, {defaultContact} from '../constants/contacts';
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
@@ -158,9 +160,35 @@ export class KassenzeichenViewer_ extends React.Component {
         let kassenzeichenPanel;
         let kassenzeichenHorizontalFlaechenChartsPanel;
         let kassenzeichenVerticalFlaechenChartsPanel;
-    
+        
+        let contact;
+        let creator=defaultContact;
+        try {
+            creator=this.props.kassenzeichen.stac_options.creatorUserName;
+        }catch (e){
+
+        }
+        if (CONTACTS_MAP.has(creator)){
+            contact=CONTACTS_MAP.get(creator);
+        }
+        else {
+            contact=CONTACTS_MAP.get(defaultContact);
+        }
+
+
+        let contactPanel=<div/>;
+        if (this.props.uiState.contactElementEnabled && this.props.kassenzeichen.id !== -1) {
+            contactPanel=<ContactPanel contact={contact}/>;
+        }
+
+
+
         if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
-          kassenzeichenPanel = <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} d3Enabled={this.props.uiState.d3Available} d3Click={this.kassenZeichenPanelD3Click} kassenzeichen={this.props.kassenzeichen} />;
+          kassenzeichenPanel = (
+            <div>
+            <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} d3Enabled={this.props.uiState.d3Available} d3Click={this.kassenZeichenPanelD3Click} kassenzeichen={this.props.kassenzeichen} />
+            </div>
+          );
         }
         if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
           kassenzeichenHorizontalFlaechenChartsPanel = <KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />;
@@ -203,6 +231,7 @@ export class KassenzeichenViewer_ extends React.Component {
               <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle} backgroundlayers={this.props.match.params.layers}/>
               <Flexbox flexDirection="row" style={detailsStyle} >
                 <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
+                  {contactPanel}                 
                   {kassenzeichenPanel}
                 </Flexbox>
                 {kassenzeichenVerticalFlaechenChartsPanel}
@@ -226,6 +255,7 @@ export class KassenzeichenViewer_ extends React.Component {
           verdisMapWithAdditionalComponents=(
             <div>
               <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
+                {contactPanel}
                 {kassenzeichenPanel}
                 {kassenzeichenHorizontalFlaechenChartsPanel}
                 {flComps}

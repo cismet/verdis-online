@@ -16,6 +16,7 @@ export const types = {
     TOGGLE_KANAL_ELEMENTS: 'UI_STATE/TOGGLE_KANAL_ELEMENTS',
     TOGGLE_FILTER_ELEMENT: 'UI_STATE/TOGGLE_FILTER_ELEMENT',
     TOGGLE_DETAIL_ELEMENTS: 'UI_STATE/TOGGLE_DETAIL_ELEMENTS',
+    TOGGLE_CONTACT_ELEMENT: 'UI_STATE/TOGGLE_CONTACT_ELEMENT',
     CHANGE_LAYER_OPACITY: 'UI_STATE/CHANGE_LAYER_OPACITY',
     CHANGE_LAYER_ENABLED: 'UI_STATE/CHANGE_LAYER_ENABLED',
     SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
@@ -44,6 +45,7 @@ const initialState = {
     kanalElementsEnabled: false,
     filterElementEnabled: false,
     detailElementsEnabled: true,
+    contactElementEnabled: true,
 
     settingsVisible: false,
     searchForKassenzeichenVisible: false,
@@ -123,6 +125,12 @@ export default function uiStateReducer(state = initialState, action) {
             {
                 newState = objectAssign({}, state);
                 newState.detailElementsEnabled = !state.detailElementsEnabled;
+                return newState;
+            }
+        case types.TOGGLE_CONTACT_ELEMENT:
+            {
+                newState = objectAssign({}, state);
+                newState.contactElementEnabled = !state.contactElementEnabled;
                 return newState;
             }
         case types.SHOW_SETTINGS:
@@ -255,6 +263,12 @@ function toggleDetailsElements() {
     };
 }
 
+function toggleContactElement() {
+    return {
+        type: types.TOGGLE_CONTACT_ELEMENT
+    };
+}
+
 function showSettings(visible) {
     return {
         type: types.SHOW_SETTINGS,
@@ -375,6 +389,7 @@ export const actions = {
     toggleKanalElements,
     toggleFilterElements,
     toggleDetailsElements,
+    toggleContactElement,
     showSettings,
     setKassenzeichenSearchInProgress,
     setKassenzeichenTextSearchVisible,

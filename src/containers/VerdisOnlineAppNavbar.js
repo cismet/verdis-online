@@ -35,6 +35,7 @@ export class AppNavbar_ extends React.Component {
     this.toggleKanal = this.toggleKanal.bind(this);
     this.toggleFilter = this.toggleFilter.bind(this);
     this.toggleDetails = this.toggleDetails.bind(this);
+    this.toggleContact = this.toggleContact.bind(this);
     this.showSettings = this.showSettings.bind(this);
     this.downloadFEB = this.downloadFEB.bind(this);
     this.textsearchkassenzeichen = this.textsearchkassenzeichen.bind(this);
@@ -74,6 +75,9 @@ export class AppNavbar_ extends React.Component {
   }
   toggleDetails() {
     this.props.uiStateActions.toggleDetailsElements();
+  }
+  toggleContact() {
+    this.props.uiStateActions.toggleContactElement();
   }
   showSettings() {
     this.props.uiStateActions.showSettings(true);
@@ -143,6 +147,9 @@ export class AppNavbar_ extends React.Component {
             </OverlayTrigger>
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.detailElementsEnabled) ? "Teilflächenliste ausblenden" : "Teilflächenliste einblenden"}</Tooltip>)}>
                 <NavItem id="navitem_detailElementsEnabled" className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
+            </OverlayTrigger>
+            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.detailElementsEnabled) ? "Ansprechpartner ausblenden" : "Ansprechpartner anzeigen"}</Tooltip>)}>
+                <NavItem id="navitem_contact" className={(this.props.uiState.contactElementEnabled) ? "active" : ""} eventKey={2.6} href="#" onSelect={this.toggleContact} ><Icon name="user" /></NavItem>
             </OverlayTrigger>
             <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">VerDIS-online beenden</Tooltip>)}>
                 <NavItem id="navitem_logout" eventKey={3} href="/#/" ><Icon name="power-off" /></NavItem>
