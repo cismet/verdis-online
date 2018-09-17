@@ -12,6 +12,7 @@ import { routerActions as RoutingActions } from 'react-router-redux';
 import { modifyQueryPart } from '../utils/routingHelper';
 
 import { getMarkerStyleFromFeatureConsideringSelection } from '../utils/kassenzeichenMappingTools';
+import {Alert} from 'react-bootstrap';
 
 import L from 'leaflet';
 
@@ -96,7 +97,7 @@ export class VerdisMap_ extends React.Component {
             boundingBoxChangedHandler={(bbox)=>this.props.mappingActions.mappingBoundsChanged(bbox)}
             backgroundlayers={this.props.backgroundlayers || "bplan_abkg@30"}
             >
-    
+
         <FeatureCollectionDisplay
             key={
               JSON.stringify(this.props.mapping.featureCollection) + ""
@@ -117,7 +118,7 @@ export class VerdisMap_ extends React.Component {
             showMarkerCollection={urlSearchParams.get('zoom')>=15}
             markerStyle={getMarkerStyleFromFeatureConsideringSelection}
           />
-          
+        
       </RoutedMap>
     );
   }

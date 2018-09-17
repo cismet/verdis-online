@@ -9,7 +9,7 @@ import ContactPanel from '../components/ContactPanel';
 import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
 import Waiting from './Waiting';
-
+import { Alert } from 'react-bootstrap';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
@@ -19,8 +19,9 @@ import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
 import VerdisOnlineModalHelpComponent from '../components/VerdisOnlineModalHelpComponent';
-import{ kassenzeichenFlaechenSorter } from '../utils/kassenzeichenHelper';
+import{ kassenzeichenFlaechenSorter,getOverlayTextForFlaeche } from '../utils/kassenzeichenHelper';
 import CONTACTS_MAP, {defaultContact} from '../constants/contacts';
+
 function mapStateToProps(state) {
   return {
     uiState: state.uiState,
@@ -136,6 +137,7 @@ export class KassenzeichenViewer_ extends React.Component {
   
 
     render() {
+        let flaechenInfoOverlay;
         let verdisMapWithAdditionalComponents;
         let mapHeight;
         if (this.props.uiState.height) {
@@ -181,9 +183,13 @@ export class KassenzeichenViewer_ extends React.Component {
             contactPanel=<ContactPanel contact={contact}/>;
         }
 
+        let selectedFlaeche=null;
+        if (this.props.mapping.selectedIndex!==undefined && this.props.mapping.selectedIndex!==-1) {
+            selectedFlaeche=this.props.mapping.featureCollection[this.props.mapping.selectedIndex];
+        }
 
 
-        if (this.props.uiState.infoElementsEnabled && this.props.kassenzeichen.id !== -1) {
+        if (this.props.kassenzeichen.id !== -1) {
           kassenzeichenPanel = (
             <div>
             <KassenzeichenPanel onClick={this.kassenZeichenPanelClick} d3Enabled={this.props.uiState.d3Available} d3Click={this.kassenZeichenPanelD3Click} kassenzeichen={this.props.kassenzeichen} />
@@ -199,7 +205,7 @@ export class KassenzeichenViewer_ extends React.Component {
           );
         }
     
-        let nothingEnabled = !this.props.uiState.infoElementsEnabled &&
+        let nothingEnabled =  
           !this.props.uiState.chartElementsEnabled &&
           !this.props.uiState.kanalElementsEnabled &&
           !this.props.uiState.filterElementEnabled &&
@@ -239,6 +245,8 @@ export class KassenzeichenViewer_ extends React.Component {
               </Flexbox>
             </div>
           );
+
+
         }
         else {
           if (flaechen) {
@@ -263,13 +271,30 @@ export class KassenzeichenViewer_ extends React.Component {
               <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  authMode={APP_MODES.STAC} height={mapHeight} featureClickHandler={this.flaechenMapClick} featureCollectionStyle={flaechenStyle} backgroundlayers={this.props.match.params.layers}/>
             </div>
           );
+
+
+          if (selectedFlaeche&&this.props.uiState.infoElementsEnabled){
+            flaechenInfoOverlay = (
+                <div style={{ position: "absolute", bottom: 0, left: 20, zIndex: 500, width: (this.props.uiState.width - verticalPanelWidth -40 ), opacity: 0.9 }}>
+                    <Alert bsStyle="warning" onDismiss={()=>{this.props.uiStateActions.toggleInfoElements()}}>
+                    {getOverlayTextForFlaeche(selectedFlaeche.properties)}
+                    </Alert>
+                </div>
+            );
         }
+        }
+
+
+
+
+
         return (
             <div>
                 <AppNavbar />
                 <Waiting key={'Waiting.visible.' + this.props.uiState.waitingVisible + " ...message." + this.props.uiState.waitingMessage + " ...type." + this.props.uiState.waitingType} />
                 <VerdisOnlineModalHelpComponent />
                 {verdisMapWithAdditionalComponents}
+                {flaechenInfoOverlay}
             </div>
           );
       }

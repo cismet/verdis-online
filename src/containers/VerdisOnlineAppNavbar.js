@@ -107,9 +107,27 @@ export class AppNavbar_ extends React.Component {
 
 
   render() {    
+    let kasszLabel="Kassenzeichen: ";
+    if (this.props.uiState.width<990){
+        kasszLabel="";
+    }
+
+    let lblDownLoadFeb="Flächenerfassungsbogen herunterladen (PDF)";
+    let lblInfo=(this.props.uiState.infoElementsEnabled) ? "Flächeninfo ausblenden" : "Flächeninfo einblenden";
+    let lblChart=(this.props.uiState.chartElementsEnabled) ? "Diagramm ausblenden" : "Diagramm einblenden";
+    let lblContact=(this.props.uiState.contactElementEnabled) ? "Ansprechpartner ausblenden" : "Ansprechpartner einblenden";
+    let lblExit="VerDIS-online beenden";
+
+    let menuIsHidden=false;
+    if (this.props.uiState.width<768) {
+        menuIsHidden=true;
+    }
+    
+    let ttTriggerOn=['hover', 'focus'];
+    let ttTriggerOff=null;
     let kassenzeichennummer;
     if (this.props.kassenzeichen.kassenzeichennummer8) {
-        kassenzeichennummer=" (Kassenzeichen: " + this.props.kassenzeichen.kassenzeichennummer8 +")";
+        kassenzeichennummer=" ("+kasszLabel+ this.props.kassenzeichen.kassenzeichennummer8 +")";
     }
     else {
         kassenzeichennummer="";
@@ -136,23 +154,20 @@ export class AppNavbar_ extends React.Component {
         <Navbar.Collapse>
           <Nav pullRight>
             <NavItem id="navitem_showSettings" onClick={this.showSettings} eventKey={2.0} >Hilfe & Einstellungen</NavItem>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">Flächenerfassungsbogen herunterladen (PDF)</Tooltip>)}>
-                <NavItem id="navitem_downloadFEB" onClick={this.downloadFEB} eventKey={2.3} ><Icon  style={pdfIconStyle} name="file-pdf-o" /></NavItem>
+            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{lblDownLoadFeb}</Tooltip>)}>
+                <NavItem id="navitem_downloadFEB" onClick={this.downloadFEB} eventKey={2.3} ><Icon  style={pdfIconStyle} name="file-pdf-o" />{menuIsHidden ? "   "+lblDownLoadFeb  : ""}</NavItem>
             </OverlayTrigger>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.infoElementsEnabled) ? "Kassenzeichen-Info ausblenden" : "Kassenzeichen-Info einblenden"}</Tooltip>)}>
-                <NavItem id="navitem_infoElementsEnabled" className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" /></NavItem>
+            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{lblInfo}</Tooltip>)}>
+                <NavItem id="navitem_infoElementsEnabled" className={(this.props.uiState.infoElementsEnabled) ? "active" : ""} eventKey={2.1} href="#" onSelect={this.toggleInfo} ><Icon name="info-circle" />{menuIsHidden ? "   "+lblInfo  : ""}</NavItem>
             </OverlayTrigger>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.chartElementsEnabled) ? "Diagramm ausblenden" : "Diagramm einblenden"}</Tooltip>)}>
-                <NavItem id="navitem_chartElementsEnabled" className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" /></NavItem>
+            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{lblChart}</Tooltip>)}>
+                <NavItem id="navitem_chartElementsEnabled" className={(this.props.uiState.chartElementsEnabled) ? "active" : ""} eventKey={2.2} href="#" onSelect={this.toggleCharts} ><Icon name="pie-chart" />{menuIsHidden ? "   "+lblChart  : ""}</NavItem>
             </OverlayTrigger>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.detailElementsEnabled) ? "Teilflächenliste ausblenden" : "Teilflächenliste einblenden"}</Tooltip>)}>
-                <NavItem id="navitem_detailElementsEnabled" className={(this.props.uiState.detailElementsEnabled) ? "active" : ""} eventKey={2.5} href="#" onSelect={this.toggleDetails} ><Icon name="th-list" /></NavItem>
+            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{lblContact}</Tooltip>)}>
+                <NavItem id="navitem_contact" className={(this.props.uiState.contactElementEnabled) ? "active" : ""} eventKey={2.6} href="#" onSelect={this.toggleContact} ><Icon name="user" />{menuIsHidden ? "   "+lblContact  : ""}</NavItem>
             </OverlayTrigger>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{(this.props.uiState.contactElementEnabled) ? "Ansprechpartner ausblenden" : "Ansprechpartner einblenden"}</Tooltip>)}>
-                <NavItem id="navitem_contact" className={(this.props.uiState.contactElementEnabled) ? "active" : ""} eventKey={2.6} href="#" onSelect={this.toggleContact} ><Icon name="user" /></NavItem>
-            </OverlayTrigger>
-            <OverlayTrigger placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">VerDIS-online beenden</Tooltip>)}>
-                <NavItem id="navitem_logout" eventKey={3} href="/#/" ><Icon name="power-off" /></NavItem>
+            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">lblExit</Tooltip>)}>
+                <NavItem id="navitem_logout" eventKey={3} href="/#/" ><Icon name="power-off" />{menuIsHidden ? "   "+lblExit  : ""}</NavItem>
             </OverlayTrigger>
           </Nav>
         </Navbar.Collapse>
