@@ -78,8 +78,6 @@ export class VerdisMap_ extends React.Component {
             ref={leafletMap => {this.leafletRoutedMap = leafletMap;}}
             layers="" 
             style={mapStyle} 
-            center={position}  
-            zoom={14} 
             ondblclick={this.mapDblClick} 
             doubleClickZoom={false} 
             locationChangedHandler={(location)=>{
@@ -93,7 +91,7 @@ export class VerdisMap_ extends React.Component {
                 autoFitBoundsTarget: this.props.mapping.autoFitBoundsTarget
             }}
             autoFitProcessedHandler={()=>this.props.mappingActions.setAutoFit(false)}
-            urlSearchparams={urlSearchParams}
+            urlSearchParams={urlSearchParams}
             boundingBoxChangedHandler={(bbox)=>this.props.mappingActions.mappingBoundsChanged(bbox)}
             backgroundlayers={this.props.backgroundlayers || "bplan_abkg@30"}
             >

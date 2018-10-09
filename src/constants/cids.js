@@ -8,3 +8,7 @@ export const GEOM_FIELD = "geo_field";
 
 export const SERVICE = "http://s10221:27065";
 export const STAC_SERVICE = "http://s10221:27065";
+
+
+// export const SERVICE = "http://leo/api/rest/v1/verdis";
+// export const STAC_SERVICE = "http://leo/api/rest/v1/verdis";

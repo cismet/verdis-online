@@ -46,24 +46,31 @@ export const getColorFromFlaechenArt = (art_abk) => {
     let color = '#ff0000';
     switch (art_abk) {
       case 'DF':
+      case 'Dachfläche':
         color = "#a24c29";
         break;
       case 'GDF':
+      case 'Gründach':
         color = "#6a7a17";
         break;
       case 'VF':
+      case 'versiegelte Fläche':
         color = "#788180";
         break;
       case 'VFS':
+      case 'städtische Straßenfläche':
         color = "#8a8684";
         break;
       case 'VSÖ':
+      case 'städtische Straßenfläche (Ökopflaster)':
         color = "#7e5b47";
         break;
       case 'VFÖ':
+      case 'Ökopflaster':
         color = "#9f9b6c";
         break;
       case 'VV':
+      case 'vorläufige Veranlagung':
         color = "#ff0000";
         break;
       default:

@@ -14,16 +14,18 @@ const KassenzeichenFlaechenChartPanel = ({kassenzeichen, orientation}) => {
   };
 
   const statsFA = new Map();
+  let total=0;
   if (kassenzeichen.flaechen) {
     
     kassenzeichen.flaechen.forEach((flaeche) => {
-      let sumFA = statsFA.get(flaeche.flaecheninfo.flaechenart.art_abkuerzung);
+      let sumFA = statsFA.get(flaeche.flaecheninfo.flaechenart.art);
       if (sumFA) {
-        statsFA.set(flaeche.flaecheninfo.flaechenart.art_abkuerzung, flaeche.flaecheninfo.groesse_korrektur + sumFA);
+        statsFA.set(flaeche.flaecheninfo.flaechenart.art, flaeche.flaecheninfo.groesse_korrektur + sumFA);
       }
       else {
-        statsFA.set(flaeche.flaecheninfo.flaechenart.art_abkuerzung, flaeche.flaecheninfo.groesse_korrektur);
+        statsFA.set(flaeche.flaecheninfo.flaechenart.art, flaeche.flaecheninfo.groesse_korrektur);
       }
+      total+=flaeche.flaecheninfo.groesse_korrektur;
     });
   }
   const statsFAData = [];
@@ -33,13 +35,12 @@ const KassenzeichenFlaechenChartPanel = ({kassenzeichen, orientation}) => {
     };
     statsFAData.push(o);
   }
-
-
+ 
   if (orientation === "vertical") {
     return (
       <Well bsSize="small" style={styleOverride}>
-        <h4>Veranlagung</h4>
-        <PieChart width={210} height={200}>
+        <h4>Statistik: {total.toLocaleString('de-DE')} m&sup2;</h4>
+        <PieChart width={210} height={240}>
           <Pie data={statsFAData}  cx={120} cy={80} innerRadius={20} outerRadius={80} dataKey="value">
             {
               statsFAData.map((entry) => {
@@ -50,7 +51,7 @@ const KassenzeichenFlaechenChartPanel = ({kassenzeichen, orientation}) => {
             }
           </Pie>
           <Legend />
-          <Tooltip />
+          <Tooltip  formatter={(value)=> value.toLocaleString('de-DE')+ " m²" } />
         </PieChart>
 
       </Well>
@@ -59,7 +60,7 @@ const KassenzeichenFlaechenChartPanel = ({kassenzeichen, orientation}) => {
   else {
     return (
       <Well bsSize="small" style={styleOverride}>
-        <h4>Veranlagung</h4>
+        <h4>Statistik: {total.toLocaleString('de-DE')} m&sup2;</h4>
         <PieChart width={140} height={100}>
           <Pie data={statsFAData} cx={85} cy={45} innerRadius={20} outerRadius={45} dataKey="value" >
             {
@@ -70,7 +71,7 @@ const KassenzeichenFlaechenChartPanel = ({kassenzeichen, orientation}) => {
               })
             }
           </Pie>
-          <Tooltip />
+          <Tooltip  formatter={(value)=> value.toLocaleString('de-DE')+ " m²" } />
         </PieChart>
 
       </Well>
