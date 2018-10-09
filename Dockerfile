@@ -15,10 +15,10 @@ ENV API_URL $API_URL
 WORKDIR /app
 
 # Install dependencies
-COPY . .
-RUN rm -rf node_modules
+COPY package.json yarn.lock ./
 RUN yarn install
 RUN yarn cache clean
+COPY . .
 RUN yarn run build
 
 
