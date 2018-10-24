@@ -2,7 +2,7 @@ import React from "react";
 const Oekopflaster = () => {
     return (
         <div>
-            <strong>Versiegelte Flaeche:</strong>
+            <strong>Ökopflaster:</strong>
             <br />
             Fläche, die mit Spezialpflaster, Rasengittersteinen, Kies, Split versehen ist oder eine
             andere wassergebundene Decke aufweist. 70% dieser Flächen sind bei der Entwässerung zu
