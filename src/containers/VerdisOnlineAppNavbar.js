@@ -166,7 +166,7 @@ export class AppNavbar_ extends React.Component {
             <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{lblContact}</Tooltip>)}>
                 <NavItem id="navitem_contact" className={(this.props.uiState.contactElementEnabled) ? "active" : ""} eventKey={2.6} href="#" onSelect={this.toggleContact} ><Icon name="user" />{menuIsHidden ? "   "+lblContact  : ""}</NavItem>
             </OverlayTrigger>
-            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">lblExit</Tooltip>)}>
+            <OverlayTrigger trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn} placement="bottom" overlay={(<Tooltip style={{zIndex: 3000000000}} id="prevtt">{lblExit}</Tooltip>)}>
                 <NavItem id="navitem_logout" eventKey={3} href="/#/" ><Icon name="power-off" />{menuIsHidden ? "   "+lblExit  : ""}</NavItem>
             </OverlayTrigger>
           </Nav>

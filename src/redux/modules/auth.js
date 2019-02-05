@@ -22,6 +22,7 @@ const initialState = {
     password: null,
     succesfullLogin: false,
     loginInProgress: false,
+    loginInProgressTextInfo: "XLaden der Daten ...", 
     stac: null,
 };
 
@@ -53,6 +54,9 @@ export default function uiStateReducer(state = initialState, action) {
             {
                 newState = objectAssign({}, state);
                 newState.loginInProgress = true;
+                if (action.loginInProgressTextInfo){
+                    newState.loginInProgressTextInfo=action.loginInProgressTextInfo;
+                }
                 return newState;
             }
         case types.SET_STAC:
@@ -72,9 +76,10 @@ export default function uiStateReducer(state = initialState, action) {
 
 
 ///SIMPLEACTIONCREATORS
-function setLoginInProgress() {
+function setLoginInProgress(loginInProgressTextInfo) {
     return {
-        type: types.SET_LOGIN_IN_PROGRESS
+        type: types.SET_LOGIN_IN_PROGRESS, loginInProgressTextInfo
+
     };
 }
 
