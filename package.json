@@ -1,6 +1,6 @@
 {
   "name": "react-redux-example",
-  "version": "0.1.0",
+  "version": "0.9.0-SNAPSHOT.0",
   "private": true,
   "dependencies": {
     "@turf/bbox-polygon": "6.0.1",
@@ -27,6 +27,7 @@
     "react": "^15.6.1",
     "react-bootstrap": "0.32.1",
     "react-bootstrap-maskedinput": "0.4.0",
+    "react-bs-notifier": "5.0.0",
     "react-cismap": "0.0.1",
     "react-dom": "^15.6.1",
     "react-fa": "5.0.0",
@@ -59,7 +60,13 @@
     "test": "react-scripts test --env=jsdom",
     "eject-dont-do-this-since-the-way-back-could-be-problematic": "react-scripts eject",
     "cy": "cypress open",
-    "cy-run": "cypress run"
+    "cy-run": "cypress run",
+    "postversion": "sed '/^.*\"version\":.*$/d' package.json > .package.json.without.version && echo $npm_package_version > .version && git rev-parse HEAD > .githash",
+    "newSnapshot": "npm version preminor --preid=SNAPSHOT",
+    "bumpSnapshot": "npm version prerelease --preid=SNAPSHOT",
+    "build:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker build  -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
+    "publish:docker": "npm run build:docker; VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker tag cismet/$npm_package_name:$VERSION $npm_package_config_dockerRegistryPath/$npm_package_name:$VERSION && docker push $npm_package_config_dockerRegistryPath/$npm_package_name:$VERSION"
+
   },
   "devDependencies": {
     "chai": "^4.1.2",
