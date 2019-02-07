@@ -15,7 +15,7 @@ import { actions as UIStateActions } from '../redux/modules/uiState';
 import MaskedFormControl from 'react-bootstrap-maskedinput';
 import queryString from 'query-string';
 import { AlertList, Alert, AlertContainer } from 'react-bs-notifier';
-
+import { getVersion } from '../constants/versions';
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -136,6 +136,18 @@ export class Landing_ extends React.Component {
 						backgroundColor: 'rgba(0,0,0,0.4)'
 					}}
 				/>
+				<div
+					style={{
+						position: 'absolute',
+						bottom: '0px',
+						left: '0px',
+						width: '100%',
+						
+						backgroundColor: 'rgba(0,0,0,0)'
+					}}
+				>
+				<div style={{  fontSize: '9px', textAlign: 'right', color: 'rgba(256,256,256,0.5)', margin: 4 }}>{getVersion()}</div>
+				</div>
 				<div style={{ width: '100%', height: '100%', position: 'absolute' }}>
 					<AlertContainer position="top-right">
 						{this.state.loginAlertVisible && (
