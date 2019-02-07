@@ -19,7 +19,6 @@ COPY yarn.lock ./
 COPY .package.json.without.version ./package.json
 RUN yarn install
 RUN yarn cache clean
-COPY .docker-files/turf-jsts-package.json ./node_modules/turf-jsts/package.json
 COPY . .
 RUN VERSION=`cat .version`; sed -i "s/%VERDIS_ONLINE_VERSION%/$VERSION/" src/constants/versions.js
 RUN HASH=`cat .githash`; sed -i "s/%VERDIS_ONLINE_HASH%/$HASH/" src/constants/versions.js
