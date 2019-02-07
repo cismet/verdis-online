@@ -1,8 +1,8 @@
 {
-  "name": "react-redux-example",
+  "name": "verdis-online",
   "version": "0.9.0-SNAPSHOT.1",
   "config": {
-    "dockerRegistryPath": "reg.cismet.de/wupp"
+    "dockerRegistryPath": "cismet"
   },
   "private": true,
   "dependencies": {
