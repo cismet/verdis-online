@@ -5655,10 +5655,32 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+leaflet-easybutton@^2.3.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/leaflet-easybutton/-/leaflet-easybutton-2.4.0.tgz#3ad8ad31c9cf6d5ca7a6a1988f82eed13ff2c1af"
+  integrity sha512-O+qsQq4zTF6ds8VClnytobTH/MKalctlPpiA8L+bNKHP14J3lgJpvEd/jSpq9mHTI6qOzRAvbQX6wS6qNwThvg==
+  dependencies:
+    leaflet "^1.0.1"
+
+leaflet-fullscreen-custom-container-fork@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/leaflet-fullscreen-custom-container-fork/-/leaflet-fullscreen-custom-container-fork-1.0.7.tgz#2451ee0e1398b5d5c70b5c5da85c72a514e98715"
+  integrity sha512-pTYxQ+NLD/lD36Uhei48ED6ypj52JiHCik6lvBDLrwNnSNEs3R4M29byhXEEZ6KizBIdphcQuga7up9iEQx4qg==
+
+leaflet.locatecontrol@^0.63.0:
+  version "0.63.0"
+  resolved "https://registry.yarnpkg.com/leaflet.locatecontrol/-/leaflet.locatecontrol-0.63.0.tgz#a93b9af0c36a0edcac50dc336aa718d2c6f91f54"
+  integrity sha512-SPhIbVTPo99YBon2YAPPCvfZa2w5MnifDFTYIXk/2YA3eShg56cPKi0A2CoXLKHel762JvheHrLEnSJduDWIlg==
+
 leaflet.markercluster@1.4.0, leaflet.markercluster@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.4.0.tgz#82d1892e2dfa6d3b2da262d9ed373c12411ba861"
   integrity sha512-8WXIZFnIViNjp1YctGPcm1FXyppzuxs+cNjnghSeHK3Z1+zhq5BSESc6aQZan118X9TqptuP9Vzf29NVob+6Uw==
+
+leaflet@^1.0.1:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.4.0.tgz#d5f56eeb2aa32787c24011e8be4c77e362ae171b"
+  integrity sha512-x9j9tGY1+PDLN9pcWTx9/y6C5nezoTMB8BLK5jTakx+H7bPlnbCHfi9Hjg+Qt36sgDz/cb9lrSpNQXmk45Tvhw==
 
 leaflet@^1.2.0:
   version "1.3.1"
@@ -7616,7 +7638,7 @@ react-bootstrap-maskedinput@0.4.0:
     react-bootstrap ">= 0.29.0"
     react-maskedinput "^3.0.0 || ^4.0.0"
 
-react-bootstrap@0.32.1, "react-bootstrap@>= 0.29.0":
+"react-bootstrap@>= 0.29.0":
   version "0.32.1"
   resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.32.1.tgz#60624c1b48a39d773ef6cce6421a4f33ecc166bb"
   integrity sha512-RbfzKUbsukWsToWqGHfCCyMFq9QQI0TznutdyxyJw6dih2NvIne25Mrssg8LZsprqtPpyQi8bN0L0Fx3fUsL8Q==
@@ -7634,6 +7656,22 @@ react-bootstrap@0.32.1, "react-bootstrap@>= 0.29.0":
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
+react-bootstrap@^0.31.5:
+  version "0.31.5"
+  resolved "https://registry.yarnpkg.com/react-bootstrap/-/react-bootstrap-0.31.5.tgz#57040fa8b1274e1e074803c21a1b895fdabea05a"
+  integrity sha512-xgDihgX4QvYHmHzL87faDBMDnGfYyqcrqV0TEbWY+JizePOG1vfb8M3xJN+6MJ3kUYqDtQSZ7v/Q6Y5YDrkMdA==
+  dependencies:
+    babel-runtime "^6.11.6"
+    classnames "^2.2.5"
+    dom-helpers "^3.2.0"
+    invariant "^2.2.1"
+    keycode "^2.1.2"
+    prop-types "^15.5.10"
+    prop-types-extra "^1.0.1"
+    react-overlays "^0.7.4"
+    uncontrollable "^4.1.0"
+    warning "^3.0.0"
+
 react-bs-notifier@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-bs-notifier/-/react-bs-notifier-5.0.0.tgz#645641ca78ef0c8f3d8f07c2afc37775f6070798"
@@ -7644,14 +7682,17 @@ react-bs-notifier@5.0.0:
     react-transition-group "2.x"
     toetag "3.x"
 
-react-cismap@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-cismap/-/react-cismap-0.0.1.tgz#2281cbe12d4340200e1701758aa9e02f3f25124d"
-  integrity sha512-pr0EjihtnaqSevOtGoNjMRDxczUlPzRraoVMDUZmq/8/KDYGSZ9a6BWi5bfd4n1Lhz9Nw2UzQhqS6YxgLr/u+A==
+react-cismap@0.0.38:
+  version "0.0.38"
+  resolved "https://registry.yarnpkg.com/react-cismap/-/react-cismap-0.0.38.tgz#b6f0a09060a52f8bf85f619d27531a25f1d64105"
+  integrity sha512-/IG5Y1HuIEkr5gd+6Jmdtm9cZVxmmcLGvMzRPDF9LTpPCszc3c2SC99g9YSDqPmorEYpn/ACZ/kPSSS38DfLIA==
   dependencies:
     "@turf/bbox-polygon" "^6.0.1"
     "@turf/intersect" "^6.1.3"
     leaflet "^1.2.0"
+    leaflet-easybutton "^2.3.0"
+    leaflet-fullscreen-custom-container-fork "^1.0.7"
+    leaflet.locatecontrol "^0.63.0"
     leaflet.markercluster "^1.4.0"
     polylabel "^1.0.2"
     proj4 "^2.5.0"
@@ -7776,6 +7817,17 @@ react-loading@^0.1.4:
   dependencies:
     inputmask-core "^2.1.1"
     prop-types "^15.5.7"
+
+react-overlays@^0.7.4:
+  version "0.7.4"
+  resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.7.4.tgz#ef2ec652c3444ab8aa014262b18f662068e56d5c"
+  integrity sha512-7vsooMx3siLAuEfTs8FYeP/lAORWWFXTO8PON3KgX0Htq1Oa+po6ioSjGyO0/GO5CVSMNhpWt6V2opeexHgBuQ==
+  dependencies:
+    classnames "^2.2.5"
+    dom-helpers "^3.2.1"
+    prop-types "^15.5.10"
+    prop-types-extra "^1.0.1"
+    warning "^3.0.0"
 
 react-overlays@^0.8.0:
   version "0.8.3"

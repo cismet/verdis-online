@@ -24,6 +24,8 @@ export class VerdisOnlineModalHelpComponent_ extends React.Component {
             .bind(this);
     }
 
+
+
     close() {
         this
             .props

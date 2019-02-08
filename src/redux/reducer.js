@@ -11,7 +11,7 @@ import localForage from 'localforage';
 const uiStateStorageConfig = {
     key: 'uiState',
     storage: localForage,
-    whitelist: ['d3Available']
+    whitelist: ['d3Available','settingsVisible','applicationMenuVisible', 'applicationMenuActiveKey']
    };
 
    const authStorageConfig = {

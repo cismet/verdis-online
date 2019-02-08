@@ -93,7 +93,7 @@ export class VerdisMap_ extends React.Component {
             autoFitProcessedHandler={()=>this.props.mappingActions.setAutoFit(false)}
             urlSearchParams={urlSearchParams}
             boundingBoxChangedHandler={(bbox)=>this.props.mappingActions.mappingBoundsChanged(bbox)}
-            backgroundlayers={this.props.backgroundlayers || "bplan_abkg@30"}
+            backgroundlayers={this.props.backgroundlayers || this.props.mapping.backgrounds[ this.props.mapping.selectedBackgroundIndex].layerkey}
             >
 
         <FeatureCollectionDisplay
