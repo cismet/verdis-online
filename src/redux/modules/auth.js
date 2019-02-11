@@ -11,6 +11,8 @@ import { actions as UiStateActions } from './uiState';
 export const types = {
     SET_LOGIN_INFORMATION: 'AUTH/SET_LOGIN_INFORMATION',
     SET_LOGIN_IN_PROGRESS: 'AUTH/SET_LOGIN_IN_PROGRESS',
+    SET_STAC: 'AUTH/SET_STAC',
+
 };
 
 
@@ -20,7 +22,8 @@ const initialState = {
     password: null,
     succesfullLogin: false,
     loginInProgress: false,
-
+    loginInProgressTextInfo: "XLaden der Daten ...", 
+    stac: null,
 };
 
 
@@ -44,14 +47,27 @@ export default function uiStateReducer(state = initialState, action) {
                 newState.user = action.user;
                 newState.password = action.password;
                 newState.succesfullLogin = action.status;
+                newState.stac= null;
                 return newState;
             }
         case types.SET_LOGIN_IN_PROGRESS:
             {
                 newState = objectAssign({}, state);
                 newState.loginInProgress = true;
+                if (action.loginInProgressTextInfo){
+                    newState.loginInProgressTextInfo=action.loginInProgressTextInfo;
+                }
                 return newState;
             }
+        case types.SET_STAC:
+        {
+            newState = objectAssign({}, state);
+            newState.stac = action.stac;
+            newState.loginInProgress = false;
+            newState.succesfullLogin = true;
+
+            return newState;
+        }
         default:
             return state;
 
@@ -60,9 +76,10 @@ export default function uiStateReducer(state = initialState, action) {
 
 
 ///SIMPLEACTIONCREATORS
-function setLoginInProgress() {
+function setLoginInProgress(loginInProgressTextInfo) {
     return {
-        type: types.SET_LOGIN_IN_PROGRESS
+        type: types.SET_LOGIN_IN_PROGRESS, loginInProgressTextInfo
+
     };
 }
 
@@ -74,6 +91,13 @@ function setLoginInformation(user, password, status) {
         status
     };
 
+}
+
+function setStac(stac) {
+    return {
+        type: types.SET_STAC,
+        stac
+    };
 }
 //COMPLEXACTIONS
 
@@ -116,4 +140,11 @@ function logout() {
 }
 //EXPORT ACTIONS
 
-export const actions = {setLoginInProgress,setLoginInformation,login,invalidateLogin,logout};
+export const actions = {
+    setLoginInProgress,
+    setLoginInformation,
+    login,
+    invalidateLogin,
+    logout,
+    setStac
+};

@@ -1,7 +1,5 @@
 import parse from 'wellknown';
-import {
-  typeCheck
-} from 'type-check';
+import check from 'check-types';
 import {
   GEOM_FIELD
 } from '../constants/cids';
@@ -11,14 +9,15 @@ export function getGeoJsonFeatureFromCidsObject(input, selector, propCreator = (
   // console.log("input Check for Array:"+typeCheck('[Object]',input));
   // console.log("input Check for Array:"+typeCheck('Object',input));
   // console.log("selector Check for Selector:"+typeCheck('String',selector));
-  // console.log("propCreator Check for Array:"+typeCheck('Function',propCreator));
-  if (typeCheck('[Object]', input)) {
+  // console.log("propCreator Check for Array:"+typeCheck('Function',propCreator));  
+
+  if (check.array(input)) {
     let collection = [];
     input.forEach(function (cidsObject) {
       collection.push(getGeoJsonFeatureFromCidsGeom(deepAccessUsingString(cidsObject, selector), propCreator(cidsObject)));
     });
     return collection;
-  } else if (typeCheck('Object', input)) {
+  } else if (check.object(input)) {
     return getGeoJsonFeatureFromCidsGeom(deepAccessUsingString(input, selector), propCreator(input));
   } else {
     throw new Error("getGeoJsonFromCidsObject has to be called either with an cidsObject or an Array of cidsObjects");
@@ -32,9 +31,11 @@ export function getGeoJsonFeatureFromCidsGeom(geom, properties) {
   delete gj_geometry.crs;
   return {
     "type": "Feature",
+    "id":properties.id || JSON.stringify(properties), //better hash this value
     "geometry": gj_geometry,
     "crs": crs,
-    "properties": properties
+    "properties": properties,
+
   };
 }
 

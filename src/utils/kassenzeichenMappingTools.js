@@ -4,11 +4,13 @@ import {
 
 import ColorHash from 'color-hash';
 import { get } from 'lodash';
+import React from 'react';
 
 export const getFlaechenFeatureCollection = (kassenzeichen) => {
   return getGeoJsonFeatureFromCidsObject(kassenzeichen.flaechen, 'flaecheninfo.geometrie', (flaeche) => {
     return {
       'id': flaeche.id,
+      "bez": flaeche.flaechenbezeichnung,
       'art_abk': flaeche.flaecheninfo.flaechenart.art_abkuerzung,
       'flaechenart': flaeche.flaecheninfo.flaechenart.art,
       'anschlussgrad': flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung,
@@ -44,24 +46,31 @@ export const getColorFromFlaechenArt = (art_abk) => {
     let color = '#ff0000';
     switch (art_abk) {
       case 'DF':
+      case 'Dachfläche':
         color = "#a24c29";
         break;
       case 'GDF':
+      case 'Gründach':
         color = "#6a7a17";
         break;
       case 'VF':
+      case 'versiegelte Fläche':
         color = "#788180";
         break;
       case 'VFS':
+      case 'städtische Straßenfläche':
         color = "#8a8684";
         break;
       case 'VSÖ':
+      case 'städtische Straßenfläche (Ökopflaster)':
         color = "#7e5b47";
         break;
       case 'VFÖ':
+      case 'Ökopflaster':
         color = "#9f9b6c";
         break;
       case 'VV':
+      case 'vorläufige Veranlagung':
         color = "#ff0000";
         break;
       default:
@@ -107,13 +116,13 @@ export const getColorFromFlaechenArt = (art_abk) => {
         linecolor="#0C7D9D";
         weight="2";
     }
-
     const style = {
         "color": linecolor,
         "weight": weight,
         "opacity": 1.0,
         "fillColor": color,
-        "fillOpacity": opacity
+        "fillOpacity": opacity,
+        "className": "verdis-flaeche-"+feature.properties.bez,
       };
     
   return style;
@@ -161,5 +170,70 @@ export const frontenStyle = (feature) => {
     
   return style;
 };
+
+export const flaechenLabeler = (feature) => {
+
+    return (
+      <h5 style={getStyleFromFeatureConsideringSelection(feature)} >
+        {feature.properties.bez}
+      </h5>
+    );
+  };
+
+
+  const getStyleFromFeatureConsideringSelection = (feature) => {
+    let base = {
+      "color":"blue",
+    //   "textShadow": "1px 1px 0px  #000000,-1px 1px 0px  #000000, 1px -1px 0px  #000000, -1px -1px 0px  #000000, 2px 2px 15px #000000",
+    };
+     if (feature.selected) {
+      const radius=10;
+      const borderDef=`${radius}px ${radius}px ${radius}px ${radius}px`;
+      return {
+        ...base,
+        "background": "rgba(67, 149, 254, 0.8)",
+        "WebkitBorderRadius": borderDef,
+        "MozBorderRadius": borderDef,
+        "borderRadius": borderDef,
+        "padding":"5px"
+      };
+    }else {
+      return base;
+    }
+  };
+  
+
+ export  const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
+    let opacity=0.6;
+    let linecolor="#000000";
+    let weight=1;
+
+    if (feature.selected === true) {
+        opacity=0.9;
+        linecolor="#0C7D9D";
+        weight="2";
+    }
+
+    const style = {
+        radius:10,
+        "color": linecolor,
+        "weight": weight,
+        "opacity": 1.0,
+        "fillOpacity": opacity,
+        svgSize: 100,
+        className: "verdis-flaeche-marker-"+feature.properties.bez,
+        svg: `<svg height="100" width="100">
+        <style>
+            .flaeche { font: bold 16px sans-serif; }
+        </style>
+
+        <text x="50" y="50" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${feature.properties.bez}</text>
+      </svg>`
+      };
+    
+  return style;
+}
+
+
 
 export default {};

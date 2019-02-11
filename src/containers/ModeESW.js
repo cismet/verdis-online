@@ -3,9 +3,6 @@ import React from 'react';
 import VerdisMap from './VerdisMap';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import {
-    getQueryObject
-} from '../utils/routingHelper';
 import KassenzeichenPanel from '../components/KassenzeichenPanel';
 import KassenzeichenFrontenChartPanel from '../components/KassenzeichenFrontenChartPanel';
 import FrontenPanel from '../components/FrontenPanel';
@@ -15,6 +12,7 @@ import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { frontenStyle,getFrontenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+import AppNavbar from '../containers/Verdis2GoAppNavbar';
 
 
 
@@ -82,11 +80,11 @@ export class ESW_ extends React.Component {
             if (typeof this.props.match.params.kassenzeichen !== "undefined" && parseInt(this.props.match.params.kassenzeichen,10) !== parseInt(this.props.kassenzeichen.kassenzeichennummer8,10) ) {
                 if (this.props.auth.user !== null) {
 
-                    let queryO = getQueryObject(this.props.routing.location.search);
+                    let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
 
-                    if (typeof queryO.lat === "undefined" ||
-                        typeof queryO.lng === "undefined" ||
-                        typeof queryO.zoom === "undefined") {
+                    if (typeof urlSearchParams.get('lat') === "undefined" ||
+                        typeof urlSearchParams.get('lng') === "undefined" ||
+                        typeof urlSearchParams.get('zoom') === "undefined") {
 
                         this.props.kassenzeichenActions.searchByKassenzeichen(this.props.match.params.kassenzeichen, true);
                     }
@@ -105,7 +103,7 @@ export class ESW_ extends React.Component {
     }
 
     kassenZeichenPanelClick() {
-        this.refs.verdismap.getWrappedInstance().fitBounds();
+        this.verdisMap.getWrappedInstance().fitBounds();
     }
 
     frontenPanelClick(front) {
@@ -115,7 +113,7 @@ export class ESW_ extends React.Component {
          this.frontenPanelRefs[front.id].scrollToVisible();
     }
 
-    frontenMapClick(event,feature,layer) {
+    frontenMapClick(event,feature) {
         this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature)=>{
             return (testfeature.properties.id===feature.properties.id);
         });
@@ -134,6 +132,7 @@ export class ESW_ extends React.Component {
     }
 
   render() {
+    let map;
     let mapHeight;
     if (this.props.uiState.height) {
       mapHeight = this.props.uiState.height - 55;
@@ -194,7 +193,7 @@ export class ESW_ extends React.Component {
     if (this.props.kassenzeichen.id === -1 || nothingEnabled) {
       return (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.frontenMapClick}/>
+          <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  height={mapHeight} featureClickHandler={this.frontenMapClick}/>
         </div>
       );
     }
@@ -212,9 +211,9 @@ export class ESW_ extends React.Component {
             );
         });
       }
-      return (
+      map = (
         <div>
-          <VerdisMap ref="verdismap" height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
+          <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  height={mapHeight - horizontalPanelHeight - 25} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
           <Flexbox flexDirection="row" style={detailsStyle} >
             <Flexbox height={""+horizontalPanelHeight} minWidth={""+horizontalPanelWidth}>
               {kassenzeichenPanel}
@@ -237,17 +236,23 @@ export class ESW_ extends React.Component {
         });
       }
 
-      return (
+      map = (
         <div>
           <div style={Object.assign({}, detailsStyle, { height: mapHeight + 'px', width: verticalPanelWidth + 'px', float: 'right' })}>
             {kassenzeichenPanel}
             {kassenzeichenFrontenHorizontalChartsPanel}
             {frComps}
           </div>
-          <VerdisMap ref="verdismap" height={mapHeight} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
+          <VerdisMap ref={verdisMapRef => {this.verdisMap = verdisMapRef;}}  height={mapHeight} featureClickHandler={this.frontenMapClick} featureCollectionStyle={frontenStyle}/>
         </div>
       );
     }
+    return (
+        <div>
+            <AppNavbar />
+            {map}
+        </div>
+      );
   }
 }
 

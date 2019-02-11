@@ -1,5 +1,14 @@
 export const DOMAIN = "VERDIS_GRUNDIS";
 export const GEOM_CLASS = "GEOM";
 export const GEOM_FIELD = "geo_field";
-export const SERVICE = "https://verdis-api.cismet.de";
+//export const SERVICE = "https://verdis-api.cismet.de";
 //export const SERVICE = "http://192.168.178.69:8890";
+//export const STAC_SERVICE = "http://192.168.178.69:8890";
+
+
+export const SERVICE = "http://s10221:27065";
+export const STAC_SERVICE = "http://s10221:27065";
+
+
+// export const SERVICE = "http://leo/api/rest/v1/verdis";
+// export const STAC_SERVICE = "http://leo/api/rest/v1/verdis";

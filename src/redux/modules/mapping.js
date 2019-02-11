@@ -13,7 +13,8 @@ export const types = {
     FEATURE_COLLECTION_CHANGED: 'MAPPING/FEATURE_COLLECTION_CHANGED',
     FEATURE_SELECTION_INDEX_CHANGED: 'MAPPING/FEATURE_SELECTION_INDEX_CHANGED',
     SET_AUTO_FIT: 'MAPPING/SET_AUTO_FIT',
-    GAZETTEER_HIT: 'MAPPING/GAZETTEER_HIT'
+    GAZETTEER_HIT: 'MAPPING/GAZETTEER_HIT',
+    SET_BACKGROUND_INDEX: 'MAPPING/SET_BACKGROUND_INDEX'
 
 };
 export const constants = {
@@ -37,7 +38,15 @@ const initialState = {
     autoFitBoundsTarget: null,
     autoFitBounds: false,
     searchInProgress: false,
-    gazetteerHit: null
+    gazetteerHit: null,
+
+    selectedBackgroundIndex: 0,
+
+    backgrounds: [
+		{ layerkey: 'bplan_abkg@30|wupp-plan-live@20', src: '/images/rain-hazard-map-bg/topo.png', title: 'Top. Karte' },
+		{ layerkey: 'trueOrtho2018@50|rvrSchrift@100|wupp-plan-live@20', src: '/images/rain-hazard-map-bg/ortho.png', title: 'Luftbildkarte' },
+		{ layerkey: 'wupp-plan-live@40', src: '/images/rain-hazard-map-bg/citymap.png', title: 'Stadtplan' }
+	]
 };
 
 
@@ -110,13 +119,20 @@ export default function mappingReducer(state = initialState, action) {
                 return newState;
             }
 
-        case types.GAZETTEER_HIT:
+            case types.GAZETTEER_HIT:
             {
                 newState = objectAssign({}, state);
                 newState.gazetteerHit = action.hit;
                 return newState;
             }
+            case types.SET_BACKGROUND_INDEX:
+            {
+                newState = objectAssign({}, state);
+                newState.selectedBackgroundIndex = action.selectedBackgroundIndex;
+                return newState;
+            }
 
+            
         default:
             return state;
     }
@@ -153,7 +169,7 @@ export default function mappingReducer(state = initialState, action) {
     };
 }
 
- function setSelectedFeatureIndex(index) {
+function setSelectedFeatureIndex(index) {
     return {
         type: types.FEATURE_SELECTION_INDEX_CHANGED,
         index
@@ -193,6 +209,13 @@ function setSelectedFeatureIndexWithSelector(selector) {
     return {
         type: types.GAZETTEER_HIT,
         hit
+    };
+}
+
+function setSelectedBackgroundIndex(selectedBackgroundIndex) {
+    return {
+        type: types.SET_BACKGROUND_INDEX,
+        selectedBackgroundIndex
     };
 }
 
@@ -264,4 +287,5 @@ export const actions = {
     fitFeatureBounds,
     fitAll,
     fitFeatureCollection,
+    setSelectedBackgroundIndex,
 };

@@ -13,6 +13,9 @@ import ModeInfo from './containers/ModeInfo';
 import store from './redux/store';
 import ReactLoading from 'react-loading';
 
+import Landing from './containers/VerdisOnlineLanding';
+import KassenzeichenViewer from './containers/KassenzeichenViewer';
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -43,11 +46,13 @@ export default class App extends React.Component {
             <main>   
               <Route component={Layout}/>   
               <Switch>
-                <Route  exact path="/" component={RedirectVersiegelteFlaechen} />  
-                <Route exact path="/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
-                <Route exact path="/esw/:kassenzeichen?" component={ModeESW} />
-                <Route exact path="/info/:kassenzeichen?" component={ModeInfo} />
-                <Route exact path="/versickerung/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
+                <Route  exact path="/" component={Landing} />  
+                <Route  exact path="/meinkassenzeichen/:layers?" component={KassenzeichenViewer} />  
+                <Route  exact path="/2go" component={RedirectVersiegelteFlaechen} />  
+                <Route exact path="/2go/versiegelteflaechen/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
+                <Route exact path="/2go/esw/:kassenzeichen?" component={ModeESW} />
+                <Route exact path="/2go/info/:kassenzeichen?" component={ModeInfo} />
+                <Route exact path="/2go/versickerung/:kassenzeichen?" component={ModeVersiegelteFlaechen} />
                 <Route component={NotFoundPage} />
               </Switch>
             </main>

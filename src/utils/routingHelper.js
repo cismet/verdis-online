@@ -1,38 +1,51 @@
-import objectAssign from 'object-assign';
-import 'url-search-params-polyfill';
+import "url-search-params-polyfill";
+import queryString from "query-string";
 
 export function modifyQueryPart(search, modifiedParts) {
-    let query = getQueryObject(search)
-    let newQuery = objectAssign( query, modifiedParts);
-    let pNames = Object.getOwnPropertyNames(newQuery);
-    let querypart = "?";
-    let first = true;
-    for (let nidx in pNames) {
-        let connector;
-        if (first) {
-            connector = "";
+    let original = new URLSearchParams(search);
+    let pNames = Object.getOwnPropertyNames(modifiedParts);
+    for (let n of pNames) {
+        if (original.has(n)) {
+            original.set(n, modifiedParts[n]);
         } else {
-            connector = "&";
+            original.append(n, modifiedParts[n]);
         }
-        querypart = querypart.concat(connector,pNames[nidx],"=",newQuery[pNames[nidx]]);
-        first = false;
     }
-    return querypart;
+    return "?" + original.toString();
 }
 
-export function getQueryObject(search) {
-    let obj = {};
-    if(search) {
-        search.slice(1).split('&').map((item) => {
-        const [ k, v ] = item.split('=');
-        v ? obj[k] = v : null;
-      });
+export function changeKassenzeichenInLocation(location, kasznr) {
+    let withoutKassz = location.pathname.replace(/\d+$/, "");
+    let lastSlash = withoutKassz.lastIndexOf("/");
+    let out;
+    if (lastSlash + 1 === withoutKassz.length) {
+        out = withoutKassz + kasznr + location.search;
+    } else {
+        out = withoutKassz + "/" + kasznr + location.search;
     }
-    return obj;
-}
-
-export function changeKassenzeichenInLocation(location,kasznr)  {
-    let splitted=location.pathname.split("/");
-    let out= "/"+splitted[1]+"/"+kasznr+location.search;
     return out;
 }
+
+
+export function removeQueryPart(search, partTobeRemoved) {
+    let query = queryString.parse(search);
+    delete query[partTobeRemoved];
+    return (
+      "?" +
+      queryString.stringify(query, {
+        sort: (m, n) => {
+          return getOrderOfQueryPart(m) >= getOrderOfQueryPart(n);
+        }
+      })
+    );
+  }
+  
+  function getOrderOfQueryPart(part) {
+    const order = ["lat", "lng", "zoom"];
+    let pos = order.indexOf(part);
+    if (pos === -1) {
+      return 1000000;
+    } else {
+      return pos;
+    }
+  }
