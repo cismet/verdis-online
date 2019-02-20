@@ -18,7 +18,6 @@ import { actions as AuthActions } from '../redux/modules/auth';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
-import VerdisOnlineModalHelpComponent from '../components/VerdisOnlineModalHelpComponent';
 import HelpAndSettings from '../components/helpandsettings/Menu00MainComponent';
 import { kassenzeichenFlaechenSorter, getOverlayTextForFlaeche } from '../utils/kassenzeichenHelper';
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
@@ -359,12 +358,12 @@ export class KassenzeichenViewer_ extends React.Component {
 				<HelpAndSettings
 					showApplicationMenu={this.props.uiStateActions.showApplicationMenu}
 					applicationMenuActiveKey={this.props.uiState.applicationMenuActiveKey}
-          setApplicationMenuActiveKey={this.props.uiStateActions.setApplicationMenuActiveKey}
-          applicationMenuVisible={this.props.uiState.applicationMenuVisible}
-          height={this.props.uiState.height}
-          selectedBackgroundIndex={this.props.mapping.selectedBackgroundIndex}
-           backgrounds={this.props.mapping.backgrounds}
-           setBackgroundIndex={this.props.mappingActions.setSelectedBackgroundIndex}
+					setApplicationMenuActiveKey={this.props.uiStateActions.setApplicationMenuActiveKey}
+					applicationMenuVisible={this.props.uiState.applicationMenuVisible}
+					height={this.props.uiState.height}
+					selectedBackgroundIndex={this.props.mapping.selectedBackgroundIndex}
+					backgrounds={this.props.mapping.backgrounds}
+					setBackgroundIndex={this.props.mappingActions.setSelectedBackgroundIndex}
 				/>
 
 				{verdisMapWithAdditionalComponents}

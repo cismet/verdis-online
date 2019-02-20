@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactDOM from 'react-dom';
+import { DOMAIN, STAC_SERVICE } from '../constants/cids';
 
 import { Panel, Form, FormGroup, Grid, Row, Col } from 'react-bootstrap';
 import Loadable from 'react-loading-overlay';
@@ -14,7 +15,7 @@ import { actions as AuthActions } from '../redux/modules/auth';
 import { actions as UIStateActions } from '../redux/modules/uiState';
 import MaskedFormControl from 'react-bootstrap-maskedinput';
 import queryString from 'query-string';
-import { AlertList, Alert, AlertContainer } from 'react-bs-notifier';
+import { Alert, AlertContainer } from 'react-bs-notifier';
 import { getVersion } from '../constants/versions';
 function mapStateToProps(state) {
 	return {
@@ -42,13 +43,17 @@ export class Landing_ extends React.Component {
 		super(props, context);
 		this.handleSTACInput = this.handleSTACInput.bind(this);
 		this.handleSTAC = this.handleSTAC.bind(this);
+		this.checkNetworkConnection = this.checkNetworkConnection.bind(this);
 		this.background = 'background.jpg';
 
 		this.state = {
-			loginAlertVisible: false
+			loginAlertVisible: false,
+			connectionProblem: false
 		};
 	}
 	componentDidMount() {
+		this.interval = setInterval(() => this.checkNetworkConnection(), 2000);
+
 		// set the focus to the input box
 		if (this.stacInput) {
 			//checks whether the ref has been set down in the render method
@@ -61,12 +66,35 @@ export class Landing_ extends React.Component {
 		}
 		this.props.authActions.logout();
 
-		let stac = queryString.parse(this.props.routing.location.search).stac;
+		let stac = ''; //queryString.parse(this.props.routing.location.search).stac;
 		this.props.uiActions.setStacInput(stac);
 		this.handleSTAC(stac);
 		if (queryString.parse(this.props.routing.location.search).bg) {
 			this.background = queryString.parse(this.props.routing.location.search).bg;
 		}
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
+	}
+
+	checkNetworkConnection() {
+		const url = STAC_SERVICE + '/actions/' + DOMAIN + '.checkCidsServerMessage?role=all';
+		const that = this;
+		fetch(url, {
+			method: 'get'
+		})
+			.then(function(response) {
+				if (response.status >= 200 && response.status < 300) {
+					that.setState({ connectionProblem: false });
+				} else {
+					that.setState({ connectionProblem: true });
+				}
+			})
+			.catch(function(err) {
+				//console.warn('Could not connect to service', err);
+				that.setState({ connectionProblem: true });
+			});
 	}
 
 	handleSTACInput(e) {
@@ -142,27 +170,42 @@ export class Landing_ extends React.Component {
 						bottom: '0px',
 						left: '0px',
 						width: '100%',
-						
+
 						backgroundColor: 'rgba(0,0,0,0)'
 					}}
 				>
-				<div style={{  fontSize: '9px', textAlign: 'right', color: 'rgba(256,256,256,0.5)', margin: 4 }}>{getVersion()}</div>
+					<div style={{ fontSize: '9px', textAlign: 'right', color: 'rgba(256,256,256,0.5)', margin: 4 }}>
+						{getVersion()}
+					</div>
 				</div>
 				<div style={{ width: '100%', height: '100%', position: 'absolute' }}>
 					<AlertContainer position="top-right">
-						{this.state.loginAlertVisible && (
-							<Alert
-								type="danger"
-								timeout={6000}
-								headline="Anmeldeinformationen fehlerhaft oder abgelaufen."
-								onDismiss={() => {
-									this.setState({ loginAlertVisible: false });
-								}}
-							>
-								Bitte überprüfen Sie den eingegeben Code und dessen Gültigkeitsdauer. Bei Problemen mit
-								der Anmeldung, wenden Sie sich bitte an den untenstehende Kontakt.
-							</Alert>
-						)}
+						<div>
+							{this.state.connectionProblem && (
+								<Alert
+									type="danger"
+									headline="Verbindungsprobleme."
+									onDismiss={() => {
+										this.setState({ connectionAlertVisible: false });
+									}}
+								>
+									Im Moment können wir keine Verbindung zu unseren Diensten aufbauen.
+								</Alert>
+							)}
+							{this.state.loginAlertVisible && (
+								<Alert
+									type="danger"
+									timeout={10000}
+									headline="Anmeldeinformationen fehlerhaft oder abgelaufen."
+									onDismiss={() => {
+										this.setState({ loginAlertVisible: false });
+									}}
+								>
+									Bitte überprüfen Sie den eingegeben Code und dessen Gültigkeitsdauer. Bei Problemen
+									mit der Anmeldung, wenden Sie sich bitte an den untenstehende Kontakt.
+								</Alert>
+							)}
+						</div>
 					</AlertContainer>
 				</div>
 				<div style={landingStyle}>
@@ -187,7 +230,14 @@ export class Landing_ extends React.Component {
 									>
 										<Panel style={panelStyle}>
 											<h3>Zugangscode:</h3>
-											<Form horizontal className="LoginForm" id="loginForm">
+											<Form
+												horizontal
+												className="LoginForm"
+												id="loginForm"
+												onSubmit={(e) => {
+													e.preventDefault();
+												}}
+											>
 												<FormGroup controlId="stacInput">
 													<MaskedFormControl
 														key={'MaskedFormControl.with' + this.stac}
@@ -207,8 +257,17 @@ export class Landing_ extends React.Component {
 														mask="AAAA-AAAA-AAAA"
 														value={this.props.uiState.stacInput}
 														onChange={this.handleSTACInput}
+														disabled={this.state.connectionProblem}
 													/>
 												</FormGroup>
+												{/* 
+												<FormGroup>
+													<MaskedFormControl
+														type="text"
+														sname="phoneNumber"
+														mask="111-111-1111"
+													/>
+												</FormGroup> */}
 											</Form>
 										</Panel>
 									</Loadable>
