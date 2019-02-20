@@ -52,7 +52,7 @@ export class Landing_ extends React.Component {
 		};
 	}
 	componentDidMount() {
-		this.interval = setInterval(() => this.checkNetworkConnection(), 1000);
+		this.interval = setInterval(() => this.checkNetworkConnection(), 2000);
 
 		// set the focus to the input box
 		if (this.stacInput) {
