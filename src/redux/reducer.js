@@ -18,10 +18,15 @@ const authStorageConfig = {
 	storage: localForage,
 	whitelist: [ 'user', 'password', 'stac' ]
 };
+const mappingStorageConfig = {
+	key: 'mapping',
+	storage: localForage,
+	whitelist: [ 'selectedBackgroundIndex' ]
+};
 
 const rootReducer = combineReducers({
 	kassenzeichen: kassenzeichenReducer,
-	mapping: mappingReducer,
+	mapping: persistReducer(mappingStorageConfig, mappingReducer),
 	uiState: persistReducer(uiStateStorageConfig, uiStateReducer),
 	auth: persistReducer(authStorageConfig, authReducer),
 	routing: routerReducer
