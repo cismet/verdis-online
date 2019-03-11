@@ -17,10 +17,19 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 						Regengeld, erfolgt auf Grundlage vorhandener Luftbilder und einem Vergleich mit dem, durch
 						Vermessungen festgestellten Datenbestand des Liegenschaftskatasters. Die rechtliche Basis bilden
 						die{' '}
-						<a href="https://www.wuppertal.de/rathaus-buergerservice/verwaltung/politik/stadtrecht-dokumente/7-10.pdf">
+						<a
+							target="_satzung"
+							href="https://www.wuppertal.de/rathaus-buergerservice/verwaltung/politik/stadtrecht-dokumente/7-10.pdf"
+						>
 							Abwasserbeseitigungssatzung
-						</a>
-						und die Satzung zur Erhebung von Anschlussbeiträgen, Abwassergebühren und Kostenersatz.
+						</a>{' '}
+						und die{' '}
+						<a
+							target="_satzung"
+							href="https://www.wuppertal.de/rathaus-buergerservice/verwaltung/politik/stadtrecht-dokumente/7-11.pdf"
+						>
+							Satzung zur Erhebung von Anschlussbeiträgen, Abwassergebühren und Kostenersatz
+						</a>.
 					</p>
 					<p>
 						Ermittelt werden die Dachflächen (bebaute Flächen mit Dachüberständen) und versiegelten Flächen
