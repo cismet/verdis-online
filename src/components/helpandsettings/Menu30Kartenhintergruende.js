@@ -23,11 +23,10 @@ const Component = ({
 	}
 	const mapPreview = (
 		<Map
-			ref={(leafletMap) => {
-				this.leafletMap = leafletMap;
-			}}
 			crs={MappingConstants.crs25832}
-			style={{ height: 300 }}
+			style={{
+				height: 300
+			}}
 			center={{
 				lat: 51.26357182763206,
 				lng: 7.176242149341344
@@ -52,36 +51,37 @@ const Component = ({
 		</div>
 	);
 
-
 	return (
 		<GenericModalMenuSection
 			applicationMenuActiveKey={applicationMenuActiveKey}
 			setApplicationMenuActiveKey={setApplicationMenuActiveKey}
-			sectionKey="kartenhintergruende"
-			sectionTitle="Kartenhintergründe"
-			sectionBsStyle="info"
+			sectionKey='kartenhintergruende'
+			sectionTitle='Kartenhintergründe'
+			sectionBsStyle='info'
 			sectionContent={
 				<div>
+					{' '}
 					<p>
-						Weiter unten finden Sie ein Kontrollfeld, mit dem Sie aus drei verschiedenen Hintergrundkarten
-						auswählen können: einer topographischen Karte in Graustufen, einer Luftbildkarte und einem
-						Stadtplan.{' '}
-					</p>
+						Weiter unten finden Sie ein Kontrollfeld, mit dem Sie aus drei verschiedenen
+						Hintergrundkarten auswählen können: einer topographischen Karte in
+						Graustufen, einer Luftbildkarte und einem Stadtplan.{' '}
+					</p>{' '}
 					<p>
-						Die topographische Karte verschafft Ihnen den besten Überblick über die Situation, da sie einen
-						plastischen Geländeindruck vermittelt. Der Stadtplan bietet einen am meisten gewohnten
-						Hintergrund zur Orientierung. Die Luftbildkarte ist die anschaulichste Kartengrundlage, sie
-						eignet sich daher vor allem für Detailbetrachtungen, ist aber nicht identisch mit dem Luftbild
-						aus dem die Auswertungen betrieben werden.
-					</p>
-
+						{' '}
+						Die topographische Karte verschafft Ihnen den besten Überblick über die
+						Situation, da sie einen plastischen Geländeindruck vermittelt.Der Stadtplan
+						bietet einen am meisten gewohnten Hintergrund zur Orientierung.Die
+						Luftbildkarte ist die anschaulichste Kartengrundlage, sie eignet sich daher
+						vor allem für Detailbetrachtungen, ist aber nicht identisch mit dem Luftbild
+						aus dem die Auswertungen betrieben werden.{' '}
+					</p>{' '}
 					<SettingsPanelWithPreviewSection
 						width={width}
 						preview={preview}
 						settingsSections={[
-							<FormGroup key="kartenselector">
-								<ControlLabel>Hintergrundkarten</ControlLabel>
-								<br />
+							<FormGroup key='kartenselector'>
+								{' '}
+								<ControlLabel>Hintergrundkarten</ControlLabel> <br />{' '}
 								{backgrounds.map((item, key) => {
 									return (
 										<Radio
@@ -92,16 +92,17 @@ const Component = ({
 												setBackgroundIndex(key);
 											}}
 											checked={selectedBackgroundIndex === key}
-											name="mapBackground"
+											name='mapBackground'
 											inline
 										>
-											{item.title} &nbsp;
+											{' '}
+											{item.title} &nbsp;{' '}
 										</Radio>
 									);
-								})}
+								})}{' '}
 							</FormGroup>
 						]}
-					/>
+					/>{' '}
 				</div>
 			}
 		/>
