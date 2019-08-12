@@ -41,15 +41,19 @@ const initialState = {
 	backgrounds: [
 		{
 			layerkey: 'bplan_abkg@30|wupp-plan-live@20',
-			src: '/images/rain-hazard-map-bg/topo.png',
+			src: '/images/mapPreviewABK.png',
 			title: 'Top. Karte'
 		},
 		{
 			layerkey: 'trueOrtho2018@50|rvrSchrift@100|wupp-plan-live@20',
-			src: '/images/rain-hazard-map-bg/ortho.png',
+			src: '/images/mapPreviewOrtho.png',
 			title: 'Luftbildkarte'
 		},
-		{ layerkey: 'wupp-plan-live@40', src: '/images/rain-hazard-map-bg/citymap.png', title: 'Stadtplan' }
+		{
+			layerkey: 'wupp-plan-live@40',
+			src: '/images/mapPreviewCityMap.png',
+			title: 'Stadtplan'
+		}
 	]
 };
 
@@ -233,7 +237,12 @@ function setSelectedBackgroundIndex(selectedBackgroundIndex) {
 function fitSelectedFeatureBounds(mode) {
 	return function(dispatch, getState) {
 		const currentState = getState();
-		dispatch(fitFeatureBounds(currentState.mapping.featureCollection[currentState.mapping.selectedIndex], mode));
+		dispatch(
+			fitFeatureBounds(
+				currentState.mapping.featureCollection[currentState.mapping.selectedIndex],
+				mode
+			)
+		);
 	};
 }
 
