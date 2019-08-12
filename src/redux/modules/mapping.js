@@ -51,7 +51,7 @@ const initialState = {
 		},
 		{
 			layerkey: 'wupp-plan-live@40',
-			src: '/images/mapPreviewCityMap.png',
+			src: '/images/mapPreviewCitymap.png',
 			title: 'Stadtplan'
 		}
 	]
