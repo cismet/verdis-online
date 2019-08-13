@@ -56,25 +56,31 @@ const Component = ({
 			applicationMenuActiveKey={applicationMenuActiveKey}
 			setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 			sectionKey='kartenhintergruende'
-			sectionTitle='Kartenhintergründe'
+			sectionTitle='Hintergrundkarten'
 			sectionBsStyle='info'
 			sectionContent={
 				<div>
-					{' '}
 					<p>
 						Weiter unten finden Sie ein Kontrollfeld, mit dem Sie aus drei verschiedenen
 						Hintergrundkarten auswählen können: einer topographischen Karte in
-						Graustufen, einer Luftbildkarte und einem Stadtplan.{' '}
-					</p>{' '}
+						Graustufen ("Top. Karte"), einer Luftbildkarte und einem Stadtplan.
+					</p>
 					<p>
-						{' '}
 						Die topographische Karte verschafft Ihnen den besten Überblick über die
-						Situation, da sie einen plastischen Geländeindruck vermittelt.Der Stadtplan
-						bietet einen am meisten gewohnten Hintergrund zur Orientierung.Die
-						Luftbildkarte ist die anschaulichste Kartengrundlage, sie eignet sich daher
-						vor allem für Detailbetrachtungen, ist aber nicht identisch mit dem Luftbild
-						aus dem die Auswertungen betrieben werden.{' '}
-					</p>{' '}
+						Geländesituation, da sie auch Böschungen und andere Geländeformen darstellt.
+						Der Stadtplan ist die am einfachsten lesbare Hintergrundkarte. Er eignet
+						sich für die schnelle Orientierung in der Karte, da hier die Hausnummern
+						aller Gebäude gut lesbar dargestellt werden. Die Luftbildkarte ist die
+						anschaulichste Kartengrundlage, nützlich vor allem für Detailbetrachtungen.
+						Sie ist aber nicht identisch mit den Luftbildern, die für die Ermittlung der
+						versiegelten Flächen verwendet werden.
+					</p>
+					<p>
+						Die Hintergrundkarten können auch direkt im Kartenfenster gewechselt werden.
+						Mit einem Klick auf die Hintergrund-Schaltfläche (links oben unterhalb der
+						Schaltflächen + und - für die Zoomstufen) kommen Sie zur nächsten
+						voreingestellten Karte, ohne das Anwendungsmenü öffnen zu müssen.
+					</p>
 					<SettingsPanelWithPreviewSection
 						width={width}
 						preview={preview}

@@ -54,7 +54,7 @@ Control.defaultProps = {
 	setSelectedBackgroundIndex: () => {},
 	backgrounds: [],
 	currentBackgroundIndex: 0,
-	tooltipPrefix: 'Hintergrund wechseln zu ',
-	tooltipPostfix: '.'
+	tooltipPrefix: '',
+	tooltipPostfix: ' als Hintergrund'
 };
 export default Control;
