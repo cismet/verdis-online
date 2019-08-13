@@ -76,7 +76,7 @@ const Component = ({
 						versiegelten Flächen verwendet werden.
 					</p>
 					<p>
-						Die Hintergrundkarten können auch direkt im Kartenfenster gewechselt werden.
+						Die Hintergrundkarten kann auch direkt im Kartenfenster gewechselt werden.
 						Mit einem Klick auf die Hintergrund-Schaltfläche (links oben unterhalb der
 						Schaltflächen + und - für die Zoomstufen) kommen Sie zur nächsten
 						voreingestellten Karte, ohne das Anwendungsmenü öffnen zu müssen.
