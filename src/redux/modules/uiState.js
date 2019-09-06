@@ -18,6 +18,7 @@ export const types = {
 	CHANGE_LAYER_OPACITY: 'UI_STATE/CHANGE_LAYER_OPACITY',
 	CHANGE_LAYER_ENABLED: 'UI_STATE/CHANGE_LAYER_ENABLED',
 	SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
+	SHOW_CHANGE_REQUESTS: 'UI_STATE/SHOW_CHANGE_REQUESTS',
 	SHOW_WAITING: 'UI_STATE/SHOW_WAITING',
 	SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: 'UI_STATE/SET_KASSENZEICHEN_SEARCH_IN_PROGRESS',
 	SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE: 'UI_STATE/SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE',
@@ -45,8 +46,9 @@ const initialState = {
 	contactElementEnabled: true,
 
 	settingsVisible: false,
+	changeRequestsVisible: false,
 	applicationMenuVisible: false,
-	applicationMenuActiveKey: "none",
+	applicationMenuActiveKey: 'none',
 
 	searchForKassenzeichenVisible: false,
 
@@ -129,6 +131,11 @@ export default function uiStateReducer(state = initialState, action) {
 			newState = objectAssign({}, state);
 			newState.settingsVisible = action.visible;
 			newState.applicationMenuVisible = action.visible;
+			return newState;
+		}
+		case types.SHOW_CHANGE_REQUESTS: {
+			newState = objectAssign({}, state);
+			newState.changeRequestsVisible = action.visible;
 			return newState;
 		}
 		case types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: {
@@ -265,6 +272,13 @@ function showSettings(visible) {
 	};
 }
 
+function showChangeRequests(visible) {
+	return {
+		type: types.SHOW_CHANGE_REQUESTS,
+		visible
+	};
+}
+
 function setKassenzeichenSearchInProgress(progress) {
 	return {
 		type: types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS,
@@ -385,6 +399,7 @@ export const actions = {
 	toggleDetailsElements,
 	toggleContactElement,
 	showSettings,
+	showChangeRequests,
 	setKassenzeichenSearchInProgress,
 	setKassenzeichenTextSearchVisible,
 	setKassenzeichenToSearchFor,
