@@ -17,7 +17,7 @@ storiesOf('FlaechenPanel Stories', module)
 			}}
 		>
 			<FlaechenPanel key={0} flaeche={f0} />
-			<FlaechenPanel key={1} flaeche={f1} />
+			<FlaechenPanel key={1} flaeche={f1} selected />
 			<FlaechenPanel key={2} flaeche={f2} />
 		</div>
 	))
@@ -29,7 +29,7 @@ storiesOf('FlaechenPanel Stories', module)
 			}}
 		>
 			<FlaechenPanel key={0} editmode={true} flaeche={f0} />
-			<FlaechenPanel key={1} editmode={true} flaeche={f1} />
+			<FlaechenPanel key={1} editmode={true} flaeche={f1} selected />
 			<FlaechenPanel key={2} editmode={true} flaeche={f2} />
 		</div>
 	))
@@ -43,22 +43,36 @@ storiesOf('FlaechenPanel Stories', module)
 						margin: 100
 					}}
 				>
-					<FlaechenPanel key={0} editmode={true} flaeche={f0} />
-					<FlaechenPanel key={1} editmode={true} flaeche={f1} />
+					<FlaechenPanel
+						display={'cr'}
+						key={0}
+						editmode={true}
+						flaeche={f0}
+						changerequest={{
+							groesse: 1400
+						}}
+					/>
+					<FlaechenPanel
+						display={'cr'}
+						key={1}
+						editmode={true}
+						selected
+						flaeche={f1}
+						changerequest={{
+							anschlussgrad: {
+								grad: 'Versickernd',
+								grad_abkuerzung: 'vers.'
+							}
+						}}
+					/>
 					<FlaechenPanel
 						key={2}
 						editmode={true}
-						display={display}
+						display={'cr'}
 						changerequest={{
-							groesse: 1439,
-							anteil: undefined,
-							anschlussgrad: {
-								grad: 'Am Kanal angeschlossen',
-								grad_abkuerzung: 'angeschl.'
-							},
 							flaechenart: {
-								art: 'Dachfläche',
-								art_abkuerzung: 'DF'
+								art: 'Gründachfläche',
+								art_abkuerzung: 'GDF'
 							}
 						}}
 						flaeche={f2}
