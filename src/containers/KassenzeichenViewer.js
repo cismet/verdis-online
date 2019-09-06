@@ -19,7 +19,11 @@ import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
 import HelpAndSettings from '../components/helpandsettings/Menu00MainComponent';
-import { kassenzeichenFlaechenSorter, getOverlayTextForFlaeche } from '../utils/kassenzeichenHelper';
+import ChangeRequests from '../components/changerequests/CR00MainComponent';
+import {
+	kassenzeichenFlaechenSorter,
+	getOverlayTextForFlaeche
+} from '../utils/kassenzeichenHelper';
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
 
 function mapStateToProps(state) {
@@ -72,14 +76,17 @@ export class KassenzeichenViewer_ extends React.Component {
 		if (this.props.auth.stac && this.props.auth.succesfullLogin === false) {
 			this.props.authActions.setLoginInProgress();
 			this.props.uiStateActions.showInfo('Kassenzeichen wird wieder geladen');
-			this.props.kassenzeichenActions.getKassenzeichenbySTAC(this.props.auth.stac, (success) => {
-				if (success === true) {
-					setTimeout(() => {
-						this.props.uiStateActions.showWaiting(false);
-						this.props.mappingActions.fitAll();
-					}, 300);
+			this.props.kassenzeichenActions.getKassenzeichenbySTAC(
+				this.props.auth.stac,
+				(success) => {
+					if (success === true) {
+						setTimeout(() => {
+							this.props.uiStateActions.showWaiting(false);
+							this.props.mappingActions.fitAll();
+						}, 300);
+					}
 				}
-			});
+			);
 		} else {
 			this.props.mappingActions.fitAll();
 		}
@@ -123,8 +130,10 @@ export class KassenzeichenViewer_ extends React.Component {
 			this.props.mapping.featureCollection.length > 0 &&
 			typeof this.props.mapping.selectedIndex !== 'undefined' &&
 			this.props.mapping.featureCollection.length > this.props.mapping.selectedIndex &&
-			typeof this.props.mapping.featureCollection[this.props.mapping.selectedIndex] !== 'undefined' &&
-			this.props.mapping.featureCollection[this.props.mapping.selectedIndex].properties.id === flaeche.id
+			typeof this.props.mapping.featureCollection[this.props.mapping.selectedIndex] !==
+				'undefined' &&
+			this.props.mapping.featureCollection[this.props.mapping.selectedIndex].properties.id ===
+				flaeche.id
 		);
 	}
 
@@ -171,8 +180,13 @@ export class KassenzeichenViewer_ extends React.Component {
 		}
 
 		let selectedFlaeche = null;
-		if (this.props.mapping.selectedIndex !== undefined && this.props.mapping.selectedIndex !== -1) {
-			selectedFlaeche = this.props.mapping.featureCollection[this.props.mapping.selectedIndex];
+		if (
+			this.props.mapping.selectedIndex !== undefined &&
+			this.props.mapping.selectedIndex !== -1
+		) {
+			selectedFlaeche = this.props.mapping.featureCollection[
+				this.props.mapping.selectedIndex
+			];
 		}
 
 		if (this.props.kassenzeichen.id !== -1) {
@@ -189,13 +203,16 @@ export class KassenzeichenViewer_ extends React.Component {
 		}
 		if (this.props.uiState.chartElementsEnabled && this.props.kassenzeichen.id !== -1) {
 			kassenzeichenHorizontalFlaechenChartsPanel = (
-				<KassenzeichenFlaechenChartPanel kassenzeichen={this.props.kassenzeichen} orientation="vertical" />
+				<KassenzeichenFlaechenChartPanel
+					kassenzeichen={this.props.kassenzeichen}
+					orientation='vertical'
+				/>
 			);
 			kassenzeichenVerticalFlaechenChartsPanel = (
 				<Flexbox height={'' + horizontalPanelHeight} minWidth={'' + horizontalPanelWidth}>
 					<KassenzeichenFlaechenChartPanel
 						kassenzeichen={this.props.kassenzeichen}
-						orientation="horizontal"
+						orientation='horizontal'
 					/>
 				</Flexbox>
 			);
@@ -259,8 +276,11 @@ export class KassenzeichenViewer_ extends React.Component {
 						featureCollectionStyle={flaechenStyle}
 						backgroundlayers={this.props.match.params.layers}
 					/>
-					<Flexbox flexDirection="row" style={detailsStyle}>
-						<Flexbox height={'' + horizontalPanelHeight} minWidth={'' + horizontalPanelWidth}>
+					<Flexbox flexDirection='row' style={detailsStyle}>
+						<Flexbox
+							height={'' + horizontalPanelHeight}
+							minWidth={'' + horizontalPanelWidth}
+						>
 							{contactPanel}
 							{kassenzeichenPanel}
 						</Flexbox>
@@ -329,7 +349,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						}}
 					>
 						<Alert
-							bsStyle="warning"
+							bsStyle='warning'
 							onDismiss={() => {
 								this.props.uiStateActions.toggleInfoElements();
 							}}
@@ -358,14 +378,16 @@ export class KassenzeichenViewer_ extends React.Component {
 				<HelpAndSettings
 					showApplicationMenu={this.props.uiStateActions.showApplicationMenu}
 					applicationMenuActiveKey={this.props.uiState.applicationMenuActiveKey}
-					setApplicationMenuActiveKey={this.props.uiStateActions.setApplicationMenuActiveKey}
+					setApplicationMenuActiveKey={
+						this.props.uiStateActions.setApplicationMenuActiveKey
+					}
 					applicationMenuVisible={this.props.uiState.applicationMenuVisible}
 					height={this.props.uiState.height}
 					selectedBackgroundIndex={this.props.mapping.selectedBackgroundIndex}
 					backgrounds={this.props.mapping.backgrounds}
 					setBackgroundIndex={this.props.mappingActions.setSelectedBackgroundIndex}
 				/>
-
+				<ChangeRequests />
 				{verdisMapWithAdditionalComponents}
 				{flaechenInfoOverlay}
 			</div>
