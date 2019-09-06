@@ -12,7 +12,7 @@ import optional from '../utils/optionalHelper';
 //const FlaechenPanel = ({flaeche,selected,flaechenPanelClickHandler,inputRef}) => {
 
 const colorUnchanged = 'black';
-const colorChanged = 'red';
+const colorChanged = '#FC913A';
 
 export default class FlaechenPanel extends React.Component {
 	constructor(props) {
@@ -33,8 +33,10 @@ export default class FlaechenPanel extends React.Component {
 			anschlussgrad,
 			anschlussgradColor,
 			flaechenart,
-			flaechenartColor;
+			flaechenartColor,
+			editButtonColor;
 
+		let edited = false;
 		//fill the intermediate vars
 		if (this.props.display === 'cr') {
 			groesse =
@@ -59,16 +61,24 @@ export default class FlaechenPanel extends React.Component {
 			groesseColor = colorUnchanged;
 		} else {
 			groesseColor = colorChanged;
+			edited = true;
 		}
 		if (anschlussgrad === this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung) {
 			anschlussgradColor = colorUnchanged;
 		} else {
 			anschlussgradColor = colorChanged;
+			edited = true;
 		}
 		if (flaechenart === this.props.flaeche.flaecheninfo.flaechenart.art) {
 			flaechenartColor = colorUnchanged;
 		} else {
 			flaechenartColor = colorChanged;
+			edited = true;
+		}
+		if (edited == true) {
+			editButtonColor = colorChanged;
+		} else {
+			editButtonColor = colorUnchanged;
 		}
 
 		let background = null;
@@ -110,24 +120,22 @@ export default class FlaechenPanel extends React.Component {
 						<tbody>
 							<tr>
 								<td>
-									<b>
-										{this.props.flaeche.flaecheninfo.flaechenart.art +
-											' ' +
-											this.props.flaeche.flaechenbezeichnung}
+									<b style={{ color: flaechenartColor }}>
+										{flaechenart + ' ' + this.props.flaeche.flaechenbezeichnung}
 									</b>
 								</td>
 								<td style={{ textAlign: 'right' }}>{beschreibung}</td>
 
 								{this.props.editmode === true && (
-									<td style={{ textAlign: 'right' }}>
+									<td style={{ textAlign: 'right', color: editButtonColor }}>
 										<Icon icon={faEdit} />
 									</td>
 								)}
 							</tr>
 							<tr>
 								<td>{area}</td>
-								<td style={{ textAlign: 'right' }}>
-									{this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung}
+								<td style={{ textAlign: 'right', color: anschlussgradColor }}>
+									{anschlussgrad}
 								</td>
 							</tr>
 						</tbody>
