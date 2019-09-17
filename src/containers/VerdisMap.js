@@ -122,6 +122,7 @@ export class VerdisMap_ extends React.Component {
 					markerStyle={getMarkerStyleFromFeatureConsideringSelection}
 				/>
 				<CyclingBackgroundButton
+					key={'CyclingBackgroundButton.' + this.props.mapping.selectedBackgroundIndex}
 					position='topleft'
 					backgrounds={this.props.mapping.backgrounds}
 					setSelectedBackgroundIndex={

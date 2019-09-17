@@ -38,6 +38,10 @@ class Control extends MapControl {
 		this.leafletElement.button.style.lineHeight = '24px';
 		this.leafletElement.state('bg-' + this.props.currentBackgroundIndex);
 	}
+	// componentWillUpdate() {
+	// 	//this.leafletElement.state('bg-' + this.props.currentBackgroundIndex);
+	// 	this.leafletElement.state('bg-' + this.props.currentBackgroundIndex);
+	// }
 }
 
 Control.propTypes = {

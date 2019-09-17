@@ -6,12 +6,12 @@ const Comp = ({ msg }) => {
 		<Msg
 			msg={msg}
 			alignment='center'
-			background='#eee'
+			background='#F8F8F8'
 			color='#666'
 			margin={5}
 			padding={5}
 			fontSize={0.9}
-			width='40%'
+			width='fit-content'
 		/>
 	);
 };

@@ -7,12 +7,13 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import optional from '../utils/optionalHelper';
 
+import { getProcessedFlaechenCR, colorUnchanged, colorChanged } from '../utils/kassenzeichenHelper';
 //const FontAwesome = require('react-fontawesome');
 
 //const FlaechenPanel = ({flaeche,selected,flaechenPanelClickHandler,inputRef}) => {
 
-const colorUnchanged = 'black';
-const colorChanged = '#FC913A';
+//const colorUnchanged = 'black';
+//const colorChanged = '#FC913A';
 
 export default class FlaechenPanel extends React.Component {
 	constructor(props) {
@@ -28,27 +29,37 @@ export default class FlaechenPanel extends React.Component {
 
 	render() {
 		let groesse,
-			groesseColor,
+			groesseColor = 'black',
 			anteil,
 			anschlussgrad,
-			anschlussgradColor,
+			anschlussgradColor = 'black',
 			flaechenart,
-			flaechenartColor,
+			flaechenartColor = 'black',
 			editButtonColor;
 
-		let edited = false;
 		//fill the intermediate vars
+		const crInfo = getProcessedFlaechenCR(this.props.flaeche, this.props.changerequest);
 		if (this.props.display === 'cr') {
-			groesse =
-				this.props.changerequest.groesse ||
-				this.props.flaeche.flaecheninfo.groesse_korrektur;
-			anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
-			anschlussgrad =
-				optional(() => this.props.changerequest.anschlussgrad.grad_abkuerzung) ||
-				this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung;
-			flaechenart =
-				optional(() => this.props.changerequest.flaechenart.art) ||
-				this.props.flaeche.flaecheninfo.flaechenart.art;
+			// groesse =
+			// 	this.props.changerequest.groesse ||
+			// 	this.props.flaeche.flaecheninfo.groesse_korrektur;
+			// anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
+			// anschlussgrad =
+			// 	optional(() => this.props.changerequest.anschlussgrad.grad_abkuerzung) ||
+			// 	this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung;
+			// flaechenart =
+			// 	optional(() => this.props.changerequest.flaechenart.art) ||
+			// 	this.props.flaeche.flaecheninfo.flaechenart.art;
+
+			groesse = crInfo.groesse;
+			anschlussgrad = crInfo.anschlussgrad.grad_abkuerzung;
+			flaechenart = crInfo.art.art;
+
+			groesseColor = crInfo.colors.groesse;
+			anschlussgradColor = crInfo.colors.anschlussgrad;
+			flaechenartColor = crInfo.colors.flaechenart;
+
+			// anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
 		} else {
 			groesse = this.props.flaeche.flaecheninfo.groesse_korrektur;
 			anteil = this.props.flaeche.anteil;
@@ -57,29 +68,43 @@ export default class FlaechenPanel extends React.Component {
 		}
 
 		//set the textcolor
-		if (groesse === this.props.flaeche.flaecheninfo.groesse_korrektur) {
-			groesseColor = colorUnchanged;
-		} else {
-			groesseColor = colorChanged;
-			edited = true;
-		}
-		if (anschlussgrad === this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung) {
-			anschlussgradColor = colorUnchanged;
-		} else {
-			anschlussgradColor = colorChanged;
-			edited = true;
-		}
-		if (flaechenart === this.props.flaeche.flaecheninfo.flaechenart.art) {
-			flaechenartColor = colorUnchanged;
-		} else {
-			flaechenartColor = colorChanged;
-			edited = true;
-		}
-		if (edited == true) {
+		// if (groesse === this.props.flaeche.flaecheninfo.groesse_korrektur) {
+		// 	groesseColor = colorUnchanged;
+		// } else {
+		// 	groesseColor = colorChanged;
+		// 	edited = true;
+		// }
+		// if (anschlussgrad === this.props.flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung) {
+		// 	anschlussgradColor = colorUnchanged;
+		// } else {
+		// 	anschlussgradColor = colorChanged;
+		// 	edited = true;
+		// }
+
+		// if (flaechenart === this.props.flaeche.flaecheninfo.flaechenart.art) {
+		// 	flaechenartColor = colorUnchanged;
+		// } else {
+		// 	flaechenartColor = colorChanged;
+		// 	edited = true;
+		// }
+
+		if (crInfo.edited == true) {
 			editButtonColor = colorChanged;
 		} else {
 			editButtonColor = colorUnchanged;
 		}
+
+		console.log('crInfo', crInfo);
+		console.log('more Info', {
+			groesse,
+			groesseColor,
+			anteil,
+			anschlussgrad,
+			anschlussgradColor,
+			flaechenart,
+			flaechenartColor,
+			editButtonColor
+		});
 
 		let background = null;
 		if (this.props.selected) {

@@ -387,7 +387,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					backgrounds={this.props.mapping.backgrounds}
 					setBackgroundIndex={this.props.mappingActions.setSelectedBackgroundIndex}
 				/>
-				<ChangeRequests />
+				{/* <ChangeRequests /> */}
 				{verdisMapWithAdditionalComponents}
 				{flaechenInfoOverlay}
 			</div>

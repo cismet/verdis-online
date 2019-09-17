@@ -5,11 +5,14 @@ import FlexView from 'react-flexview';
 const Comp = ({
 	msg,
 	from,
-	width,
-	background,
+	width = '75%',
+	background = '#00aabb99',
+	color = 'black',
 	alignment = 'left',
 	margin = '10px',
-	padding = '15px'
+	padding = '15px',
+	fontSizeSender = 0.8,
+	fontSize = 1
 }) => {
 	let textAlign;
 	if (alignment === 'left') {
@@ -27,14 +30,14 @@ const Comp = ({
 				marginTop: margin,
 				marginLeft: 15,
 				marginRight: 15,
-				fontSize: '80%'
+				fontSize: fontSizeSender * 100 + '%'
 			}}
 		>
 			{from}
 			<FlexView
 				hAlignContent={alignment}
 				style={{
-					fontSize: '125%',
+					fontSize: fontSize / fontSizeSender * 100 + '%',
 					border: '1px solid transparent',
 					borderRadius: '5px',
 					padding: padding,
@@ -43,8 +46,9 @@ const Comp = ({
 					marginTop: '1px',
 					marginLeft: '1px',
 					marginRight: '1px',
-					background: background || '#00aabb99',
-					width: width || '75%',
+					background: background,
+					color: color,
+					maxWidth: width,
 					textAlign
 				}}
 			>
