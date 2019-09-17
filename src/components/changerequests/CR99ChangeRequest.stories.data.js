@@ -5,7 +5,7 @@ const f0 = {
 		$self: '/VERDIS_GRUNDIS.FLAECHENINFO/587951',
 		id: 587951,
 		groesse_aus_grafik: 1439,
-		groesse_korrektur: 1439,
+		groesse_korrektur: 12,
 		flaechenart: {
 			$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
 			id: 1,

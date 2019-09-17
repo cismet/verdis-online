@@ -35,6 +35,53 @@ storiesOf('FlaechenPanel Stories', module)
 	))
 	.add('Simple Flaechenpanels with ChangeRequests', () =>
 		React.createElement(() => {
+			return (
+				<div
+					style={{
+						width: 250,
+						margin: 100
+					}}
+				>
+					<FlaechenPanel
+						display={'cr'}
+						key={0}
+						editmode={true}
+						flaeche={f0}
+						changerequest={{
+							groesse: 1400
+						}}
+					/>
+					<FlaechenPanel
+						display={'cr'}
+						key={1}
+						editmode={true}
+						selected
+						flaeche={f1}
+						changerequest={{
+							anschlussgrad: {
+								grad: 'Versickernd',
+								grad_abkuerzung: 'vers.'
+							}
+						}}
+					/>
+					<FlaechenPanel
+						key={2}
+						editmode={true}
+						display={'cr'}
+						changerequest={{
+							flaechenart: {
+								art: 'Gründachfläche',
+								art_abkuerzung: 'GDF'
+							}
+						}}
+						flaeche={f2}
+					/>
+				</div>
+			);
+		})
+	)
+	.add('Simple Flaechenpanels with ChangeRequests and dynamic showChanges Toggle', () =>
+		React.createElement(() => {
 			const [ display, setDisplay ] = React.useState(5);
 			return (
 				<div
@@ -70,6 +117,23 @@ storiesOf('FlaechenPanel Stories', module)
 						editmode={true}
 						display={'cr'}
 						changerequest={{
+							flaechenart: {
+								art: 'Gründachfläche',
+								art_abkuerzung: 'GDF'
+							}
+						}}
+						flaeche={f2}
+					/>
+					<FlaechenPanel
+						key={2}
+						editmode={true}
+						display={'cr'}
+						changerequest={{
+							groesse: 1400,
+							anschlussgrad: {
+								grad: 'Versickernd',
+								grad_abkuerzung: 'vers.'
+							},
 							flaechenart: {
 								art: 'Gründachfläche',
 								art_abkuerzung: 'GDF'

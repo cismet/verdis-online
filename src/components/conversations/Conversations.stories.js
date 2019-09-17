@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import Message from './InternalMessage';
 import SystemMessage from './SystemMessage';
+import DateTimeMessage from './DateTimeMessage';
 import ClerkMessage from './InternalMessage';
 import { withInfo } from '@storybook/addon-info';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -33,6 +34,7 @@ storiesOf('Conversation Stories', module)
 	))
 	.add('Simple Conversation', () => (
 		<div>
+			<DateTimeMessage msg='02.07.2019' />
 			<Message
 				msg='Sehr geehrte*r Nutzer*in, hier haben Sie die Möglichkeit Änderungen an Ihren Flächen mitzuteilen.'
 				from='VerDIS-Online'
@@ -59,6 +61,7 @@ storiesOf('Conversation Stories', module)
 				padding={5}
 				width={'fit-content'}
 			/>
+			<DateTimeMessage msg='Gestern' />
 
 			<Message
 				msg='Die Änderung der Fläche werde ich übernehmen. Das Foto ist nicht ausreichend. Bitte übersenden Sie zusätzlich ein Foto der gesamten Fläche. Ökopflaster wird auch nicht als vollständig versickernd angesehen, sondern muss laut Satzung mit 70% seiner Flächen zur Gebührenerhebung herangezogen werden.'
@@ -92,6 +95,7 @@ storiesOf('Conversation Stories', module)
 				from='Dirk Steinbacher'
 			/>
 			<SystemMessage msg='Ihr Sachbearbeiter hat die Dachfläche 1 geändert.' />
+			<DateTimeMessage msg='Heute' />
 			<Message
 				msg='So wird eine Nachricht visualisiert, die noch nicht abgesschickt ist.'
 				_from='VerDIS-Online'

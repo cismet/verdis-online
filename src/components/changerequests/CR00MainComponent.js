@@ -12,9 +12,7 @@ import { Icon } from 'react-fa';
 import { Link } from 'react-scroll';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 import Footer from './Menu99Footer';
-import { ChatFeed, Message } from 'react-chat-ui';
 import FlaechenPanel from '../FlaechenPanel';
-import { MessageBox } from 'react-chat-elements';
 
 const CR = {
 	kassenzeichen: 60004629,
@@ -74,49 +72,7 @@ const CR = {
 		}
 	}
 };
-const demo = [
-	new Message({
-		id: 1,
-		message: <div>Hallo Bürger. Wenn etwas nicht stimmt, dann ändere es einfach.</div>,
-		senderName: 'VerDIS-online'
-	}), // Gray bubble
-	new Message({ id: 0, message: 'Da passt was nicht weil isso, siehe lustiges pdf!' }),
-	new Message({
-		id: 0,
-		message: (
-			<a style={{ color: '#ffffff' }} href='https://meine.domain.de/lustiges.pdf'>
-				<Icon name={'file'} /> lustiges.pdf
-			</a>
-		)
-	}),
 
-	new Message({
-		id: 1,
-		message: 'Konnte nichts feststellen, alles in Ordnung.!',
-		senderName: 'Dirk Steinbacher'
-	}),
-	new Message({
-		id: 1,
-		message:
-			'❌ Ihr Änderungswunsch konnte leider nicht übernommen werden. Sollten dazu noch Rückfragen bestehen, antworten Sie einfach auf diese Nachricht.',
-		senderName: 'VerDIS-online'
-	}),
-	new Message({ id: 0, message: 'Oh, falsches PDF, siehe richtiges pdf.' }),
-	new Message({
-		id: 0,
-		message: (
-			<a style={{ color: '#ffffff' }} href='https://meine.domain.de/richtiges.pdf'>
-				<Icon name={'file'} /> richtiges.pdf
-			</a>
-		)
-	}),
-	new Message({
-		id: 1,
-		message: 'Ach so, verstehe. Alles Klar!',
-		senderName: 'Dirk Steinbacher'
-	}),
-	new Message({ id: 0, message: 'Geht doch, danke.' })
-];
 const CR00 = ({ visible, height, showChangeRequestMenu }) => {
 	const modalBodyStyle = {
 		overflowY: 'auto',
@@ -127,7 +83,7 @@ const CR00 = ({ visible, height, showChangeRequestMenu }) => {
 		showChangeRequestMenu(false);
 	};
 
-	const [ messages, setMessages ] = useState(demo);
+	const [ messages, setMessages ] = useState([]);
 	console.log('useState', useState);
 
 	return (
@@ -167,23 +123,7 @@ const CR00 = ({ visible, height, showChangeRequestMenu }) => {
 					}}
 				>
 					<Panel header={'Ihre Kommunikation '} eventKey={'sectionKey0'} bsStyle={'info'}>
-						<ChatFeed
-							messages={messages} // Boolean: list of message objects
-							isTyping={false} // Boolean: is the recipient typing
-							hasInputField={false} // Boolean: use our input, or use your own
-							showSenderName={true} // show the name of the user who sent the message
-							bubblesCentered={true} //Boolean should the bubbles be centered in the feed?
-							// JSON: Custom bubble styles
-							bubbleStyles={{
-								text: {
-									fontSize: 14
-								},
-								chatbubble: {
-									borderRadius: 20,
-									padding: 10
-								}
-							}}
-						/>
+						{/* stacs */}
 					</Panel>
 				</Accordion>
 				<Accordion

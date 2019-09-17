@@ -1,0 +1,3 @@
+.customLeftAlignedValidation > .form-control-feedback {
+	text-align: start;
+}
