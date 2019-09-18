@@ -272,7 +272,7 @@ function showSettings(visible) {
 	};
 }
 
-function showChangeRequests(visible) {
+function showChangeRequestsMenu(visible) {
 	return {
 		type: types.SHOW_CHANGE_REQUESTS,
 		visible
@@ -399,7 +399,7 @@ export const actions = {
 	toggleDetailsElements,
 	toggleContactElement,
 	showSettings,
-	showChangeRequests,
+	showChangeRequestsMenu,
 	setKassenzeichenSearchInProgress,
 	setKassenzeichenTextSearchVisible,
 	setKassenzeichenToSearchFor,

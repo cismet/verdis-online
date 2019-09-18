@@ -88,7 +88,7 @@ export class AppNavbar_ extends React.Component {
 		this.props.uiStateActions.showSettings(true);
 	}
 	showChangeRequests() {
-		this.props.uiStateActions.showChangeRequests(true);
+		this.props.uiStateActions.showChangeRequestsMenu(true);
 	}
 
 	downloadFEB() {

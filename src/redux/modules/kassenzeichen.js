@@ -12,7 +12,7 @@ import {
 	getKassenzeichenInfoFeatureCollection
 } from '../../utils/kassenzeichenMappingTools';
 import { changeKassenzeichenInLocation } from '../../utils/routingHelper';
-
+import { mockchangerequests } from './mockData';
 ///TYPES
 export const types = {
 	SET_KASSENZEICHEN: 'KASSENZEICHEN/SET_KASSENZEICHEN'
@@ -88,12 +88,16 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
 						switch (state.uiState.mode) {
 							case APP_MODES.VERSIEGELTE_FLAECHEN:
 								dispatch(
-									MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData))
+									MappingActions.setFeatureCollection(
+										getFlaechenFeatureCollection(kassenzeichenData)
+									)
 								);
 								break;
 							case APP_MODES.ESW:
 								dispatch(
-									MappingActions.setFeatureCollection(getFrontenFeatureCollection(kassenzeichenData))
+									MappingActions.setFeatureCollection(
+										getFrontenFeatureCollection(kassenzeichenData)
+									)
 								);
 								break;
 							case APP_MODES.INFO:
@@ -105,7 +109,9 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
 								break;
 							case APP_MODES.VERSICKERUNG:
 								dispatch(
-									MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData))
+									MappingActions.setFeatureCollection(
+										getFlaechenFeatureCollection(kassenzeichenData)
+									)
 								);
 								break;
 							default:
@@ -156,7 +162,10 @@ function getKassenzeichenbySTAC(stac, callback) {
 		dispatch(AuthActions.logout());
 		dispatch(AuthActions.setLoginInProgress('Anmelden ...'));
 		const url =
-			STAC_SERVICE + '/actions/' + DOMAIN + '.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result';
+			STAC_SERVICE +
+			'/actions/' +
+			DOMAIN +
+			'.getMyKassenzeichen/tasks?role=all&resultingInstanceType=result';
 
 		fetch(url, {
 			method: 'post',
@@ -166,7 +175,10 @@ function getKassenzeichenbySTAC(stac, callback) {
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(actionResult) {
 						const kassenzeichenData = JSON.parse(actionResult.res);
-						
+						kassenzeichenData.changerequests =
+							mockchangerequests[kassenzeichenData.kassenzeichennummer8];
+
+						console.log('XXXX', kassenzeichenData);
 						//console.log(JSON.stringify(kassenzeichenData,2,null))
 						if (kassenzeichenData.nothing) {
 							dispatch(AuthActions.logout());
@@ -176,7 +188,9 @@ function getKassenzeichenbySTAC(stac, callback) {
 						} else {
 							dispatch(setKassenzeichenObject(kassenzeichenData));
 							dispatch(
-								MappingActions.setFeatureCollection(getFlaechenFeatureCollection(kassenzeichenData))
+								MappingActions.setFeatureCollection(
+									getFlaechenFeatureCollection(kassenzeichenData)
+								)
 							);
 							dispatch(MappingActions.setSelectedFeatureIndex(null));
 							dispatch(MappingActions.fitAll());
@@ -237,7 +251,11 @@ function getFEBByStac(stac, callback, silent = false) {
 			})
 		);
 
-		const url = STAC_SERVICE + '/actions/' + DOMAIN + '.getMyFEB/tasks?role=all&resultingInstanceType=result';
+		const url =
+			STAC_SERVICE +
+			'/actions/' +
+			DOMAIN +
+			'.getMyFEB/tasks?role=all&resultingInstanceType=result';
 		fetch(url, {
 			method: 'post',
 			body: fd
@@ -310,17 +328,26 @@ function searchByKassenzeichen(kassenzeichen, fitBounds) {
 					response.json().then(function(queryResult) {
 						if (queryResult.$collection.length === 1) {
 							dispatch(UiStateActions.setKassenzeichenToSearchFor(null));
-							dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, fitBounds));
+							dispatch(
+								searchByKassenzeichenId(
+									queryResult.$collection[0].LEGACY_OBJECT_ID,
+									fitBounds
+								)
+							);
 						} else if (queryResult.$collection.length < 1) {
 							dispatch(
 								UiStateActions.showError(
-									'Es konnte kein Kassenzeichen ' + kassenzeichen + ' gefunden werden.'
+									'Es konnte kein Kassenzeichen ' +
+										kassenzeichen +
+										' gefunden werden.'
 								)
 							);
 						} else {
 							dispatch(
 								UiStateActions.showError(
-									'Kassenzeichen ' + kassenzeichen + ' lieferte keinen eindeutigen Treffer.'
+									'Kassenzeichen ' +
+										kassenzeichen +
+										' lieferte keinen eindeutigen Treffer.'
 								)
 							);
 						}
@@ -394,15 +421,29 @@ function searchByPoint(x, y, fitBounds) {
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(queryResult) {
 						if (queryResult.$collection.length === 1) {
-							dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, fitBounds));
+							dispatch(
+								searchByKassenzeichenId(
+									queryResult.$collection[0].LEGACY_OBJECT_ID,
+									fitBounds
+								)
+							);
 						} else if (queryResult.$collection.length < 1) {
-							dispatch(UiStateActions.showInfo('Hier konnte kein Kassenzeichen gefunden werden.'));
+							dispatch(
+								UiStateActions.showInfo(
+									'Hier konnte kein Kassenzeichen gefunden werden.'
+								)
+							);
 							setTimeout(() => {
 								dispatch(UiStateActions.showWaiting(false));
 							}, 1000);
 						} else {
 							//TODO: could show a list with hits but for now just the first hit
-							dispatch(searchByKassenzeichenId(queryResult.$collection[0].LEGACY_OBJECT_ID, fitBounds));
+							dispatch(
+								searchByKassenzeichenId(
+									queryResult.$collection[0].LEGACY_OBJECT_ID,
+									fitBounds
+								)
+							);
 						}
 					});
 				} else if (response.status === 401) {
@@ -426,7 +467,13 @@ function searchByPoint(x, y, fitBounds) {
 			.catch(function(err) {
 				dispatch(
 					UiStateActions.showError(
-						'Bei der Suche an dem Punkt ' + x + ' ,' + y + ' ist ein Fehler aufgetreten. (' + err + ')'
+						'Bei der Suche an dem Punkt ' +
+							x +
+							' ,' +
+							y +
+							' ist ein Fehler aufgetreten. (' +
+							err +
+							')'
 					)
 				);
 			});
