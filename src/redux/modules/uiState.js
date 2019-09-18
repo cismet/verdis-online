@@ -46,7 +46,9 @@ const initialState = {
 	contactElementEnabled: true,
 
 	settingsVisible: false,
-	changeRequestsVisible: false,
+	changeRequestsMenuVisible: false,
+	changeRequestsEditMode: true,
+
 	applicationMenuVisible: false,
 	applicationMenuActiveKey: 'none',
 
@@ -135,7 +137,7 @@ export default function uiStateReducer(state = initialState, action) {
 		}
 		case types.SHOW_CHANGE_REQUESTS: {
 			newState = objectAssign({}, state);
-			newState.changeRequestsVisible = action.visible;
+			newState.changeRequestsMenuVisible = action.visible;
 			return newState;
 		}
 		case types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: {

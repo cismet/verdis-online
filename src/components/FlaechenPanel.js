@@ -152,8 +152,20 @@ export default class FlaechenPanel extends React.Component {
 								<td style={{ textAlign: 'right' }}>{beschreibung}</td>
 
 								{this.props.editmode === true && (
-									<td style={{ textAlign: 'right', color: editButtonColor }}>
-										<Icon icon={faEdit} />
+									<td
+										style={{
+											textAlign: 'right',
+											color: editButtonColor,
+											cursor: 'pointer'
+										}}
+									>
+										<Icon
+											onClick={(e) => {
+												this.props.showEditCRMenu(this.props.flaeche);
+												e.stopPropagation();
+											}}
+											icon={faEdit}
+										/>
 									</td>
 								)}
 							</tr>
@@ -179,7 +191,8 @@ FlaechenPanel.propTypes = {
 	flaechenPanelClickHandler: PropTypes.func,
 	changerequests: PropTypes.object,
 	display: PropTypes.string,
-	changerequest: PropTypes.object
+	changerequest: PropTypes.object,
+	showEditCRMenu: PropTypes.func
 };
 FlaechenPanel.defaultProps = {
 	editmode: false,
