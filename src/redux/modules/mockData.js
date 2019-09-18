@@ -2,6 +2,19 @@ export const mockchangerequests = {
 	'60432515': {
 		kassenzeichen: 60432515,
 		flaechen: {
+			'1': {
+				groesse: 1430
+			},
+			'2': {
+				groesse: 921,
+				pruefung: {
+					groesse: {
+						value: 921,
+						von: 'SteinbacherD102',
+						timestamp: 47110815
+					}
+				}
+			},
 			'8': {
 				flaechenart: {
 					art: 'Gründachfläche',
@@ -19,6 +32,13 @@ export const mockchangerequests = {
 				}
 			}
 		},
+		documents: [
+			{
+				name: 'Versickerungsgenehmigung.pdf',
+				uuid: 'akdjsfhjldsfghlkasdjhfjlkhdfjkl384297'
+			}
+		],
+
 		nachrichten: {
 			buerger: {},
 			sachbearbeiter: {

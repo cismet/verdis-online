@@ -25,6 +25,7 @@ import {
 	getOverlayTextForFlaeche
 } from '../utils/kassenzeichenHelper';
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
+import ChangeRequestEditView from '../components/changerequests/CR50Flaechendialog';
 
 function mapStateToProps(state) {
 	return {
@@ -64,6 +65,7 @@ export class KassenzeichenViewer_ extends React.Component {
 		this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
 		this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
 		this.flaechenMapClick = this.flaechenMapClick.bind(this);
+		this.getCRsForFlaeche = this.getCRsForFlaeche.bind(this);
 		this.flaechenPanelRefs = {};
 	}
 
@@ -89,6 +91,22 @@ export class KassenzeichenViewer_ extends React.Component {
 			);
 		} else {
 			this.props.mappingActions.fitAll();
+		}
+	}
+
+	getCRsForFlaeche(flaeche) {
+		if (
+			this.props.kassenzeichen.changerequests !== undefined &&
+			this.props.kassenzeichen.changerequests.flaechen !== undefined &&
+			this.props.kassenzeichen.changerequests.flaechen[flaeche.flaechenbezeichnung] !==
+				undefined
+		) {
+			const ret = this.props.kassenzeichen.changerequests.flaechen[
+				flaeche.flaechenbezeichnung
+			];
+			return ret;
+		} else {
+			return undefined;
 		}
 	}
 
@@ -259,7 +277,9 @@ export class KassenzeichenViewer_ extends React.Component {
 								selected={sel}
 								flaechenPanelClickHandler={that.flaechenPanelClick}
 								flaeche={flaeche}
+								changerequest={that.getCRsForFlaeche(flaeche)}
 								editmode={that.props.uiState.changeRequestsEditMode}
+								display={that.props.uiState.changeRequestDisplayMode}
 							/>
 						</Flexbox>
 					);
@@ -296,6 +316,7 @@ export class KassenzeichenViewer_ extends React.Component {
 				this.flaechenPanelRefs = {};
 				flComps = flaechen.map(function(flaeche) {
 					const sel = that.isFlaecheSelected(flaeche);
+					const cr = that.getCRsForFlaeche(flaeche);
 					return (
 						<FlaechenPanel
 							ref={(c) => {
@@ -305,7 +326,12 @@ export class KassenzeichenViewer_ extends React.Component {
 							selected={sel}
 							flaechenPanelClickHandler={that.flaechenPanelClick}
 							flaeche={flaeche}
+							display={that.props.uiState.changeRequestDisplayMode}
+							changerequest={cr}
 							editmode={that.props.uiState.changeRequestsEditMode}
+							showEditCRMenu={() => {
+								that.props.uiStateActions.showCREditUI(flaeche, cr);
+							}}
 						/>
 					);
 				});
@@ -392,6 +418,30 @@ export class KassenzeichenViewer_ extends React.Component {
 				<ChangeRequests
 					visible={this.props.uiState.changeRequestsMenuVisible}
 					showChangeRequestMenu={this.props.uiStateActions.showChangeRequestsMenu}
+				/>
+				<ChangeRequestEditView
+					visible={this.props.uiState.changeRequestEditViewVisible}
+					showChangeRequestMenu={(storeIt) => {
+						if (storeIt == true) {
+							this.props.kassenzeichenActions.setChangeRequestsForFlaeche(
+								this.props.uiState.changeRequestEditViewFlaeche,
+								this.props.uiState.changeRequestEditViewCR
+							);
+						}
+						this.props.uiStateActions.showChangeRequestsEditView(false);
+					}}
+					flaeche={this.props.uiState.changeRequestEditViewFlaeche}
+					flaechenCR={this.props.uiState.changeRequestEditViewCR}
+					setFlaechenCR={(cr) => {
+						this.props.uiStateActions.setChangeRequestsEditViewFlaecheAndCR(
+							this.props.uiState.changeRequestEditViewFlaeche,
+							cr
+						);
+					}}
+					__setFlaechenCR={this.props.kassenzeichenActions.setChangeRequestsForFlaeche}
+					documents={
+						(this.props.kassenzeichen.changerequests || { documents: [] }).documents
+					}
 				/>
 				{verdisMapWithAdditionalComponents}
 				{flaechenInfoOverlay}

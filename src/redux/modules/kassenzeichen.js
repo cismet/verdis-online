@@ -512,6 +512,24 @@ function d3AvailabilityCheck() {
 	};
 }
 
+function setChangeRequests(crs) {
+	return function(dispatch, getState) {
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		newKassz.changerequests = crs;
+		dispatch(setKassenzeichenObject(newKassz));
+	};
+}
+
+function setChangeRequestsForFlaeche(flaeche, crs) {
+	return function(dispatch, getState) {
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		newKassz.changerequests.flaechen[flaeche.flaechenbezeichnung] = crs;
+		dispatch(setKassenzeichenObject(newKassz));
+	};
+}
+
 export const actions = {
 	setKassenzeichenObject,
 	searchByKassenzeichenId,
@@ -520,5 +538,7 @@ export const actions = {
 	openD3,
 	d3AvailabilityCheck,
 	getKassenzeichenbySTAC,
-	getFEBByStac
+	getFEBByStac,
+	setChangeRequests,
+	setChangeRequestsForFlaeche
 };

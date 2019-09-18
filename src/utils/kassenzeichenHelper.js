@@ -205,8 +205,6 @@ export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
 };
 
 const isProcessedByClerk = (attr, cr) => {
-	console.log('XXcr', cr);
-
 	try {
 		if (
 			cr !== undefined &&

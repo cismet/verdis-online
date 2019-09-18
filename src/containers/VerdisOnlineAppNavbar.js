@@ -10,6 +10,8 @@ import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen'
 import Waiting from './Waiting';
 import { Icon } from 'react-fa';
 
+import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';
+import Toggle from 'react-bootstrap-toggle';
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -195,7 +197,16 @@ export class AppNavbar_ extends React.Component {
 								onClick={this.showChangeRequests}
 								eventKey={2.0}
 							>
-								Änderungswünsche
+								Änderungswünsche{' '}
+								{/* <Toggle
+									on={'meine Änderungen'}
+									off={'Original'}
+									size='xs'
+									offstyle='success'
+									onstyle='warning'
+									active={true}
+									style={{ padding: 10 }}
+								/> */}
 							</NavItem>
 							<OverlayTrigger
 								trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn}
