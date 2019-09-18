@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import FlaechenPanel from './FlaechenPanel';
 import { f0, f1, f2 } from './FlaechenPanel.stories.data';
+import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';
+import Toggle from 'react-bootstrap-toggle';
 
 storiesOf('FlaechenPanel Stories', module)
 	// .addDecorator(withInfo) // At your stories directly.
@@ -82,7 +84,7 @@ storiesOf('FlaechenPanel Stories', module)
 	)
 	.add('Simple Flaechenpanels with ChangeRequests and dynamic showChanges Toggle', () =>
 		React.createElement(() => {
-			const [ display, setDisplay ] = React.useState(5);
+			const [ display, setDisplay ] = React.useState('cr');
 			return (
 				<div
 					style={{
@@ -90,8 +92,27 @@ storiesOf('FlaechenPanel Stories', module)
 						margin: 100
 					}}
 				>
+					<div style={{ textAlign: 'right', marginBottom: 50 }}>
+						Änderungen anzeigen{'    '}
+						<Toggle
+							onClick={() => {
+								if (display === 'cr') {
+									setDisplay('hideCR');
+								} else {
+									setDisplay('cr');
+								}
+							}}
+							on={'ON'}
+							off={'OFF'}
+							size='xs'
+							offstyle='danger'
+							active={display === 'cr'}
+							style={{ padding: 10 }}
+						/>
+					</div>
+
 					<FlaechenPanel
-						display={'cr'}
+						display={display}
 						key={0}
 						editmode={true}
 						flaeche={f0}
@@ -100,13 +121,13 @@ storiesOf('FlaechenPanel Stories', module)
 						}}
 					/>
 					<FlaechenPanel
-						display={'cr'}
+						display={display}
 						key={1}
 						editmode={true}
 						selected
 						flaeche={f1}
 						changerequest={{
-							anschlussgrad: {
+							anschlussgradX: {
 								grad: 'Versickernd',
 								grad_abkuerzung: 'vers.'
 							}
@@ -115,7 +136,7 @@ storiesOf('FlaechenPanel Stories', module)
 					<FlaechenPanel
 						key={2}
 						editmode={true}
-						display={'cr'}
+						display={display}
 						changerequest={{
 							flaechenart: {
 								art: 'Gründachfläche',
@@ -125,9 +146,9 @@ storiesOf('FlaechenPanel Stories', module)
 						flaeche={f2}
 					/>
 					<FlaechenPanel
-						key={2}
+						key={22}
 						editmode={true}
-						display={'cr'}
+						display={display}
 						changerequest={{
 							groesse: 1400,
 							anschlussgrad: {
