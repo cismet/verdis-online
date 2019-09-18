@@ -125,17 +125,17 @@ export const anschlussgrade = [
 
 export const colorUnchanged = 'black';
 export const colorChanged = '#436F8C';
-export const colorAccepted = '#0D6759';
+export const colorAccepted = '#3D7844';
 export const colorRejected = '#B11623';
 
 export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
-	let groesse, art, anschlussgrad, groesseColor, anschlussgradColor, flaechenartColor;
+	let groesse, art, anschlussgrad;
 	let changeCounter = 0;
 	let edited = false;
 	let validationStates = {
-		groesse: 'pending',
-		flaechenart: 'pending',
-		anschlussgrad: 'pending'
+		groesse: null, //means 'pending'
+		flaechenart: null, //means 'pending'
+		anschlussgrad: null //means 'pending'
 	};
 	let colors = {
 		groesse: 'black',
@@ -149,7 +149,7 @@ export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
 		groesse = flaechenCR.groesse;
 		setValidationStringForAttr(validationStates, 'groesse', flaechenCR, 'error');
 		setColorForAttr(colors, 'groesse', flaechenCR, colorRejected, colorChanged);
-		if ((isProcessedByClerk('groesse'), flaechenCR)) {
+		if (!isProcessedByClerk('groesse', flaechenCR)) {
 			changeCounter++;
 		}
 	} else {
@@ -164,7 +164,7 @@ export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
 		art = flaechenCR.flaechenart;
 		setValidationStringForAttr(validationStates, 'flaechenart', flaechenCR, 'error');
 		setColorForAttr(colors, 'flaechenart', flaechenCR, colorRejected, colorChanged);
-		if ((isProcessedByClerk('flaechenart'), flaechenCR)) {
+		if (!isProcessedByClerk('flaechenart', flaechenCR)) {
 			changeCounter++;
 		}
 	} else {
@@ -181,7 +181,7 @@ export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
 		anschlussgrad = flaechenCR.anschlussgrad;
 		setValidationStringForAttr(validationStates, 'anschlussgrad', flaechenCR, 'error');
 		setColorForAttr(colors, 'anschlussgrad', flaechenCR, colorRejected, colorChanged);
-		if ((isProcessedByClerk('anschlussgrad'), flaechenCR)) {
+		if (!isProcessedByClerk('anschlussgrad', flaechenCR)) {
 			changeCounter++;
 		}
 	} else {
@@ -205,6 +205,8 @@ export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
 };
 
 const isProcessedByClerk = (attr, cr) => {
+	console.log('XXcr', cr);
+
 	try {
 		if (
 			cr !== undefined &&
@@ -213,9 +215,26 @@ const isProcessedByClerk = (attr, cr) => {
 			cr.pruefung[attr] !== undefined &&
 			cr.pruefung[attr].value !== undefined
 		) {
-			const crValue = JSON.stringify(cr[attr]);
-			const checkValue = JSON.stringify(cr.pruefung[attr].value);
-			return crValue === checkValue;
+			const crValue = cr[attr];
+			const checkValue = cr.pruefung[attr].value;
+			console.log('crValue === checkValue', [ crValue, checkValue, crValue === checkValue ]);
+
+			switch (attr) {
+				case 'groesse':
+					return crValue === checkValue;
+				case 'flaechenart':
+					return (
+						crValue.art_abkuerzung === checkValue.art_abkuerzung &&
+						crValue.art === checkValue.art
+					);
+				case 'anschlussgrad':
+					return (
+						crValue.grad_abkuerzung === checkValue.grad_abkuerzung &&
+						crValue.grad === checkValue.grad
+					);
+				default:
+					return false;
+			}
 		} else {
 			return false;
 		}

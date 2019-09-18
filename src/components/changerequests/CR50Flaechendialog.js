@@ -30,12 +30,13 @@ import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 import Footer from './Menu99Footer';
 import FlaechenPanel from '../FlaechenPanel';
 import FlexView from 'react-flexview';
-
+import Color from 'color';
 import {
 	flaechenarten,
 	anschlussgrade,
 	getProcessedFlaechenCR,
-	getLinkForUUID
+	getLinkForUUID,
+	colorChanged
 } from '../../utils/kassenzeichenHelper';
 import './style.css';
 
@@ -152,6 +153,13 @@ const CR00 = ({
 							>
 								<ControlLabel>Größe</ControlLabel>
 								<FormControl
+									style={{
+										background: new Color(
+											crInfo.colors.groesse === 'black'
+												? 'white'
+												: crInfo.colors.groesse
+										).alpha(0.1)
+									}}
 									onChange={(e) => {
 										const newCR = JSON.parse(JSON.stringify(flaechenCR));
 										newCR.groesse = Number(e.target.value);
@@ -168,6 +176,13 @@ const CR00 = ({
 							>
 								<ControlLabel>Flächenart</ControlLabel>
 								<FormControl
+									style={{
+										background: new Color(
+											crInfo.colors.flaechenart === 'black'
+												? 'white'
+												: crInfo.colors.flaechenart
+										).alpha(0.1)
+									}}
 									onChange={(e) => {
 										const newCR = JSON.parse(JSON.stringify(flaechenCR));
 										newCR.flaechenart = flaechenarten.find(
@@ -201,6 +216,13 @@ const CR00 = ({
 							>
 								<ControlLabel>Anschlussgrad</ControlLabel>
 								<FormControl
+									style={{
+										background: new Color(
+											crInfo.colors.anschlussgrad === 'black'
+												? 'white'
+												: crInfo.colors.anschlussgrad
+										).alpha(0.1)
+									}}
 									onChange={(e) => {
 										const newCR = JSON.parse(JSON.stringify(flaechenCR));
 

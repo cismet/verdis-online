@@ -44,7 +44,7 @@ const cr = {
 
 storiesOf('ChangeRequest Stories', module)
 	// .addDecorator(withInfo) // At your stories directly.
-	.add('Simple CR Flaechendialog with every attr changed and accepeted', () =>
+	.add('CR Flaechendialog with every attr changed and accepeted', () =>
 		React.createElement(() => {
 			const [ flaechenCR, setFlaechenCR ] = useState(cr);
 
@@ -74,7 +74,7 @@ storiesOf('ChangeRequest Stories', module)
 			);
 		})
 	)
-	.add('Simple CR Flaechendialog with every attr changed and rejected', () =>
+	.add('CR Flaechendialog with every attr changed and rejected', () =>
 		React.createElement(() => {
 			const [ flaechenCR, setFlaechenCR ] = useState({
 				groesse: 1430,
@@ -109,6 +109,38 @@ storiesOf('ChangeRequest Stories', module)
 						timestamp: 47110815
 					}
 				}
+			});
+
+			return (
+				<div
+					styleX={{
+						width: 250,
+						margin: 100
+					}}
+				>
+					<CRFlaechendialog
+						flaeche={f1}
+						flaechenCR={flaechenCR}
+						setFlaechenCR={setFlaechenCR}
+						documents={[
+							{
+								name: 'Versickerungsgenehmigung.pdf',
+								uuid: 'akdjsfhjldsfghlkasdjhfjlkhdfjkl384297'
+							}
+						]}
+						closeFlaechenCR={action('closeFlaechenCR')}
+						showChangeRequestMenu={action('showChangeRequestMenu')}
+						visible={true}
+						height={900}
+					/>
+				</div>
+			);
+		})
+	)
+	.add('CR Flaechendialog with one attr changed (pending)', () =>
+		React.createElement(() => {
+			const [ flaechenCR, setFlaechenCR ] = useState({
+				groesse: 1430
 			});
 
 			return (
