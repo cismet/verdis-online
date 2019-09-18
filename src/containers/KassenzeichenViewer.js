@@ -259,6 +259,7 @@ export class KassenzeichenViewer_ extends React.Component {
 								selected={sel}
 								flaechenPanelClickHandler={that.flaechenPanelClick}
 								flaeche={flaeche}
+								editmode={that.props.uiState.changeRequestsEditMode}
 							/>
 						</Flexbox>
 					);
@@ -304,6 +305,7 @@ export class KassenzeichenViewer_ extends React.Component {
 							selected={sel}
 							flaechenPanelClickHandler={that.flaechenPanelClick}
 							flaeche={flaeche}
+							editmode={that.props.uiState.changeRequestsEditMode}
 						/>
 					);
 				});
@@ -388,7 +390,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					setBackgroundIndex={this.props.mappingActions.setSelectedBackgroundIndex}
 				/>
 				<ChangeRequests
-					visible={this.props.uiState.changeRequestsVisible}
+					visible={this.props.uiState.changeRequestsMenuVisible}
 					showChangeRequestMenu={this.props.uiStateActions.showChangeRequestsMenu}
 				/>
 				{verdisMapWithAdditionalComponents}

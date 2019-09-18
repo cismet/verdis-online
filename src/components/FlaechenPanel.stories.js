@@ -18,9 +18,25 @@ storiesOf('FlaechenPanel Stories', module)
 				margin: 100
 			}}
 		>
-			<FlaechenPanel key={0} flaeche={f0} />
-			<FlaechenPanel key={1} flaeche={f1} selected />
-			<FlaechenPanel key={2} flaeche={f2} />
+			<FlaechenPanel
+				key={0}
+				flaeche={f0}
+				flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+				showEditCRMenu={action('showEditCRMenu')}
+			/>
+			<FlaechenPanel
+				key={1}
+				flaeche={f1}
+				selected
+				flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+				showEditCRMenu={action('showEditCRMenu')}
+			/>
+			<FlaechenPanel
+				key={2}
+				flaeche={f2}
+				flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+				showEditCRMenu={action('showEditCRMenu')}
+			/>
 		</div>
 	))
 	.add('Simple Flaechenpanels in Editmode', () => (
@@ -30,9 +46,28 @@ storiesOf('FlaechenPanel Stories', module)
 				margin: 100
 			}}
 		>
-			<FlaechenPanel key={0} editmode={true} flaeche={f0} />
-			<FlaechenPanel key={1} editmode={true} flaeche={f1} selected />
-			<FlaechenPanel key={2} editmode={true} flaeche={f2} />
+			<FlaechenPanel
+				key={0}
+				editmode={true}
+				flaeche={f0}
+				flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+				showEditCRMenu={action('showEditCRMenu')}
+			/>
+			<FlaechenPanel
+				key={1}
+				editmode={true}
+				flaeche={f1}
+				flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+				showEditCRMenu={action('showEditCRMenu')}
+				selected
+			/>
+			<FlaechenPanel
+				key={2}
+				editmode={true}
+				flaeche={f2}
+				flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+				showEditCRMenu={action('showEditCRMenu')}
+			/>
 		</div>
 	))
 	.add('Simple Flaechenpanels with ChangeRequests', () =>
@@ -52,6 +87,8 @@ storiesOf('FlaechenPanel Stories', module)
 						changerequest={{
 							groesse: 1400
 						}}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 					<FlaechenPanel
 						display={'cr'}
@@ -65,6 +102,8 @@ storiesOf('FlaechenPanel Stories', module)
 								grad_abkuerzung: 'vers.'
 							}
 						}}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 					<FlaechenPanel
 						key={2}
@@ -77,6 +116,8 @@ storiesOf('FlaechenPanel Stories', module)
 							}
 						}}
 						flaeche={f2}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 				</div>
 			);
@@ -119,6 +160,8 @@ storiesOf('FlaechenPanel Stories', module)
 						changerequest={{
 							groesse: 1400
 						}}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 					<FlaechenPanel
 						display={display}
@@ -132,6 +175,8 @@ storiesOf('FlaechenPanel Stories', module)
 								grad_abkuerzung: 'vers.'
 							}
 						}}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 					<FlaechenPanel
 						key={2}
@@ -144,6 +189,8 @@ storiesOf('FlaechenPanel Stories', module)
 							}
 						}}
 						flaeche={f2}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 					<FlaechenPanel
 						key={22}
@@ -161,6 +208,8 @@ storiesOf('FlaechenPanel Stories', module)
 							}
 						}}
 						flaeche={f2}
+						flaechenPanelClickHandler={action('flaechenPanelClickHandler')}
+						showEditCRMenu={action('showEditCRMenu')}
 					/>
 				</div>
 			);
