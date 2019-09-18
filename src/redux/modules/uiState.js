@@ -19,6 +19,10 @@ export const types = {
 	CHANGE_LAYER_ENABLED: 'UI_STATE/CHANGE_LAYER_ENABLED',
 	SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
 	SHOW_CHANGE_REQUESTS: 'UI_STATE/SHOW_CHANGE_REQUESTS',
+	SHOW_CHANGE_REQUESTS_EDIT_UI: 'UI_STATE/SHOW_CHANGE_REQUESTS_EDIT_UI',
+	SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR:
+		'UI_STATE/SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR',
+
 	SHOW_WAITING: 'UI_STATE/SHOW_WAITING',
 	SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: 'UI_STATE/SET_KASSENZEICHEN_SEARCH_IN_PROGRESS',
 	SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE: 'UI_STATE/SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE',
@@ -48,6 +52,11 @@ const initialState = {
 	settingsVisible: false,
 	changeRequestsMenuVisible: false,
 	changeRequestsEditMode: true,
+	changeRequestDisplayMode: 'cr',
+
+	changeRequestEditViewVisible: false,
+	changeRequestEditViewFlaeche: {},
+	changeRequestEditViewCR: {},
 
 	applicationMenuVisible: false,
 	applicationMenuActiveKey: 'none',
@@ -140,6 +149,19 @@ export default function uiStateReducer(state = initialState, action) {
 			newState.changeRequestsMenuVisible = action.visible;
 			return newState;
 		}
+
+		case types.SHOW_CHANGE_REQUESTS_EDIT_UI: {
+			newState = objectAssign({}, state);
+			newState.changeRequestEditViewVisible = action.visible;
+			return newState;
+		}
+		case types.SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR: {
+			newState = objectAssign({}, state);
+			newState.changeRequestEditViewFlaeche = action.flaeche;
+			newState.changeRequestEditViewCR = action.cr;
+			return newState;
+		}
+
 		case types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: {
 			newState = objectAssign({}, state);
 			newState.searchInProgress = action.progress;
@@ -280,6 +302,19 @@ function showChangeRequestsMenu(visible) {
 		visible
 	};
 }
+function showChangeRequestsEditView(visible) {
+	return {
+		type: types.SHOW_CHANGE_REQUESTS_EDIT_UI,
+		visible
+	};
+}
+function setChangeRequestsEditViewFlaecheAndCR(flaeche, cr) {
+	return {
+		type: types.SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR,
+		flaeche,
+		cr
+	};
+}
 
 function setKassenzeichenSearchInProgress(progress) {
 	return {
@@ -391,6 +426,13 @@ function setApplicationMenuActiveKey(key) {
 
 //COMPLEXACTIONS
 
+function showCREditUI(flaeche, cr) {
+	return function(dispatch, getState) {
+		dispatch(setChangeRequestsEditViewFlaecheAndCR(flaeche, cr));
+		dispatch(showChangeRequestsEditView(true));
+	};
+}
+
 //EXPORT ACTIONS
 
 export const actions = {
@@ -402,6 +444,8 @@ export const actions = {
 	toggleContactElement,
 	showSettings,
 	showChangeRequestsMenu,
+	showChangeRequestsEditView,
+	setChangeRequestsEditViewFlaecheAndCR,
 	setKassenzeichenSearchInProgress,
 	setKassenzeichenTextSearchVisible,
 	setKassenzeichenToSearchFor,
@@ -417,5 +461,6 @@ export const actions = {
 	setFebBlob,
 	setWaitForFEB,
 	showApplicationMenu,
-	setApplicationMenuActiveKey
+	setApplicationMenuActiveKey,
+	showCREditUI
 };
