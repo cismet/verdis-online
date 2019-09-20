@@ -14,7 +14,8 @@ import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 import Footer from './Menu99Footer';
 import FlaechenPanel from '../FlaechenPanel';
 import CRConversation from '../conversations/CRConversation';
-
+import FlexView from 'react-flexview';
+import DocPanel from './CR20DocumentPanel';
 const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 	const modalBodyStyle = {
 		overflowY: 'auto',
@@ -25,7 +26,34 @@ const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 		showChangeRequestMenu(false);
 	};
 
+	const changerequests = kassenzeichen.changerequests;
+
 	if (visible === true) {
+		const changerequestBezeichnungsArray = Object.keys(changerequests.flaechen) || [];
+
+		const origPanels = [];
+		const crPanels = [];
+		changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+			//find flaeche
+			const flaeche = kassenzeichen.flaechen.find(
+				(fCand) => fCand.flaechenbezeichnung === flaechenbezeichnung
+			);
+
+			//get cr for flaeche
+			const cr = changerequests.flaechen[flaechenbezeichnung];
+
+			//create the panels and push them into the arrays
+			origPanels.push(<FlaechenPanel key={'orig.' + index} flaeche={flaeche} />);
+			crPanels.push(
+				<FlaechenPanel
+					key={'cr' + index}
+					flaeche={flaeche}
+					display={'cr'}
+					changerequest={cr}
+				/>
+			);
+		});
+
 		return (
 			<Modal
 				style={{
@@ -44,10 +72,10 @@ const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 				</Modal.Header>
 				<Modal.Body style={modalBodyStyle} id='myMenu' key={'applicationMenuActiveKey'}>
 					<p>
-						Eine wunderbare Heiterkeit hat meine ganze Seele eingenommen, gleich den
-						süßen Frühlingsmorgen, die ich mit ganzem Herzen genieße. Ich bin allein und
-						freue mich meines Lebens in dieser Gegend, die für solche Seelen geschaffen
-						ist wie die meine.
+						Hier können Sie gewünschte Änderungen eintragen, belegen und an uns
+						übermitteln. Bitte beachten Sie, dass eine Nachweispflicht besteht, wenn
+						Flächen nicht in den Kanal entwässern. Die nachfolgende Kommunikation ist
+						kein Chat. Eine Antwort wird nicht immer zeitnah erfolgen.
 					</p>
 					<Accordion
 						key={'sectionKey0'}
@@ -63,7 +91,7 @@ const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 						}}
 					>
 						<Panel
-							header={'Ihre Kommunikation '}
+							header={'Ihre Kommunikation'}
 							eventKey={'sectionKey0'}
 							bsStyle={'info'}
 						>
@@ -84,342 +112,38 @@ const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 						}}
 					>
 						<Panel
-							header={'Ihre Änderungsvorschläge (3)'}
+							header={
+								'Ihre Änderungsvorschläge' +
+								(changerequestBezeichnungsArray !== undefined &&
+								changerequestBezeichnungsArray.length > 0
+									? ' (' + changerequestBezeichnungsArray.length + ')'
+									: '')
+							}
 							eventKey={'sectionKey1'}
 							bsStyle={'warning'}
 						>
-							<table style={{ border: '1px', width: '100%' }}>
-								<tbody>
-									<tr>
-										<td style={{ padding: '20px', paddingBottom: '2px' }}>
-											<FlaechenPanel
-												key={1}
-												flaeche={{
-													$self: '/VERDIS_GRUNDIS.FLAECHE/589226',
-													id: 589226,
-													flaecheninfo: {
-														$self:
-															'/VERDIS_GRUNDIS.FLAECHENINFO/587951',
-														id: 587951,
-														groesse_aus_grafik: 1439,
-														groesse_korrektur: 1439,
-														flaechenart: {
-															$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
-															id: 1,
-															art: 'Dachfläche',
-															art_abkuerzung: 'DF'
-														},
-														anschlussgrad: {
-															$self:
-																'/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1',
-															id: 1,
-															grad: 'Am Kanal angeschlossen',
-															grad_abkuerzung: 'angeschl.'
-														},
-														geometrie: {
-															$self: '/VERDIS_GRUNDIS.GEOM/645327',
-															geo_field:
-																'SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))',
-															id: 645327
-														},
-														beschreibung: {
-															$self:
-																'/VERDIS_GRUNDIS.FLAECHENBESCHREIBUNG/1',
-															id: 1,
-															beschreibung: 'Hauptdach',
-															dachflaeche: true
-														},
-														nachgewiesen: null
-													},
-													anteil: null,
-													flaechenbezeichnung: '1',
-													bemerkung: null,
-													datum_erfassung: '2019-05-06',
-													datum_veranlagung: '03/01'
-												}}
-											/>
-										</td>
-										<td
-											style={{
-												textAlign: 'center',
-												padding: '20px',
-												paddingBottom: '2px'
-											}}
-										>
-											<h1>➡️</h1>
-										</td>
-										<td style={{ padding: '20px', paddingBottom: '2px' }}>
-											<FlaechenPanel
-												key={1}
-												flaeche={{
-													$self: '/VERDIS_GRUNDIS.FLAECHE/589226',
-													id: 589226,
-													flaecheninfo: {
-														$self:
-															'/VERDIS_GRUNDIS.FLAECHENINFO/587951',
-														id: 587951,
-														groesse_aus_grafik: 1439,
-														groesse_korrektur: 1439,
-														flaechenart: {
-															$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
-															id: 1,
-															art: 'Dachfläche',
-															art_abkuerzung: 'DF'
-														},
-														anschlussgrad: {
-															$self:
-																'/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1',
-															id: 1,
-															grad: 'Am Kanal angeschlossen',
-															grad_abkuerzung: 'angeschl.'
-														},
-														geometrie: {
-															$self: '/VERDIS_GRUNDIS.GEOM/645327',
-															geo_field:
-																'SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))',
-															id: 645327
-														},
-														beschreibung: {
-															$self:
-																'/VERDIS_GRUNDIS.FLAECHENBESCHREIBUNG/1',
-															id: 1,
-															beschreibung: 'Hauptdach',
-															dachflaeche: true
-														},
-														nachgewiesen: null
-													},
-													anteil: null,
-													flaechenbezeichnung: '1',
-													bemerkung: null,
-													datum_erfassung: '2019-05-06',
-													datum_veranlagung: '03/01'
-												}}
-											/>
-										</td>
-									</tr>{' '}
-									<tr>
-										<td style={{ padding: '20px', paddingBottom: '2px' }}>
-											<FlaechenPanel
-												key={1}
-												flaeche={{
-													$self: '/VERDIS_GRUNDIS.FLAECHE/589226',
-													id: 589226,
-													flaecheninfo: {
-														$self:
-															'/VERDIS_GRUNDIS.FLAECHENINFO/587951',
-														id: 587951,
-														groesse_aus_grafik: 1439,
-														groesse_korrektur: 1439,
-														flaechenart: {
-															$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
-															id: 1,
-															art: 'Dachfläche',
-															art_abkuerzung: 'DF'
-														},
-														anschlussgrad: {
-															$self:
-																'/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1',
-															id: 1,
-															grad: 'Am Kanal angeschlossen',
-															grad_abkuerzung: 'angeschl.'
-														},
-														geometrie: {
-															$self: '/VERDIS_GRUNDIS.GEOM/645327',
-															geo_field:
-																'SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))',
-															id: 645327
-														},
-														beschreibung: {
-															$self:
-																'/VERDIS_GRUNDIS.FLAECHENBESCHREIBUNG/1',
-															id: 1,
-															beschreibung: 'Hauptdach',
-															dachflaeche: true
-														},
-														nachgewiesen: null
-													},
-													anteil: null,
-													flaechenbezeichnung: '1',
-													bemerkung: null,
-													datum_erfassung: '2019-05-06',
-													datum_veranlagung: '03/01'
-												}}
-											/>
-										</td>
-										<td
-											style={{
-												textAlign: 'center',
-												padding: '20px',
-												paddingBottom: '2px'
-											}}
-										>
-											<h1>➡️</h1>
-										</td>
-										<td style={{ padding: '20px', paddingBottom: '2px' }}>
-											<FlaechenPanel
-												key={1}
-												flaeche={{
-													$self: '/VERDIS_GRUNDIS.FLAECHE/589226',
-													id: 589226,
-													flaecheninfo: {
-														$self:
-															'/VERDIS_GRUNDIS.FLAECHENINFO/587951',
-														id: 587951,
-														groesse_aus_grafik: 1439,
-														groesse_korrektur: 1439,
-														flaechenart: {
-															$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
-															id: 1,
-															art: 'Dachfläche',
-															art_abkuerzung: 'DF'
-														},
-														anschlussgrad: {
-															$self:
-																'/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1',
-															id: 1,
-															grad: 'Am Kanal angeschlossen',
-															grad_abkuerzung: 'angeschl.'
-														},
-														geometrie: {
-															$self: '/VERDIS_GRUNDIS.GEOM/645327',
-															geo_field:
-																'SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))',
-															id: 645327
-														},
-														beschreibung: {
-															$self:
-																'/VERDIS_GRUNDIS.FLAECHENBESCHREIBUNG/1',
-															id: 1,
-															beschreibung: 'Hauptdach',
-															dachflaeche: true
-														},
-														nachgewiesen: null
-													},
-													anteil: null,
-													flaechenbezeichnung: '1',
-													bemerkung: null,
-													datum_erfassung: '2019-05-06',
-													datum_veranlagung: '03/01'
-												}}
-											/>
-										</td>
-									</tr>{' '}
-									<tr>
-										<td style={{ padding: '20px', paddingBottom: '2px' }}>
-											<FlaechenPanel
-												key={1}
-												flaeche={{
-													$self: '/VERDIS_GRUNDIS.FLAECHE/589226',
-													id: 589226,
-													flaecheninfo: {
-														$self:
-															'/VERDIS_GRUNDIS.FLAECHENINFO/587951',
-														id: 587951,
-														groesse_aus_grafik: 1439,
-														groesse_korrektur: 1439,
-														flaechenart: {
-															$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
-															id: 1,
-															art: 'Dachfläche',
-															art_abkuerzung: 'DF'
-														},
-														anschlussgrad: {
-															$self:
-																'/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1',
-															id: 1,
-															grad: 'Am Kanal angeschlossen',
-															grad_abkuerzung: 'angeschl.'
-														},
-														geometrie: {
-															$self: '/VERDIS_GRUNDIS.GEOM/645327',
-															geo_field:
-																'SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))',
-															id: 645327
-														},
-														beschreibung: {
-															$self:
-																'/VERDIS_GRUNDIS.FLAECHENBESCHREIBUNG/1',
-															id: 1,
-															beschreibung: 'Hauptdach',
-															dachflaeche: true
-														},
-														nachgewiesen: null
-													},
-													anteil: null,
-													flaechenbezeichnung: '1',
-													bemerkung: null,
-													datum_erfassung: '2019-05-06',
-													datum_veranlagung: '03/01'
-												}}
-											/>
-										</td>
-										<td
-											style={{
-												textAlign: 'center',
-												padding: '20px',
-												paddingBottom: '2px'
-											}}
-										>
-											<h1>➡️</h1>
-										</td>
-										<td style={{ padding: '20px', paddingBottom: '2px' }}>
-											<FlaechenPanel
-												key={1}
-												flaeche={{
-													$self: '/VERDIS_GRUNDIS.FLAECHE/589226',
-													id: 589226,
-													flaecheninfo: {
-														$self:
-															'/VERDIS_GRUNDIS.FLAECHENINFO/587951',
-														id: 587951,
-														groesse_aus_grafik: 1439,
-														groesse_korrektur: 1439,
-														flaechenart: {
-															$self: '/VERDIS_GRUNDIS.FLAECHENART/1',
-															id: 1,
-															art: 'Dachfläche',
-															art_abkuerzung: 'DF'
-														},
-														anschlussgrad: {
-															$self:
-																'/VERDIS_GRUNDIS.ANSCHLUSSGRAD/1',
-															id: 1,
-															grad: 'Am Kanal angeschlossen',
-															grad_abkuerzung: 'angeschl.'
-														},
-														geometrie: {
-															$self: '/VERDIS_GRUNDIS.GEOM/645327',
-															geo_field:
-																'SRID=25832;POLYGON ((374434.773388274 5681708.410269481, 374422.9765875824 5681681.326124268, 374416.4917460494 5681678.77451399, 374414.6316594295 5681678.042241155, 374388.7985139042 5681667.87650333, 374378.45250927284 5681672.500879675, 374369.5769530609 5681695.245395789, 374377.3835603334 5681698.2688674955, 374384.26506664976 5681680.825143035, 374403.19203012437 5681688.089174278, 374405.2701534666 5681692.783884902, 374412.0159482844 5681708.02086718, 374410.9620341733 5681710.78136942, 374407.27580372244 5681720.352106105, 374410.5685532801 5681721.474190737, 374413.7243855968 5681713.191018979, 374422.6200171821 5681716.820486266, 374419.31595605984 5681725.170663593, 374427.1594889499 5681728.050702512, 374431.3764658645 5681717.166099008, 374434.773388274 5681708.410269481))',
-															id: 645327
-														},
-														beschreibung: {
-															$self:
-																'/VERDIS_GRUNDIS.FLAECHENBESCHREIBUNG/1',
-															id: 1,
-															beschreibung: 'Hauptdach',
-															dachflaeche: true
-														},
-														nachgewiesen: null
-													},
-													anteil: null,
-													flaechenbezeichnung: '1',
-													bemerkung: null,
-													datum_erfassung: '2019-05-06',
-													datum_veranlagung: '03/01'
-												}}
-											/>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+							<div>
+								<FlexView row justifyContent='space-around'>
+									<FlexView column grow>
+										<h4>aktueller Datenbestand</h4>
+										{origPanels}
+									</FlexView>
+									<FlexView column grow />
+
+									<FlexView column grow />
+									<FlexView column grow>
+										<h4>Ihr Änderungswunsch</h4>
+										{crPanels}
+									</FlexView>
+								</FlexView>
+							</div>
 						</Panel>
 					</Accordion>
 					<Accordion
 						key={'sectionKey'}
 						name={'sectionKey'}
 						style={{ marginBottom: 6 }}
-						defaultActiveKey={'applicationMenuActiveKey' || 'sectionKey'}
+						defaultActiveKey={'sectionKey'}
 						onSelect={() => {
 							// if (applicationMenuActiveKey === sectionKey) {
 							//   setApplicationMenuActiveKey("none");
@@ -429,10 +153,21 @@ const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 						}}
 					>
 						<Panel
-							header={'Ihre Dokumente (2)'}
+							header={
+								'Ihre Dokumente' +
+								(changerequests.documents.length > 0
+									? ' (' + changerequests.documents.length + ')'
+									: '')
+							}
 							eventKey={'sectionKey'}
 							bsStyle={'danger'}
-						/>
+						>
+							<div>
+								{changerequests.documents.map((doc) => {
+									return <DocPanel doc={doc} />;
+								})}
+							</div>
+						</Panel>
 					</Accordion>{' '}
 				</Modal.Body>
 
@@ -452,11 +187,12 @@ const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 									}}
 								>
 									<p>
-										Er hörte leise Schritte hinter sich. Das bedeutete nichts
-										Gutes. Wer würde ihm schon folgen, spät in der Nacht und
-										dazu noch in dieser engen Gasse mitten im übel beleumundeten
-										Hafenviertel? Gerade jetzt, wo er das Ding seines Lebens
-										gedreht hatte und mit der Beute verschwinden wollte!{' '}
+										Sollten sich nach Abschluss der Bearbeitung Änderungen
+										gegenüber der bisherigen Gebührenerhebung ergeben erhalten
+										Sie einen Änderungsbescheid durch das Steueramt. Eine
+										Veranlagung findet ggf. rückwirkend ab dem Datum an dem die
+										Änderung feststellbar ist aber längsten das laufende und die
+										4 vorhergehenden Jahre statt.
 									</p>
 								</td>
 								<td>

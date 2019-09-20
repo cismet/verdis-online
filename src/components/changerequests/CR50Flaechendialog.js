@@ -38,6 +38,8 @@ import {
 	getLinkForUUID,
 	colorChanged
 } from '../../utils/kassenzeichenHelper';
+import DocPanel from './CR20DocumentPanel';
+
 import './style.css';
 
 const CR00 = ({
@@ -274,17 +276,7 @@ const CR00 = ({
 							bsStyle={'danger'}
 						>
 							{documents.map((doc) => {
-								return (
-									<div style={{ fontSize: '130%' }}>
-										<a
-											target='_additional_docs'
-											href={getLinkForUUID(doc.uuid)}
-											style={{ color: 'black', cursor: 'pointer' }}
-										>
-											<Icon name={'file'} /> {doc.name}
-										</a>
-									</div>
-								);
+								return <DocPanel doc={doc} />;
 							})}
 						</Panel>
 					</Accordion>
