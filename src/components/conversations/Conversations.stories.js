@@ -8,6 +8,8 @@ import ClerkMessage from './InternalMessage';
 import { withInfo } from '@storybook/addon-info';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import CRConversation from './CRConversation';
+import { mockchangerequests } from '../../redux/modules/mockData';
 
 storiesOf('Conversation Stories', module)
 	// .addDecorator(withInfo) // At your stories directly.
@@ -32,7 +34,7 @@ storiesOf('Conversation Stories', module)
 			/>
 		</div>
 	))
-	.add('Simple Conversation', () => (
+	.add('Simple Conversation build with raw messages', () => (
 		<div>
 			<DateTimeMessage msg='02.07.2019' />
 			<Message
@@ -103,4 +105,7 @@ storiesOf('Conversation Stories', module)
 				alignment='right'
 			/>
 		</div>
+	))
+	.add('Simple Conversation build with CRConversation component', () => (
+		<CRConversation messages={mockchangerequests['60432515'].nachrichten} />
 	));

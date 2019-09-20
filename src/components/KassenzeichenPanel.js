@@ -46,7 +46,7 @@ const KassenzeichenPanel = ({ kassenzeichen, onClick, d3Click, d3Enabled }) => {
 				</tbody>
 			</table>
 			{d3}
-			Änderungen anzeigen:{' '}
+			{/* Änderungen anzeigen:{' '}
 			<div
 				onClick={(e) => {
 					e.stopPropagation();
@@ -60,8 +60,8 @@ const KassenzeichenPanel = ({ kassenzeichen, onClick, d3Click, d3Enabled }) => {
 					onstyle='warning'
 					active={true}
 					style={{ padding: 10 }}
-				/>
-			</div>
+				/> */}
+			{/* </div> */}
 		</Well>
 	);
 };

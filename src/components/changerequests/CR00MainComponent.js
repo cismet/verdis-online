@@ -13,8 +13,9 @@ import { Link } from 'react-scroll';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 import Footer from './Menu99Footer';
 import FlaechenPanel from '../FlaechenPanel';
+import CRConversation from '../conversations/CRConversation';
 
-const CR00 = ({ visible, height, showChangeRequestMenu }) => {
+const CR00 = ({ visible, height, kassenzeichen, showChangeRequestMenu }) => {
 	const modalBodyStyle = {
 		overflowY: 'auto',
 		overflowX: 'hidden',
@@ -24,8 +25,6 @@ const CR00 = ({ visible, height, showChangeRequestMenu }) => {
 		showChangeRequestMenu(false);
 	};
 
-	const [ messages, setMessages ] = useState([]);
-	console.log('useState', useState);
 	if (visible === true) {
 		return (
 			<Modal
@@ -68,7 +67,7 @@ const CR00 = ({ visible, height, showChangeRequestMenu }) => {
 							eventKey={'sectionKey0'}
 							bsStyle={'info'}
 						>
-							{/* stacs */}
+							<CRConversation messages={kassenzeichen.changerequests.nachrichten} />
 						</Panel>
 					</Accordion>
 					<Accordion

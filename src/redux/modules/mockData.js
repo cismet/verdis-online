@@ -39,45 +39,63 @@ export const mockchangerequests = {
 			}
 		],
 
-		nachrichten: {
-			buerger: {},
-			sachbearbeiter: {
-				nachricht: 'Hallo Bürger. Wenn etwas nicht stimmt, dann ändere es einfach ;-)',
-				timestamp: 1566915257854,
-				bubbleStyles: {
-					chatbubble: {
-						background: 'red'
-					}
-				}
+		nachrichten: [
+			{
+				typ: 'CLERK',
+				timestamp: 1562059800000,
+				name: 'verdis',
+				nachricht:
+					'Sehr geehrte*r Nutzer*in, hier haben Sie die Möglichkeit Änderungen an Ihren Flächen mitzuteilen.'
 			},
-			next: {
-				buerger: {
-					nachricht: 'Da passt was nicht weil isso, siehe lustiges pdf !',
-					timestamp: 1566915257744,
-					anhang: 'http://meine.domain.de/lustiges.pdf'
-				},
-				sachbearbeiter: {
-					nachricht: 'Konnte nichts feststellen, alles in Ordnung.',
-					timestamp: 1566915257854
-				},
-				next: {
-					buerger: {
-						nachricht: 'Oh, falsches PDF, siehe richtiges pdf.',
-						timestamp: 1566915257858,
-						anhang: 'http://meine.domain.de/richtiges.pdf'
-					},
-					sachbearbeiter: {
-						nachricht: 'Ach so, verstehe. Alles Klar !',
-						timestamp: 1566915257858
-					},
-					next: {
-						buerger: {
-							nachricht: 'Geht doch, danke.',
-							timestamp: 1566915257858
-						}
-					}
-				}
+
+			{
+				typ: 'CITIZEN',
+				timestamp: 1562060700000,
+				nachricht:
+					'Fläche B ist kleiner. Sie ist nicht 40 m² groß, sondern nur 37 m². Sie ist auch nicht an dem Kanal angeschlossen, sondern besteht aus Ökopflaster und versickert. Siehe Foto.',
+				anhang: { name: 'Ökopflasterfoto.pdf', uuid: '1337' }
+			},
+
+			{
+				typ: 'CLERK',
+				timestamp: 1562136300000,
+				name: 'Dirk Steinbacher',
+				nachricht:
+					'Die Änderung der Fläche werde ich übernehmen. Das Foto ist nicht ausreichend. Bitte übersenden Sie zusätzlich ein Foto der gesamten Fläche. Ökopflaster wird auch nicht als vollständig versickernd angesehen, sondern muss laut Satzung mit 70% seiner Flächen zur Gebührenerhebung herangezogen werden.'
+			},
+			{
+				typ: 'SYSTEM',
+				timestamp: 1562136360000,
+				nachricht:
+					"SYSTEMMESSAGE({ type: 'changed', flaeche: '1' ,flaechenart:'Dachfläche'}) "
+			},
+
+			{
+				typ: 'CITIZEN',
+				timestamp: 1562179560000,
+				nachricht:
+					'Hier das gewünschte Foto. Die Zufahrt entwässert seitlich in die Beete.',
+				anhang: { name: 'Foto2.pdf', uuid: '13374' }
+			},
+			{
+				typ: 'CLERK',
+				timestamp: 1562227500000,
+				name: 'Dirk Steinbacher',
+				nachricht:
+					'Auf dem 2ten Foto sind Rasenkantensteine und ein Gully zu erkennen. Aus diesem Grund muss ich für diese Fläche 24 m² (70% von 37 m²) zur Veranlagung an das Steueramt weitergeben.'
+			},
+			{
+				typ: 'SYSTEM',
+				timestamp: 1562227560000,
+				nachricht:
+					"SYSTEMMESSAGE({ type: 'changed', flaeche: '1', flaechenart:'Dachfläche' }) "
+			},
+			{
+				typ: 'CITIZEN',
+				draft: true,
+				timestamp: 1562486760000,
+				nachricht: 'So wird eine Nachricht visualisiert, die noch nicht abgesschickt ist.'
 			}
-		}
+		]
 	}
 };
