@@ -153,5 +153,6 @@ FlaechenPanel.propTypes = {
 FlaechenPanel.defaultProps = {
 	editmode: false,
 	display: 'original',
-	changerequest: {}
+	changerequest: {},
+	flaechenPanelClickHandler: () => {}
 };
