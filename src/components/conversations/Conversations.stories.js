@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
 import Message from './InternalMessage';
@@ -9,6 +9,7 @@ import { withInfo } from '@storybook/addon-info';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import CRConversation from './CRConversation';
+import ConversationInput from './ConversationInput';
 import { mockchangerequests } from '../../redux/modules/mockData';
 
 storiesOf('Conversation Stories', module)
@@ -108,4 +109,15 @@ storiesOf('Conversation Stories', module)
 	))
 	.add('Simple Conversation build with CRConversation component', () => (
 		<CRConversation messages={mockchangerequests['60432515'].nachrichten} />
-	));
+	))
+	.add('Simple Conversation Input Control', () =>
+		React.createElement(() => {
+			const [ draft, setDraft ] = useState('');
+
+			return (
+				<div style={{ padding: '180px' }}>
+					<ConversationInput draft={draft} setDraft={setDraft} />
+				</div>
+			);
+		})
+	);
