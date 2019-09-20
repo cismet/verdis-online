@@ -87,10 +87,10 @@ const CR00 = ({
 				<Modal.Body style={modalBodyStyle} id='myMenu' key={'applicationMenuActiveKey'}>
 					<p>
 						Wenn Sie konkrete Änderungswünsche haben, können Sie diese im untenstehenden
-						Formular (gelbe Box) direkt der Fläche zuordnen. Bitte beachten Sie, dass
-						Sie bestimmte Änderungen mit Dokumenten belegen müssen. Alle Dokumente, die
-						Ihrem Kassenzeichen zugeordnet sind, finden Sie im roten Bereich. Dort
-						können Sie auch neue Dokumente hochladen.
+						Formular (gelb umrahmter Bereich) direkt der Fläche zuordnen. Bitte beachten
+						Sie, dass Sie bestimmte Änderungen mit Dokumenten belegen müssen. Alle
+						Dokumente, die Ihrem Kassenzeichen zugeordnet sind, finden Sie im rot
+						umrahmten Bereich. Dort können Sie auch neue Dokumente hochladen.
 					</p>
 					<Accordion
 						key={'sectionKey0'}
@@ -152,7 +152,7 @@ const CR00 = ({
 									validationState={crInfo.validationStates.groesse}
 									className='customLeftAlignedValidation'
 								>
-									<ControlLabel>Größe</ControlLabel>
+									<ControlLabel>Größe in m²</ControlLabel>
 									<FormControl
 										style={{
 											background: new Color(

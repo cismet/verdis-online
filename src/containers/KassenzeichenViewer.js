@@ -418,6 +418,8 @@ export class KassenzeichenViewer_ extends React.Component {
 				<ChangeRequests
 					visible={this.props.uiState.changeRequestsMenuVisible}
 					showChangeRequestMenu={this.props.uiStateActions.showChangeRequestsMenu}
+					height={mapHeight + 10}
+					kassenzeichen={this.props.kassenzeichen}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
