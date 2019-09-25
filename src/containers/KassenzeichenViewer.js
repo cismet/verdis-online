@@ -420,6 +420,10 @@ export class KassenzeichenViewer_ extends React.Component {
 					showChangeRequestMenu={this.props.uiStateActions.showChangeRequestsMenu}
 					height={mapHeight + 10}
 					kassenzeichen={this.props.kassenzeichen}
+					addMessage={this.props.kassenzeichenActions.addChangeRequestMessage}
+					removeLastUserMessage={
+						this.props.kassenzeichenActions.removeLastChangeRequestMessage
+					}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
@@ -445,6 +449,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						(this.props.kassenzeichen.changerequests || { documents: [] }).documents
 					}
 				/>
+
 				{verdisMapWithAdditionalComponents}
 				{flaechenInfoOverlay}
 			</div>

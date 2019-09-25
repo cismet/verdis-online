@@ -112,11 +112,16 @@ storiesOf('Conversation Stories', module)
 	))
 	.add('Simple Conversation Input Control', () =>
 		React.createElement(() => {
-			const [ draft, setDraft ] = useState('');
+			const [ textValue, setTextValue ] = useState('');
+			const [ msg, setMsg ] = useState('');
 
 			return (
 				<div style={{ padding: '180px' }}>
-					<ConversationInput draft={draft} setDraft={setDraft} />
+					<ConversationInput
+						value={textValue}
+						setValue={setTextValue}
+						setDraft={action('setDraftMessage')}
+					/>
 				</div>
 			);
 		})
