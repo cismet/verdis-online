@@ -1,0 +1,3 @@
+.basicSelectionColor::selection {
+	background: #b4d5fe !important; /* WebKit/Blink Browsers */
+}

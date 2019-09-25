@@ -32,12 +32,6 @@ export const mockchangerequests = {
 				}
 			}
 		},
-		documents: [
-			{
-				name: 'Versickerungsgenehmigung.pdf',
-				uuid: 'akdjsfhjldsfghlkasdjhfjlkhdfjkl384297'
-			}
-		],
 
 		nachrichten: [
 			{
@@ -52,8 +46,11 @@ export const mockchangerequests = {
 				typ: 'CITIZEN',
 				timestamp: 1562060700000,
 				nachricht:
-					'Fläche B ist kleiner. Sie ist nicht 40 m² groß, sondern nur 37 m². Sie ist auch nicht an dem Kanal angeschlossen, sondern besteht aus Ökopflaster und versickert. Siehe Foto.',
-				anhang: { name: 'Ökopflasterfoto.pdf', uuid: '1337' }
+					'Fläche B ist kleiner. Sie ist nicht 40 m² groß, sondern nur 37 m². Sie ist auch nicht an dem Kanal angeschlossen, sondern besteht aus Ökopflaster und versickert. Siehe Fotos.',
+				anhang: [
+					{ name: 'Ökopflasterfoto.pdf', uuid: '1337' },
+					{ name: 'Ökopflasterfoto2.pdf', uuid: '1338' }
+				]
 			},
 
 			{
@@ -75,7 +72,7 @@ export const mockchangerequests = {
 				timestamp: 1562179560000,
 				nachricht:
 					'Hier das gewünschte Foto. Die Zufahrt entwässert seitlich in die Beete.',
-				anhang: { name: 'Foto2.pdf', uuid: '13374' }
+				anhang: [ { name: 'Foto2.pdf', uuid: '13374' } ]
 			},
 			{
 				typ: 'CLERK',

@@ -8,3 +8,30 @@ body {
 	border: none;
 	box-shadow: none;
 }
+
+::selection {
+	background: whitesmoke; /* WebKit/Blink Browsers */
+}
+
+
+@-webkit-keyframes fill {
+	to {
+	  background-size:100% 0;
+	}
+  }
+  
+  @keyframes fill {
+	to {
+	  background-size:100% 0;
+	}
+  }
+  
+  
+  .cnh_holding > .fillButton{
+	background: -webkit-linear-gradient( white , white) #B4FFB4 no-repeat 0 0;
+	background: linear-gradient( white , white) #B4FFB4 no-repeat 0 0;
+	mix-blend-mode: multiply;
+	background-size:  100% 100%;
+	-webkit-animation: fill 2s forwards;
+	animation: fill 2s forwards;
+  }

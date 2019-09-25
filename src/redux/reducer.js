@@ -10,7 +10,18 @@ import localForage from 'localforage';
 const uiStateStorageConfig = {
 	key: 'uiState',
 	storage: localForage,
-	whitelist: [ 'd3Available', 'settingsVisible', 'applicationMenuVisible', 'applicationMenuActiveKey' ]
+	whitelist: [
+		'd3Available',
+		'settingsVisible',
+		'applicationMenuVisible',
+		'applicationMenuActiveKey',
+		'changeRequestEditViewVisible',
+		'changeRequestEditViewFlaeche',
+		'changeRequestEditViewCR',
+		'changeRequestsMenuVisible',
+		'changeRequestsEditMode',
+		'changeRequestDisplayMode'
+	]
 };
 
 const authStorageConfig = {

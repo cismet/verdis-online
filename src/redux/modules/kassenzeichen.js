@@ -529,6 +529,56 @@ function setChangeRequestsForFlaeche(flaeche, crs) {
 		dispatch(setKassenzeichenObject(newKassz));
 	};
 }
+function addChangeRequestMessage(msg) {
+	return function(dispatch, getState) {
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		const sMsgs = newKassz.changerequests.nachrichten.sort((a, b) => a.timestamp - b.timestamp);
+
+		if (
+			msg.anhang !== undefined &&
+			sMsgs[sMsgs.length - 1].typ === 'CITIZEN' &&
+			sMsgs[sMsgs.length - 1].anhang === undefined
+		) {
+			sMsgs[sMsgs.length - 1].anhang = msg.anhang;
+			if (msg.nachricht !== undefined && msg.nachricht !== '') {
+				sMsgs[sMsgs.length - 1].nachricht =
+					sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+			}
+		} else if (
+			msg.nachricht !== undefined &&
+			msg.nachricht.trim() !== '' &&
+			sMsgs[sMsgs.length - 1].typ === 'CITIZEN'
+		) {
+			sMsgs[sMsgs.length - 1].nachricht =
+				sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+		} else if (
+			msg.nachricht !== undefined &&
+			msg.nachricht.trim() !== '' &&
+			sMsgs[sMsgs.length - 1].typ !== 'CITIZEN'
+		) {
+			newKassz.changerequests.nachrichten.push(msg);
+		}
+
+		dispatch(setKassenzeichenObject(newKassz));
+	};
+}
+function removeLastChangeRequestMessage() {
+	return function(dispatch, getState) {
+		console.log('removeLastChangeRequestMessage');
+
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		const sMsgs = newKassz.changerequests.nachrichten.sort((a, b) => a.timestamp - b.timestamp);
+		const lastMsg = sMsgs[sMsgs.length - 1];
+		if (lastMsg.typ === 'CITIZEN' && lastMsg.draft === true) {
+			sMsgs.length = sMsgs.length - 1;
+			newKassz.changerequests.nachrichten = sMsgs;
+		}
+
+		dispatch(setKassenzeichenObject(newKassz));
+	};
+}
 
 export const actions = {
 	setKassenzeichenObject,
@@ -540,5 +590,7 @@ export const actions = {
 	getKassenzeichenbySTAC,
 	getFEBByStac,
 	setChangeRequests,
-	setChangeRequestsForFlaeche
+	setChangeRequestsForFlaeche,
+	addChangeRequestMessage,
+	removeLastChangeRequestMessage
 };

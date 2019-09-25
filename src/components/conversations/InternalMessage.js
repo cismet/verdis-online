@@ -3,7 +3,7 @@ import FlexView from 'react-flexview';
 
 // Since this component is simple and static, there's no parent container for it.
 const Comp = ({
-	msg,
+	msg = '',
 	from,
 	width = '75%',
 	background = '#00aabb99',
@@ -20,8 +20,20 @@ const Comp = ({
 	} else if (alignment === 'center') {
 		textAlign = 'start'; //'center';
 	} else {
-		textAlign = 'start'; //'end';
+		textAlign = 'end'; //'end';
 	}
+	let messageToDisplay = msg;
+	console.log('typeof msg	', typeof msg);
+	if (typeof msg === 'string') {
+		console.log('is a string	');
+
+		messageToDisplay = msg.split('\n').map((i) => {
+			return <p style={{ margin: '0px', minHeight: '20px' }}>{i}</p>;
+		});
+	}
+
+	console.log('messageToDisplay', messageToDisplay);
+
 	return (
 		<FlexView
 			column
@@ -52,7 +64,7 @@ const Comp = ({
 					textAlign
 				}}
 			>
-				{msg}
+				<div>{messageToDisplay}</div>
 			</FlexView>
 		</FlexView>
 	);

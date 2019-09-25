@@ -54,23 +54,29 @@ const Comp = ({
 									background={background}
 									alignment='right'
 								/>
-								{msg.anhang !== undefined && (
-									<Message
-										msg={
-											<div>
-												<a style={{ color: 'black' }} href=''>
-													<FontAwesomeIcon icon={faFilePdf} />
-													<span> {msg.anhang.name}</span>
-												</a>
-											</div>
-										}
-										background={background}
-										alignment='right'
-										margin={-1}
-										padding={5}
-										width={'fit-content'}
-									/>
-								)}
+								{msg.anhang !== undefined &&
+									msg.anhang.length !== undefined &&
+									msg.anhang.length > 0 &&
+									msg.anhang.map((anhang, index) => {
+										return (
+											<Message
+												key={'Message.' + anhang.uuid}
+												msg={
+													<div>
+														<a style={{ color: 'black' }} href=''>
+															<FontAwesomeIcon icon={faFilePdf} />
+															<span> {anhang.name}</span>
+														</a>
+													</div>
+												}
+												background={background}
+												alignment='right'
+												margin={-1}
+												padding={5}
+												width={'fit-content'}
+											/>
+										);
+									})}
 							</div>
 						);
 					}
