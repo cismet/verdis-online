@@ -424,6 +424,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					removeLastUserMessage={
 						this.props.kassenzeichenActions.removeLastChangeRequestMessage
 					}
+					uploadCRDoc={this.props.kassenzeichenActions.addCRDoc}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}

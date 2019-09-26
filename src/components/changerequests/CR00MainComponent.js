@@ -26,7 +26,8 @@ const CR00 = ({
 	kassenzeichen,
 	showChangeRequestMenu = () => {},
 	addMessage = () => {},
-	removeLastUserMessage = () => {}
+	removeLastUserMessage = () => {},
+	uploadCRDoc = () => {}
 }) => {
 	const [ mode, setMode ] = useState('cr_off');
 	const scrollDivRef = useRef(null);
@@ -34,13 +35,12 @@ const CR00 = ({
 	const modalBodyStyle = {
 		overflowY: 'auto',
 		overflowX: 'hidden',
-		maxHeight: height - 200
+		maxHeight: height - 250
 	};
 
 	const close = () => {
 		showChangeRequestMenu(false);
 	};
-	const [ msgTextValue, setMsgTextValue ] = useState('');
 
 	const changerequests = kassenzeichen.changerequests;
 
@@ -164,15 +164,14 @@ const CR00 = ({
 							/>
 
 							<ConversationInput
-								value={msgTextValue}
-								setValue={setMsgTextValue}
-								setDraft={(draftText) => {
+								setDraft={(draftText, attachments) => {
 									console.log('draftText', draftText);
 									const msg = {
 										typ: 'CITIZEN',
 										timestamp: Date.now(),
 										nachricht: draftText,
-										draft: true
+										draft: true,
+										anhang: attachments
 									};
 
 									addMessage(msg);
@@ -185,6 +184,7 @@ const CR00 = ({
 								}}
 								lastUserMessage={lastUserMessage}
 								removeLastUserMessage={removeLastUserMessage}
+								uploadCRDoc={uploadCRDoc}
 							/>
 
 							{/* <div style={{ marginTop: '20px', textAlign: 'end' }}>

@@ -91,7 +91,8 @@ export const mockchangerequests = {
 				typ: 'CITIZEN',
 				draft: true,
 				timestamp: 1562486760000,
-				nachricht: 'So wird eine Nachricht visualisiert, die noch nicht abgesschickt ist.'
+				nachricht: 'So wird eine Nachricht visualisiert, die noch nicht abgeschickt ist.',
+				anhang: [ { name: 'Foto neu.pdf', uuid: '13374' } ]
 			}
 		]
 	}
