@@ -1,13 +1,11 @@
-import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { Button, FormGroup, InputGroup } from 'react-bootstrap';
-import { Icon } from 'react-fa';
-import './style.css';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import TextareaAutosize from 'react-autosize-textarea';
+import { FormGroup, InputGroup } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
-
+import { Icon } from 'react-fa';
+import Documents from './Documents';
+import './style.css';
 const Comp = ({
-	value = '',
-	setValue = () => {},
 	setDraft = () => {},
 	maxRows = 4,
 	scrollToInput = () => {},
@@ -20,21 +18,42 @@ const Comp = ({
 	lastUserMessage,
 	removeLastUserMessage = () => {
 		console.log('remove last user message');
-	}
+	},
+	uploadCRDoc = () => {}
 }) => {
 	const textarea = useRef();
 	const [ position, setPosition ] = useState(0);
+	const [ msgTextValue, setMsgTextValue ] = useState('');
+	const [ msgAttachments, setMsgAttachments ] = useState([]);
+
 	useEffect(() => {
 		if (textarea && textarea.current) {
 			textarea.current.selectionStart = position;
 			textarea.current.selectionEnd = position;
-			//textarea.current.style.height = textarea.current.scrollHeight + 'px';
 		}
 	});
+	useEffect(() => {
+		setTimeout(() => {
+			scrollToInput();
+		}, 500);
+	}, []);
+
 	const onDrop = useCallback((acceptedFiles) => {
-		console.log('acceptedFiles', acceptedFiles);
+		acceptedFiles.forEach((file) =>
+			uploadCRDoc(file, (returnedFO) => {
+				addAttachment(returnedFO);
+			})
+		);
 	}, []);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+	const addAttachment = (fileO) => {
+		setMsgAttachments((msga) => {
+			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+			newMsgAttachments.push(JSON.parse(fileO));
+			return newMsgAttachments;
+		});
+	};
 
 	// const rowNumbersInDraft = value.split(/\r\n|\r|\n/).length;
 	// if (rowNumbersInDraft < 1) {
@@ -47,6 +66,26 @@ const Comp = ({
 
 	return (
 		<div style={{ margin: '0px', marginTop: '30px' }}>
+			{/* <div style={{ margin: '15px' }}>
+				{msgAttachments.map((fileO, index) => {
+					return (
+						<span key={'draftDocs.' + index}>
+							{index > 0 ? ', ' : ''}
+							<Document
+								fileObject={fileO}
+								remove={() => {
+									const newAttachments = JSON.parse(
+										JSON.stringify(msgAttachments)
+									);
+									newAttachments.splice(index, 1);
+									setMsgAttachments(newAttachments);
+								}}
+							/>
+						</span>
+					);
+				})}
+			</div> */}
+			<Documents docs={msgAttachments} setDocs={setMsgAttachments} />
 			<FormGroup>
 				<InputGroup>
 					{/* <InputGroup.Button>
@@ -66,29 +105,29 @@ const Comp = ({
 						ref={textarea}
 						style={{ resize: 'none', minHeight: '34px', textAlign: 'right' }}
 						className='basicSelectionColor form-control'
-						value={value}
+						value={msgTextValue}
 						maxRows={12}
 						onChange={(e) => {
 							if (textarea && textarea.current) {
-								setValue(e.target.value);
+								setMsgTextValue(e.target.value);
 								setPosition(textarea.current.selectionStart);
 							}
 						}}
 						onKeyDown={(e) => {
 							if (textarea && textarea.current) {
 								if (e.keyCode === 13 && !e.altKey) {
+									//normal return - should send content as draft
 									const draft = e.target.value;
-									setValue(undefined);
-									setDraft(draft);
+									setMsgTextValue('');
+									console.log('xxx msgAttachments', msgAttachments);
+
+									setDraft(draft, msgAttachments);
+									setMsgAttachments([]);
 									e.preventDefault();
 									scrollToInput();
 								} else if (e.keyCode === 13 && e.altKey) {
-									console.log(
-										'textarea.current.selectionStart',
-										textarea.current.selectionStart
-									);
-
-									setValue(
+									//alt-return - should not send, but insert a linebreak
+									setMsgTextValue(
 										e.target.value.substring(
 											0,
 											textarea.current.selectionStart
@@ -100,10 +139,11 @@ const Comp = ({
 									);
 									setPosition(textarea.current.selectionStart + 1);
 								} else if (e.target.value === '' && e.keyCode === 38) {
+									// arrow up - should edit the last draft message
 									if (lastUserMessage !== undefined) {
 										removeLastUserMessage();
-
-										setValue(lastUserMessage.nachricht);
+										setMsgTextValue(lastUserMessage.nachricht);
+										setMsgAttachments(lastUserMessage.anhang);
 										setTimeout(() => {
 											setPosition(lastUserMessage.nachricht.length + 100);
 										}, 10);
@@ -117,9 +157,10 @@ const Comp = ({
 							onClick={(e) => {
 								if (textarea && textarea.current) {
 									const draft = textarea.current.value;
-									setValue(undefined);
-									setDraft(draft);
-
+									setMsgTextValue('');
+									setDraft(draft, msgAttachments);
+									setMsgAttachments([]);
+									e.preventDefault();
 									scrollToInput();
 								}
 							}}

@@ -535,30 +535,61 @@ function addChangeRequestMessage(msg) {
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 		const sMsgs = newKassz.changerequests.nachrichten.sort((a, b) => a.timestamp - b.timestamp);
 
-		if (
-			msg.anhang !== undefined &&
-			sMsgs[sMsgs.length - 1].typ === 'CITIZEN' &&
-			sMsgs[sMsgs.length - 1].anhang === undefined
-		) {
-			sMsgs[sMsgs.length - 1].anhang = msg.anhang;
+		if (sMsgs[sMsgs.length - 1].typ === 'CITIZEN') {
+			//last Message is from citizen, so add stuff to it
+
+			//1. Messagetext
 			if (msg.nachricht !== undefined && msg.nachricht !== '') {
-				sMsgs[sMsgs.length - 1].nachricht =
-					sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+				if (
+					sMsgs[sMsgs.length - 1].nachricht != undefined &&
+					sMsgs[sMsgs.length - 1].nachricht.trim() != ''
+				) {
+					sMsgs[sMsgs.length - 1].nachricht =
+						sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+				} else {
+					sMsgs[sMsgs.length - 1].nachricht = msg.nachricht;
+				}
 			}
-		} else if (
-			msg.nachricht !== undefined &&
-			msg.nachricht.trim() !== '' &&
-			sMsgs[sMsgs.length - 1].typ === 'CITIZEN'
-		) {
-			sMsgs[sMsgs.length - 1].nachricht =
-				sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
-		} else if (
-			msg.nachricht !== undefined &&
-			msg.nachricht.trim() !== '' &&
-			sMsgs[sMsgs.length - 1].typ !== 'CITIZEN'
-		) {
+
+			//2. Messageatachments
+			if (msg.anhang !== undefined) {
+				if (sMsgs[sMsgs.length - 1].anhang != undefined) {
+					msg.anhang.forEach((doc) => sMsgs[sMsgs.length - 1].anhang.push(doc));
+				} else {
+					sMsgs[sMsgs.length - 1].anhang = msg.anhang;
+				}
+			}
+		} else {
 			newKassz.changerequests.nachrichten.push(msg);
 		}
+
+		// if (msg.nachricht !== undefined && msg.nachricht !== '') {
+		// }
+
+		// if (
+		// 	msg.anhang !== undefined &&
+		// 	sMsgs[sMsgs.length - 1].typ === 'CITIZEN' &&
+		// 	sMsgs[sMsgs.length - 1].anhang === undefined
+		// ) {
+		// 	sMsgs[sMsgs.length - 1].anhang = msg.anhang;
+		// 	if (msg.nachricht !== undefined && msg.nachricht !== '') {
+		// 		sMsgs[sMsgs.length - 1].nachricht =
+		// 			sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+		// 	}
+		// } else if (
+		// 	msg.nachricht !== undefined &&
+		// 	msg.nachricht.trim() !== '' &&
+		// 	sMsgs[sMsgs.length - 1].typ === 'CITIZEN'
+		// ) {
+		// 	sMsgs[sMsgs.length - 1].nachricht =
+		// 		sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+		// } else if (
+		// 	msg.nachricht !== undefined &&
+		// 	msg.nachricht.trim() !== '' &&
+		// 	sMsgs[sMsgs.length - 1].typ !== 'CITIZEN'
+		// ) {
+		// 	newKassz.changerequests.nachrichten.push(msg);
+		// }
 
 		dispatch(setKassenzeichenObject(newKassz));
 	};
@@ -580,6 +611,70 @@ function removeLastChangeRequestMessage() {
 	};
 }
 
+function addCRDoc(file, callback) {
+	return function(dispatch, getState) {
+		let taskParameters = {
+			parameters: {
+				fileName: file.name
+			}
+		};
+
+		let fd = new FormData();
+		fd.append('file', new Blob([ file ]));
+
+		fd.append(
+			'taskparams',
+			new Blob([ JSON.stringify(taskParameters) ], {
+				type: 'application/json'
+			})
+		);
+
+		const STAC_SERVICE_ = 'https://eneywvj94f7b6.x.pipedream.net/';
+		const url =
+			STAC_SERVICE +
+			'/actions/' +
+			DOMAIN +
+			'.uploadChangeRequestAnhang/tasks?role=all&resultingInstanceType=result';
+
+		console.log('XXX taskParameters', taskParameters);
+
+		fetch(url, {
+			method: 'post',
+			body: fd
+		})
+			.then(function(response) {
+				if (response.status >= 200 && response.status < 300) {
+					response.json().then(function(result) {
+						callback(result.res);
+					});
+				}
+			})
+			.catch(function(err) {
+				// dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
+				// dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));
+				console.log('Error in action' + err);
+				dispatch(AuthActions.logout());
+				if (typeof callback === 'function') {
+					//callback(false);
+				}
+			});
+	};
+}
+
+// console.log('acceptedFiles', acceptedFiles);
+// const reader = new FileReader();
+
+// reader.onabort = () => console.log('file reading was aborted');
+// reader.onerror = () => console.log('file reading has failed');
+// reader.onload = (x) => {
+// 	// Do whatever you want with the file contents
+// 	const binaryStr = reader.result;
+// 	console.log('acceptedFiles', x);
+// 	//uploadCRDoc()
+// };
+
+//acceptedFiles.forEach((file) => reader.readAsBinaryString(file));
+
 export const actions = {
 	setKassenzeichenObject,
 	searchByKassenzeichenId,
@@ -592,5 +687,6 @@ export const actions = {
 	setChangeRequests,
 	setChangeRequestsForFlaeche,
 	addChangeRequestMessage,
-	removeLastChangeRequestMessage
+	removeLastChangeRequestMessage,
+	addCRDoc
 };

@@ -8,7 +8,7 @@ import ClerkMessage from './InternalMessage';
 import { withInfo } from '@storybook/addon-info';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
-
+import Documents from './Documents';
 // Since this component is simple and static, there's no parent container for it.
 const Comp = ({
 	messages = [],
@@ -48,13 +48,39 @@ const Comp = ({
 						}
 						return (
 							<div>
-								<Message
-									key={index}
-									msg={msg.nachricht}
-									background={background}
-									alignment='right'
-								/>
+								{msg.nachricht != undefined &&
+								msg.nachricht.trim() !== '' && (
+									<Message
+										key={index}
+										msg={msg.nachricht}
+										background={background}
+										alignment='right'
+									/>
+								)}
+
 								{msg.anhang !== undefined &&
+								msg.anhang.length !== undefined &&
+								msg.anhang.length > 0 && (
+									<Message
+										key={'Attachment.Message'}
+										msg={
+											<div>
+												<Documents
+													docs={msg.anhang || []}
+													readOnly={true}
+													embedded={true}
+													margin='2px'
+												/>
+											</div>
+										}
+										background={background}
+										alignment='right'
+										margin={-1}
+										padding={5}
+										width={'fit-content'}
+									/>
+								)}
+								{/* {msg.anhang !== undefined &&
 									msg.anhang.length !== undefined &&
 									msg.anhang.length > 0 &&
 									msg.anhang.map((anhang, index) => {
@@ -76,7 +102,7 @@ const Comp = ({
 												width={'fit-content'}
 											/>
 										);
-									})}
+									})} */}
 							</div>
 						);
 					}
