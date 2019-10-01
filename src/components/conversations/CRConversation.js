@@ -25,9 +25,19 @@ const Comp = ({
 
 	const sMsgs = messages.sort((a, b) => a.timestamp - b.timestamp);
 
+	const sMsgsWithWelcomeMessage = [];
+	sMsgsWithWelcomeMessage.push({
+		typ: 'CLERK',
+		timestamp: 0,
+		name: 'verdis',
+		nachricht:
+			'Sehr geehrte*r Nutzer*in, hier haben Sie die Möglichkeit Änderungen an Ihren Flächen zu begründen und allgemeine Anmerkungen sowie Belege hinzuzufügen.'
+	});
+	sMsgsWithWelcomeMessage.push(...sMsgs);
+
 	return (
 		<div>
-			{sMsgs.map((msg, index) => {
+			{sMsgsWithWelcomeMessage.map((msg, index) => {
 				switch (msg.typ) {
 					case 'CLERK': {
 						let sender;

@@ -525,6 +525,15 @@ function setChangeRequestsForFlaeche(flaeche, crs) {
 	return function(dispatch, getState) {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		if (newKassz.changerequests === undefined) {
+			newKassz.changerequests = {
+				kassenzeichen: newKassz.kassenzeichennummer8,
+				flaechen: {},
+				nachrichten: []
+			};
+		} else if (newKassz.changerequests.flaechen === undefined) {
+			newKassz.changerequests.flaechen = {};
+		}
 		newKassz.changerequests.flaechen[flaeche.flaechenbezeichnung] = crs;
 		dispatch(setKassenzeichenObject(newKassz));
 	};
@@ -533,64 +542,45 @@ function addChangeRequestMessage(msg) {
 	return function(dispatch, getState) {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
-		const sMsgs = newKassz.changerequests.nachrichten.sort((a, b) => a.timestamp - b.timestamp);
 
-		if (sMsgs[sMsgs.length - 1].typ === 'CITIZEN') {
-			//last Message is from citizen, so add stuff to it
-
-			//1. Messagetext
-			if (msg.nachricht !== undefined && msg.nachricht !== '') {
-				if (
-					sMsgs[sMsgs.length - 1].nachricht != undefined &&
-					sMsgs[sMsgs.length - 1].nachricht.trim() != ''
-				) {
-					sMsgs[sMsgs.length - 1].nachricht =
-						sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
-				} else {
-					sMsgs[sMsgs.length - 1].nachricht = msg.nachricht;
-				}
-			}
-
-			//2. Messageatachments
-			if (msg.anhang !== undefined) {
-				if (sMsgs[sMsgs.length - 1].anhang != undefined) {
-					msg.anhang.forEach((doc) => sMsgs[sMsgs.length - 1].anhang.push(doc));
-				} else {
-					sMsgs[sMsgs.length - 1].anhang = msg.anhang;
-				}
-			}
+		if (newKassz.changerequests === undefined) {
+			newKassz.changerequests = {
+				kassenzeichen: newKassz.kassenzeichennummer8,
+				flaechen: [],
+				nachrichten: [ msg ]
+			};
 		} else {
-			newKassz.changerequests.nachrichten.push(msg);
+			const sMsgs = newKassz.changerequests.nachrichten.sort(
+				(a, b) => a.timestamp - b.timestamp
+			);
+			if (sMsgs.length !== 0 && sMsgs[sMsgs.length - 1].typ === 'CITIZEN') {
+				//last Message is from citizen, so add stuff to it
+
+				//1. Messagetext
+				if (msg.nachricht !== undefined && msg.nachricht !== '') {
+					if (
+						sMsgs[sMsgs.length - 1].nachricht != undefined &&
+						sMsgs[sMsgs.length - 1].nachricht.trim() != ''
+					) {
+						sMsgs[sMsgs.length - 1].nachricht =
+							sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
+					} else {
+						sMsgs[sMsgs.length - 1].nachricht = msg.nachricht;
+					}
+				}
+
+				//2. Messageatachments
+				if (msg.anhang !== undefined) {
+					if (sMsgs[sMsgs.length - 1].anhang != undefined) {
+						msg.anhang.forEach((doc) => sMsgs[sMsgs.length - 1].anhang.push(doc));
+					} else {
+						sMsgs[sMsgs.length - 1].anhang = msg.anhang;
+					}
+				}
+			} else {
+				newKassz.changerequests.nachrichten.push(msg);
+			}
 		}
-
-		// if (msg.nachricht !== undefined && msg.nachricht !== '') {
-		// }
-
-		// if (
-		// 	msg.anhang !== undefined &&
-		// 	sMsgs[sMsgs.length - 1].typ === 'CITIZEN' &&
-		// 	sMsgs[sMsgs.length - 1].anhang === undefined
-		// ) {
-		// 	sMsgs[sMsgs.length - 1].anhang = msg.anhang;
-		// 	if (msg.nachricht !== undefined && msg.nachricht !== '') {
-		// 		sMsgs[sMsgs.length - 1].nachricht =
-		// 			sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
-		// 	}
-		// } else if (
-		// 	msg.nachricht !== undefined &&
-		// 	msg.nachricht.trim() !== '' &&
-		// 	sMsgs[sMsgs.length - 1].typ === 'CITIZEN'
-		// ) {
-		// 	sMsgs[sMsgs.length - 1].nachricht =
-		// 		sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
-		// } else if (
-		// 	msg.nachricht !== undefined &&
-		// 	msg.nachricht.trim() !== '' &&
-		// 	sMsgs[sMsgs.length - 1].typ !== 'CITIZEN'
-		// ) {
-		// 	newKassz.changerequests.nachrichten.push(msg);
-		// }
-
 		dispatch(setKassenzeichenObject(newKassz));
 	};
 }

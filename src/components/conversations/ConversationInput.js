@@ -66,26 +66,8 @@ const Comp = ({
 
 	return (
 		<div style={{ margin: '0px', marginTop: '30px' }}>
-			{/* <div style={{ margin: '15px' }}>
-				{msgAttachments.map((fileO, index) => {
-					return (
-						<span key={'draftDocs.' + index}>
-							{index > 0 ? ', ' : ''}
-							<Document
-								fileObject={fileO}
-								remove={() => {
-									const newAttachments = JSON.parse(
-										JSON.stringify(msgAttachments)
-									);
-									newAttachments.splice(index, 1);
-									setMsgAttachments(newAttachments);
-								}}
-							/>
-						</span>
-					);
-				})}
-			</div> */}
 			<Documents docs={msgAttachments} setDocs={setMsgAttachments} />
+
 			<FormGroup>
 				<InputGroup>
 					{/* <InputGroup.Button>
@@ -119,7 +101,6 @@ const Comp = ({
 									//normal return - should send content as draft
 									const draft = e.target.value;
 									setMsgTextValue('');
-									console.log('xxx msgAttachments', msgAttachments);
 
 									setDraft(draft, msgAttachments);
 									setMsgAttachments([]);
@@ -180,7 +161,10 @@ const Comp = ({
 						fontSize: '12px'
 					}}
 				>
-					<div style={{ textAlign: 'right' }}>{subText}</div>
+					<div style={{ minHeight: 25 }} {...getRootProps()}>
+						<input {...getInputProps()} />
+						<div style={{ textAlign: 'right' }}>{subText}</div>
+					</div>
 				</div>
 			</FormGroup>
 		</div>

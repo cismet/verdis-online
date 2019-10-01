@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, OverlayTrigger, Tooltip, Badge } from 'react-bootstrap';
 
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
@@ -197,7 +197,8 @@ export class AppNavbar_ extends React.Component {
 								onClick={this.showChangeRequests}
 								eventKey={2.0}
 							>
-								Änderungswünsche{' '}
+								Änderungswünsche
+								{/* <Badge>42</Badge> */}
 								{/* <Toggle
 									on={'meine Änderungen'}
 									off={'Original'}
