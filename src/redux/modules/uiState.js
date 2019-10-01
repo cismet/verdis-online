@@ -20,6 +20,7 @@ export const types = {
 	SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
 	SHOW_CHANGE_REQUESTS: 'UI_STATE/SHOW_CHANGE_REQUESTS',
 	SHOW_CHANGE_REQUESTS_EDIT_UI: 'UI_STATE/SHOW_CHANGE_REQUESTS_EDIT_UI',
+	SET_CHANGE_REQUESTS_EDIT_MODE: 'SET_CHANGE_REQUESTS_EDIT_MODE',
 	SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR:
 		'UI_STATE/SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR',
 
@@ -51,7 +52,7 @@ const initialState = {
 
 	settingsVisible: false,
 	changeRequestsMenuVisible: false,
-	changeRequestsEditMode: true,
+	changeRequestsEditMode: false,
 	changeRequestDisplayMode: 'cr',
 
 	changeRequestEditViewVisible: false,
@@ -161,7 +162,11 @@ export default function uiStateReducer(state = initialState, action) {
 			newState.changeRequestEditViewCR = action.cr;
 			return newState;
 		}
-
+		case types.SET_CHANGE_REQUESTS_EDIT_MODE: {
+			newState = objectAssign({}, state);
+			newState.changeRequestsEditMode = action.inEditMode;
+			return newState;
+		}
 		case types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: {
 			newState = objectAssign({}, state);
 			newState.searchInProgress = action.progress;
@@ -424,6 +429,13 @@ function setApplicationMenuActiveKey(key) {
 	};
 }
 
+function setChangeRequestInEditMode(inEditMode) {
+	return {
+		type: types.SET_CHANGE_REQUESTS_EDIT_MODE,
+		inEditMode
+	};
+}
+
 //COMPLEXACTIONS
 
 function showCREditUI(flaeche, cr) {
@@ -462,5 +474,6 @@ export const actions = {
 	setWaitForFEB,
 	showApplicationMenu,
 	setApplicationMenuActiveKey,
-	showCREditUI
+	showCREditUI,
+	setChangeRequestInEditMode
 };

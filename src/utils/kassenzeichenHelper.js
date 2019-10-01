@@ -258,6 +258,11 @@ const setColorForAttr = (colorStates, attr, flaechenCR, colorProcessed, colorUnp
 	}
 };
 
-export const getLinkForUUID = (uuid) => {
-	return 'https://drive.google.com/file/d/1lgWGVvgG5N7iwINFEQ6OCmG-G-_8jnxe/view?usp=sharing';
+export const getLinkForDoc = (doc) => {
+	return (
+		'http://cids-blau.s10222.wuppertal-intra.de/files/grundis/aenderungsanfrage_anhang/' +
+		doc.uuid +
+		'_' +
+		doc.name
+	);
 };

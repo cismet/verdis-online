@@ -425,6 +425,8 @@ export class KassenzeichenViewer_ extends React.Component {
 						this.props.kassenzeichenActions.removeLastChangeRequestMessage
 					}
 					uploadCRDoc={this.props.kassenzeichenActions.addCRDoc}
+					crEditMode={this.props.uiState.changeRequestsEditMode}
+					setCREditMode={this.props.uiStateActions.setChangeRequestInEditMode}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
@@ -440,6 +442,11 @@ export class KassenzeichenViewer_ extends React.Component {
 					flaeche={this.props.uiState.changeRequestEditViewFlaeche}
 					flaechenCR={this.props.uiState.changeRequestEditViewCR}
 					setFlaechenCR={(cr) => {
+						console.log('YYYY setFlaechenCR', [
+							this.props.uiState.changeRequestEditViewFlaeche,
+							cr
+						]);
+
 						this.props.uiStateActions.setChangeRequestsEditViewFlaecheAndCR(
 							this.props.uiState.changeRequestEditViewFlaeche,
 							cr
