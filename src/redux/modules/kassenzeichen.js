@@ -2,7 +2,7 @@ import objectAssign from 'object-assign';
 import { SERVICE, DOMAIN, STAC_SERVICE } from '../../constants/cids';
 
 import { appModes as APP_MODES } from '../../constants/uiConstants';
-import { actions as UiStateActions } from './uiState';
+import { actions as UiStateActions, CLOUDSTORAGESTATES } from './uiState';
 import { actions as AuthActions } from './auth';
 import { actions as MappingActions } from './mapping';
 import { routerActions as RoutingActions } from 'react-router-redux';
@@ -175,10 +175,10 @@ function getKassenzeichenbySTAC(stac, callback) {
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(actionResult) {
 						const kassenzeichenData = JSON.parse(actionResult.res);
-						kassenzeichenData.changerequests =
-							mockchangerequests[kassenzeichenData.kassenzeichennummer8];
+						// kassenzeichenData.aenderungsanfrage =
+						// 	mockchangerequests[kassenzeichenData.kassenzeichennummer8];
 
-						console.log('XXXX', kassenzeichenData);
+						//console.log('XXXX', kassenzeichenData);
 						//console.log(JSON.stringify(kassenzeichenData,2,null))
 						if (kassenzeichenData.nothing) {
 							dispatch(AuthActions.logout());
@@ -516,8 +516,9 @@ function setChangeRequests(crs) {
 	return function(dispatch, getState) {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
-		newKassz.changerequests = crs;
+		newKassz.aenderungsanfrage = crs;
 		dispatch(setKassenzeichenObject(newKassz));
+		dispatch(storeCR(newKassz.aenderungsanfrage));
 	};
 }
 
@@ -525,17 +526,18 @@ function setChangeRequestsForFlaeche(flaeche, crs) {
 	return function(dispatch, getState) {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
-		if (newKassz.changerequests === undefined) {
-			newKassz.changerequests = {
+		if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
+			newKassz.aenderungsanfrage = {
 				kassenzeichen: newKassz.kassenzeichennummer8,
 				flaechen: {},
 				nachrichten: []
 			};
-		} else if (newKassz.changerequests.flaechen === undefined) {
-			newKassz.changerequests.flaechen = {};
+		} else if (newKassz.aenderungsanfrage.flaechen === undefined) {
+			newKassz.aenderungsanfrage.flaechen = {};
 		}
-		newKassz.changerequests.flaechen[flaeche.flaechenbezeichnung] = crs;
+		newKassz.aenderungsanfrage.flaechen[flaeche.flaechenbezeichnung] = crs;
 		dispatch(setKassenzeichenObject(newKassz));
+		dispatch(storeCR(newKassz.aenderungsanfrage));
 	};
 }
 function addChangeRequestMessage(msg) {
@@ -543,17 +545,24 @@ function addChangeRequestMessage(msg) {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 
-		if (newKassz.changerequests === undefined) {
-			newKassz.changerequests = {
+		if (newKassz.aenderungsanfrage === undefined) {
+			newKassz.aenderungsanfrage = {
 				kassenzeichen: newKassz.kassenzeichennummer8,
 				flaechen: [],
 				nachrichten: [ msg ]
 			};
 		} else {
-			const sMsgs = newKassz.changerequests.nachrichten.sort(
+			if (newKassz.aenderungsanfrage.nachrichten === undefined) {
+				newKassz.aenderungsanfrage.nachrichten = [];
+			}
+			const sMsgs = newKassz.aenderungsanfrage.nachrichten.sort(
 				(a, b) => a.timestamp - b.timestamp
 			);
-			if (sMsgs.length !== 0 && sMsgs[sMsgs.length - 1].typ === 'CITIZEN') {
+			if (
+				sMsgs.length !== 0 &&
+				sMsgs[sMsgs.length - 1].typ === 'CITIZEN' &&
+				sMsgs[sMsgs.length - 1].draft === true
+			) {
 				//last Message is from citizen, so add stuff to it
 
 				//1. Messagetext
@@ -578,10 +587,11 @@ function addChangeRequestMessage(msg) {
 					}
 				}
 			} else {
-				newKassz.changerequests.nachrichten.push(msg);
+				newKassz.aenderungsanfrage.nachrichten.push(msg);
 			}
 		}
 		dispatch(setKassenzeichenObject(newKassz));
+		dispatch(storeCR(newKassz.aenderungsanfrage));
 	};
 }
 function removeLastChangeRequestMessage() {
@@ -590,11 +600,13 @@ function removeLastChangeRequestMessage() {
 
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
-		const sMsgs = newKassz.changerequests.nachrichten.sort((a, b) => a.timestamp - b.timestamp);
+		const sMsgs = newKassz.aenderungsanfrage.nachrichten.sort(
+			(a, b) => a.timestamp - b.timestamp
+		);
 		const lastMsg = sMsgs[sMsgs.length - 1];
 		if (lastMsg.typ === 'CITIZEN' && lastMsg.draft === true) {
 			sMsgs.length = sMsgs.length - 1;
-			newKassz.changerequests.nachrichten = sMsgs;
+			newKassz.aenderungsanfrage.nachrichten = sMsgs;
 		}
 
 		dispatch(setKassenzeichenObject(newKassz));
@@ -651,6 +663,100 @@ function addCRDoc(file, callback) {
 	};
 }
 
+function storeCR(
+	cr,
+	callback = (payload) => {
+		console.log('Stored CR', payload);
+	}
+) {
+	return function(dispatch, getState) {
+		dispatch(UiStateActions.setCloudStorageStatus(CLOUDSTORAGESTATES.CLOUD_STORAGE_UP));
+		const stac = getState().auth.stac;
+		let taskParameters = {
+			parameters: {
+				changerequestJson: cr,
+				stac,
+				email: 'max.mustermann@cismet.de'
+			}
+		};
+
+		let fd = new FormData();
+
+		fd.append(
+			'taskparams',
+			new Blob([ JSON.stringify(taskParameters) ], {
+				type: 'application/json'
+			})
+		);
+		const STAC_SERVICE_ = 'https://eneywvj94f7b6.x.pipedream.net/';
+
+		const url =
+			STAC_SERVICE +
+			'/actions/' +
+			DOMAIN +
+			'.kassenzeichenChangeRequest/tasks?role=all&resultingInstanceType=result';
+
+		fetch(url, {
+			method: 'post',
+			body: fd
+		})
+			.then(function(response) {
+				if (response.status >= 200 && response.status < 300) {
+					response.json().then(function(result) {
+						callback(result.res);
+						setTimeout(() => {
+							dispatch(UiStateActions.setCloudStorageStatus(undefined));
+						}, 100);
+					});
+				}
+			})
+			.catch(function(err) {
+				// dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
+				// dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));
+				console.log('Error in action' + err);
+				dispatch(AuthActions.logout());
+				if (typeof callback === 'function') {
+					//callback(false);
+				}
+			});
+	};
+}
+
+function submitCR() {
+	return function(dispatch, getState) {
+		dispatch(UiStateActions.setCloudStorageStatus(CLOUDSTORAGESTATES.CLOUD_STORAGE_UP));
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+
+		const state = getState();
+		const stac = state.auth.stac;
+		if (
+			newKassz.aenderungsanfrage !== undefined &&
+			newKassz.aenderungsanfrage !== null &&
+			newKassz.aenderungsanfrage.flaechen !== undefined
+		) {
+			if (newKassz.aenderungsanfrage.nachrichten === undefined) {
+				newKassz.aenderungsanfrage.nachrichten = [];
+			}
+			const changerequestBezeichnungsArray = Object.keys(newKassz.aenderungsanfrage.flaechen);
+			changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+				newKassz.aenderungsanfrage.flaechen[flaechenbezeichnung].draft = false;
+			});
+
+			const changerequestMessagesArray = newKassz.aenderungsanfrage.nachrichten;
+			changerequestMessagesArray.map((msg) => {
+				if (msg.draft === true) {
+					msg.draft = false;
+				}
+			});
+			console.log('undrafted', newKassz.aenderungsanfrage);
+
+			dispatch(setKassenzeichenObject(newKassz));
+			dispatch(storeCR(newKassz.aenderungsanfrage));
+		}
+	};
+}
+
 // console.log('acceptedFiles', acceptedFiles);
 // const reader = new FileReader();
 
@@ -678,5 +784,7 @@ export const actions = {
 	setChangeRequestsForFlaeche,
 	addChangeRequestMessage,
 	removeLastChangeRequestMessage,
-	addCRDoc
+	addCRDoc,
+	storeCR,
+	submitCR
 };

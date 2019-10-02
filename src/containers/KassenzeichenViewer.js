@@ -96,12 +96,13 @@ export class KassenzeichenViewer_ extends React.Component {
 
 	getCRsForFlaeche(flaeche) {
 		if (
-			this.props.kassenzeichen.changerequests !== undefined &&
-			this.props.kassenzeichen.changerequests.flaechen !== undefined &&
-			this.props.kassenzeichen.changerequests.flaechen[flaeche.flaechenbezeichnung] !==
+			this.props.kassenzeichen.aenderungsanfrage !== undefined &&
+			this.props.kassenzeichen.aenderungsanfrage !== null &&
+			this.props.kassenzeichen.aenderungsanfrage.flaechen !== undefined &&
+			this.props.kassenzeichen.aenderungsanfrage.flaechen[flaeche.flaechenbezeichnung] !==
 				undefined
 		) {
-			const ret = this.props.kassenzeichen.changerequests.flaechen[
+			const ret = this.props.kassenzeichen.aenderungsanfrage.flaechen[
 				flaeche.flaechenbezeichnung
 			];
 			return ret;
@@ -427,6 +428,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					uploadCRDoc={this.props.kassenzeichenActions.addCRDoc}
 					crEditMode={this.props.uiState.changeRequestsEditMode}
 					setCREditMode={this.props.uiStateActions.setChangeRequestInEditMode}
+					submit={this.props.kassenzeichenActions.submitCR}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
@@ -452,9 +454,8 @@ export class KassenzeichenViewer_ extends React.Component {
 							cr
 						);
 					}}
-					__setFlaechenCR={this.props.kassenzeichenActions.setChangeRequestsForFlaeche}
 					documents={
-						(this.props.kassenzeichen.changerequests || { documents: [] }).documents
+						(this.props.kassenzeichen.aenderungsanfrage || { documents: [] }).documents
 					}
 				/>
 
