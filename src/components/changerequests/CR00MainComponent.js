@@ -9,6 +9,7 @@ import ConversationInput from '../conversations/ConversationInput';
 import CRConversation from '../conversations/CRConversation';
 import FlaechenPanel from '../FlaechenPanel';
 import DocPanel from './CR20DocumentPanel';
+import CloudLoadingAttributeIcon from '../commons/CloudLoadingAttributeIcon';
 
 const scrollToVisible = (ref) => {
 	// console.log('scroll ref', ref.current);
@@ -32,7 +33,8 @@ const CR00 = ({
 	setCREditMode = () => {},
 	submit = () => {
 		console.warn('submit action ist not set, but was triggered.');
-	}
+	},
+	cloudStorageStatus
 }) => {
 	const scrollDivRef = useRef(null);
 	const [ locked, setLocked ] = useState(true);
@@ -118,7 +120,12 @@ const CR00 = ({
 			>
 				<Modal.Header>
 					<Modal.Title>
-						<Icon name={'edit'} /> {'Änderungswünsche und Kommentare'}
+						<div className='pull-left'>
+							<Icon name={'edit'} /> {'Änderungswünsche und Kommentare'}
+						</div>
+						<div className='pull-right'>
+							<CloudLoadingAttributeIcon value={cloudStorageStatus} />
+						</div>
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body style={modalBodyStyle} id='myMenu' key={'applicationMenuActiveKey'}>
@@ -345,7 +352,7 @@ const CR00 = ({
 											<Button
 												style={{ width: '200px' }}
 												id='cmdCloseModalApplicationMenu'
-												bsStyle='warning'
+												bsStyle='default'
 												type='submit'
 												onClick={close}
 											>
@@ -358,7 +365,7 @@ const CR00 = ({
 										<td width='100%' style={{ verticalAlign: 'top' }}>
 											<Button
 												style={{ width: '300px' }}
-												bsStyle='success'
+												bsStyle={locked === true ? 'warning' : 'success'}
 												className='fillButton'
 												onClick={unlockOrSubmit}
 											>

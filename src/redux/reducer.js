@@ -19,8 +19,7 @@ const uiStateStorageConfig = {
 		'changeRequestEditViewFlaeche',
 		'changeRequestEditViewCR',
 		'changeRequestsMenuVisible',
-		'changeRequestsEditMode',
-		'changeRequestDisplayMode'
+		'changeRequestsEditMode'
 	]
 };
 
