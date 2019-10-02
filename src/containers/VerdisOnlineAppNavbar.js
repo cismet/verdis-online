@@ -6,7 +6,10 @@ import { Navbar, Nav, NavItem, OverlayTrigger, Tooltip, Badge } from 'react-boot
 
 import { actions as UiStateActions, CLOUDSTORAGESTATES } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
-import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
+import {
+	actions as KassenzeichenActions,
+	getNumberOfPendingChanges
+} from '../redux/modules/kassenzeichen';
 import Waiting from './Waiting';
 import { Icon } from 'react-fa';
 
@@ -126,6 +129,8 @@ export class AppNavbar_ extends React.Component {
 	}
 
 	render() {
+		const crCounter = getNumberOfPendingChanges(this.props.kassenzeichen.aenderungsanfrage);
+
 		let kasszLabel = 'Kassenzeichen: ';
 		if (this.props.uiState.width < 990) {
 			kasszLabel = '';
@@ -204,17 +209,15 @@ export class AppNavbar_ extends React.Component {
 								onClick={this.showChangeRequests}
 								eventKey={2.0}
 							>
-								Änderungswünsche
-								{/* <Badge>42</Badge> */}
-								{/* <Toggle
-									on={'meine Änderungen'}
-									off={'Original'}
-									size='xs'
-									offstyle='success'
-									onstyle='warning'
-									active={true}
-									style={{ padding: 10 }}
-								/> */}
+								Änderungswünsche{' '}
+								{this.props.uiState.changeRequestsEditMode === true &&
+								crCounter.crDraftCounter > 0 && (
+									<Badge style={{ backgroundColor: '#BD9546' }}>
+										{crCounter.crDraftCounter}
+									</Badge>
+								)}
+								{crCounter.crDraftCounter === 0 &&
+								crCounter.crCounter > 0 && <Badge>{crCounter.crCounter}</Badge>}
 							</NavItem>
 							<OverlayTrigger
 								trigger={menuIsHidden ? ttTriggerOff : ttTriggerOn}

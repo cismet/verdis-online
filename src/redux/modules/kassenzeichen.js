@@ -586,7 +586,10 @@ function addChangeRequestMessage(msg) {
 						sMsgs[sMsgs.length - 1].anhang = msg.anhang;
 					}
 				}
-			} else {
+			} else if (
+				(msg.anhang !== undefined && msg.anhang.length > 0) ||
+				(msg.nachricht !== undefined && msg.nachricht.trim() !== '')
+			) {
 				newKassz.aenderungsanfrage.nachrichten.push(msg);
 			}
 		}
@@ -609,6 +612,7 @@ function removeLastChangeRequestMessage() {
 			newKassz.aenderungsanfrage.nachrichten = sMsgs;
 		}
 
+		dispatch(storeCR(newKassz.aenderungsanfrage));
 		dispatch(setKassenzeichenObject(newKassz));
 	};
 }
@@ -749,12 +753,56 @@ function submitCR() {
 					msg.draft = false;
 				}
 			});
-			console.log('undrafted', newKassz.aenderungsanfrage);
 
 			dispatch(setKassenzeichenObject(newKassz));
 			dispatch(storeCR(newKassz.aenderungsanfrage));
 		}
 	};
+}
+
+export function getNumberOfPendingChanges(cr) {
+	let crCounter = 0;
+	let crDraftCounter = 0;
+	if (cr !== undefined && cr !== null) {
+		const changerequestBezeichnungsArray = Object.keys(cr.flaechen);
+		changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+			const crf = cr.flaechen[flaechenbezeichnung];
+			if (crf.draft === true) {
+				if (crf.groesse != undefined) {
+					crDraftCounter++;
+				}
+				if (crf.flaechenart != undefined) {
+					crDraftCounter++;
+				}
+				if (crf.anschlussgrad != undefined) {
+					crDraftCounter++;
+				}
+			} else {
+				if (crf.groesse != undefined) {
+					crCounter++;
+				}
+				if (crf.flaechenart != undefined) {
+					crCounter++;
+				}
+				if (crf.anschlussgrad != undefined) {
+					crCounter++;
+				}
+			}
+		});
+
+		const changerequestMessagesArray = cr.nachrichten;
+		changerequestMessagesArray.map((msg) => {
+			if (msg.draft === true) {
+				if (msg.nachricht !== undefined && msg.nachricht.trim() !== '') {
+					crDraftCounter++;
+				}
+				if (msg.anhang !== undefined && msg.anhang.length > 0) {
+					crDraftCounter += msg.anhang.length;
+				}
+			}
+		});
+	}
+	return { crDraftCounter, crCounter };
 }
 
 // console.log('acceptedFiles', acceptedFiles);

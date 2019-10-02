@@ -280,7 +280,13 @@ export class KassenzeichenViewer_ extends React.Component {
 								flaeche={flaeche}
 								changerequest={that.getCRsForFlaeche(flaeche)}
 								editmode={that.props.uiState.changeRequestsEditMode}
-								display={that.props.uiState.changeRequestDisplayMode}
+								display={
+									that.props.uiState.changeRequestsEditMode === true ? (
+										'cr'
+									) : (
+										'original'
+									)
+								}
 							/>
 						</Flexbox>
 					);
@@ -327,7 +333,13 @@ export class KassenzeichenViewer_ extends React.Component {
 							selected={sel}
 							flaechenPanelClickHandler={that.flaechenPanelClick}
 							flaeche={flaeche}
-							display={that.props.uiState.changeRequestDisplayMode}
+							display={
+								that.props.uiState.changeRequestsEditMode === true ? (
+									'cr'
+								) : (
+									'original'
+								)
+							}
 							changerequest={cr}
 							editmode={that.props.uiState.changeRequestsEditMode}
 							showEditCRMenu={() => {
@@ -429,6 +441,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					crEditMode={this.props.uiState.changeRequestsEditMode}
 					setCREditMode={this.props.uiStateActions.setChangeRequestInEditMode}
 					submit={this.props.kassenzeichenActions.submitCR}
+					cloudStorageStatus={this.props.uiState.cloudStorageStatus}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
