@@ -63,6 +63,11 @@ const CR00 = ({
 		showChangeRequestMenu(false);
 	};
 
+	const setNewFlaechenCR = (cr) => {
+		cr.draft = true;
+		setFlaechenCR(cr);
+	};
+
 	console.log('flaechenCR', flaechenCR);
 
 	if (visible !== false && flaechenCR !== {}) {
@@ -74,7 +79,6 @@ const CR00 = ({
 					zIndex: 3000000000
 				}}
 				height='100%'
-				bsSize='middle'
 				show={true || visible}
 				onHide={close}
 				keyboard={false}
@@ -166,7 +170,7 @@ const CR00 = ({
 										onChange={(e) => {
 											const newCR = JSON.parse(JSON.stringify(flaechenCR));
 											newCR.groesse = Number(e.target.value);
-											setFlaechenCR(newCR);
+											setNewFlaechenCR(newCR);
 										}}
 										value={crInfo.groesse}
 									/>
@@ -193,7 +197,7 @@ const CR00 = ({
 											);
 
 											//newCR.flaechenart = e.target.value;
-											setFlaechenCR(newCR);
+											setNewFlaechenCR(newCR);
 										}}
 										componentClass='select'
 										placeholder='select'
@@ -233,7 +237,7 @@ const CR00 = ({
 												(val) => val.grad_abkuerzung === e.target.value
 											);
 
-											setFlaechenCR(newCR);
+											setNewFlaechenCR(newCR);
 										}}
 										componentClass='select'
 										placeholder='select'

@@ -34,7 +34,14 @@ export const types = {
 	SET_STAC_INPUT: 'UI_STATE/SET_STAC_INPUT',
 	SET_FEB_BLOB: 'UI_STATE/SET_FEB_BLOB',
 	SET_WAIT4FEB: 'UI_STATE/SET_WAIT4FEB',
-	SET_APPLICATION_MENU_ACTIVE_KEY: 'UISTATE/SET_APPLICATION_MENU_ACTIVE_KEY'
+	SET_APPLICATION_MENU_ACTIVE_KEY: 'UISTATE/SET_APPLICATION_MENU_ACTIVE_KEY',
+	SET_CLOUD_STORAGE_STATUS: 'UISTATE/SET_CLOUD_STORAGE_STATUS'
+};
+
+export const CLOUDSTORAGESTATES = {
+	CLOUD_STORAGE_UP: 'CLOUD_STORAGE_UP',
+	CLOUD_STORAGE_DOWN: 'CLOUD_STORAGE_DOWN',
+	CLOUD_STORAGE_ERROR: 'CLOUD_STORAGE_ERROR'
 };
 
 ///INITIAL STATE
@@ -94,7 +101,10 @@ const initialState = {
 	stacInput: '',
 
 	febBlob: null,
-	waitForFEB: false
+	waitForFEB: false,
+
+	cloudStorageStatus: undefined, //CLOUDSTORAGESTATES.CLOUD_STORAGE_UP,
+	cloudStorageStatusMessages: []
 };
 
 ///REDUCER
@@ -246,6 +256,15 @@ export default function uiStateReducer(state = initialState, action) {
 			newState.applicationMenuActiveKey = action.key;
 			return newState;
 		}
+		case types.SET_CLOUD_STORAGE_STATUS: {
+			newState = objectAssign({}, state);
+			newState.cloudStorageStatus = action.status;
+			if (action.message !== undefined) {
+				newState.cloudStorageStatusMessages.push(action.message);
+			}
+			return newState;
+		}
+
 		default:
 			return state;
 	}
@@ -436,6 +455,14 @@ function setChangeRequestInEditMode(inEditMode) {
 	};
 }
 
+function setCloudStorageStatus(status, msg) {
+	return {
+		type: types.SET_CLOUD_STORAGE_STATUS,
+		status,
+		msg
+	};
+}
+
 //COMPLEXACTIONS
 
 function showCREditUI(flaeche, cr) {
@@ -475,5 +502,6 @@ export const actions = {
 	showApplicationMenu,
 	setApplicationMenuActiveKey,
 	showCREditUI,
-	setChangeRequestInEditMode
+	setChangeRequestInEditMode,
+	setCloudStorageStatus
 };

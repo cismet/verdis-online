@@ -29,7 +29,10 @@ const CR00 = ({
 	removeLastUserMessage = () => {},
 	uploadCRDoc = () => {},
 	crEditMode = false,
-	setCREditMode = () => {}
+	setCREditMode = () => {},
+	submit = () => {
+		console.warn('submit action ist not set, but was triggered.');
+	}
 }) => {
 	const scrollDivRef = useRef(null);
 	const [ locked, setLocked ] = useState(true);
@@ -48,14 +51,14 @@ const CR00 = ({
 		if (locked === true) {
 			setLocked(false);
 		} else {
-			//submit the shit
-
+			//submit
+			submit();
 			//then
-			close();
+			//close();
 		}
 	};
 
-	const changerequests = kassenzeichen.changerequests;
+	const changerequests = kassenzeichen.aenderungsanfrage;
 
 	if (visible === true) {
 		const changerequestBezeichnungsArray =
@@ -171,7 +174,7 @@ const CR00 = ({
 								>
 									<CRConversation
 										messages={
-											(kassenzeichen.changerequests || { nachrichten: [] })
+											(kassenzeichen.aenderungsanfrage || { nachrichten: [] })
 												.nachrichten
 										}
 									/>

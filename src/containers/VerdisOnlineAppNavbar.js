@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem, OverlayTrigger, Tooltip, Badge } from 'react-bootstrap';
 
-import { actions as UiStateActions } from '../redux/modules/uiState';
+import { actions as UiStateActions, CLOUDSTORAGESTATES } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import Waiting from './Waiting';
@@ -12,6 +12,13 @@ import { Icon } from 'react-fa';
 
 import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';
 import Toggle from 'react-bootstrap-toggle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faCloudUploadAlt,
+	faCloudDownloadAlt,
+	faCloudRain
+} from '@fortawesome/free-solid-svg-icons';
+
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -307,6 +314,37 @@ export class AppNavbar_ extends React.Component {
 									{menuIsHidden ? '   ' + lblExit : ''}
 								</NavItem>
 							</OverlayTrigger>
+							{this.props.uiState.cloudStorageStatus ===
+								CLOUDSTORAGESTATES.CLOUD_STORAGE_UP && (
+								<NavItem id='navitem_cloud' eventKey={4} href='/#/'>
+									<FontAwesomeIcon icon={faCloudUploadAlt} />
+									{menuIsHidden ? '   ' + lblExit : ''}
+								</NavItem>
+							)}
+							{this.props.uiState.cloudStorageStatus ===
+								CLOUDSTORAGESTATES.CLOUD_STORAGE_DOWN && (
+								<NavItem id='navitem_cloud' eventKey={4} href='/#/'>
+									<FontAwesomeIcon icon={faCloudDownloadAlt} />
+									{menuIsHidden ? '   ' + lblExit : ''}
+								</NavItem>
+							)}
+							{this.props.uiState.cloudStorageStatus ===
+								CLOUDSTORAGESTATES.CLOUD_STORAGE_ERROR && (
+								<NavItem id='navitem_cloud' eventKey={4} href='/#/'>
+									<FontAwesomeIcon icon={faCloudRain} />
+									{menuIsHidden ? '   ' + lblExit : ''}
+								</NavItem>
+							)}
+							{this.props.uiState.cloudStorageStatus === undefined && (
+								<NavItem
+									style={{ width: 50 }}
+									id='navitem_cloud'
+									eventKey={4}
+									href='/#/'
+								>
+									{menuIsHidden ? '   ' + lblExit : ''}
+								</NavItem>
+							)}
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
