@@ -1,16 +1,18 @@
 import React from 'react';
-import { Icon } from 'react-fa';
+import DocIcon from '../conversations/DocIcon';
+import Document from '../conversations/Document';
 import { getLinkForDoc } from '../../utils/kassenzeichenHelper';
 const Comp = ({ doc }) => {
 	return (
-		<div style={{ fontSize: '130%' }}>
-			<a
+		<div style={{ margin: 10, fontSize: '130%' }}>
+			{/* <a
 				target='_additional_docs'
 				href={getLinkForDoc(doc)}
 				style={{ color: 'black', cursor: 'pointer' }}
 			>
-				<Icon name={'file'} /> {doc.name}
-			</a>
+				<DocIcon fileEnding={doc.name.split('.').pop()} /> {doc.name}
+			</a> */}
+			<Document fileObject={doc} background='#FFF' />
 		</div>
 	);
 };

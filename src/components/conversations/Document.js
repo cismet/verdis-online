@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getLinkForDoc } from '../../utils/kassenzeichenHelper';
-
+import DocIcon from './DocIcon';
 // Since this component is simple and static, there's no parent container for it.
 const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 	const [ verifiedState, setVerifiedState ] = useState('unverified');
 	useEffect(() => {
-		setTimeout(() => {
-			setVerifiedState('verified');
-		}, 1000);
+		let url = getLinkForDoc(fileObject);
+
+		fetch(url, {
+			method: 'head'
+		})
+			.then(function(response) {
+				if (response.status >= 200 && response.status < 300) {
+					setVerifiedState('verified');
+				} else {
+					setVerifiedState('error');
+				}
+			})
+			.catch(function(err) {
+				console.error('error when head checking url ' + url, err);
+
+				setVerifiedState('error');
+			});
+		// setTimeout(() => {
+		// 	setVerifiedState('verified');
+		// }, 1000);
 	}, []);
 	let color;
 	switch (verifiedState) {
@@ -18,6 +35,9 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 			break;
 		case 'verified':
 			color = 'black';
+			break;
+		case 'error':
+			color = '#B05353';
 			break;
 		default:
 			color = 'grey';
@@ -38,7 +58,7 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 	}
 
 	let status;
-	if (verifiedState !== 'verified') {
+	if (verifiedState === 'unverified') {
 		status = <FontAwesomeIcon icon={faSpinner} spin />;
 	}
 
@@ -49,6 +69,7 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 				style={{ color, cursor: 'pointer' }}
 				target='_additional_docs'
 				href={getLinkForDoc(fileObject)}
+				download={fileObject.name}
 			>
 				{main}
 			</a>
@@ -64,7 +85,7 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 				background
 			}}
 		>
-			<FontAwesomeIcon icon={faFilePdf} />
+			<DocIcon fileEnding={fileObject.name.split('.').pop()} />
 			{main} {deleteLink} {status}
 		</span>
 	);
