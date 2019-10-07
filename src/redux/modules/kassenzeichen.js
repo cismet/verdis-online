@@ -545,14 +545,17 @@ function addChangeRequestMessage(msg) {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 
-		if (newKassz.aenderungsanfrage === undefined) {
+		if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
 			newKassz.aenderungsanfrage = {
 				kassenzeichen: newKassz.kassenzeichennummer8,
 				flaechen: [],
 				nachrichten: [ msg ]
 			};
 		} else {
-			if (newKassz.aenderungsanfrage.nachrichten === undefined) {
+			if (
+				newKassz.aenderungsanfrage.nachrichten === undefined ||
+				newKassz.aenderungsanfrage.nachrichten === null
+			) {
 				newKassz.aenderungsanfrage.nachrichten = [];
 			}
 			const sMsgs = newKassz.aenderungsanfrage.nachrichten.sort(
