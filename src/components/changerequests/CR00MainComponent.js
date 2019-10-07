@@ -83,15 +83,17 @@ const CR00 = ({
 			const cr = changerequests.flaechen[flaechenbezeichnung];
 
 			//create the panels and push them into the arrays
-			origPanels.push(<FlaechenPanel key={'orig.' + index} flaeche={flaeche} />);
-			crPanels.push(
-				<FlaechenPanel
-					key={'cr' + index}
-					flaeche={flaeche}
-					display={'cr'}
-					changerequest={cr}
-				/>
-			);
+			if (cr !== undefined && flaeche !== undefined) {
+				origPanels.push(<FlaechenPanel key={'orig.' + index} flaeche={flaeche} />);
+				crPanels.push(
+					<FlaechenPanel
+						key={'cr' + index}
+						flaeche={flaeche}
+						display={'cr'}
+						changerequest={cr}
+					/>
+				);
+			}
 		});
 
 		sMsgs.map((msg) => {
