@@ -132,10 +132,13 @@ const systemmessage = (sysMsgConf) => {
 	if (sysMsgConf.type !== undefined) {
 		switch (sysMsgConf.type) {
 			case 'CHANGED':
-				return `Ihr Sachbearbeiter hat die ${sysMsgConf.flaechenart ||
-					'Fläche'} ${sysMsgConf.flaeche} geändert.`;
+				return `Ihr Sachbearbeiter hat die Fläche ${sysMsgConf.flaeche} geändert.`;
+
+			case 'REJECTED':
+				return `Ihr Sachbearbeiter hat Änderungen an der Fläche ${sysMsgConf.flaeche} abgelehnt.`;
 		}
 	}
+
 	return 'Fehlerhafte Systemnachricht:' + JSON.stringify(sysMsgConf);
 };
 
