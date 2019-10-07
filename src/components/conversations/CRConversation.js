@@ -118,7 +118,7 @@ const Comp = ({
 					}
 
 					case 'SYSTEM':
-						return <SystemMessage msg={eval(msg.nachricht)} />;
+						return <SystemMessage msg={systemmessage(msg.nachrichtenParameter)} />;
 					default:
 						break;
 				}
@@ -128,15 +128,15 @@ const Comp = ({
 	);
 };
 
-const SYSTEMMESSAGE = (sysMsgConf) => {
+const systemmessage = (sysMsgConf) => {
 	if (sysMsgConf.type !== undefined) {
 		switch (sysMsgConf.type) {
-			case 'changed':
+			case 'CHANGED':
 				return `Ihr Sachbearbeiter hat die ${sysMsgConf.flaechenart ||
 					'Fläche'} ${sysMsgConf.flaeche} geändert.`;
 		}
 	}
-	return 'Nix gemacht, kaputt gelacht. Bonanza.';
+	return 'Fehlerhafte Systemnachricht:' + JSON.stringify(sysMsgConf);
 };
 
 export default Comp;
