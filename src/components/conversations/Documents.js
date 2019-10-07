@@ -16,7 +16,7 @@ const Comp = ({ docs, setDocs, readOnly = false, margin = '15px', embedded = fal
 	}
 	return (
 		<div style={{ margin }}>
-			{docs.map((fileO, index) => {
+			{(docs || []).map((fileO, index) => {
 				return (
 					<span key={'draftDocs.' + index}>
 						{index > 0 ? ', ' : ''}
