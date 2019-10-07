@@ -767,43 +767,46 @@ export function getNumberOfPendingChanges(cr) {
 	let crCounter = 0;
 	let crDraftCounter = 0;
 	if (cr !== undefined && cr !== null) {
-		const changerequestBezeichnungsArray = Object.keys(cr.flaechen);
-		changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
-			const crf = cr.flaechen[flaechenbezeichnung];
-			if (crf.draft === true) {
-				if (crf.groesse != undefined) {
-					crDraftCounter++;
+		if (cr.flaechen !== undefined && cr.flaechen != null) {
+			const changerequestBezeichnungsArray = Object.keys(cr.flaechen);
+			changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+				const crf = cr.flaechen[flaechenbezeichnung];
+				if (crf.draft === true) {
+					if (crf.groesse != undefined) {
+						crDraftCounter++;
+					}
+					if (crf.flaechenart != undefined) {
+						crDraftCounter++;
+					}
+					if (crf.anschlussgrad != undefined) {
+						crDraftCounter++;
+					}
+				} else {
+					if (crf.groesse != undefined) {
+						crCounter++;
+					}
+					if (crf.flaechenart != undefined) {
+						crCounter++;
+					}
+					if (crf.anschlussgrad != undefined) {
+						crCounter++;
+					}
 				}
-				if (crf.flaechenart != undefined) {
-					crDraftCounter++;
+			});
+		}
+		if (cr.nachrichten !== undefined && cr.nachrichten !== null) {
+			const changerequestMessagesArray = cr.nachrichten;
+			changerequestMessagesArray.map((msg) => {
+				if (msg.draft === true) {
+					if (msg.nachricht !== undefined && msg.nachricht.trim() !== '') {
+						crDraftCounter++;
+					}
+					if (msg.anhang !== undefined && msg.anhang.length > 0) {
+						crDraftCounter += msg.anhang.length;
+					}
 				}
-				if (crf.anschlussgrad != undefined) {
-					crDraftCounter++;
-				}
-			} else {
-				if (crf.groesse != undefined) {
-					crCounter++;
-				}
-				if (crf.flaechenart != undefined) {
-					crCounter++;
-				}
-				if (crf.anschlussgrad != undefined) {
-					crCounter++;
-				}
-			}
-		});
-
-		const changerequestMessagesArray = cr.nachrichten;
-		changerequestMessagesArray.map((msg) => {
-			if (msg.draft === true) {
-				if (msg.nachricht !== undefined && msg.nachricht.trim() !== '') {
-					crDraftCounter++;
-				}
-				if (msg.anhang !== undefined && msg.anhang.length > 0) {
-					crDraftCounter += msg.anhang.length;
-				}
-			}
-		});
+			});
+		}
 	}
 	return { crDraftCounter, crCounter };
 }
