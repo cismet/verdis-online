@@ -34,7 +34,8 @@ const CR00 = ({
 	submit = () => {
 		console.warn('submit action ist not set, but was triggered.');
 	},
-	cloudStorageStatus
+	cloudStorageStatus,
+	documents
 }) => {
 	const scrollDivRef = useRef(null);
 	const [ locked, setLocked ] = useState(true);
@@ -67,7 +68,6 @@ const CR00 = ({
 			Object.keys((changerequests || { flaechen: [] }).flaechen || []) || [];
 		const changerequestMessagesArray =
 			(changerequests || { nachrichten: [] }).nachrichten || [];
-		const documents = [];
 		const origPanels = [];
 		const crPanels = [];
 		let lastUserMessage = undefined;
@@ -97,13 +97,6 @@ const CR00 = ({
 		});
 
 		sMsgs.map((msg) => {
-			//if a document exists, add it to the documents array
-			if (msg.anhang !== undefined && msg.anhang.length > 0) {
-				msg.anhang.map((anhang) => {
-					documents.push(anhang);
-				});
-			}
-
 			if (msg.typ === 'CITIZEN' && msg.draft === true) {
 				lastUserMessage = msg;
 			}

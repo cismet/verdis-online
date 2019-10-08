@@ -165,7 +165,20 @@ export class KassenzeichenViewer_ extends React.Component {
 		} else {
 			mapHeight = 50;
 		}
+		const changerequests = this.props.kassenzeichen.aenderungsanfrage;
+		const changerequestMessagesArray =
+			(changerequests || { nachrichten: [] }).nachrichten || [];
+		const sMsgs = changerequestMessagesArray.sort((a, b) => a.timestamp - b.timestamp);
+		const documents = [];
 
+		sMsgs.map((msg) => {
+			//if a document exists, add it to the documents array
+			if (msg.anhang !== undefined && msg.anhang.length > 0) {
+				msg.anhang.map((anhang) => {
+					documents.push(anhang);
+				});
+			}
+		});
 		const detailsStyle = {
 			backgroundColor: '#EEE',
 			padding: '5px 5px 5px 5px',
@@ -442,6 +455,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					setCREditMode={this.props.uiStateActions.setChangeRequestInEditMode}
 					submit={this.props.kassenzeichenActions.submitCR}
 					cloudStorageStatus={this.props.uiState.cloudStorageStatus}
+					documents={documents}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
@@ -467,9 +481,7 @@ export class KassenzeichenViewer_ extends React.Component {
 							cr
 						);
 					}}
-					documents={
-						(this.props.kassenzeichen.aenderungsanfrage || { documents: [] }).documents
-					}
+					documents={documents}
 				/>
 
 				{verdisMapWithAdditionalComponents}
