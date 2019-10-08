@@ -6,7 +6,7 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import optional from '../utils/optionalHelper';
-
+import { colorDraft } from '../utils/kassenzeichenHelper';
 import { getProcessedFlaechenCR, colorUnchanged, colorChanged } from '../utils/kassenzeichenHelper';
 //const FontAwesome = require('react-fontawesome');
 
@@ -36,9 +36,12 @@ export default class FlaechenPanel extends React.Component {
 			flaechenart,
 			flaechenartColor = 'black',
 			editButtonColor;
-
+		let borderStyle = undefined;
+		let borderColor = undefined;
 		//fill the intermediate vars
 		const crInfo = getProcessedFlaechenCR(this.props.flaeche, this.props.changerequest);
+		console.log('crInfo', crInfo);
+
 		if (this.props.display === 'cr') {
 			groesse = crInfo.groesse;
 			anschlussgrad = crInfo.anschlussgrad.grad_abkuerzung;
@@ -47,6 +50,10 @@ export default class FlaechenPanel extends React.Component {
 			groesseColor = crInfo.colors.groesse;
 			anschlussgradColor = crInfo.colors.anschlussgrad;
 			flaechenartColor = crInfo.colors.flaechenart;
+			if (this.props.changerequest.draft === true) {
+				borderStyle = 'solid';
+				borderColor = colorDraft;
+			}
 
 			// anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
 		} else {
@@ -63,16 +70,23 @@ export default class FlaechenPanel extends React.Component {
 		}
 
 		let background = null;
+
+		if (this.props.selected) {
+			background = 'grey';
+		}
 		if (this.props.selected) {
 			background = 'grey';
 		}
 
-		const styleOverride = {
+		let styleOverride = {
 			marginBottom: '5px',
 			width: '100%',
 			height: '100%',
-			background: background
+			background: background,
+			borderStyle: borderStyle,
+			borderColor: borderColor
 		};
+
 		let area = <div />;
 		if (this.props.flaeche.anteil) {
 			area = (

@@ -127,6 +127,7 @@ export const colorUnchanged = 'black';
 export const colorChanged = '#436F8C';
 export const colorAccepted = '#3D7844';
 export const colorRejected = '#B11623';
+export const colorDraft = '#BD9546';
 
 export const getProcessedFlaechenCR = (flaeche, flaechenCR) => {
 	let groesse, art, anschlussgrad;
