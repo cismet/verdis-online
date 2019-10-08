@@ -257,9 +257,15 @@ const CR00 = ({
 							eventKey={'sectionKey'}
 							bsStyle={'danger'}
 						>
-							{documents.map((doc) => {
-								return <DocPanel doc={doc} />;
-							})}
+							<div>
+								{documents.length > 0 &&
+									documents.map((doc) => {
+										return <DocPanel doc={doc} />;
+									})}
+							</div>
+							{documents.length === 0 && (
+								<div style={{ color: 'grey' }}>keine Datei vorhanden</div>
+							)}
 						</Panel>
 					</Accordion>
 				</Modal.Body>
