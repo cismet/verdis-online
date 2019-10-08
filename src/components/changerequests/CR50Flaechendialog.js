@@ -1,45 +1,23 @@
-import React, { useState } from 'react';
-import Introduction from './Menu05Introduction';
-import Datengrundlage from './Menu10Datengrundlagen';
-import MeinKassenzeichen from './Menu20MeinKassenzeichen';
-import Kartenhintergruende from './Menu30Kartenhintergruende';
-import Anleitung from './Menu40Anleitung';
-import FAQs from './Menu50FAQ';
-import Datenschutz from './Menu60Datenschutz';
-import PropTypes from 'prop-types';
-
+import Color from 'color';
+import React from 'react';
 import {
-	Modal,
+	Accordion,
 	Button,
-	form,
-	Col,
-	PanelGroup,
-	FormGroup,
-	Label,
-	FieldGroup,
-	Checkbox,
 	ControlLabel,
 	FormControl,
-	Radio,
-	Panel,
-	Accordion
+	FormGroup,
+	Modal,
+	Panel
 } from 'react-bootstrap';
 import { Icon } from 'react-fa';
-import { Link } from 'react-scroll';
-import GenericModalMenuSection from '../commons/GenericModalMenuSection';
-import Footer from './Menu99Footer';
-import FlaechenPanel from '../FlaechenPanel';
 import FlexView from 'react-flexview';
-import Color from 'color';
 import {
-	flaechenarten,
 	anschlussgrade,
-	getProcessedFlaechenCR,
-	getLinkForUUID,
-	colorChanged
+	flaechenarten,
+	getProcessedFlaechenCR
 } from '../../utils/kassenzeichenHelper';
+import FlaechenPanel from '../FlaechenPanel';
 import DocPanel from './CR20DocumentPanel';
-
 import './style.css';
 
 const CR00 = ({

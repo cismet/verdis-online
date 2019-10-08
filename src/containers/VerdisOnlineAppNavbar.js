@@ -22,6 +22,8 @@ import {
 	faCloudRain
 } from '@fortawesome/free-solid-svg-icons';
 
+import { colorDraft } from '../utils/kassenzeichenHelper';
+
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -212,7 +214,7 @@ export class AppNavbar_ extends React.Component {
 								Änderungswünsche{' '}
 								{this.props.uiState.changeRequestsEditMode === true &&
 								crCounter.crDraftCounter > 0 && (
-									<Badge style={{ backgroundColor: '#BD9546' }}>
+									<Badge style={{ backgroundColor: colorDraft }}>
 										{crCounter.crDraftCounter}
 									</Badge>
 								)}

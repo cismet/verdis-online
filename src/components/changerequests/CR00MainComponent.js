@@ -163,6 +163,20 @@ const CR00 = ({
 								Kommunikation ist kein Chat. Eine Antwort wird nicht immer zeitnah
 								erfolgen.
 							</p>
+
+							{/* <div>
+								<Toggle
+								onClick={() => {
+									setCREditMode(!crEditMode);
+								}}
+								on={'Ein'}
+								off={'Aus'}
+								offstyle='danger'
+								onstyle='success'
+								active={crEditMode}
+								style={{ padding: 10 }}
+							/>
+							</div> */}
 							<Accordion
 								key={'sectionKey0'}
 								name={'sectionKey'}
