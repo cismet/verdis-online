@@ -111,8 +111,8 @@ export const flaechenarten = [
 	{ art_abkuerzung: 'VF', art: 'versiegelte Fläche' },
 	{ art_abkuerzung: 'VFS', art: 'städtische Straßenfläche' },
 	{ art_abkuerzung: 'VSÖ', art: 'städtische Straßenfläche (Ökopflaster)' },
-	{ art_abkuerzung: 'VFÖ', art: 'Ökopflaster' },
-	{ art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
+	{ art_abkuerzung: 'VFÖ', art: 'Ökopflaster' }
+	// { art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
 ];
 
 export const anschlussgrade = [
