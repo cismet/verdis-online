@@ -30,8 +30,6 @@ const iconAttributeMap = {
 };
 
 const Comp = ({ fileEnding }) => {
-	console.log('fileEnding', fileEnding, iconAttributeMap, iconAttributeMap[fileEnding]);
-
 	if (iconAttributeMap[fileEnding] === undefined) {
 		fileEnding = 'default';
 	}

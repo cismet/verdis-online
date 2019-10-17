@@ -456,11 +456,12 @@ export class KassenzeichenViewer_ extends React.Component {
 					submit={this.props.kassenzeichenActions.submitCR}
 					cloudStorageStatus={this.props.uiState.cloudStorageStatus}
 					documents={documents}
+					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
 				/>
 				<ChangeRequestEditView
 					visible={this.props.uiState.changeRequestEditViewVisible}
 					showChangeRequestMenu={(storeIt) => {
-						if (storeIt == true) {
+						if (storeIt === true) {
 							this.props.kassenzeichenActions.setChangeRequestsForFlaeche(
 								this.props.uiState.changeRequestEditViewFlaeche,
 								this.props.uiState.changeRequestEditViewCR
@@ -471,16 +472,13 @@ export class KassenzeichenViewer_ extends React.Component {
 					flaeche={this.props.uiState.changeRequestEditViewFlaeche}
 					flaechenCR={this.props.uiState.changeRequestEditViewCR}
 					setFlaechenCR={(cr) => {
-						console.log('YYYY setFlaechenCR', [
-							this.props.uiState.changeRequestEditViewFlaeche,
-							cr
-						]);
-
 						this.props.uiStateActions.setChangeRequestsEditViewFlaecheAndCR(
 							this.props.uiState.changeRequestEditViewFlaeche,
 							cr
 						);
 					}}
+					uploadCRDoc={this.props.kassenzeichenActions.addCRDoc}
+					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
 					documents={documents}
 				/>
 

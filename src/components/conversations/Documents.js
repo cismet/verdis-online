@@ -1,5 +1,6 @@
 import React from 'react';
 import Document from './Document';
+
 // Since this component is simple and static, there's no parent container for it.
 const Comp = ({ docs, setDocs, readOnly = false, margin = '15px', embedded = false }) => {
 	let remover;

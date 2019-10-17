@@ -216,7 +216,6 @@ const isProcessedByClerk = (attr, cr) => {
 		) {
 			const crValue = cr[attr];
 			const checkValue = cr.pruefung[attr].value;
-			console.log('crValue === checkValue', [ crValue, checkValue, crValue === checkValue ]);
 
 			switch (attr) {
 				case 'groesse':

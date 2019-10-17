@@ -8,7 +8,7 @@ import FlexView from 'react-flexview';
 import ConversationInput from '../conversations/ConversationInput';
 import CRConversation from '../conversations/CRConversation';
 import FlaechenPanel from '../FlaechenPanel';
-import DocPanel from './CR20DocumentPanel';
+import DocPanel from './CR20DocumentsPanel';
 import CloudLoadingAttributeIcon from '../commons/CloudLoadingAttributeIcon';
 
 const scrollToVisible = (ref) => {
@@ -35,7 +35,8 @@ const CR00 = ({
 		console.warn('submit action ist not set, but was triggered.');
 	},
 	cloudStorageStatus,
-	documents
+	documents,
+	setMsgAttachments = () => {}
 }) => {
 	const scrollDivRef = useRef(null);
 	const [ locked, setLocked ] = useState(true);
@@ -297,15 +298,11 @@ const CR00 = ({
 									eventKey={'sectionKey'}
 									bsStyle={'danger'}
 								>
-									<div>
-										{documents.length > 0 &&
-											documents.map((doc) => {
-												return <DocPanel doc={doc} />;
-											})}
-									</div>
-									{documents.length === 0 && (
-										<div style={{ color: 'grey' }}>keine Datei vorhanden</div>
-									)}
+									<DocPanel
+										uploadCRDoc={uploadCRDoc}
+										setMsgAttachments={setMsgAttachments}
+										documents={documents}
+									/>
 								</Panel>
 							</Accordion>
 						</div>
