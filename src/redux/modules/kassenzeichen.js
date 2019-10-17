@@ -622,11 +622,15 @@ function removeLastChangeRequestMessage() {
 
 function addCRDoc(file, callback) {
 	return function(dispatch, getState) {
+		const stac = getState().auth.stac;
+
 		let taskParameters = {
 			parameters: {
-				fileName: file.name
+				fileName: file.name,
+				stac
 			}
 		};
+		console.log('taskParameters', taskParameters);
 
 		let fd = new FormData();
 		fd.append('file', new Blob([ file ]));
