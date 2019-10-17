@@ -69,7 +69,7 @@ contacts.set('DavidOsbarB102', {
 	vorname: 'Bärbel',
 	nachname: 'David-Osbar',
 	telefon: '+49-202-563 6637',
-	mail: ' Baerbel.David-Osbar@stadt.wuppertal.de',
+	mail: ' baerbel.david-osbar@stadt.wuppertal.de',
 	image: 'DavidOsbarB102.png'
 });
 contacts.set('PytlikS102', {
