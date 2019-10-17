@@ -645,8 +645,6 @@ function addCRDoc(file, callback) {
 			DOMAIN +
 			'.uploadChangeRequestAnhang/tasks?role=all&resultingInstanceType=result';
 
-		console.log('XXX taskParameters', taskParameters);
-
 		fetch(url, {
 			method: 'post',
 			body: fd

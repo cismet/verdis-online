@@ -23,9 +23,12 @@ const Comp = ({ documents = [], uploadCRDoc = () => {}, setMsgAttachments = () =
 		<div {...getRootProps()}>
 			<input style={{ height: 0 }} {...getInputProps()} />
 			{documents.length > 0 &&
-				documents.map((doc) => {
+				documents.map((doc, index) => {
 					return (
-						<div style={{ margin: 10, fontSize: '130%' }}>
+						<div
+							key={'Documents.div.' + index}
+							style={{ margin: 10, fontSize: '130%' }}
+						>
 							<Document fileObject={doc} background='#FFF' />
 						</div>
 					);

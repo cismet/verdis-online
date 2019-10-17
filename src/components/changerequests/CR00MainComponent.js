@@ -210,7 +210,6 @@ const CR00 = ({
 											addMessage(msg);
 										}}
 										scrollToInput={() => {
-											console.log('scrollToInput', scrollDivRef);
 											setTimeout(() => {
 												scrollToVisible(scrollDivRef);
 											}, 10);
