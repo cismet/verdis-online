@@ -46,7 +46,13 @@ const Comp = ({
 							sender = msg.name;
 						}
 
-						return <Message key={index} msg={msg.nachricht} from={sender} />;
+						return (
+							<Message
+								key={'CLERK.Message.' + index}
+								msg={msg.nachricht}
+								from={sender}
+							/>
+						);
 					}
 					case 'CITIZEN': {
 						let background = '#FDC65399';
@@ -55,11 +61,11 @@ const Comp = ({
 							background = '#FDC65333';
 						}
 						return (
-							<div>
+							<div key={'CITIZEN.div.' + index}>
 								{msg.nachricht != undefined &&
 								msg.nachricht.trim() !== '' && (
 									<Message
-										key={index}
+										key={'CITIZEN.Message.' + index}
 										msg={msg.nachricht}
 										background={background}
 										alignment='right'
@@ -116,11 +122,16 @@ const Comp = ({
 					}
 
 					case 'SYSTEM':
-						return <SystemMessage msg={systemmessage(msg.nachrichtenParameter)} />;
+						return (
+							<SystemMessage
+								key={'SYSTEM.SystemMessage.' + index}
+								msg={systemmessage(msg.nachrichtenParameter)}
+							/>
+						);
 					default:
 						break;
 				}
-				return <div>{msg.nachricht}</div>;
+				return <div key={'FALLBACK.pure.' + index}>{msg.nachricht}</div>;
 			})}
 		</div>
 	);

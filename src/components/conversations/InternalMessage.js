@@ -24,8 +24,12 @@ const Comp = ({
 	}
 	let messageToDisplay = msg;
 	if (typeof msg === 'string') {
-		messageToDisplay = msg.split('\n').map((i) => {
-			return <p style={{ margin: '0px', minHeight: '20px' }}>{i}</p>;
+		messageToDisplay = msg.split('\n').map((i, index) => {
+			return (
+				<p key={'INTERNALMESSAGE.p.' + index} style={{ margin: '0px', minHeight: '20px' }}>
+					{i}
+				</p>
+			);
 		});
 	}
 
