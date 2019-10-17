@@ -109,7 +109,7 @@ const CR00 = ({
 					zIndex: 3000000000
 				}}
 				height='100%'
-				bsSize={crEditMode === true ? 'large' : 'default'}
+				bsSize={crEditMode === true ? 'large' : undefined} //undefined == mid
 				show={true || visible}
 				onHide={close}
 				keyboard={false}
@@ -131,7 +131,7 @@ const CR00 = ({
 						treten sowie konkrete Änderungsvorschläge an den einzelnen Flächen selbt
 						hinterlegen.
 					</p>
-					<p style={{ textAlign: 'center', marginTop: '20px' }}>
+					<div style={{ textAlign: 'center', marginTop: '20px' }}>
 						<div style={{ fontSize: '20px' }}>
 							<strong>Änderungsmodus: </strong>
 							<Toggle
@@ -146,7 +146,7 @@ const CR00 = ({
 								style={{ padding: 10 }}
 							/>
 						</div>
-					</p>
+					</div>
 
 					{crEditMode === true && (
 						<div>
@@ -255,7 +255,7 @@ const CR00 = ({
 								>
 									<div>
 										{origPanels.length > 0 && (
-											<FlexView row justifyContent='space-around'>
+											<FlexView row='true'>
 												<FlexView column grow>
 													<h4>aktueller Datenbestand</h4>
 													{origPanels}

@@ -40,7 +40,6 @@ export default class FlaechenPanel extends React.Component {
 		let borderColor = undefined;
 		//fill the intermediate vars
 		const crInfo = getProcessedFlaechenCR(this.props.flaeche, this.props.changerequest);
-
 		if (this.props.display === 'cr') {
 			groesse = crInfo.groesse;
 			anschlussgrad = crInfo.anschlussgrad.grad_abkuerzung;

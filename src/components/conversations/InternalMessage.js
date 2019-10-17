@@ -23,16 +23,11 @@ const Comp = ({
 		textAlign = 'end'; //'end';
 	}
 	let messageToDisplay = msg;
-	console.log('typeof msg	', typeof msg);
 	if (typeof msg === 'string') {
-		console.log('is a string	');
-
 		messageToDisplay = msg.split('\n').map((i) => {
 			return <p style={{ margin: '0px', minHeight: '20px' }}>{i}</p>;
 		});
 	}
-
-	console.log('messageToDisplay', messageToDisplay);
 
 	return (
 		<FlexView

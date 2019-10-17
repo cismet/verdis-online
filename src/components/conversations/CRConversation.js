@@ -21,8 +21,6 @@ const Comp = ({
 	width,
 	background
 }) => {
-	console.log('messages', messages);
-
 	const sMsgs = messages.sort((a, b) => a.timestamp - b.timestamp);
 
 	const sMsgsWithWelcomeMessage = [];
