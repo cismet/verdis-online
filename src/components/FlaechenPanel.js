@@ -40,7 +40,6 @@ export default class FlaechenPanel extends React.Component {
 		let borderColor = undefined;
 		//fill the intermediate vars
 		const crInfo = getProcessedFlaechenCR(this.props.flaeche, this.props.changerequest);
-		console.log('crInfo', crInfo);
 
 		if (this.props.display === 'cr') {
 			groesse = crInfo.groesse;

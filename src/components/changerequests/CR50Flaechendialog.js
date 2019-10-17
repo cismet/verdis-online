@@ -17,7 +17,9 @@ import {
 	getProcessedFlaechenCR
 } from '../../utils/kassenzeichenHelper';
 import FlaechenPanel from '../FlaechenPanel';
-import DocPanel from './CR20DocumentPanel';
+import Document from '../conversations/Document';
+import DocPanel from './CR20DocumentsPanel';
+
 import './style.css';
 
 const CR00 = ({
@@ -27,7 +29,9 @@ const CR00 = ({
 	flaeche = {},
 	flaechenCR = {},
 	setFlaechenCR = () => {},
-	documents = []
+	documents = [],
+	uploadCRDoc = () => {},
+	setMsgAttachments = () => {}
 }) => {
 	const modalBodyStyle = {
 		overflowY: 'auto',
@@ -257,15 +261,11 @@ const CR00 = ({
 							eventKey={'sectionKey'}
 							bsStyle={'danger'}
 						>
-							<div>
-								{documents.length > 0 &&
-									documents.map((doc) => {
-										return <DocPanel doc={doc} />;
-									})}
-							</div>
-							{documents.length === 0 && (
-								<div style={{ color: 'grey' }}>keine Datei vorhanden</div>
-							)}
+							<DocPanel
+								uploadCRDoc={uploadCRDoc}
+								setMsgAttachments={setMsgAttachments}
+								documents={documents}
+							/>
 						</Panel>
 					</Accordion>
 				</Modal.Body>
