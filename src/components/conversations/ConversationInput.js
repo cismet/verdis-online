@@ -55,6 +55,10 @@ const Comp = ({
 		});
 	};
 
+	const x = getRootProps();
+	const y = getInputProps();
+	console.log('x,y', [ x, y ]);
+
 	// const rowNumbersInDraft = value.split(/\r\n|\r|\n/).length;
 	// if (rowNumbersInDraft < 1) {
 	// 	rows = 1;
@@ -65,8 +69,29 @@ const Comp = ({
 	// }
 
 	return (
-		<div style={{ margin: '0px', marginTop: '30px' }}>
-			<Documents docs={msgAttachments} setDocs={setMsgAttachments} />
+		<div
+			style={{
+				paddingTop: '40px',
+				paddingBottom: '40px',
+				padding: '5px',
+				margin: '0px',
+				marginTop: '30px',
+				background: '#f8f8f8',
+				borderRadius: '5px',
+				borderStyle: 'solid',
+				borderWidth: '1px',
+				borderColor: '#CCCCCC',
+				outline: 'none'
+			}}
+			{...getRootProps()}
+			onClick={() => {}}
+			onKeyDown={() => {}}
+		>
+			<Documents
+				style={{ paddingTop: '30px' }}
+				docs={msgAttachments}
+				setDocs={setMsgAttachments}
+			/>
 
 			<FormGroup>
 				<InputGroup>
@@ -161,10 +186,7 @@ const Comp = ({
 						fontSize: '12px'
 					}}
 				>
-					<div style={{ minHeight: 25 }} {...getRootProps()}>
-						<input {...getInputProps()} />
-						<div style={{ textAlign: 'right' }}>{subText}</div>
-					</div>
+					<div style={{ textAlign: 'right' }}>{subText}</div>
 				</div>
 			</FormGroup>
 		</div>

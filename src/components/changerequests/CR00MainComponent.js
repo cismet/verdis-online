@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { Accordion, Button, Modal, Panel } from 'react-bootstrap';
 import Toggle from 'react-bootstrap-toggle';
 import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';
-import ClickNHold from 'react-click-n-hold';
 import { Icon } from 'react-fa';
 import FlexView from 'react-flexview';
 import ConversationInput from '../conversations/ConversationInput';
