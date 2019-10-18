@@ -459,6 +459,7 @@ export class KassenzeichenViewer_ extends React.Component {
 					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
 				/>
 				<ChangeRequestEditView
+					height={mapHeight + 10}
 					visible={this.props.uiState.changeRequestEditViewVisible}
 					showChangeRequestMenu={(storeIt) => {
 						if (storeIt === true) {

@@ -27,7 +27,7 @@ const Comp = ({ documents = [], uploadCRDoc = () => {}, setMsgAttachments = () =
 					return (
 						<div
 							key={'Documents.div.' + index}
-							style={{ margin: 10, fontSize: '130%' }}
+							style={{ margin: 10, fontSize: '110%' }}
 						>
 							<Document fileObject={doc} background='#FFF' />
 						</div>

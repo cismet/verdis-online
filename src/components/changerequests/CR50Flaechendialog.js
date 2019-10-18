@@ -50,6 +50,8 @@ const CR00 = ({
 		setFlaechenCR(cr);
 	};
 
+	console.log('height', height);
+
 	if (visible !== false && flaechenCR !== {}) {
 		const crInfo = getProcessedFlaechenCR(flaeche, flaechenCR);
 
