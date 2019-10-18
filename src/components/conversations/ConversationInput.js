@@ -55,19 +55,6 @@ const Comp = ({
 		});
 	};
 
-	const x = getRootProps();
-	const y = getInputProps();
-	console.log('x,y', [ x, y ]);
-
-	// const rowNumbersInDraft = value.split(/\r\n|\r|\n/).length;
-	// if (rowNumbersInDraft < 1) {
-	// 	rows = 1;
-	// } else if (rowNumbersInDraft < maxRows + 1) {
-	// 	rows = rowNumbersInDraft;
-	// } else {
-	// 	rows = maxRows;
-	// }
-
 	return (
 		<div
 			style={{
