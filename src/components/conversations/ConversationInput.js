@@ -75,7 +75,7 @@ const Comp = ({
 			onKeyDown={() => {}}
 		>
 			<Documents
-				style={{ paddingTop: '30px', padding: '5px', margin: '30p1x' }}
+				style={{ paddingTop: '30px', padding: '5px', margin: '30px' }}
 				docs={msgAttachments}
 				setDocs={setMsgAttachments}
 			/>
