@@ -75,16 +75,13 @@ const Comp = ({
 			onKeyDown={() => {}}
 		>
 			<Documents
-				style={{ paddingTop: '30px' }}
+				style={{ paddingTop: '30px', padding: '5px', margin: '30p1x' }}
 				docs={msgAttachments}
 				setDocs={setMsgAttachments}
 			/>
 
 			<FormGroup>
 				<InputGroup>
-					{/* <InputGroup.Button>
-					<Button>Before</Button>
-				</InputGroup.Button> */}
 					<InputGroup.Addon style={{ cursor: 'pointer', verticalAlign: 'bottom' }}>
 						<div {...getRootProps()}>
 							<input {...getInputProps()} />
@@ -138,7 +135,9 @@ const Comp = ({
 										setMsgTextValue(lastUserMessage.nachricht);
 										setMsgAttachments(lastUserMessage.anhang);
 										setTimeout(() => {
-											setPosition(lastUserMessage.nachricht.length + 100);
+											setPosition(
+												(lastUserMessage.nachricht || []).length + 100
+											);
 										}, 10);
 									}
 								}

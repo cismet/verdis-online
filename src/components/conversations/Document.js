@@ -4,7 +4,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getLinkForDoc } from '../../utils/kassenzeichenHelper';
 import DocIcon from './DocIcon';
 // Since this component is simple and static, there's no parent container for it.
-const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
+const Comp = ({ fileObject, remove, background = '#eeeeee', addComma }) => {
 	const [ verifiedState, setVerifiedState ] = useState('unverified');
 	useEffect(() => {
 		let url = getLinkForDoc(fileObject);
@@ -29,6 +29,10 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 		// }, 1000);
 	}, []);
 	let color;
+	let comma = '';
+	if (addComma === true) {
+		comma = ',';
+	}
 	switch (verifiedState) {
 		case 'unverified':
 			color = 'grey';
@@ -59,10 +63,14 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 
 	let status;
 	if (verifiedState === 'unverified') {
-		status = <FontAwesomeIcon icon={faSpinner} spin />;
+		status = (
+			<span>
+				&nbsp;<FontAwesomeIcon icon={faSpinner} spin />
+			</span>
+		);
 	}
 
-	let main = <span style={{ marginLeft: 5, marginRight: 10 }}>{fileObject.name}</span>;
+	let main = <span style={{ marginLeft: 5, marginRight: 0 }}>{fileObject.name + comma}</span>;
 	if (verifiedState === 'verified') {
 		main = (
 			<a
@@ -80,13 +88,16 @@ const Comp = ({ fileObject, remove, background = '#eeeeee' }) => {
 		<span
 			style={{
 				color,
-				padding: '8px',
+				padding: '4px',
 				borderRadius: 4,
-				background
+				background,
+				display: 'inline',
+				lineHeight: '2em'
 			}}
 		>
-			<DocIcon fileEnding={fileObject.name.split('.').pop()} />
-			{main} {deleteLink} {status}
+			<DocIcon fileEnding={fileObject.name.split('.').pop()} />&nbsp;
+			{main}&nbsp;{deleteLink}
+			{status}
 		</span>
 	);
 };

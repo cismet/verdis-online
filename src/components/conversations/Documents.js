@@ -2,7 +2,7 @@ import React from 'react';
 import Document from './Document';
 
 // Since this component is simple and static, there's no parent container for it.
-const Comp = ({ docs, setDocs, readOnly = false, margin = '15px', embedded = false }) => {
+const Comp = ({ docs, setDocs, readOnly = false, embedded = false }) => {
 	let remover;
 	if (readOnly === false) {
 		remover = (index) => {
@@ -12,18 +12,29 @@ const Comp = ({ docs, setDocs, readOnly = false, margin = '15px', embedded = fal
 		};
 	}
 	let background;
+	let margin = '5px';
 	if (embedded === true) {
 		background = '#00000000'; //transparent
+		// background = '#fff000'; //transparent
+		margin = '0px';
 	}
+
 	return (
 		<div style={{ margin }}>
 			{(docs || []).map((fileO, index) => {
 				return (
 					<span key={'draftDocs.' + index}>
-						{index > 0 ? ', ' : ''}
-						{readOnly && <Document fileObject={fileO} background={background} />}
+						{index > 0 ? ' ' : ''}
+						{readOnly && (
+							<Document
+								addComma={index < docs.length - 1}
+								fileObject={fileO}
+								background={background}
+							/>
+						)}
 						{!readOnly && (
 							<Document
+								addComma={index < docs.length - 1}
 								fileObject={fileO}
 								remove={() => {
 									remover(index);
