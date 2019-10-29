@@ -39,18 +39,45 @@ const Comp = ({
 	}, []);
 
 	const onDrop = useCallback((acceptedFiles) => {
-		acceptedFiles.forEach((file) =>
-			uploadCRDoc(file, (returnedFO) => {
-				addAttachment(returnedFO);
-			})
-		);
+		acceptedFiles.forEach((file) => {
+			file.nonce = btoa(JSON.stringify(file)) + new Date().getTime();
+			addAttachment({
+				name: file.name,
+				nonce: file.nonce,
+				inProgress: true
+			});
+			return uploadCRDoc(file, (returnedFOString) => {
+				const returnedFO = JSON.parse(returnedFOString);
+				returnedFO.nonce = file.nonce;
+				returnedFO.inProgress = false;
+				console.log('updateAttachment', returnedFO);
+
+				updateAttachment(returnedFO);
+			});
+		});
 	}, []);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 	const addAttachment = (fileO) => {
+		console.log('addAttachment', fileO);
+
 		setMsgAttachments((msga) => {
 			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
-			newMsgAttachments.push(JSON.parse(fileO));
+			newMsgAttachments.push(fileO);
+			return newMsgAttachments;
+		});
+	};
+
+	const updateAttachment = (fileO) => {
+		setMsgAttachments((msga) => {
+			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+			newMsgAttachments.forEach((fo, index) => {
+				if (fo.nonce === fileO.nonce) {
+					newMsgAttachments[index] = fileO;
+					return;
+				}
+			});
+
 			return newMsgAttachments;
 		});
 	};
@@ -110,7 +137,11 @@ const Comp = ({
 									//normal return - should send content as draft
 									const draft = e.target.value;
 									setMsgTextValue('');
-
+									//TODO keine Code Duplication
+									msgAttachments.forEach((fo, index) => {
+										fo.nonce = undefined;
+										fo.inProgress = undefined;
+									});
 									setDraft(draft, msgAttachments);
 									setMsgAttachments([]);
 									e.preventDefault();
@@ -150,8 +181,14 @@ const Comp = ({
 								if (textarea && textarea.current) {
 									const draft = textarea.current.value;
 									setMsgTextValue('');
+									msgAttachments.forEach((fo, index) => {
+										fo.nonce = undefined;
+										fo.inProgress = undefined;
+									});
 									setDraft(draft, msgAttachments);
+
 									setMsgAttachments([]);
+									//TODO Hier die noch nicht hochgeladenen ausnehmen
 									e.preventDefault();
 									scrollToInput();
 								}

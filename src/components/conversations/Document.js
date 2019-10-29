@@ -7,27 +7,29 @@ import DocIcon from './DocIcon';
 const Comp = ({ fileObject, remove, background = '#eeeeee', addComma }) => {
 	const [ verifiedState, setVerifiedState ] = useState('unverified');
 	useEffect(() => {
-		let url = getLinkForDoc(fileObject);
+		if (fileObject.inProgress !== true && verifiedState === 'unverified') {
+			let url = getLinkForDoc(fileObject);
 
-		fetch(url, {
-			method: 'head'
-		})
-			.then(function(response) {
-				if (response.status >= 200 && response.status < 300) {
-					setVerifiedState('verified');
-				} else {
-					setVerifiedState('error');
-				}
+			fetch(url, {
+				method: 'head'
 			})
-			.catch(function(err) {
-				console.error('error when head checking url ' + url, err);
+				.then(function(response) {
+					if (response.status >= 200 && response.status < 300) {
+						setVerifiedState('verified');
+					} else {
+						setVerifiedState('error');
+					}
+				})
+				.catch(function(err) {
+					console.error('error when head checking url ' + url, err);
 
-				setVerifiedState('error');
-			});
-		// setTimeout(() => {
-		// 	setVerifiedState('verified');
-		// }, 1000);
-	}, []);
+					setVerifiedState('error');
+				});
+			// setTimeout(() => {
+			// 	setVerifiedState('verified');
+			// }, 1000);
+		}
+	});
 	let color;
 	let comma = '';
 	if (addComma === true) {
