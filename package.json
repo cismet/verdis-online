@@ -17,6 +17,7 @@
     "@types/react-bootstrap": "0.32.10",
     "@types/react-router-redux": "5.0.15",
     "@types/redux-immutable-state-invariant": "2.0.4",
+    "babel-polyfill": "6.26.0",
     "check-types": "7.4.0",
     "color-hash": "1.0.3",
     "flexbox-react": "^4.4.0",
@@ -99,9 +100,11 @@
       "not op_mini all"
     ],
     "development": [
+      "ie 11",
       "last 1 chrome version",
       "last 1 firefox version",
-      "last 1 safari version"
+      "last 1 safari version",
+      "last 1 ie version"
     ]
   }
 }

@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
@@ -10,12 +11,12 @@ import './index.css';
 const target = document.querySelector('#root');
 
 render(
-  <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <div>
-        <App />
-      </div>
-    </ConnectedRouter>
-  </Provider>,
-  target
+	<Provider store={store}>
+		<ConnectedRouter history={history}>
+			<div>
+				<App />
+			</div>
+		</ConnectedRouter>
+	</Provider>,
+	target
 );
