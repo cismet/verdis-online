@@ -153,7 +153,7 @@ const CR00 = ({
 										</ControlLabel>
 									)}
 									<FormControl
-										disabled={true}
+										disabled={isAnteiligeFlaeche()}
 										style={{
 											background: new Color(
 												crInfo.colors.groesse === 'black'
