@@ -50,6 +50,10 @@ const CR00 = ({
 		setFlaechenCR(cr);
 	};
 
+	const isAnteiligeFlaeche = () => {
+		return flaeche.anteil !== undefined;
+	};
+
 	if (visible !== false && flaechenCR !== {}) {
 		const crInfo = getProcessedFlaechenCR(flaeche, flaechenCR);
 
@@ -138,8 +142,18 @@ const CR00 = ({
 									validationState={crInfo.validationStates.groesse}
 									className='customLeftAlignedValidation'
 								>
-									<ControlLabel>Größe in m²</ControlLabel>
+									{isAnteiligeFlaeche() === false && (
+										<ControlLabel>Größe in m²</ControlLabel>
+									)}
+
+									{isAnteiligeFlaeche() === true && (
+										<ControlLabel>
+											Größe in m² (Hier nicht änderbar, da eine Anteilsfläche
+											vorliegt.)
+										</ControlLabel>
+									)}
 									<FormControl
+										disabled={true}
 										style={{
 											background: new Color(
 												crInfo.colors.groesse === 'black'
@@ -148,9 +162,13 @@ const CR00 = ({
 											).alpha(0.1)
 										}}
 										onChange={(e) => {
-											const newCR = JSON.parse(JSON.stringify(flaechenCR));
-											newCR.groesse = Number(e.target.value);
-											setNewFlaechenCR(newCR);
+											if (isAnteiligeFlaeche() === false) {
+												const newCR = JSON.parse(
+													JSON.stringify(flaechenCR)
+												);
+												newCR.groesse = Number(e.target.value);
+												setNewFlaechenCR(newCR);
+											}
 										}}
 										value={crInfo.groesse}
 									/>

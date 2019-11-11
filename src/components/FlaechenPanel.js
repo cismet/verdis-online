@@ -53,7 +53,7 @@ export default class FlaechenPanel extends React.Component {
 				borderColor = colorDraft;
 			}
 
-			// anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
+			anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
 		} else {
 			groesse = this.props.flaeche.flaecheninfo.groesse_korrektur;
 			anteil = this.props.flaeche.anteil;
