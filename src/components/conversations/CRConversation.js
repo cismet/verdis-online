@@ -19,7 +19,8 @@ const Comp = ({
 		system: {}
 	},
 	width,
-	background
+	background,
+	hiseSystemMessages = false
 }) => {
 	const sMsgs = messages.sort((a, b) => a.timestamp - b.timestamp);
 
@@ -122,12 +123,16 @@ const Comp = ({
 					}
 
 					case 'SYSTEM':
-						return (
-							<SystemMessage
-								key={'SYSTEM.SystemMessage.' + index}
-								msg={systemmessage(msg.nachrichtenParameter)}
-							/>
-						);
+						if (hiseSystemMessages === false) {
+							return (
+								<SystemMessage
+									key={'SYSTEM.SystemMessage.' + index}
+									msg={systemmessage(msg.nachrichtenParameter)}
+								/>
+							);
+						} else {
+							return undefined;
+						}
 					default:
 						break;
 				}

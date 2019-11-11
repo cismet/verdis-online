@@ -39,6 +39,7 @@ const CR00 = ({
 }) => {
 	const scrollDivRef = useRef(null);
 	const [ locked, setLocked ] = useState(true);
+	const [ hideSystemMessages, setHideSystemMessages ] = useState(false);
 	const modalBodyStyle = {
 		overflowY: 'auto',
 		overflowX: 'hidden',
@@ -155,6 +156,22 @@ const CR00 = ({
 								wenn Flächen nicht in den Kanal entwässern. Die nachfolgende
 								Kommunikation ist kein Chat. Eine Antwort wird nicht immer zeitnah
 								erfolgen.
+								<div style={{ textAlign: 'right' }}>
+									<br />
+									Systemnachrichten einblenden: {' '}
+									<Toggle
+										onClick={() => {
+											setHideSystemMessages(!hideSystemMessages);
+										}}
+										on={'Ein'}
+										off={'Aus'}
+										offstyle='danger'
+										onstyle='success'
+										size={'xs'}
+										active={!hideSystemMessages}
+										style={{ padding: 10 }}
+									/>
+								</div>
 							</p>
 
 							{/* <div>
@@ -193,6 +210,7 @@ const CR00 = ({
 											(kassenzeichen.aenderungsanfrage || { nachrichten: [] })
 												.nachrichten
 										}
+										hiseSystemMessages={hideSystemMessages}
 									/>
 
 									<ConversationInput
