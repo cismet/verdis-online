@@ -22,7 +22,7 @@ const KassenzeichenPanel = ({ kassenzeichen, onClick, d3Click, d3Enabled }) => {
 		d3 = (
 			<Button block show={d3Enabled} onClick={d3Click}>
 				{' '}
-				<Icon name='file-pdf-o' /> in d.3 &ouml;ffnen
+				<Icon name='file-pdf' /> in d.3 &ouml;ffnen
 			</Button>
 		);
 	} else {

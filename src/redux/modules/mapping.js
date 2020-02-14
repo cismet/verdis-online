@@ -1,7 +1,6 @@
 import objectAssign from 'object-assign';
 
 import L from 'leaflet';
-import 'proj4leaflet';
 
 ///TYPES
 export const types = {

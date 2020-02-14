@@ -235,7 +235,7 @@ export class AppNavbar_ extends React.Component {
 									onClick={this.downloadFEB}
 									eventKey={2.3}
 								>
-									<Icon style={pdfIconStyle} name='file-pdf-o' />
+									<Icon style={pdfIconStyle} name='file-pdf' />
 									{menuIsHidden ? '   ' + lblDownLoadFeb : ''}
 								</NavItem>
 							</OverlayTrigger>
@@ -279,7 +279,7 @@ export class AppNavbar_ extends React.Component {
 									href='#'
 									onSelect={this.toggleCharts}
 								>
-									<Icon name='pie-chart' />
+									<Icon name='chart-pie' />
 									{menuIsHidden ? '   ' + lblChart : ''}
 								</NavItem>
 							</OverlayTrigger>

@@ -70,6 +70,7 @@ export class VerdisMap_ extends React.Component {
 
 		return (
 			<RoutedMap
+				editable={true}
 				key={'leafletRoutedMap'}
 				referenceSystem={MappingConstants.crs25832}
 				referenceSystemDefinition={MappingConstants.proj4crs25832def}
@@ -114,7 +115,7 @@ export class VerdisMap_ extends React.Component {
 					boundingBox={this.props.mapping.boundingBox}
 					clusteringEnabled={false}
 					style={this.props.featureCollectionStyle}
-					// labeler={flaechenLabeler}
+					//labeler={flaechenLabeler}
 					hoverer={this.props.hoverer}
 					featureClickHandler={this.featureClick}
 					mapRef={this.leafletRoutedMap}
