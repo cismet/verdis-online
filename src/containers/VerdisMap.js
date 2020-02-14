@@ -7,7 +7,13 @@ import { appModes as APP_MODES } from '../constants/uiConstants';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { bindActionCreators } from 'redux';
-import { RoutedMap, MappingConstants, FeatureCollectionDisplay } from 'react-cismap';
+import {
+	RoutedMap,
+	MappingConstants,
+	FeatureCollectionDisplay,
+	NewPolyControl,
+	NewMarkerControl
+} from 'react-cismap';
 import { routerActions as RoutingActions } from 'react-router-redux';
 import { modifyQueryPart } from '../utils/routingHelper';
 
@@ -34,6 +40,7 @@ function mapDispatchToProps(dispatch) {
 		routingActions: bindActionCreators(RoutingActions, dispatch)
 	};
 }
+
 export class VerdisMap_ extends React.Component {
 	constructor(props) {
 		super(props);
@@ -61,16 +68,34 @@ export class VerdisMap_ extends React.Component {
 
 		this.props.featureClickHandler(event, feature, layer);
 	}
+
+	onFeatureCreation(feature) {
+		console.log('feature created', feature);
+
+		// setAnnotations((oldAnno) => {
+		// 	feature.id = oldAnno.length;
+		// 	return [ ...oldAnno, feature ];
+		// });
+	}
+	onFeatureChange(feature) {
+		// setAnnotations((oldAnno) => {
+		// 	//feature.inEditMode = true;
+		// 	oldAnno[feature.id] = feature;
+		// 	return [ ...oldAnno ];
+		// });
+	}
+
 	render() {
 		const mapStyle = {
 			height: this.props.height
 		};
 
 		let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
-
+		let annotationEditable = true;
 		return (
 			<RoutedMap
 				editable={true}
+				snappingEnabled={true}
 				key={'leafletRoutedMap'}
 				referenceSystem={MappingConstants.crs25832}
 				referenceSystemDefinition={MappingConstants.proj4crs25832def}
@@ -121,7 +146,72 @@ export class VerdisMap_ extends React.Component {
 					mapRef={this.leafletRoutedMap}
 					showMarkerCollection={urlSearchParams.get('zoom') >= 15}
 					markerStyle={getMarkerStyleFromFeatureConsideringSelection}
+					snappingGuides={true}
 				/>
+				{/* {annotationEditable && (
+					<FeatureCollectionDisplay
+						editable={true}
+						snappingGuides={true}
+						onFeatureCreation={onFeatureCreation}
+						onFeatureChangeAfterEditing={onFeatureChange}
+						editModeStatusChanged={onFeatureChange}
+						customType='annotation'
+						key={'annotations_' + JSON.stringify(annotations)}
+						featureCollection={annotations}
+						boundingBox={{
+							left: 343647.19856823067,
+							top: 5695957.177980389,
+							right: 398987.6070465423,
+							bottom: 5652273.416315537
+						}}
+						featureClickHandler={(event, feature) => {
+							// console.log('click', event, feature);
+							// if (feature.selected === undefined || feature.selected === false) {
+							// 	feature.selected = true;
+							// } else {
+							// 	feature.selected = false;
+							// }
+							// onFeatureChange(feature);
+						}}
+						style={(feature) => {
+							console.log('style feature', feature.selected);
+							const currentColor = '#ffff00';
+
+							let opacity,
+								lineColor,
+								fillColor = '#B90504',
+								markerColor,
+								weight = 2;
+
+							if (feature.selected === true) {
+								opacity = 0.9;
+								lineColor = '#0C7D9D';
+								markerColor = 'blue';
+							} else {
+								opacity = 1;
+								lineColor = '#990100';
+								markerColor = 'red';
+							}
+
+							return {
+								color: lineColor,
+								radius: 8,
+								weight,
+								opacity,
+								fillColor,
+								fillOpacity: 0.6,
+								className: 'annotation-' + feature.id,
+								defaultMarker: true,
+								customMarker: L.ExtraMarkers.icon({
+									icon: feature.inEditMode === true ? 'fa-square' : undefined,
+									markerColor,
+									shape: 'circle',
+									prefix: 'fa'
+								})
+							};
+						}}
+					/>
+				)} */}
 				<CyclingBackgroundButton
 					key={'CyclingBackgroundButton.' + this.props.mapping.selectedBackgroundIndex}
 					position='topleft'
@@ -131,6 +221,8 @@ export class VerdisMap_ extends React.Component {
 					}
 					currentBackgroundIndex={this.props.mapping.selectedBackgroundIndex}
 				/>
+				{annotationEditable && <NewPolyControl />}
+				{annotationEditable && <NewMarkerControl />}
 			</RoutedMap>
 		);
 	}
