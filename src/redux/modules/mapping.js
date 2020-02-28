@@ -249,7 +249,7 @@ function fitFeatureBounds(feature, mode) {
 	return function(dispatch) {
 		const projectedF = L.Proj.geoJson(feature);
 		const bounds = projectedF.getBounds();
-		dispatch(setAutoFit(true, bounds, mode));
+		dispatch(setAutoFit(true, getSimpleBounds(bounds), mode));
 	};
 }
 
@@ -259,15 +259,20 @@ function fitAll() {
 		dispatch(fitFeatureCollection(currentState.mapping.featureCollection));
 	};
 }
-
 function fitFeatureCollection(features) {
 	return function(dispatch) {
 		const projectedFC = L.Proj.geoJson(features);
 		const bounds = projectedFC.getBounds();
-		dispatch(setAutoFit(true, bounds, constants.AUTO_FIT_MODE_STRICT));
+		dispatch(setAutoFit(true, getSimpleBounds(bounds), constants.AUTO_FIT_MODE_STRICT));
 	};
 }
 
+function getSimpleBounds(latLngBounds) {
+	return [
+		[ latLngBounds._northEast.lat, latLngBounds._northEast.lng ],
+		[ latLngBounds._southWest.lat, latLngBounds._southWest.lng ]
+	];
+}
 //EXPORT ACTIONS
 
 // internalShowKassenzeichenObject,

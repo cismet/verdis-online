@@ -91,7 +91,13 @@ export class VerdisMap_ extends React.Component {
 		};
 
 		let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
-		let annotationEditable = true;
+		console.log(
+			'this.props.uiState.changeRequestsEditMode',
+			this.props.uiState.changeRequestsEditMode
+		);
+
+		let annotationEditable = this.props.uiState.changeRequestsEditMode;
+
 		return (
 			<RoutedMap
 				editable={true}
@@ -221,8 +227,22 @@ export class VerdisMap_ extends React.Component {
 					}
 					currentBackgroundIndex={this.props.mapping.selectedBackgroundIndex}
 				/>
-				{annotationEditable && <NewPolyControl />}
-				{annotationEditable && <NewMarkerControl />}
+				{annotationEditable && (
+					<NewPolyControl
+						key={
+							'NewPolyControl + update when CyclingBackgroundButton.' +
+							this.props.mapping.selectedBackgroundIndex
+						}
+					/>
+				)}
+				{annotationEditable && (
+					<NewMarkerControl
+						key={
+							'NewMarkerControl+ update when CyclingBackgroundButton.' +
+							this.props.mapping.selectedBackgroundIndex
+						}
+					/>
+				)}
 			</RoutedMap>
 		);
 	}
