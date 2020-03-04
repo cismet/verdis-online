@@ -9,10 +9,14 @@ import { routerActions as RoutingActions } from 'react-router-redux';
 import {
 	getFlaechenFeatureCollection,
 	getFrontenFeatureCollection,
-	getKassenzeichenInfoFeatureCollection
+	getKassenzeichenInfoFeatureCollection,
+	getAnnotationFeatureCollection
 } from '../../utils/kassenzeichenMappingTools';
 import { changeKassenzeichenInLocation } from '../../utils/routingHelper';
 import { mockchangerequests } from './mockData';
+
+import { toArabic, toRoman } from 'roman-numerals';
+
 ///TYPES
 export const types = {
 	SET_KASSENZEICHEN: 'KASSENZEICHEN/SET_KASSENZEICHEN'
@@ -87,10 +91,15 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
 						);
 						switch (state.uiState.mode) {
 							case APP_MODES.VERSIEGELTE_FLAECHEN:
+								const flaechenFC = getFlaechenFeatureCollection(kassenzeichenData);
+								const annoFC = getAnnotationFeatureCollection(
+									state.kassenzeichen.aenderungsanfrage
+								);
 								dispatch(
-									MappingActions.setFeatureCollection(
-										getFlaechenFeatureCollection(kassenzeichenData)
-									)
+									MappingActions.setFeatureCollection([
+										...flaechenFC,
+										...annoFC
+									])
 								);
 								break;
 							case APP_MODES.ESW:
@@ -151,7 +160,7 @@ function getKassenzeichenbySTAC(stac, callback) {
 				STAC: stac
 			}
 		};
-
+		const state = getState();
 		let fd = new FormData();
 		fd.append(
 			'taskparams',
@@ -175,6 +184,8 @@ function getKassenzeichenbySTAC(stac, callback) {
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(actionResult) {
 						const kassenzeichenData = JSON.parse(actionResult.res);
+						console.log('xxx', kassenzeichenData);
+
 						// kassenzeichenData.aenderungsanfrage =
 						// 	mockchangerequests[kassenzeichenData.kassenzeichennummer8];
 
@@ -187,11 +198,21 @@ function getKassenzeichenbySTAC(stac, callback) {
 							}
 						} else {
 							dispatch(setKassenzeichenObject(kassenzeichenData));
-							dispatch(
-								MappingActions.setFeatureCollection(
-									getFlaechenFeatureCollection(kassenzeichenData)
-								)
+							const flaechenFC = getFlaechenFeatureCollection(kassenzeichenData);
+							const annoFC = getAnnotationFeatureCollection(
+								kassenzeichenData.aenderungsanfrage
 							);
+							console.log('annoFC', annoFC);
+
+							dispatch(
+								MappingActions.setFeatureCollection([ ...flaechenFC, ...annoFC ])
+							);
+
+							// dispatch(
+							// 	MappingActions.setFeatureCollection(
+							// 		getFlaechenFeatureCollection(kassenzeichenData)
+							// 	)
+							// );
 							dispatch(MappingActions.setSelectedFeatureIndex(null));
 							dispatch(MappingActions.fitAll());
 							dispatch(AuthActions.setStac(stac));
@@ -530,7 +551,8 @@ function setChangeRequestsForFlaeche(flaeche, crs) {
 			newKassz.aenderungsanfrage = {
 				kassenzeichen: newKassz.kassenzeichennummer8,
 				flaechen: {},
-				nachrichten: []
+				nachrichten: [],
+				annotations: []
 			};
 		} else if (newKassz.aenderungsanfrage.flaechen === undefined) {
 			newKassz.aenderungsanfrage.flaechen = {};
@@ -549,7 +571,8 @@ function addChangeRequestMessage(msg) {
 			newKassz.aenderungsanfrage = {
 				kassenzeichen: newKassz.kassenzeichennummer8,
 				flaechen: [],
-				nachrichten: [ msg ]
+				nachrichten: [ msg ],
+				geometrien: {}
 			};
 		} else {
 			if (
@@ -678,6 +701,8 @@ function storeCR(
 		console.log('Stored CR', payload);
 	}
 ) {
+	console.log('__CR', cr);
+
 	return function(dispatch, getState) {
 		dispatch(UiStateActions.setCloudStorageStatus(CLOUDSTORAGESTATES.CLOUD_STORAGE_UP));
 		const stac = getState().auth.stac;
@@ -813,6 +838,51 @@ export function getNumberOfPendingChanges(cr) {
 	return { crDraftCounter, crCounter };
 }
 
+function addAnnotation(annotationFeature) {
+	return function(dispatch, getState) {
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		const feature = JSON.parse(JSON.stringify(annotationFeature));
+
+		const annotationCount = Object.keys((newKassz.aenderungsanfrage || {}).geometrien || {})
+			.length;
+		feature.id = 'anno.' + (annotationCount + 1);
+		const annotationName = toRoman(annotationCount + 1);
+		feature.properties.name = annotationName;
+		feature.properties.draft = true;
+
+		if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
+			newKassz.aenderungsanfrage = {
+				kassenzeichen: newKassz.kassenzeichennummer8,
+				flaechen: [],
+				nachrichten: [],
+				geometrien: { annotationName: feature }
+			};
+		} else {
+			if (
+				newKassz.aenderungsanfrage.geometrien === undefined ||
+				newKassz.aenderungsanfrage.geometrien === null
+			) {
+				newKassz.aenderungsanfrage.geometrien = {};
+			}
+			newKassz.aenderungsanfrage.geometrien[annotationName] = feature;
+		}
+		dispatch(setKassenzeichenObject(newKassz));
+		dispatch(storeCR(newKassz.aenderungsanfrage));
+	};
+}
+
+function changeAnnotation(annotation) {
+	return function(dispatch, getState) {
+		const kassenzeichen = getState().kassenzeichen;
+		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+		if (newKassz.aenderungsanfrage.geometrien !== undefined) {
+			newKassz.aenderungsanfrage.geometrien[annotation.properties.name] = annotation;
+		}
+		dispatch(storeCR(newKassz.aenderungsanfrage));
+		dispatch(setKassenzeichenObject(newKassz));
+	};
+}
 // console.log('acceptedFiles', acceptedFiles);
 // const reader = new FileReader();
 
@@ -842,5 +912,7 @@ export const actions = {
 	removeLastChangeRequestMessage,
 	addCRDoc,
 	storeCR,
-	submitCR
+	submitCR,
+	addAnnotation,
+	changeAnnotation
 };

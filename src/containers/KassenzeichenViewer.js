@@ -8,6 +8,7 @@ import ContactPanel from '../components/ContactPanel';
 
 import KassenzeichenFlaechenChartPanel from '../components/KassenzeichenFlaechenChartPanel';
 import FlaechenPanel from '../components/FlaechenPanel';
+import AnnotationPanel from '../components/AnnotationPanel';
 import Waiting from './Waiting';
 import { Alert } from 'react-bootstrap';
 import Flexbox from 'flexbox-react';
@@ -26,7 +27,7 @@ import {
 } from '../utils/kassenzeichenHelper';
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
 import ChangeRequestEditView from '../components/changerequests/CR50Flaechendialog';
-
+import AnnotationEditView from '../components/changerequests/CR60AnnotationDialog';
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -186,11 +187,23 @@ export class KassenzeichenViewer_ extends React.Component {
 		};
 
 		let flaechen = [];
+		let anmerkungsflaechen = [];
 		let flComps = [];
 
 		if (this.props.kassenzeichen.flaechen && this.props.uiState.detailElementsEnabled) {
 			flaechen = this.props.kassenzeichen.flaechen.concat().sort(kassenzeichenFlaechenSorter);
 		}
+
+		if (
+			this.props.kassenzeichen.aenderungsanfrage !== undefined &&
+			this.props.kassenzeichen.aenderungsanfrage.geometrien !== undefined
+		) {
+			const keys = Object.keys(this.props.kassenzeichen.aenderungsanfrage.geometrien);
+			for (const key of keys) {
+				anmerkungsflaechen.push(this.props.kassenzeichen.aenderungsanfrage.geometrien[key]);
+			}
+		}
+
 		let kassenzeichenPanel;
 		let kassenzeichenHorizontalFlaechenChartsPanel;
 		let kassenzeichenVerticalFlaechenChartsPanel;
@@ -331,10 +344,29 @@ export class KassenzeichenViewer_ extends React.Component {
 				</div>
 			);
 		} else {
+			console.log('anmerkungsflaechen', anmerkungsflaechen);
+
 			if (flaechen) {
 				const that = this;
 				this.flaechenPanelRefs = {};
-				flComps = flaechen.map(function(flaeche) {
+				if (anmerkungsflaechen) {
+					flComps = anmerkungsflaechen.map((annotationFeature) => {
+						return (
+							<AnnotationPanel
+								key={'AnnotationPanel.' + JSON.stringify(annotationFeature)}
+								annotationFeature={annotationFeature}
+								showEditAnnoMenu={() => {
+									that.props.uiStateActions.showCRAnnotationEditUI(
+										annotationFeature,
+										{}
+									);
+								}}
+							/>
+						);
+					});
+				}
+
+				const comps = flaechen.map(function(flaeche) {
 					const sel = that.isFlaecheSelected(flaeche);
 					const cr = that.getCRsForFlaeche(flaeche);
 					return (
@@ -361,6 +393,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						/>
 					);
 				});
+				flComps = [ ...flComps, ...comps ];
 			}
 
 			verdisMapWithAdditionalComponents = (
@@ -481,6 +514,33 @@ export class KassenzeichenViewer_ extends React.Component {
 					uploadCRDoc={this.props.kassenzeichenActions.addCRDoc}
 					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
 					documents={documents}
+				/>
+				<AnnotationEditView
+					height={mapHeight + 10}
+					visible={this.props.uiState.changeRequestAnnotationEditViewVisible}
+					annotationFeature={this.props.uiState.changeRequestAnnotationEditViewAnnotation}
+					setNewAnnotation={(anno) => {
+						this.props.uiStateActions.setChangeRequestsAnnotationEditViewAnnotationAndCR(
+							anno
+						);
+						// this.props.kassenzeichenActions.changeAnnotation(
+						// 	this.props.uiState.changeRequestAnnotationEditViewAnnotation
+						// );
+					}}
+					showAnnotationEditView={(storeIt) => {
+						if (storeIt === true) {
+							console.log(
+								'SPEICHERN der Annotation',
+								this.props.uiState.changeRequestAnnotationEditViewAnnotation
+									.properties
+							);
+
+							this.props.kassenzeichenActions.changeAnnotation(
+								this.props.uiState.changeRequestAnnotationEditViewAnnotation
+							);
+						}
+						this.props.uiStateActions.showChangeRequestsAnnotationEditView(false);
+					}}
 				/>
 
 				{verdisMapWithAdditionalComponents}

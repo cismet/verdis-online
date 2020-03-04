@@ -35,7 +35,11 @@ export const types = {
 	SET_FEB_BLOB: 'UI_STATE/SET_FEB_BLOB',
 	SET_WAIT4FEB: 'UI_STATE/SET_WAIT4FEB',
 	SET_APPLICATION_MENU_ACTIVE_KEY: 'UISTATE/SET_APPLICATION_MENU_ACTIVE_KEY',
-	SET_CLOUD_STORAGE_STATUS: 'UISTATE/SET_CLOUD_STORAGE_STATUS'
+	SET_CLOUD_STORAGE_STATUS: 'UISTATE/SET_CLOUD_STORAGE_STATUS',
+
+	SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI: 'UI_STATE/SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI',
+	SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR:
+		'UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR'
 };
 
 export const CLOUDSTORAGESTATES = {
@@ -65,6 +69,10 @@ const initialState = {
 	changeRequestEditViewVisible: false,
 	changeRequestEditViewFlaeche: {},
 	changeRequestEditViewCR: {},
+
+	changeRequestAnnotationEditViewVisible: false,
+	changeRequestAnnotationEditViewAnnotation: {},
+	changeRequestAnnotationEditViewCR: {},
 
 	applicationMenuVisible: false,
 	applicationMenuActiveKey: 'none',
@@ -170,6 +178,17 @@ export default function uiStateReducer(state = initialState, action) {
 			newState = objectAssign({}, state);
 			newState.changeRequestEditViewFlaeche = action.flaeche;
 			newState.changeRequestEditViewCR = action.cr;
+			return newState;
+		}
+		case types.SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI: {
+			newState = objectAssign({}, state);
+			newState.changeRequestAnnotationEditViewVisible = action.visible;
+			return newState;
+		}
+		case types.SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR: {
+			newState = objectAssign({}, state);
+			newState.changeRequestAnnotationEditViewAnnotation = action.annotation;
+			newState.changeRequestAnnotationEditViewCR = action.cr;
 			return newState;
 		}
 		case types.SET_CHANGE_REQUESTS_EDIT_MODE: {
@@ -339,7 +358,19 @@ function setChangeRequestsEditViewFlaecheAndCR(flaeche, cr) {
 		cr
 	};
 }
-
+function showChangeRequestsAnnotationEditView(visible) {
+	return {
+		type: types.SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI,
+		visible
+	};
+}
+function setChangeRequestsAnnotationEditViewAnnotationAndCR(annotation, cr) {
+	return {
+		type: types.SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR,
+		annotation,
+		cr
+	};
+}
 function setKassenzeichenSearchInProgress(progress) {
 	return {
 		type: types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS,
@@ -471,6 +502,12 @@ function showCREditUI(flaeche, cr) {
 		dispatch(showChangeRequestsEditView(true));
 	};
 }
+function showCRAnnotationEditUI(annotation, cr) {
+	return function(dispatch, getState) {
+		dispatch(setChangeRequestsAnnotationEditViewAnnotationAndCR(annotation, cr));
+		dispatch(showChangeRequestsAnnotationEditView(true));
+	};
+}
 
 //EXPORT ACTIONS
 
@@ -503,5 +540,8 @@ export const actions = {
 	setApplicationMenuActiveKey,
 	showCREditUI,
 	setChangeRequestInEditMode,
-	setCloudStorageStatus
+	setCloudStorageStatus,
+	showChangeRequestsAnnotationEditView,
+	setChangeRequestsAnnotationEditViewAnnotationAndCR,
+	showCRAnnotationEditUI
 };

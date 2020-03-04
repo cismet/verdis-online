@@ -47,6 +47,8 @@ export class VerdisMap_ extends React.Component {
 		this.mapDblClick = this.mapDblClick.bind(this);
 		this.featureClick = this.featureClick.bind(this);
 		this.fitBounds = this.fitBounds.bind(this);
+		this.onFeatureCreation = this.onFeatureCreation.bind(this);
+		this.onFeatureChange = this.onFeatureChange.bind(this);
 	}
 
 	fitBounds() {
@@ -71,13 +73,15 @@ export class VerdisMap_ extends React.Component {
 
 	onFeatureCreation(feature) {
 		console.log('feature created', feature);
-
+		this.props.kassenzeichenActions.addAnnotation(feature);
 		// setAnnotations((oldAnno) => {
 		// 	feature.id = oldAnno.length;
 		// 	return [ ...oldAnno, feature ];
 		// });
 	}
 	onFeatureChange(feature) {
+		console.log('feature Changed', feature);
+
 		// setAnnotations((oldAnno) => {
 		// 	//feature.inEditMode = true;
 		// 	oldAnno[feature.id] = feature;
@@ -101,6 +105,8 @@ export class VerdisMap_ extends React.Component {
 		return (
 			<RoutedMap
 				editable={true}
+				onFeatureCreation={this.onFeatureCreation}
+				onFeatureChangeAfterEditing={this.onFeatureChange}
 				snappingEnabled={true}
 				key={'leafletRoutedMap'}
 				referenceSystem={MappingConstants.crs25832}

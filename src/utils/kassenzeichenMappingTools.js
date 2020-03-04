@@ -1,4 +1,5 @@
 import { getGeoJsonFeatureFromCidsObject } from './cidsTools';
+import L from 'leaflet';
 
 import ColorHash from 'color-hash';
 import { get } from 'lodash';
@@ -20,6 +21,23 @@ export const getFlaechenFeatureCollection = (kassenzeichen) => {
 			};
 		}
 	);
+	// console.log('geojson', geojson, JSON.stringify(geojson));
+
+	return geojson;
+};
+
+export const getAnnotationFeatureCollection = (aenderungsanfrage) => {
+	const geojson = [];
+
+	if (aenderungsanfrage.geometrien !== undefined && aenderungsanfrage.geometrien !== null) {
+		const keys = Object.keys(aenderungsanfrage.geometrien);
+		for (const key of keys) {
+			const feature = JSON.parse(JSON.stringify(aenderungsanfrage.geometrien[key]));
+			feature.featuretype = 'annotation';
+			geojson.push(feature);
+		}
+	}
+
 	// console.log('geojson', geojson, JSON.stringify(geojson));
 
 	return geojson;
@@ -117,26 +135,63 @@ export const getColorForKassenzeichenGeometry = (geo_field) => {
 };
 
 export const flaechenStyle = (feature) => {
-	let color = getColorFromFlaechenArt(feature.properties.art_abk);
-	let opacity = 0.6;
-	let linecolor = '#000000';
-	let weight = 1;
+	if (feature.featuretype === 'annotation') {
+		const currentColor = '#ffff00';
 
-	if (feature.selected === true) {
-		opacity = 0.9;
-		linecolor = '#0C7D9D';
-		weight = '2';
+		let opacity,
+			lineColor,
+			fillColor = '#B90504',
+			markerColor,
+			weight = 2;
+
+		if (feature.selected === true) {
+			opacity = 0.9;
+			lineColor = '#0C7D9D';
+			markerColor = 'blue';
+		} else {
+			opacity = 1;
+			lineColor = '#990100';
+			markerColor = 'red';
+		}
+
+		return {
+			color: lineColor,
+			radius: 8,
+			weight,
+			opacity,
+			fillColor,
+			fillOpacity: 0.6,
+			className: 'annotation-' + feature.id,
+			defaultMarker: true,
+			customMarker: L.ExtraMarkers.icon({
+				icon: feature.inEditMode === true ? 'fa-square' : undefined,
+				markerColor,
+				shape: 'circle',
+				prefix: 'fa',
+				number: 'X'
+			})
+		};
+	} else {
+		let color = getColorFromFlaechenArt(feature.properties.art_abk);
+		let opacity = 0.6;
+		let linecolor = '#000000';
+		let weight = 1;
+
+		if (feature.selected === true) {
+			opacity = 0.9;
+			linecolor = '#0C7D9D';
+			weight = '2';
+		}
+		const style = {
+			color: linecolor,
+			weight: weight,
+			opacity: 1.0,
+			fillColor: color,
+			fillOpacity: opacity,
+			className: 'verdis-flaeche-' + feature.properties.bez
+		};
+		return style;
 	}
-	const style = {
-		color: linecolor,
-		weight: weight,
-		opacity: 1.0,
-		fillColor: color,
-		fillOpacity: opacity,
-		className: 'verdis-flaeche-' + feature.properties.bez
-	};
-
-	return style;
 };
 
 export const kassenzeichenGeometrienStyle = (feature) => {
@@ -219,7 +274,17 @@ export const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
 		linecolor = '#0C7D9D';
 		weight = '2';
 	}
-
+	let text, yTextPos;
+	if (feature.featuretype === 'annotation') {
+		text = feature.properties.name;
+	} else {
+		text = feature.properties.bez;
+	}
+	if (feature.featuretype === 'annotation' && feature.geometry.type === 'Point') {
+		yTextPos = 60;
+	} else {
+		yTextPos = 50;
+	}
 	const style = {
 		radius: 10,
 		color: linecolor,
@@ -233,8 +298,7 @@ export const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
             .flaeche { font: bold 16px sans-serif; }
         </style>
 
-        <text x="50" y="50" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${feature
-			.properties.bez}</text>
+        <text x="50" y="${yTextPos}" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${text}</text>
       </svg>`
 	};
 
