@@ -344,8 +344,6 @@ export class KassenzeichenViewer_ extends React.Component {
 				</div>
 			);
 		} else {
-			console.log('anmerkungsflaechen', anmerkungsflaechen);
-
 			if (flaechen) {
 				const that = this;
 				this.flaechenPanelRefs = {};
@@ -523,18 +521,9 @@ export class KassenzeichenViewer_ extends React.Component {
 						this.props.uiStateActions.setChangeRequestsAnnotationEditViewAnnotationAndCR(
 							anno
 						);
-						// this.props.kassenzeichenActions.changeAnnotation(
-						// 	this.props.uiState.changeRequestAnnotationEditViewAnnotation
-						// );
 					}}
 					showAnnotationEditView={(storeIt) => {
 						if (storeIt === true) {
-							console.log(
-								'SPEICHERN der Annotation',
-								this.props.uiState.changeRequestAnnotationEditViewAnnotation
-									.properties
-							);
-
 							this.props.kassenzeichenActions.changeAnnotation(
 								this.props.uiState.changeRequestAnnotationEditViewAnnotation
 							);

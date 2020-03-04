@@ -184,7 +184,6 @@ function getKassenzeichenbySTAC(stac, callback) {
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(actionResult) {
 						const kassenzeichenData = JSON.parse(actionResult.res);
-						console.log('xxx', kassenzeichenData);
 
 						// kassenzeichenData.aenderungsanfrage =
 						// 	mockchangerequests[kassenzeichenData.kassenzeichennummer8];
@@ -202,7 +201,6 @@ function getKassenzeichenbySTAC(stac, callback) {
 							const annoFC = getAnnotationFeatureCollection(
 								kassenzeichenData.aenderungsanfrage
 							);
-							console.log('annoFC', annoFC);
 
 							dispatch(
 								MappingActions.setFeatureCollection([ ...flaechenFC, ...annoFC ])

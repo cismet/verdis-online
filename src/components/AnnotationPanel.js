@@ -11,8 +11,6 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 const Comp = ({ annotationFeature, editmode = true, selected, showEditAnnoMenu }) => {
-	console.log('AnnotationPanel for ', annotationFeature);
-
 	const divRef = useRef(null);
 	const editButtonColor = colorChanged;
 	const color = colorChanged;

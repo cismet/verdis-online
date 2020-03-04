@@ -95,10 +95,6 @@ export class VerdisMap_ extends React.Component {
 		};
 
 		let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
-		console.log(
-			'this.props.uiState.changeRequestsEditMode',
-			this.props.uiState.changeRequestsEditMode
-		);
 
 		let annotationEditable = this.props.uiState.changeRequestsEditMode;
 
