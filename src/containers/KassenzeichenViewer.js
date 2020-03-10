@@ -351,7 +351,18 @@ export class KassenzeichenViewer_ extends React.Component {
 				const that = this;
 				this.flaechenPanelRefs = {};
 				if (anmerkungsflaechen) {
-					flComps = anmerkungsflaechen.map((annotationFeature) => {
+					const sortedAnmerkungsflaechen = anmerkungsflaechen.sort((a, b) => {
+						return (
+							Number(a.id.replace('anno.', '')) - Number(b.id.replace('anno.', ''))
+						);
+					});
+
+					flComps = sortedAnmerkungsflaechen.map((annotationFeature) => {
+						console.log(
+							'annotationFeature',
+							Number(annotationFeature.id.replace('anno.', ''))
+						);
+
 						const sel = that.isFlaecheSelected(annotationFeature);
 						const ap = (
 							<AnnotationPanel
