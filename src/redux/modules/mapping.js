@@ -12,7 +12,8 @@ export const types = {
 	FEATURE_SELECTION_INDEX_CHANGED: 'MAPPING/FEATURE_SELECTION_INDEX_CHANGED',
 	SET_AUTO_FIT: 'MAPPING/SET_AUTO_FIT',
 	GAZETTEER_HIT: 'MAPPING/GAZETTEER_HIT',
-	SET_BACKGROUND_INDEX: 'MAPPING/SET_BACKGROUND_INDEX'
+	SET_BACKGROUND_INDEX: 'MAPPING/SET_BACKGROUND_INDEX',
+	SET_IDS_IN_EDIT: 'MAPPING/SET_IDS_IN_EDIT'
 };
 export const constants = {
 	AUTO_FIT_MODE_STRICT: 'MAPPING/AUTO_FIT_MODE_STRICT',
@@ -28,6 +29,7 @@ export const constants = {
 
 const initialState = {
 	featureCollection: [],
+	idsInEdit: [],
 	selectedIndex: null,
 	boundingBox: null,
 	autoFitBoundsTarget: null,
@@ -131,6 +133,11 @@ export default function mappingReducer(state = initialState, action) {
 			newState.selectedBackgroundIndex = action.selectedBackgroundIndex;
 			return newState;
 		}
+		case types.SET_IDS_IN_EDIT: {
+			newState = objectAssign({}, state);
+			newState.idsInEdit = action.idsInEdit;
+			return newState;
+		}
 
 		default:
 			return state;
@@ -217,6 +224,12 @@ function setSelectedBackgroundIndex(selectedBackgroundIndex) {
 	};
 }
 
+function setIdsInEdit(idsInEdit) {
+	return {
+		type: types.SET_IDS_IN_EDIT,
+		idsInEdit
+	};
+}
 //COMPLEXACTIONS
 
 // function showKassenzeichenObject(kassenzeichenObject, skipFitBounds) {
@@ -273,6 +286,17 @@ function getSimpleBounds(latLngBounds) {
 		[ latLngBounds._southWest.lat, latLngBounds._southWest.lng ]
 	];
 }
+
+export function getLayerForFeatureId(routedmap, featureId) {
+	let l = undefined;
+	routedmap.leafletMap.leafletElement.eachLayer(function(layer) {
+		if (layer.feature !== undefined && layer.feature.id === featureId) {
+			l = layer;
+		}
+	});
+
+	return l;
+}
 //EXPORT ACTIONS
 
 // internalShowKassenzeichenObject,
@@ -291,5 +315,6 @@ export const actions = {
 	fitFeatureBounds,
 	fitAll,
 	fitFeatureCollection,
-	setSelectedBackgroundIndex
+	setSelectedBackgroundIndex,
+	setIdsInEdit
 };

@@ -33,7 +33,7 @@ export const getAnnotationFeatureCollection = (aenderungsanfrage) => {
 		const keys = Object.keys(aenderungsanfrage.geometrien);
 		for (const key of keys) {
 			const feature = JSON.parse(JSON.stringify(aenderungsanfrage.geometrien[key]));
-			feature.featuretype = 'annotation';
+			feature.properties.type = 'annotation';
 			feature.crs = { type: 'name', properties: { name: 'urn:ogc:def:crs:EPSG::25832' } };
 			feature.properties.id = feature.properties.id;
 			geojson.push(feature);
@@ -137,7 +137,7 @@ export const getColorForKassenzeichenGeometry = (geo_field) => {
 };
 
 export const flaechenStyle = (feature) => {
-	if (feature.featuretype === 'annotation') {
+	if (feature.properties.type === 'annotation') {
 		const currentColor = '#ffff00';
 
 		let opacity,
@@ -280,12 +280,12 @@ export const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
 		weight = '2';
 	}
 	let text, yTextPos;
-	if (feature.featuretype === 'annotation') {
+	if (feature.properties.type === 'annotation') {
 		text = feature.properties.name;
 	} else {
 		text = feature.properties.bez;
 	}
-	if (feature.featuretype === 'annotation' && feature.geometry.type === 'Point') {
+	if (feature.properties.type === 'annotation' && feature.geometry.type === 'Point') {
 		yTextPos = 60;
 	} else {
 		yTextPos = 50;

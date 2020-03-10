@@ -18,7 +18,8 @@ const Comp = ({
 	height,
 	showAnnotationEditView = () => {},
 	annotationFeature = { properties: { name: 'I' } },
-	setNewAnnotation = () => {}
+	setNewAnnotation = () => {},
+	deleteAnnotation = () => {}
 }) => {
 	const modalBodyStyle = {
 		overflowY: 'auto',
@@ -30,6 +31,10 @@ const Comp = ({
 	};
 	const cancel = () => {
 		showAnnotationEditView(false);
+	};
+	const deleteAnno = () => {
+		showAnnotationEditView(false);
+		deleteAnnotation(annotationFeature);
 	};
 
 	if (visible !== false && annotationFeature !== {}) {
@@ -110,6 +115,14 @@ const Comp = ({
 										value={annotationFeature.properties.text}
 									/>
 								</FormGroup>
+								<Button
+									id='cmdCloseModalApplicationMenu'
+									bsStyle='danger'
+									type='submit'
+									onClick={deleteAnno}
+								>
+									Anmerkung entfernen
+								</Button>
 							</form>
 						</Panel>
 					</Accordion>

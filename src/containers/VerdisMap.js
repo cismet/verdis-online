@@ -21,6 +21,8 @@ import { getMarkerStyleFromFeatureConsideringSelection } from '../utils/kassenze
 import { Alert } from 'react-bootstrap';
 
 import L from 'leaflet';
+import 'leaflet-editable';
+
 import CyclingBackgroundButton from '../components/CyclingBackgroundButton';
 
 const position = [ 51.272399, 7.199712 ];
@@ -56,6 +58,7 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	mapDblClick(event) {
+		console.log('mapDblClick event', event);
 		if (this.props.authMode === APP_MODES.USER_PW) {
 			const skipFitBounds = true; //event.originalEvent.shiftKey;
 			const latlon = event.latlng;
@@ -65,6 +68,8 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	featureClick(event, feature, layer) {
+		console.log('event', event);
+
 		L.DomEvent.stopPropagation(event.originalEvent);
 		event.originalEvent.preventDefault();
 
@@ -82,6 +87,7 @@ export class VerdisMap_ extends React.Component {
 	onFeatureChange(feature) {
 		console.log('feature Changed', feature);
 
+		this.props.kassenzeichenActions.changeAnnotation(feature);
 		// setAnnotations((oldAnno) => {
 		// 	//feature.inEditMode = true;
 		// 	oldAnno[feature.id] = feature;
@@ -97,6 +103,18 @@ export class VerdisMap_ extends React.Component {
 		let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
 
 		let annotationEditable = this.props.uiState.changeRequestsEditMode;
+		const that = this;
+		if (this.leafletRoutedMap !== undefined) {
+			this.leafletRoutedMap.leafletMap.leafletElement.eachLayer(function(layer) {
+				if (layer.feature != undefined && layer.feature.properties.type === 'annotation') {
+					if (that.props.mapping.idsInEdit.includes(layer.feature.id)) {
+						layer.enableEdit();
+					} else {
+						layer.disableEdit();
+					}
+				}
+			});
+		}
 
 		return (
 			<RoutedMap
@@ -136,15 +154,10 @@ export class VerdisMap_ extends React.Component {
 				}
 			>
 				<FeatureCollectionDisplay
-					key={
-						JSON.stringify(this.props.mapping.featureCollection) + ''
-						//   this.props.featureKeySuffixCreator() +
-						//   "clustered:" +
-						//   this.props.clustered +
-						//   ".customPostfix:" +
-						//   this.props.mapping.featureCollectionKeyPostfix
-					}
-					featureCollection={this.props.mapping.featureCollection}
+					key={'fc' + JSON.stringify(this.props.mapping.featureCollection) + ''}
+					featureCollection={this.props.mapping.featureCollection.filter(
+						(feature) => feature.properties.type !== 'annotation'
+					)}
 					boundingBox={this.props.mapping.boundingBox}
 					clusteringEnabled={false}
 					style={this.props.featureCollectionStyle}
@@ -155,6 +168,26 @@ export class VerdisMap_ extends React.Component {
 					showMarkerCollection={urlSearchParams.get('zoom') >= 15}
 					markerStyle={getMarkerStyleFromFeatureConsideringSelection}
 					snappingGuides={true}
+				/>
+
+				<FeatureCollectionDisplay
+					key={'anno' + JSON.stringify(this.props.mapping.featureCollection) + ''}
+					featureCollection={JSON.parse(
+						JSON.stringify(
+							this.props.mapping.featureCollection.filter(
+								(feature) => feature.properties.type === 'annotation'
+							)
+						)
+					)}
+					boundingBox={this.props.mapping.boundingBox}
+					style={this.props.featureCollectionStyle}
+					hoverer={this.props.hoverer}
+					featureClickHandler={this.featureClick}
+					mapRef={this.leafletRoutedMap}
+					showMarkerCollection={urlSearchParams.get('zoom') >= 15}
+					markerStyle={getMarkerStyleFromFeatureConsideringSelection}
+					snappingGuides={true}
+					editable={true}
 				/>
 				{/* {annotationEditable && (
 					<FeatureCollectionDisplay

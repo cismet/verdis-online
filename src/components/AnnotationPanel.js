@@ -3,13 +3,8 @@ import PropTypes from 'prop-types';
 
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 import { Well } from 'react-bootstrap';
-import {
-	getProcessedFlaechenCR,
-	colorUnchanged,
-	colorChanged,
-	colorDraft
-} from '../utils/kassenzeichenHelper';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { colorUnchanged, colorChanged, colorDraft } from '../utils/kassenzeichenHelper';
+import { faEdit, faDrawPolygon, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 // Switched fomr func comp to class again because of the external ref
@@ -39,6 +34,9 @@ export default class Comp extends React.Component {
 		const selected = this.props.selected;
 		const showEditAnnoMenu = this.props.showEditAnnoMenu;
 		const clickHandler = this.props.clickHandler || (() => {});
+		const togglePolyEditMode = this.props.togglePolyEditMode || (() => {});
+		const layer = this.props.layer;
+		const map = this.props.map;
 
 		const editButtonColor = colorChanged;
 		const color = colorChanged;
@@ -96,6 +94,14 @@ export default class Comp extends React.Component {
 									>
 										<Icon
 											onClick={(e) => {
+												togglePolyEditMode();
+												e.stopPropagation();
+											}}
+											icon={faDrawPolygon}
+											style={{ marginRight: 10 }}
+										/>{' '}
+										<Icon
+											onClick={(e) => {
 												showEditAnnoMenu(annotationFeature);
 												e.stopPropagation();
 											}}
@@ -122,6 +128,7 @@ Comp.propTypes = {
 	editmode: PropTypes.bool,
 	selected: PropTypes.bool,
 	showEditAnnoMenu: PropTypes.func,
-	showEditAnnoMenu: PropTypes.func,
-	clickHandler: PropTypes.func
+	setEditMode4Feature: PropTypes.func,
+	clickHandler: PropTypes.func,
+	layer: PropTypes.object
 };

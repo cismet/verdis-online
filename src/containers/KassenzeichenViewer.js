@@ -14,7 +14,7 @@ import { Alert } from 'react-bootstrap';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
-import { actions as MappingActions } from '../redux/modules/mapping';
+import { actions as MappingActions, getLayerForFeatureId } from '../redux/modules/mapping';
 import { actions as AuthActions } from '../redux/modules/auth';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
@@ -136,7 +136,12 @@ export class KassenzeichenViewer_ extends React.Component {
 
 	flaechenMapClick(event, feature) {
 		if (this.isFlaecheSelected(feature.properties) === true) {
-			this.props.mappingActions.fitSelectedFeatureBounds();
+			if (feature.properties.type !== 'annotation') {
+				this.props.mappingActions.fitSelectedFeatureBounds();
+			} else {
+				// console.log('layer ', event.sourceTarget);
+				// event.sourceTarget.toggleEdit();
+			}
 		} else {
 			console.log('feature that should be selected', feature);
 
@@ -373,7 +378,31 @@ export class KassenzeichenViewer_ extends React.Component {
 										{}
 									);
 								}}
+								inPolyEditMode={that.props.mapping.idsInEdit.includes(
+									annotationFeature.id
+								)}
+								togglePolyEditMode={() => {
+									if (
+										that.props.mapping.idsInEdit.includes(annotationFeature.id)
+									) {
+										const newIds = that.props.mapping.idsInEdit.filter(
+											(id) => id !== annotationFeature.id
+										);
+										that.props.mappingActions.setIdsInEdit(newIds);
+									} else {
+										const newIds = JSON.parse(
+											JSON.stringify(that.props.mapping.idsInEdit)
+										);
+										newIds.push(annotationFeature.id);
+										that.props.mappingActions.setIdsInEdit(newIds);
+									}
+								}}
 								clickHandler={that.flaechenPanelClick}
+								map={this.verdisMap.wrappedInstance.leafletRoutedMap}
+								layer={getLayerForFeatureId(
+									this.verdisMap.wrappedInstance.leafletRoutedMap,
+									annotationFeature.id
+								)}
 							/>
 						);
 
@@ -440,7 +469,7 @@ export class KassenzeichenViewer_ extends React.Component {
 
 			if (
 				selectedFlaeche !== undefined &&
-				selectedFlaeche.featuretype !== 'annotation' &&
+				selectedFlaeche.properties.type !== 'annotation' &&
 				this.props.uiState.infoElementsEnabled
 			) {
 				flaechenInfoOverlay = (
@@ -551,6 +580,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						}
 						this.props.uiStateActions.showChangeRequestsAnnotationEditView(false);
 					}}
+					deleteAnnotation={this.props.kassenzeichenActions.removeAnnotation}
 				/>
 
 				{verdisMapWithAdditionalComponents}
