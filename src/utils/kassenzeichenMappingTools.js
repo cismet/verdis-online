@@ -34,6 +34,8 @@ export const getAnnotationFeatureCollection = (aenderungsanfrage) => {
 		for (const key of keys) {
 			const feature = JSON.parse(JSON.stringify(aenderungsanfrage.geometrien[key]));
 			feature.featuretype = 'annotation';
+			feature.crs = { type: 'name', properties: { name: 'urn:ogc:def:crs:EPSG::25832' } };
+			feature.properties.id = feature.properties.id;
 			geojson.push(feature);
 		}
 	}
@@ -142,14 +144,17 @@ export const flaechenStyle = (feature) => {
 			lineColor,
 			fillColor = '#B90504',
 			markerColor,
-			weight = 2;
+			weight = 2,
+			fillOpacity;
 
 		if (feature.selected === true) {
 			opacity = 0.9;
 			lineColor = '#0C7D9D';
+			fillOpacity = 0.8;
 			markerColor = 'blue';
 		} else {
 			opacity = 1;
+			fillOpacity = 0.6;
 			lineColor = '#990100';
 			markerColor = 'red';
 		}
@@ -160,7 +165,7 @@ export const flaechenStyle = (feature) => {
 			weight,
 			opacity,
 			fillColor,
-			fillOpacity: 0.6,
+			fillOpacity,
 			className: 'annotation-' + feature.id,
 			defaultMarker: true,
 			customMarker: L.ExtraMarkers.icon({

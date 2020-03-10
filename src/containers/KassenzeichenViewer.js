@@ -28,6 +28,7 @@ import {
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
 import ChangeRequestEditView from '../components/changerequests/CR50Flaechendialog';
 import AnnotationEditView from '../components/changerequests/CR60AnnotationDialog';
+import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -137,6 +138,8 @@ export class KassenzeichenViewer_ extends React.Component {
 		if (this.isFlaecheSelected(feature.properties) === true) {
 			this.props.mappingActions.fitSelectedFeatureBounds();
 		} else {
+			console.log('feature that should be selected', feature);
+
 			this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature) => {
 				return testfeature.properties.id === feature.properties.id;
 			});
@@ -349,18 +352,26 @@ export class KassenzeichenViewer_ extends React.Component {
 				this.flaechenPanelRefs = {};
 				if (anmerkungsflaechen) {
 					flComps = anmerkungsflaechen.map((annotationFeature) => {
-						return (
+						const sel = that.isFlaecheSelected(annotationFeature);
+						const ap = (
 							<AnnotationPanel
 								key={'AnnotationPanel.' + JSON.stringify(annotationFeature)}
+								ref={(c) => {
+									that.flaechenPanelRefs[annotationFeature.id] = c;
+								}}
 								annotationFeature={annotationFeature}
+								selected={sel}
 								showEditAnnoMenu={() => {
 									that.props.uiStateActions.showCRAnnotationEditUI(
 										annotationFeature,
 										{}
 									);
 								}}
+								clickHandler={that.flaechenPanelClick}
 							/>
 						);
+
+						return ap;
 					});
 				}
 
@@ -421,7 +432,11 @@ export class KassenzeichenViewer_ extends React.Component {
 				</div>
 			);
 
-			if (selectedFlaeche && this.props.uiState.infoElementsEnabled) {
+			if (
+				selectedFlaeche !== undefined &&
+				selectedFlaeche.featuretype !== 'annotation' &&
+				this.props.uiState.infoElementsEnabled
+			) {
 				flaechenInfoOverlay = (
 					<div
 						style={{

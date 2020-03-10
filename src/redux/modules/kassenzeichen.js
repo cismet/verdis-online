@@ -847,6 +847,8 @@ function addAnnotation(annotationFeature) {
 		feature.id = 'anno.' + (annotationCount + 1);
 		const annotationName = toRoman(annotationCount + 1);
 		feature.properties.name = annotationName;
+		feature.properties.id = feature.id;
+
 		feature.properties.draft = true;
 
 		if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
