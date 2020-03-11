@@ -152,6 +152,7 @@ export const flaechenStyle = (feature) => {
 			lineColor = '#0C7D9D';
 			fillOpacity = 0.8;
 			markerColor = 'blue';
+			console.log('feature xxx', feature);
 		} else {
 			opacity = 1;
 			fillOpacity = 0.6;
@@ -168,6 +169,7 @@ export const flaechenStyle = (feature) => {
 			fillOpacity,
 			className: 'annotation-' + feature.id,
 			defaultMarker: true,
+
 			customMarker: L.ExtraMarkers.icon({
 				icon: feature.inEditMode === true ? 'fa-square' : undefined,
 				markerColor,
@@ -254,6 +256,8 @@ const getStyleFromFeatureConsideringSelection = (feature) => {
 		//   "textShadow": "1px 1px 0px  #000000,-1px 1px 0px  #000000, 1px -1px 0px  #000000, -1px -1px 0px  #000000, 2px 2px 15px #000000",
 	};
 	if (feature.selected) {
+		console.log('xxx feature', feature);
+
 		const radius = 10;
 		const borderDef = `${radius}px ${radius}px ${radius}px ${radius}px`;
 		return {
@@ -262,7 +266,8 @@ const getStyleFromFeatureConsideringSelection = (feature) => {
 			WebkitBorderRadius: borderDef,
 			MozBorderRadius: borderDef,
 			borderRadius: borderDef,
-			padding: '5px'
+			padding: '5px',
+			defaultMarker: true
 		};
 	} else {
 		return base;
@@ -294,21 +299,29 @@ export const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
 	// } else {
 	// 	yTextPos = 10;
 	// }
-	yTextPos = 10;
+	yTextPos = 15;
+	if (feature.properties.type === 'annotation') {
+		if (feature.geometry.type === 'Point') {
+			console.log('feature', feature);
+
+			yTextPos = 20;
+		}
+	}
+
 	const style = {
 		radius: 10,
 		color: linecolor,
 		weight: weight,
 		opacity: 1.0,
 		fillOpacity: opacity,
-		svgSize: 20,
+		svgSize: 30,
 		className: 'verdis-flaeche-marker-' + feature.properties.bez,
-		svg: `<svg height="20" width="20" nostyle="background-color:green">
+		svg: `<svg interactive="false" height="30" width="30" skipstyle="background-color:green;" >
         <style>
             .flaeche { font: bold 16px sans-serif; }
         </style>
 
-        <text x="10" y="${yTextPos}" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${text}</text>
+        <text x="15" y="${yTextPos}" vertical-align="middle" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${text}</text>
       </svg>`
 	};
 
