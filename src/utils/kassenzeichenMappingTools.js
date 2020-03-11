@@ -285,25 +285,30 @@ export const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
 	} else {
 		text = feature.properties.bez;
 	}
-	if (feature.properties.type === 'annotation' && feature.geometry.type === 'Point') {
-		yTextPos = 60;
-	} else {
-		yTextPos = 50;
-	}
+	// if (feature.properties.type === 'annotation') {
+	// 	if (feature.geometry.type === 'Point') {
+	// 		yTextPos = 20;
+	// 	} else {
+	// 		yTextPos = 10;
+	// 	}
+	// } else {
+	// 	yTextPos = 10;
+	// }
+	yTextPos = 10;
 	const style = {
 		radius: 10,
 		color: linecolor,
 		weight: weight,
 		opacity: 1.0,
 		fillOpacity: opacity,
-		svgSize: 100,
+		svgSize: 20,
 		className: 'verdis-flaeche-marker-' + feature.properties.bez,
-		svg: `<svg height="100" width="100">
+		svg: `<svg height="20" width="20" nostyle="background-color:green">
         <style>
             .flaeche { font: bold 16px sans-serif; }
         </style>
 
-        <text x="50" y="${yTextPos}" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${text}</text>
+        <text x="10" y="${yTextPos}" class="flaeche" text-anchor="middle" alignment-baseline="central" fill="#0B486B">${text}</text>
       </svg>`
 	};
 

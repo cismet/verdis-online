@@ -51,6 +51,7 @@ export class VerdisMap_ extends React.Component {
 		this.fitBounds = this.fitBounds.bind(this);
 		this.onFeatureCreation = this.onFeatureCreation.bind(this);
 		this.onFeatureChange = this.onFeatureChange.bind(this);
+		this.handlePolygonEditMode = this.handlePolygonEditMode.bind(this);
 	}
 
 	fitBounds() {
@@ -77,22 +78,35 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	onFeatureCreation(feature) {
-		console.log('feature created', feature);
 		this.props.kassenzeichenActions.addAnnotation(feature);
-		// setAnnotations((oldAnno) => {
-		// 	feature.id = oldAnno.length;
-		// 	return [ ...oldAnno, feature ];
-		// });
 	}
 	onFeatureChange(feature) {
-		console.log('feature Changed', feature);
-
 		this.props.kassenzeichenActions.changeAnnotation(feature);
-		// setAnnotations((oldAnno) => {
-		// 	//feature.inEditMode = true;
-		// 	oldAnno[feature.id] = feature;
-		// 	return [ ...oldAnno ];
-		// });
+	}
+
+	handlePolygonEditMode() {
+		const that = this;
+
+		if (this.leafletRoutedMap !== undefined) {
+			this.leafletRoutedMap.leafletMap.leafletElement.eachLayer(function(layer) {
+				if (layer.feature !== undefined && layer.feature.properties.type === 'annotation') {
+					if (
+						that.props.mapping.idsInEdit.includes(layer.feature.id) &&
+						that.props.mapping.selectedIndex !== undefined &&
+						(that.props.mapping.featureCollection[that.props.mapping.selectedIndex] ||
+							{}).id === layer.feature.id
+					) {
+						layer.enableEdit();
+						console.log('VerdisMap-Render layer.enableEdit();');
+					} else {
+						layer.disableEdit();
+					}
+				}
+			});
+		}
+	}
+	componentDidUpdate() {
+		this.handlePolygonEditMode();
 	}
 
 	render() {
@@ -103,18 +117,6 @@ export class VerdisMap_ extends React.Component {
 		let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
 
 		let annotationEditable = this.props.uiState.changeRequestsEditMode;
-		const that = this;
-		if (this.leafletRoutedMap !== undefined) {
-			this.leafletRoutedMap.leafletMap.leafletElement.eachLayer(function(layer) {
-				if (layer.feature != undefined && layer.feature.properties.type === 'annotation') {
-					if (that.props.mapping.idsInEdit.includes(layer.feature.id)) {
-						layer.enableEdit();
-					} else {
-						layer.disableEdit();
-					}
-				}
-			});
-		}
 
 		return (
 			<RoutedMap
@@ -122,7 +124,13 @@ export class VerdisMap_ extends React.Component {
 				onFeatureCreation={this.onFeatureCreation}
 				onFeatureChangeAfterEditing={this.onFeatureChange}
 				snappingEnabled={true}
-				key={'leafletRoutedMap'}
+				key={
+					'leafletRoutedMap0 + '
+					//  +
+					// JSON.stringify(this.props.mapping.featureCollection) +
+					// '+' +
+					// this.props.mapping.selectedIndex
+				}
 				referenceSystem={MappingConstants.crs25832}
 				referenceSystemDefinition={MappingConstants.proj4crs25832def}
 				ref={(leafletMap) => {
@@ -154,9 +162,14 @@ export class VerdisMap_ extends React.Component {
 				}
 			>
 				<FeatureCollectionDisplay
-					key={'fc' + JSON.stringify(this.props.mapping.featureCollection) + ''}
+					key={
+						'fc' +
+						JSON.stringify(this.props.mapping.featureCollection) +
+						'+' +
+						this.props.mapping.selectedIndex
+					}
 					featureCollection={this.props.mapping.featureCollection.filter(
-						(feature) => feature.properties.type !== 'annotation'
+						(feature) => true || feature.properties.type !== 'annotation'
 					)}
 					boundingBox={this.props.mapping.boundingBox}
 					clusteringEnabled={false}
@@ -169,7 +182,7 @@ export class VerdisMap_ extends React.Component {
 					markerStyle={getMarkerStyleFromFeatureConsideringSelection}
 					snappingGuides={true}
 				/>
-
+				{/* 
 				<FeatureCollectionDisplay
 					key={'anno' + JSON.stringify(this.props.mapping.featureCollection) + ''}
 					featureCollection={JSON.parse(
@@ -188,7 +201,7 @@ export class VerdisMap_ extends React.Component {
 					markerStyle={getMarkerStyleFromFeatureConsideringSelection}
 					snappingGuides={true}
 					editable={true}
-				/>
+				/> */}
 				{/* {annotationEditable && (
 					<FeatureCollectionDisplay
 						editable={true}

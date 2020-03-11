@@ -136,12 +136,12 @@ export class KassenzeichenViewer_ extends React.Component {
 
 	flaechenMapClick(event, feature) {
 		if (this.isFlaecheSelected(feature.properties) === true) {
-			if (feature.properties.type !== 'annotation') {
-				this.props.mappingActions.fitSelectedFeatureBounds();
-			} else {
-				// console.log('layer ', event.sourceTarget);
-				// event.sourceTarget.toggleEdit();
-			}
+			// if (feature.properties.type !== 'annotation') {
+			this.props.mappingActions.fitSelectedFeatureBounds();
+			// } else {
+			// 	// console.log('layer ', event.sourceTarget);
+			// 	// event.sourceTarget.toggleEdit();
+			// }
 		} else {
 			console.log('feature that should be selected', feature);
 
@@ -398,11 +398,11 @@ export class KassenzeichenViewer_ extends React.Component {
 									}
 								}}
 								clickHandler={that.flaechenPanelClick}
-								map={this.verdisMap.wrappedInstance.leafletRoutedMap}
-								layer={getLayerForFeatureId(
-									this.verdisMap.wrappedInstance.leafletRoutedMap,
-									annotationFeature.id
-								)}
+								//map={this.verdisMap.wrappedInstance.leafletRoutedMap}
+								// layer={getLayerForFeatureId(
+								// 	this.verdisMap.wrappedInstance.leafletRoutedMap,
+								// 	annotationFeature.id
+								// )}
 							/>
 						);
 

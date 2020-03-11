@@ -267,7 +267,13 @@ export class Landing_ extends React.Component {
 					</AlertContainer>
 				</div>
 				<div style={landingStyle}>
-					<Grid>
+					<Grid
+						onClick={() => {
+							if (getVersion() === 'dev-hot-reload') {
+								this.handleSTAC('STACSTACSTAC');
+							}
+						}}
+					>
 						<Row className='show-grid'>
 							<Col xs={12} md={12}>
 								<h1 style={{ color: 'white' }}>

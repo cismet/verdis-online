@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 import { Well } from 'react-bootstrap';
 import { colorUnchanged, colorChanged, colorDraft } from '../utils/kassenzeichenHelper';
-import { faEdit, faDrawPolygon, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faDrawPolygon, faTrashAlt, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 // Switched fomr func comp to class again because of the external ref
@@ -35,6 +35,7 @@ export default class Comp extends React.Component {
 		const showEditAnnoMenu = this.props.showEditAnnoMenu;
 		const clickHandler = this.props.clickHandler || (() => {});
 		const togglePolyEditMode = this.props.togglePolyEditMode || (() => {});
+		const inPolyEditMode = this.props.inPolyEditMode || false;
 		const layer = this.props.layer;
 		const map = this.props.map;
 
@@ -92,14 +93,49 @@ export default class Comp extends React.Component {
 											cursor: 'pointer'
 										}}
 									>
-										<Icon
-											onClick={(e) => {
-												togglePolyEditMode();
-												e.stopPropagation();
-											}}
-											icon={faDrawPolygon}
-											style={{ marginRight: 10 }}
-										/>{' '}
+										{/* <span class='fa-layers fa-fw' style='background:MistyRose'>
+											<i class='fas fa-circle' style='color:Tomato' />
+											<i
+												class='fa-inverse fas fa-times'
+												data-fa-transform='shrink-6'
+											/>
+										</span> */}
+										{inPolyEditMode === true && (
+											<span className='fa-layers' style={{}}>
+												<Icon
+													className='fa-lg fa-w12'
+													onClick={(e) => {
+														clickHandler(annotationFeature);
+														togglePolyEditMode();
+														e.stopPropagation();
+													}}
+													icon={faCircle}
+													style={{ marginRight: 10 }}
+												/>
+												<Icon
+													onClick={(e) => {
+														clickHandler(annotationFeature);
+														togglePolyEditMode();
+														e.stopPropagation();
+													}}
+													inverse
+													transform='shrink-4 left-3.6'
+													icon={faDrawPolygon}
+													style={{ marginRight: 10 }}
+												/>
+											</span>
+										)}
+										{inPolyEditMode === false && (
+											<Icon
+												onClick={(e) => {
+													clickHandler(annotationFeature);
+													togglePolyEditMode();
+													e.stopPropagation();
+												}}
+												icon={faDrawPolygon}
+												style={{ marginRight: 10 }}
+											/>
+										)}{' '}
 										<Icon
 											onClick={(e) => {
 												showEditAnnoMenu(annotationFeature);

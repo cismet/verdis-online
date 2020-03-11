@@ -696,14 +696,7 @@ function addCRDoc(file, callback) {
 	};
 }
 
-function storeCR(
-	cr,
-	callback = (payload) => {
-		console.log('Stored CR', payload);
-	}
-) {
-	console.log('__CR', cr);
-
+function storeCR(cr, callback = (payload) => {}) {
 	return function(dispatch, getState) {
 		dispatch(UiStateActions.setCloudStorageStatus(CLOUDSTORAGESTATES.CLOUD_STORAGE_UP));
 		const stac = getState().auth.stac;
@@ -845,12 +838,23 @@ function addAnnotation(annotationFeature) {
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 		const feature = JSON.parse(JSON.stringify(annotationFeature));
 
-		const annotationCount = Object.keys((newKassz.aenderungsanfrage || {}).geometrien || {})
-			.length;
-		feature.id = 'anno.' + (annotationCount + 1);
-		const annotationName = toRoman(annotationCount + 1);
+		const annotationkeys = Object.keys((newKassz.aenderungsanfrage || {}).geometrien || {});
+
+		let maxId = 0;
+		for (const ak of annotationkeys) {
+			if (Object.keys(newKassz.aenderungsanfrage || {}.geometrien).length > 0) {
+				const nid = newKassz.aenderungsanfrage.geometrien[ak].properties.numericId;
+				if (nid > maxId) {
+					maxId = nid;
+				}
+			}
+		}
+		feature.id = 'anno.' + (maxId + 1);
+
+		const annotationName = toRoman(maxId + 1);
 		feature.properties.name = annotationName;
 		feature.properties.id = feature.id;
+		feature.properties.numericId = maxId + 1;
 
 		feature.properties.draft = true;
 
