@@ -152,7 +152,6 @@ export const flaechenStyle = (feature) => {
 			lineColor = '#0C7D9D';
 			fillOpacity = 0.8;
 			markerColor = 'blue';
-			console.log('feature xxx', feature);
 		} else {
 			opacity = 1;
 			fillOpacity = 0.6;
@@ -256,8 +255,6 @@ const getStyleFromFeatureConsideringSelection = (feature) => {
 		//   "textShadow": "1px 1px 0px  #000000,-1px 1px 0px  #000000, 1px -1px 0px  #000000, -1px -1px 0px  #000000, 2px 2px 15px #000000",
 	};
 	if (feature.selected) {
-		console.log('xxx feature', feature);
-
 		const radius = 10;
 		const borderDef = `${radius}px ${radius}px ${radius}px ${radius}px`;
 		return {
@@ -302,8 +299,6 @@ export const getMarkerStyleFromFeatureConsideringSelection = (feature) => {
 	yTextPos = 15;
 	if (feature.properties.type === 'annotation') {
 		if (feature.geometry.type === 'Point') {
-			console.log('feature', feature);
-
 			yTextPos = 20;
 		}
 	}

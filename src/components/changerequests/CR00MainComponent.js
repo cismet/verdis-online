@@ -7,6 +7,7 @@ import FlexView from 'react-flexview';
 import ConversationInput from '../conversations/ConversationInput';
 import CRConversation from '../conversations/CRConversation';
 import FlaechenPanel from '../FlaechenPanel';
+import AnnotationPanel from '../AnnotationPanel';
 import DocPanel from './CR20DocumentsPanel';
 import CloudLoadingAttributeIcon from '../commons/CloudLoadingAttributeIcon';
 
@@ -71,6 +72,7 @@ const CR00 = ({
 			(changerequests || { nachrichten: [] }).nachrichten || [];
 		const origPanels = [];
 		const crPanels = [];
+		const annoPanels = [];
 		let lastUserMessage = undefined;
 		const sMsgs = changerequestMessagesArray.sort((a, b) => a.timestamp - b.timestamp);
 
@@ -97,6 +99,29 @@ const CR00 = ({
 			}
 		});
 
+		//AnnotationPanels
+		console.log('kassenzeichen', kassenzeichen);
+		if (kassenzeichen !== undefined && kassenzeichen.aenderungsanfrage !== undefined) {
+			const annos = kassenzeichen.aenderungsanfrage.geometrien;
+			console.log('annos', annos);
+
+			if (annos !== undefined) {
+				const annoArr = [];
+
+				for (const ak of Object.keys(annos)) {
+					annoArr.push(annos[ak]);
+				}
+
+				const sortedAnnoArr = annoArr.sort(
+					(a, b) => a.properties.numericId - b.properties.numericId
+				);
+				for (const a of sortedAnnoArr) {
+					const ap = <AnnotationPanel annotationFeature={a} />;
+
+					annoPanels.push(ap);
+				}
+			}
+		}
 		sMsgs.map((msg) => {
 			if (msg.typ === 'CITIZEN' && msg.draft === true) {
 				lastUserMessage = msg;
@@ -306,6 +331,18 @@ const CR00 = ({
 									// }
 								}}
 							>
+								<Panel
+									header={
+										'Ihre Anmerkungen in der Karte' +
+										(annoPanels.length > 0
+											? ' (' + annoPanels.length + ')'
+											: '')
+									}
+									eventKey={'sectionKey'}
+									bsStyle={'success'}
+								>
+									{annoPanels}
+								</Panel>
 								<Panel
 									header={
 										'Ihre Dokumente' +

@@ -778,6 +778,13 @@ function submitCR() {
 				}
 			});
 
+			if (newKassz.aenderungsanfrage.geometrien === undefined) {
+				newKassz.aenderungsanfrage.geometrien = {};
+			}
+			for (const ak of Object.keys(newKassz.aenderungsanfrage.geometrien)) {
+				newKassz.aenderungsanfrage.geometrien[ak].properties.draft = false;
+			}
+
 			dispatch(setKassenzeichenObject(newKassz));
 			dispatch(storeCR(newKassz.aenderungsanfrage));
 		}
