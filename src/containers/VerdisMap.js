@@ -116,7 +116,7 @@ export class VerdisMap_ extends React.Component {
 
 		let urlSearchParams = new URLSearchParams(this.props.routing.location.search);
 
-		let annotationEditable = this.props.uiState.changeRequestsEditMode;
+		let annotationEditable = this.props.changeRequestsEditMode; //this.props.uiState.changeRequestsEditMode;
 
 		return (
 			<RoutedMap
@@ -169,7 +169,7 @@ export class VerdisMap_ extends React.Component {
 						this.props.mapping.selectedIndex
 					}
 					featureCollection={this.props.mapping.featureCollection.filter(
-						(feature) => true || feature.properties.type !== 'annotation'
+						(feature) => annotationEditable || feature.properties.type !== 'annotation'
 					)}
 					boundingBox={this.props.mapping.boundingBox}
 					clusteringEnabled={false}
@@ -310,7 +310,8 @@ VerdisMap_.propTypes = {
 	featureClickHandler: PropTypes.func,
 	featureCollectionStyle: PropTypes.func,
 	authMode: PropTypes.string,
-	backgroundlayers: PropTypes.string
+	backgroundlayers: PropTypes.string,
+	changeRequestsEditMode: PropTypes.bool
 };
 
 VerdisMap_.defaultProps = {

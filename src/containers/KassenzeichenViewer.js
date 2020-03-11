@@ -288,6 +288,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						height={mapHeight}
 						featureClickHandler={this.flaechenMapClick}
 						backgroundlayers={this.props.match.params.layers}
+						changeRequestsEditMode={this.props.uiState.changeRequestsEditMode}
 					/>
 				</div>
 			);
@@ -337,6 +338,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						featureClickHandler={this.flaechenMapClick}
 						featureCollectionStyle={flaechenStyle}
 						backgroundlayers={this.props.match.params.layers}
+						changeRequestsEditMode={this.props.uiState.changeRequestsEditMode}
 					/>
 					<Flexbox flexDirection='row' style={detailsStyle}>
 						<Flexbox
@@ -361,55 +363,58 @@ export class KassenzeichenViewer_ extends React.Component {
 							Number(a.id.replace('anno.', '')) - Number(b.id.replace('anno.', ''))
 						);
 					});
+					if (that.props.uiState.changeRequestsEditMode === true) {
+						flComps = sortedAnmerkungsflaechen.map((annotationFeature) => {
+							const sel = that.isFlaecheSelected(annotationFeature);
 
-					flComps = sortedAnmerkungsflaechen.map((annotationFeature) => {
-						const sel = that.isFlaecheSelected(annotationFeature);
-						const ap = (
-							<AnnotationPanel
-								key={'AnnotationPanel.' + JSON.stringify(annotationFeature)}
-								ref={(c) => {
-									that.flaechenPanelRefs[annotationFeature.id] = c;
-								}}
-								annotationFeature={annotationFeature}
-								selected={sel}
-								showEditAnnoMenu={() => {
-									that.props.uiStateActions.showCRAnnotationEditUI(
-										annotationFeature,
-										{}
-									);
-								}}
-								inPolyEditMode={that.props.mapping.idsInEdit.includes(
-									annotationFeature.id
-								)}
-								togglePolyEditMode={() => {
-									if (
-										that.props.mapping.idsInEdit.includes(annotationFeature.id)
-									) {
-										const newIds = that.props.mapping.idsInEdit.filter(
-											(id) => id !== annotationFeature.id
+							const ap = (
+								<AnnotationPanel
+									key={'AnnotationPanel.' + JSON.stringify(annotationFeature)}
+									ref={(c) => {
+										that.flaechenPanelRefs[annotationFeature.id] = c;
+									}}
+									annotationFeature={annotationFeature}
+									selected={sel}
+									showEditAnnoMenu={() => {
+										that.props.uiStateActions.showCRAnnotationEditUI(
+											annotationFeature,
+											{}
 										);
-										that.props.mappingActions.setIdsInEdit(newIds);
-									} else {
-										const newIds = JSON.parse(
-											JSON.stringify(that.props.mapping.idsInEdit)
-										);
-										newIds.push(annotationFeature.id);
-										that.props.mappingActions.setIdsInEdit(newIds);
-									}
-								}}
-								clickHandler={that.flaechenPanelClick}
-								//map={this.verdisMap.wrappedInstance.leafletRoutedMap}
-								// layer={getLayerForFeatureId(
-								// 	this.verdisMap.wrappedInstance.leafletRoutedMap,
-								// 	annotationFeature.id
-								// )}
-							/>
-						);
+									}}
+									inPolyEditMode={that.props.mapping.idsInEdit.includes(
+										annotationFeature.id
+									)}
+									togglePolyEditMode={() => {
+										if (
+											that.props.mapping.idsInEdit.includes(
+												annotationFeature.id
+											)
+										) {
+											const newIds = that.props.mapping.idsInEdit.filter(
+												(id) => id !== annotationFeature.id
+											);
+											that.props.mappingActions.setIdsInEdit(newIds);
+										} else {
+											const newIds = JSON.parse(
+												JSON.stringify(that.props.mapping.idsInEdit)
+											);
+											newIds.push(annotationFeature.id);
+											that.props.mappingActions.setIdsInEdit(newIds);
+										}
+									}}
+									clickHandler={that.flaechenPanelClick}
+									//map={this.verdisMap.wrappedInstance.leafletRoutedMap}
+									// layer={getLayerForFeatureId(
+									// 	this.verdisMap.wrappedInstance.leafletRoutedMap,
+									// 	annotationFeature.id
+									// )}
+								/>
+							);
 
-						return ap;
-					});
+							return ap;
+						});
+					}
 				}
-
 				const comps = flaechen.map(function(flaeche) {
 					const sel = that.isFlaecheSelected(flaeche);
 					const cr = that.getCRsForFlaeche(flaeche);
@@ -462,6 +467,7 @@ export class KassenzeichenViewer_ extends React.Component {
 						height={mapHeight}
 						featureClickHandler={this.flaechenMapClick}
 						featureCollectionStyle={flaechenStyle}
+						changeRequestsEditMode={this.props.uiState.changeRequestsEditMode}
 						backgroundlayers={this.props.match.params.layers}
 					/>
 				</div>
