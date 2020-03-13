@@ -101,7 +101,11 @@ const CR00 = ({
 
 		//AnnotationPanels
 		console.log('kassenzeichen', kassenzeichen);
-		if (kassenzeichen !== undefined && kassenzeichen.aenderungsanfrage !== undefined) {
+		if (
+			kassenzeichen !== undefined &&
+			kassenzeichen.aenderungsanfrage !== undefined &&
+			kassenzeichen.aenderungsanfrage !== null
+		) {
 			const annos = kassenzeichen.aenderungsanfrage.geometrien;
 			console.log('annos', annos);
 

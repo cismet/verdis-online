@@ -29,7 +29,12 @@ export const getFlaechenFeatureCollection = (kassenzeichen) => {
 export const getAnnotationFeatureCollection = (aenderungsanfrage) => {
 	const geojson = [];
 
-	if (aenderungsanfrage.geometrien !== undefined && aenderungsanfrage.geometrien !== null) {
+	if (
+		aenderungsanfrage !== null &&
+		aenderungsanfrage !== undefined &&
+		aenderungsanfrage.geometrien !== undefined &&
+		aenderungsanfrage.geometrien !== null
+	) {
 		const keys = Object.keys(aenderungsanfrage.geometrien);
 		for (const key of keys) {
 			const feature = JSON.parse(JSON.stringify(aenderungsanfrage.geometrien[key]));

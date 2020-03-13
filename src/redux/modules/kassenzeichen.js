@@ -870,7 +870,7 @@ function addAnnotation(annotationFeature) {
 				kassenzeichen: newKassz.kassenzeichennummer8,
 				flaechen: [],
 				nachrichten: [],
-				geometrien: { annotationName: feature }
+				geometrien: {}
 			};
 		} else {
 			if (
@@ -879,8 +879,8 @@ function addAnnotation(annotationFeature) {
 			) {
 				newKassz.aenderungsanfrage.geometrien = {};
 			}
-			newKassz.aenderungsanfrage.geometrien[annotationName] = feature;
 		}
+		newKassz.aenderungsanfrage.geometrien[annotationName] = feature;
 		dispatch(setKassenzeichenObject(newKassz));
 		createFeatureCollectionForFlaechen(
 			dispatch,

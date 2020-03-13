@@ -204,6 +204,7 @@ export class KassenzeichenViewer_ extends React.Component {
 
 		if (
 			this.props.kassenzeichen.aenderungsanfrage !== undefined &&
+			this.props.kassenzeichen.aenderungsanfrage !== null &&
 			this.props.kassenzeichen.aenderungsanfrage.geometrien !== undefined
 		) {
 			const keys = Object.keys(this.props.kassenzeichen.aenderungsanfrage.geometrien);
