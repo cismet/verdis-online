@@ -24,6 +24,7 @@ import L from 'leaflet';
 import 'leaflet-editable';
 
 import CyclingBackgroundButton from '../components/CyclingBackgroundButton';
+import EditModeControlButton from '../components/commons/EditModeControlButton';
 
 const position = [ 51.272399, 7.199712 ];
 function mapStateToProps(state) {
@@ -52,6 +53,7 @@ export class VerdisMap_ extends React.Component {
 		this.onFeatureCreation = this.onFeatureCreation.bind(this);
 		this.onFeatureChange = this.onFeatureChange.bind(this);
 		this.handlePolygonEditMode = this.handlePolygonEditMode.bind(this);
+		this.state = { featuresInEditmode: false };
 	}
 
 	fitBounds() {
@@ -91,8 +93,7 @@ export class VerdisMap_ extends React.Component {
 			this.leafletRoutedMap.leafletMap.leafletElement.eachLayer(function(layer) {
 				if (layer.feature !== undefined && layer.feature.properties.type === 'annotation') {
 					if (
-						that.props.mapping.idsInEdit.includes(layer.feature.id) &&
-						that.props.mapping.selectedIndex !== undefined &&
+						that.state.featuresInEditmode === true &&
 						(that.props.mapping.featureCollection[that.props.mapping.selectedIndex] ||
 							{}).id === layer.feature.id
 					) {
@@ -110,6 +111,8 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	render() {
+		console.log('state', this.state);
+
 		const mapStyle = {
 			height: this.props.height
 		};
@@ -289,6 +292,20 @@ export class VerdisMap_ extends React.Component {
 							'NewMarkerControl+ update when CyclingBackgroundButton.' +
 							this.props.mapping.selectedBackgroundIndex
 						}
+					/>
+				)}
+				{annotationEditable && (
+					<EditModeControlButton
+						key={'EditModeControlButton' + this.state.featuresInEditmode}
+						featuresInEditmode={this.state.featuresInEditmode}
+						onChange={(featuresInEditmode) => {
+							console.log(
+								'this.setState({ featuresInEditmode });',
+								featuresInEditmode
+							);
+
+							this.setState({ featuresInEditmode });
+						}}
 					/>
 				)}
 			</RoutedMap>

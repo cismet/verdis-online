@@ -125,17 +125,7 @@ export default class Comp extends React.Component {
 												/>
 											</span>
 										)}
-										{inPolyEditMode === false && (
-											<Icon
-												onClick={(e) => {
-													clickHandler(annotationFeature);
-													togglePolyEditMode();
-													e.stopPropagation();
-												}}
-												icon={faDrawPolygon}
-												style={{ marginRight: 10 }}
-											/>
-										)}{' '}
+
 										<Icon
 											onClick={(e) => {
 												showEditAnnoMenu(annotationFeature);
