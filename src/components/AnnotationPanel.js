@@ -43,7 +43,7 @@ export default class Comp extends React.Component {
 		const color = colorChanged;
 		const anmerkungsTitleColor = colorUnchanged;
 		const title = annotationFeature.properties.title || 'neue Anmerkung';
-
+		const showEverything = this.props.showEverything || false;
 		let background;
 		if (selected === true) {
 			background = 'grey';
@@ -64,6 +64,12 @@ export default class Comp extends React.Component {
 			borderStyle: borderStyle,
 			borderColor: borderColor
 		};
+		let content;
+		if (showEverything === true) {
+			content = annotationFeature.properties.text;
+		} else {
+			content = annotationFeature.properties.name;
+		}
 
 		return (
 			<div ref={(c) => (this.theDiv = c)}>
@@ -80,12 +86,14 @@ export default class Comp extends React.Component {
 							<tr>
 								<td>
 									<b style={{ color: color }}>
-										Anmerkung {annotationFeature.properties.name}
+										Anmerkung {annotationFeature.properties.name}{' '}
+										{showEverything === true && '(' + title + ')'}
 									</b>
 								</td>
 								<td style={{ textAlign: 'right' }} />
 
-								{editmode === true && (
+								{showEditAnnoMenu !== undefined &&
+								editmode === true && (
 									<td
 										style={{
 											textAlign: 'right',
@@ -93,39 +101,6 @@ export default class Comp extends React.Component {
 											cursor: 'pointer'
 										}}
 									>
-										{/* <span class='fa-layers fa-fw' style='background:MistyRose'>
-											<i class='fas fa-circle' style='color:Tomato' />
-											<i
-												class='fa-inverse fas fa-times'
-												data-fa-transform='shrink-6'
-											/>
-										</span> */}
-										{inPolyEditMode === true && (
-											<span className='fa-layers' style={{}}>
-												<Icon
-													className='fa-lg fa-w12'
-													onClick={(e) => {
-														clickHandler(annotationFeature);
-														togglePolyEditMode();
-														e.stopPropagation();
-													}}
-													icon={faCircle}
-													style={{ marginRight: 10 }}
-												/>
-												<Icon
-													onClick={(e) => {
-														clickHandler(annotationFeature);
-														togglePolyEditMode();
-														e.stopPropagation();
-													}}
-													inverse
-													transform='shrink-4 left-3.6'
-													icon={faDrawPolygon}
-													style={{ marginRight: 10 }}
-												/>
-											</span>
-										)}
-
 										<Icon
 											onClick={(e) => {
 												showEditAnnoMenu(annotationFeature);
@@ -137,7 +112,7 @@ export default class Comp extends React.Component {
 								)}
 							</tr>
 							<tr>
-								<td style={{ color: anmerkungsTitleColor }}>{title}</td>
+								<td style={{ color: anmerkungsTitleColor }}>{content}</td>
 								{/* <td style={{ textAlign: 'right', color: anschlussgradColor }}>
 								{anschlussgrad}
 							</td> */}
@@ -156,5 +131,6 @@ Comp.propTypes = {
 	showEditAnnoMenu: PropTypes.func,
 	setEditMode4Feature: PropTypes.func,
 	clickHandler: PropTypes.func,
-	layer: PropTypes.object
+	layer: PropTypes.object,
+	showEverything: PropTypes.bool
 };

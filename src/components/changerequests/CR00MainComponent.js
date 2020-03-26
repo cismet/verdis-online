@@ -120,7 +120,7 @@ const CR00 = ({
 					(a, b) => a.properties.numericId - b.properties.numericId
 				);
 				for (const a of sortedAnnoArr) {
-					const ap = <AnnotationPanel annotationFeature={a} />;
+					const ap = <AnnotationPanel showEverything={true} annotationFeature={a} />;
 
 					annoPanels.push(ap);
 				}
