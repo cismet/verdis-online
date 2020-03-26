@@ -284,6 +284,7 @@ export class VerdisMap_ extends React.Component {
 							'NewPolyControl + update when CyclingBackgroundButton.' +
 							this.props.mapping.selectedBackgroundIndex
 						}
+						tooltip='Fläche anlegen'
 					/>
 				)}
 				{annotationEditable && (
@@ -292,6 +293,7 @@ export class VerdisMap_ extends React.Component {
 							'NewMarkerControl+ update when CyclingBackgroundButton.' +
 							this.props.mapping.selectedBackgroundIndex
 						}
+						tooltip='Punkt anlegen'
 					/>
 				)}
 				{annotationEditable && (
