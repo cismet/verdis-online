@@ -35,3 +35,8 @@ body {
 	-webkit-animation: fill 2s forwards;
 	animation: fill 2s forwards;
   }
+  
+
+  .leaflet-editable-drawing .leaflet-interactive {
+	cursor: crosshair!important;
+	}
