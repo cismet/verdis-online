@@ -68,7 +68,7 @@ export default class Comp extends React.Component {
 		if (showEverything === true) {
 			content = annotationFeature.properties.text;
 		} else {
-			content = annotationFeature.properties.name;
+			content = annotationFeature.properties.title;
 		}
 
 		return (
