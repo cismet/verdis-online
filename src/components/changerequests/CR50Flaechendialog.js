@@ -39,7 +39,11 @@ const CR00 = ({
 		maxHeight: height - 200
 	};
 	const close = () => {
-		showChangeRequestMenu(true);
+		if (JSON.stringify(flaechenCR) !== '{}') {
+			showChangeRequestMenu(true);
+		} else {
+			showChangeRequestMenu(false);
+		}
 	};
 	const cancel = () => {
 		showChangeRequestMenu(false);
@@ -64,7 +68,7 @@ const CR00 = ({
 				}}
 				height='100%'
 				show={true || visible}
-				onHide={close}
+				onHide={cancel}
 				keyboard={false}
 			>
 				<Modal.Header>

@@ -80,7 +80,6 @@ export default class Comp extends React.Component {
 
 		const geomType = annotationFeature.geometry.type;
 		const area = getArea25832(annotationFeature);
-		console.log('area ' + annotationFeature.properties.name, area);
 
 		// const secondaryInfo = annotationFeature.properties.title;
 		const secondaryInfo =
