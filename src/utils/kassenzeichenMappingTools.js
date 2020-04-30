@@ -1,9 +1,50 @@
 import { getGeoJsonFeatureFromCidsObject } from './cidsTools';
 import L from 'leaflet';
-
+import proj4 from 'proj4';
 import ColorHash from 'color-hash';
 import { get } from 'lodash';
 import React from 'react';
+import getArea from '@turf/area';
+import { reproject } from 'reproject';
+
+export const projectionData = {
+	'25832': {
+		def: '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs',
+		geojson: {
+			type: 'name',
+			properties: {
+				name: 'urn:ogc:def:crs:EPSG::25832'
+			}
+		}
+	},
+	'4326': {
+		def: '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs',
+		geojson: {
+			type: 'name',
+			properties: {
+				name: 'urn:ogc:def:crs:EPSG::4326'
+			}
+		}
+	}
+};
+
+export const getWGS84GeoJSON = (geoJSON) => {
+	try {
+		const reprojectedGeoJSON = reproject(geoJSON, projectionData['25832'].def, proj4.WGS84);
+
+		return reprojectedGeoJSON;
+	} catch (e) {
+		console.log('excepotion reproject', e);
+		return undefined;
+	}
+};
+
+export const getArea25832 = (geoJSON) => {
+	const wGS84GeoJSON = getWGS84GeoJSON(geoJSON);
+	if (wGS84GeoJSON !== undefined) {
+		return getArea(wGS84GeoJSON);
+	}
+};
 
 export const getFlaechenFeatureCollection = (kassenzeichen) => {
 	const geojson = getGeoJsonFeatureFromCidsObject(

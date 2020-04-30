@@ -2221,6 +2221,14 @@
     "@svgr/plugin-svgo" "^4.3.1"
     loader-utils "^1.2.3"
 
+"@turf/area@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@turf/area/-/area-6.0.1.tgz#50ed63c70ef2bdb72952384f1594319d94f3b051"
+  integrity sha512-Zv+3N1ep9P5JvR0YOYagLANyapGWQBh8atdeR3bKpWcigVXFsEKNUw03U/5xnh+cKzm7yozHD6MFJkqQv55y0g==
+  dependencies:
+    "@turf/helpers" "6.x"
+    "@turf/meta" "6.x"
+
 "@turf/bbox-polygon@6.0.1", "@turf/bbox-polygon@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@turf/bbox-polygon/-/bbox-polygon-6.0.1.tgz#ae0fbb14558831fb34538aae089a23d3336c6379"
@@ -2246,6 +2254,13 @@
   version "6.1.2"
   resolved "https://registry.yarnpkg.com/@turf/invariant/-/invariant-6.1.2.tgz#6013ed6219f9ac2edada9b31e1dfa5918eb0a2f7"
   integrity sha512-WU08Ph8j0J2jVGlQCKChXoCtI50BB3yEH21V++V0T4cR1T27HKCxkehV2sYMwTierfMBgjwSwDIsxnR4/2mWXg==
+  dependencies:
+    "@turf/helpers" "6.x"
+
+"@turf/meta@6.x":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@turf/meta/-/meta-6.0.2.tgz#eb92951126d24a613ac1b7b99d733fcc20fd30cf"
+  integrity sha512-VA7HJkx7qF1l3+GNGkDVn2oXy4+QoLP6LktXAaZKjuT1JI0YESat7quUkbCMy4zP9lAUuvS4YMslLyTtr919FA==
   dependencies:
     "@turf/helpers" "6.x"
 
@@ -13222,7 +13237,7 @@ replace-ext@1.0.0:
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.0.tgz#de63128373fcbf7c3ccfa4de5a480c45a67958eb"
   integrity sha1-3mMSg3P8v3w8z6TeWkgMRaZ5WOs=
 
-reproject@^1.2.5:
+reproject@1.2.5, reproject@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/reproject/-/reproject-1.2.5.tgz#ce26040f659ef40eeba9b78d22a536708b5186a4"
   integrity sha512-cTH78fi1uuv5gzW/GVepO4LbCvOUhO0X2BEyyvrKkYb4KPRmDPs7cZnIxemHPUIch/CoSI8MPLmXRHZFSHjbKw==

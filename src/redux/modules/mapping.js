@@ -273,11 +273,13 @@ function fitAll() {
 	};
 }
 function fitFeatureCollection(features) {
-	return function(dispatch) {
-		const projectedFC = L.Proj.geoJson(features);
-		const bounds = projectedFC.getBounds();
-		dispatch(setAutoFit(true, getSimpleBounds(bounds), constants.AUTO_FIT_MODE_STRICT));
-	};
+	if (Array.isArray(features) === true && features.length > 0) {
+		return function(dispatch) {
+			const projectedFC = L.Proj.geoJson(features);
+			const bounds = projectedFC.getBounds();
+			dispatch(setAutoFit(true, getSimpleBounds(bounds), constants.AUTO_FIT_MODE_STRICT));
+		};
+	}
 }
 
 function getSimpleBounds(latLngBounds) {

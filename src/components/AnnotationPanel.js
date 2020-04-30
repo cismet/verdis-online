@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 import { Well } from 'react-bootstrap';
 import { colorUnchanged, colorChanged, colorDraft } from '../utils/kassenzeichenHelper';
-import { faEdit, faDrawPolygon, faTrashAlt, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { getArea25832 } from '../utils/kassenzeichenMappingTools';
+import {
+	faEdit,
+	faDrawPolygon,
+	faMapMarker,
+	faTrashAlt,
+	faCircle
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 // Switched fomr func comp to class again because of the external ref
@@ -29,7 +36,12 @@ export default class Comp extends React.Component {
 	}
 
 	render() {
-		const annotationFeature = this.props.annotationFeature;
+		const annotationFeature = JSON.parse(JSON.stringify(this.props.annotationFeature));
+
+		annotationFeature.crs = {
+			type: 'name',
+			properties: { name: 'urn:ogc:def:crs:EPSG::25832' }
+		};
 		const editmode = this.props.editmode || true;
 		const selected = this.props.selected;
 		const showEditAnnoMenu = this.props.showEditAnnoMenu;
@@ -65,10 +77,25 @@ export default class Comp extends React.Component {
 			borderColor: borderColor
 		};
 		let content;
+
+		const geomType = annotationFeature.geometry.type;
+		const area = getArea25832(annotationFeature);
+		console.log('area ' + annotationFeature.properties.name, area);
+
+		// const secondaryInfo = annotationFeature.properties.title;
+		const secondaryInfo =
+			geomType === 'Polygon' ? (
+				<span>
+					<Icon style={{ color: '#999' }} icon={faDrawPolygon} /> ~ {Math.round(area)} m²
+				</span>
+			) : (
+				<Icon style={{ color: '#999' }} icon={faMapMarker} />
+			);
+
 		if (showEverything === true) {
 			content = annotationFeature.properties.text;
 		} else {
-			content = annotationFeature.properties.title;
+			content = secondaryInfo;
 		}
 
 		return (
@@ -87,7 +114,9 @@ export default class Comp extends React.Component {
 								<td>
 									<b style={{ color: color }}>
 										Anmerkung {annotationFeature.properties.name}{' '}
-										{showEverything === true && '(' + title + ')'}
+										{showEverything === true && (
+											<span>( {secondaryInfo} )</span>
+										)}
 									</b>
 								</td>
 								<td style={{ textAlign: 'right' }} />
