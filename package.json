@@ -92,7 +92,7 @@
     "publish:docker": "npm run build:docker; VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker tag cismet/$npm_package_name:$VERSION $npm_package_config_dockerRegistryPath/$npm_package_name:$VERSION && docker push $npm_package_config_dockerRegistryPath/$npm_package_name:$VERSION",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    yarn get"getVersion": "echo '---------------' && echo ':ship: @ alpha in Version `'$npm_package_version'`' |pbcopy && echo '>>>> :ship: @ alpha in Version '$npm_package_version' (info copied to clipboard)'"
+    "getVersion": "echo '---------------' && echo ':ship: @ alpha in Version `'$npm_package_version'`' |pbcopy && echo '>>>> :ship: @ alpha in Version '$npm_package_version' (info copied to clipboard)'"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^5.1.11",
