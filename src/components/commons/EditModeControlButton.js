@@ -50,8 +50,6 @@ export default class Control extends MapControl {
 					link,
 					'click',
 					function(e) {
-						console.log('featuresInEditmode click', featuresInEditmode);
-
 						if (featuresInEditmode === true) {
 							onChange(false);
 						} else {
@@ -60,7 +58,7 @@ export default class Control extends MapControl {
 					},
 					this
 				);
-
+				L.DomEvent.disableClickPropagation(container);
 				return container;
 			}
 		});

@@ -271,7 +271,11 @@ export class VerdisMap_ extends React.Component {
 					/>
 				)} */}
 				<CyclingBackgroundButton
-					key={'CyclingBackgroundButton.' + this.props.mapping.selectedBackgroundIndex}
+					key={
+						'CyclingBackgroundButton.' +
+						this.state.featuresInEditmode +
+						this.props.mapping.selectedBackgroundIndex
+					}
 					position='topleft'
 					backgrounds={this.props.mapping.backgrounds}
 					setSelectedBackgroundIndex={
@@ -283,8 +287,12 @@ export class VerdisMap_ extends React.Component {
 					<NewPolyControl
 						key={
 							'NewPolyControl + update when CyclingBackgroundButton.' +
+							this.state.featuresInEditmode +
 							this.props.mapping.selectedBackgroundIndex
 						}
+						onSelect={() => {
+							this.setState({ featuresInEditmode: false });
+						}}
 						tooltip='Fläche anlegen'
 					/>
 				)}
@@ -292,22 +300,37 @@ export class VerdisMap_ extends React.Component {
 					<NewMarkerControl
 						key={
 							'NewMarkerControl+ update when CyclingBackgroundButton.' +
+							this.state.featuresInEditmode +
 							this.props.mapping.selectedBackgroundIndex
 						}
+						onSelect={() => {
+							this.setState({ featuresInEditmode: false });
+						}}
 						tooltip='Punkt anlegen'
 					/>
 				)}
 				{annotationEditable && (
 					<EditModeControlButton
-						key={'EditModeControlButton' + this.state.featuresInEditmode}
+						key={
+							'EditModeControlButton' +
+							this.state.featuresInEditmode +
+							this.props.mapping.selectedBackgroundIndex
+						}
 						featuresInEditmode={this.state.featuresInEditmode}
 						onChange={(featuresInEditmode) => {
-							console.log(
-								'this.setState({ featuresInEditmode });',
-								featuresInEditmode
-							);
-
 							this.setState({ featuresInEditmode });
+							try {
+								const map = this.leafletRoutedMap.leafletMap.leafletElement;
+								console.log('map.editTools.mode.name', map.editTools.mode.name);
+
+								if (map.editTools.mode.name !== undefined) {
+									console.log('stopDrawing');
+
+									map.editTools.stopDrawing();
+									map.editTools.mode.name = undefined;
+									map.editTools.validClicks = 0;
+								}
+							} catch (skip) {}
 						}}
 					/>
 				)}
