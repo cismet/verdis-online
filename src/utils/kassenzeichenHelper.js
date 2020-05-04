@@ -266,3 +266,216 @@ export const getLinkForDoc = (doc) => {
 		doc.name
 	);
 };
+
+export const veranlagungsgrundlage = [
+	{
+		flaechenart: 6,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 1,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 2,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 3,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 4,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 5,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 6,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 1,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 2,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 3,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 4,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 5,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 0,
+		bezeichner: '999-Rest'
+	},
+	{
+		flaechenart: 2,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 0.25,
+		bezeichner: '730-Va-über'
+	},
+	{
+		flaechenart: 4,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 0.35,
+		bezeichner: '730-Va-über'
+	},
+	{
+		flaechenart: 6,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 0.35,
+		bezeichner: '740-VFS'
+	},
+	{
+		flaechenart: 2,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 0.5,
+		bezeichner: '715-GDF'
+	},
+	{
+		flaechenart: 1,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 0.5,
+		bezeichner: '730-Va-über'
+	},
+	{
+		flaechenart: 3,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 0.5,
+		bezeichner: '730-Va-über'
+	},
+	{
+		flaechenart: 2,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 0.5,
+		bezeichner: '715-GDF'
+	},
+	{
+		flaechenart: 5,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 0.5,
+		bezeichner: '740-VFS'
+	},
+	{
+		flaechenart: 4,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 0.7,
+		bezeichner: '725-VFÖ'
+	},
+	{
+		flaechenart: 6,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 0.7,
+		bezeichner: '740-VFS'
+	},
+	{
+		flaechenart: 4,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 0.7,
+		bezeichner: '725-VFÖ'
+	},
+	{
+		flaechenart: 6,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 0.7,
+		bezeichner: '740-VFS'
+	},
+	{
+		flaechenart: 7,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 1,
+		bezeichner: 'VV-750'
+	},
+	{
+		flaechenart: 3,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 1,
+		bezeichner: '720-VF'
+	},
+	{
+		flaechenart: 1,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 1,
+		bezeichner: '710-DF'
+	},
+	{
+		flaechenart: 5,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 1,
+		bezeichner: '740-VFS'
+	},
+	{
+		flaechenart: 3,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 1,
+		bezeichner: '720-VF'
+	},
+	{
+		flaechenart: 5,
+		anschlussgrad: 5,
+		veranlagungsschluessel: 1,
+		bezeichner: '740-VFS'
+	},
+	{
+		flaechenart: 7,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 1,
+		bezeichner: 'VV-750'
+	},
+	{
+		flaechenart: 7,
+		anschlussgrad: 2,
+		veranlagungsschluessel: 1,
+		bezeichner: 'VV-750'
+	},
+	{
+		flaechenart: 7,
+		anschlussgrad: 3,
+		veranlagungsschluessel: 1,
+		bezeichner: 'VV-750'
+	},
+	{
+		flaechenart: 7,
+		anschlussgrad: 4,
+		veranlagungsschluessel: 1,
+		bezeichner: 'VV-750'
+	},
+	{
+		flaechenart: 1,
+		anschlussgrad: 1,
+		veranlagungsschluessel: 1,
+		bezeichner: '710-DF'
+	}
+];
