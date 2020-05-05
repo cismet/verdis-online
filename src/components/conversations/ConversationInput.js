@@ -175,27 +175,28 @@ const Comp = ({
 							}
 						}}
 					/>
-					<InputGroup.Addon style={{ cursor: 'pointer', verticalAlign: 'bottom' }}>
-						<Icon
-							onClick={(e) => {
-								if (textarea && textarea.current) {
-									const draft = textarea.current.value;
-									setMsgTextValue('');
-									msgAttachments.forEach((fo, index) => {
-										fo.nonce = undefined;
-										fo.inProgress = undefined;
-									});
-									setDraft(draft, msgAttachments);
+					<InputGroup.Addon
+						onClick={(e) => {
+							console.log('textarea', textarea);
 
-									setMsgAttachments([]);
-									//TODO Hier die noch nicht hochgeladenen ausnehmen
-									e.preventDefault();
-									scrollToInput();
-								}
-							}}
-							style={{ marginBottom: 3 }}
-							name='arrow-circle-right'
-						/>
+							if (textarea && textarea.current) {
+								const draft = textarea.current.value;
+								setMsgTextValue('');
+								msgAttachments.forEach((fo, index) => {
+									fo.nonce = undefined;
+									fo.inProgress = undefined;
+								});
+								setDraft(draft, msgAttachments);
+
+								setMsgAttachments([]);
+								//TODO Hier die noch nicht hochgeladenen ausnehmen
+								e.preventDefault();
+								scrollToInput();
+							}
+						}}
+						style={{ cursor: 'pointer', verticalAlign: 'bottom' }}
+					>
+						<Icon style={{ marginBottom: 3 }} name='arrow-circle-right' />
 					</InputGroup.Addon>
 				</InputGroup>
 				<div

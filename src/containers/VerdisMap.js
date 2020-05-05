@@ -111,8 +111,6 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	render() {
-		console.log('state', this.state);
-
 		const mapStyle = {
 			height: this.props.height,
 			cursor: 'grab'
