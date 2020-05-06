@@ -183,8 +183,17 @@ const CR00 = ({
 									validationState={crInfo.validationStates.flaechenart}
 									className='customLeftAlignedValidation'
 								>
-									<ControlLabel>Flächenart</ControlLabel>
+									<ControlLabel>
+										Flächenart{' '}
+										{isAnteiligeFlaeche() === true && (
+											<span>
+												(Hier nicht änderbar, da eine Anteilsfläche
+												vorliegt.)
+											</span>
+										)}
+									</ControlLabel>
 									<FormControl
+										disabled={isAnteiligeFlaeche()}
 										style={{
 											background: new Color(
 												crInfo.colors.flaechenart === 'black'
@@ -223,8 +232,17 @@ const CR00 = ({
 									validationState={crInfo.validationStates.anschlussgrad}
 									className='customLeftAlignedValidation'
 								>
-									<ControlLabel>Anschlussgrad</ControlLabel>
+									<ControlLabel>
+										Anschlussgrad{' '}
+										{isAnteiligeFlaeche() === true && (
+											<span>
+												(Hier nicht änderbar, da eine Anteilsfläche
+												vorliegt.)
+											</span>
+										)}
+									</ControlLabel>
 									<FormControl
+										disabled={isAnteiligeFlaeche()}
 										style={{
 											background: new Color(
 												crInfo.colors.anschlussgrad === 'black'

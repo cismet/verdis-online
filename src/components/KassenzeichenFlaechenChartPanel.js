@@ -12,6 +12,14 @@ const KassenzeichenFlaechenChartPanel = ({ kassenzeichen, orientation }) => {
 		width: '100%'
 	};
 
+	const getCorrectArea = (flaeche) => {
+		if (flaeche.anteil !== undefined && flaeche.anteil !== null) {
+			return flaeche.anteil;
+		} else {
+			return flaeche.flaecheninfo.groesse_korrektur;
+		}
+	};
+
 	const statsFA = new Map();
 	let total = 0;
 	if (kassenzeichen.flaechen) {
@@ -30,15 +38,12 @@ const KassenzeichenFlaechenChartPanel = ({ kassenzeichen, orientation }) => {
 			if (sumFA) {
 				statsFA.set(
 					flaeche.flaecheninfo.flaechenart.art,
-					flaeche.flaecheninfo.groesse_korrektur * factor + sumFA
+					getCorrectArea(flaeche) * factor + sumFA
 				);
 			} else {
-				statsFA.set(
-					flaeche.flaecheninfo.flaechenart.art,
-					flaeche.flaecheninfo.groesse_korrektur * factor
-				);
+				statsFA.set(flaeche.flaecheninfo.flaechenart.art, getCorrectArea(flaeche) * factor);
 			}
-			total += flaeche.flaecheninfo.groesse_korrektur * factor;
+			total += getCorrectArea(flaeche) * factor;
 		});
 	}
 	const statsFAData = [];
