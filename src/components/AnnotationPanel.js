@@ -57,9 +57,9 @@ export default class Comp extends React.Component {
 		const title = annotationFeature.properties.title || 'neue Anmerkung';
 		const showEverything = this.props.showEverything || false;
 		let background;
-		if (selected === true) {
-			background = 'grey';
-		}
+		// if (selected === true) {
+		// 	background = 'grey';
+		// }
 
 		let borderStyle = 'solid';
 		let borderColor = undefined;
@@ -68,13 +68,22 @@ export default class Comp extends React.Component {
 			borderColor = colorDraft;
 		}
 
+		if (selected === true) {
+			borderStyle = 'solid';
+			borderColor = colorChanged;
+		} else {
+			borderStyle = 'solid';
+			borderColor = '#ffffff00';
+		}
+
 		let styleOverride = {
 			marginBottom: '5px',
 			width: '100%',
 			height: '100%',
 			background: background,
 			borderStyle: borderStyle,
-			borderColor: borderColor
+			borderColor: borderColor,
+			borderWidth: 3
 		};
 		let content;
 

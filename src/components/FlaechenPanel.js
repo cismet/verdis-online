@@ -28,6 +28,8 @@ export default class FlaechenPanel extends React.Component {
 	}
 
 	render() {
+		const selected = this.props.selected;
+		const colorSelected = colorChanged;
 		let groesse,
 			groesseColor = 'black',
 			anteil,
@@ -38,6 +40,14 @@ export default class FlaechenPanel extends React.Component {
 			editButtonColor;
 		let borderStyle = undefined;
 		let borderColor = undefined;
+
+		if (selected === true) {
+			borderStyle = 'solid';
+			borderColor = colorChanged;
+		} else {
+			borderStyle = 'solid';
+			borderColor = '#ffffff00';
+		}
 		//fill the intermediate vars
 		const crInfo = getProcessedFlaechenCR(this.props.flaeche, this.props.changerequest);
 		if (this.props.display === 'cr') {
@@ -49,8 +59,18 @@ export default class FlaechenPanel extends React.Component {
 			anschlussgradColor = crInfo.colors.anschlussgrad;
 			flaechenartColor = crInfo.colors.flaechenart;
 			if (this.props.changerequest.draft === true) {
-				borderStyle = 'solid';
-				borderColor = colorDraft;
+				if (selected === true) {
+					borderColor =
+						colorSelected +
+						' ' +
+						colorDraft +
+						' ' +
+						colorSelected +
+						' ' +
+						colorSelected;
+				} else {
+					borderColor = colorDraft;
+				}
 			}
 
 			anteil = this.props.changerequest.anteil || this.props.flaeche.anteil;
@@ -69,12 +89,9 @@ export default class FlaechenPanel extends React.Component {
 
 		let background = null;
 
-		if (this.props.selected) {
-			background = 'grey';
-		}
-		if (this.props.selected) {
-			background = 'grey';
-		}
+		// if (this.props.selected) {
+		// 	background = 'grey';
+		// }
 
 		let styleOverride = {
 			marginBottom: '5px',
@@ -82,7 +99,8 @@ export default class FlaechenPanel extends React.Component {
 			height: '100%',
 			background: background,
 			borderStyle: borderStyle,
-			borderColor: borderColor
+			borderColor: borderColor,
+			borderWidth: 3
 		};
 
 		let area = <div />;
