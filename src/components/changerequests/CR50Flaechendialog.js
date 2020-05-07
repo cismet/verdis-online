@@ -55,7 +55,7 @@ const CR00 = ({
 	};
 
 	const isAnteiligeFlaeche = () => {
-		return flaeche.anteil !== undefined;
+		return flaeche.anteil !== undefined && flaeche.anteil !== null;
 	};
 
 	if (visible !== false && flaechenCR !== {}) {
