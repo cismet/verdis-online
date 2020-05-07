@@ -31,7 +31,7 @@ const CR00 = ({
 	setFlaechenCR = () => {},
 	documents = [],
 	uploadCRDoc = () => {},
-	setMsgAttachments = () => {}
+	addFiles = () => {}
 }) => {
 	const modalBodyStyle = {
 		overflowY: 'auto',
@@ -100,7 +100,7 @@ const CR00 = ({
 						}}
 					>
 						<Panel header={'Übersicht '} eventKey={'sectionKey0'} bsStyle={'info'}>
-							<FlexView row justifyContent='space-around'>
+							<FlexView row='true' justifycontent='space-around'>
 								<FlexView column grow>
 									<h4>aktueller Datenbestand</h4>
 									<FlaechenPanel key={'orig'} flaeche={flaeche} />
@@ -293,15 +293,18 @@ const CR00 = ({
 						}}
 					>
 						<Panel
-							header={`Ihre Dokumente ${documents.length > 0
-								? ' (' + documents.length + ')'
-								: ''}`}
+							header={
+								<div>
+									Ihre Dokumente{' '}
+									{documents.length > 0 ? ' (' + documents.length + ')' : ''}
+								</div>
+							}
 							eventKey={'sectionKey'}
 							bsStyle={'danger'}
 						>
 							<DocPanel
 								uploadCRDoc={uploadCRDoc}
-								setMsgAttachments={setMsgAttachments}
+								addFiles={addFiles}
 								documents={documents}
 							/>
 						</Panel>

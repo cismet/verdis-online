@@ -647,7 +647,8 @@ function removeLastChangeRequestMessage() {
 function addCRDoc(file, callback) {
 	return function(dispatch, getState) {
 		const stac = getState().auth.stac;
-
+		console.log('addCRDoc file', file);
+		console.log('addCRDoc callback', callback);
 		let taskParameters = {
 			parameters: {
 				fileName: file.name,
@@ -678,6 +679,8 @@ function addCRDoc(file, callback) {
 			body: fd
 		})
 			.then(function(response) {
+				console.log('addCRDoc response.status', response.status);
+
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(result) {
 						callback(result.res);

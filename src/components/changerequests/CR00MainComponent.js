@@ -36,7 +36,6 @@ const CR00 = ({
 	},
 	cloudStorageStatus,
 	documents,
-	setMsgAttachments = () => {},
 	showModalMenu = () => {}
 }) => {
 	const scrollDivRef = useRef(null);
@@ -101,15 +100,12 @@ const CR00 = ({
 		});
 
 		//AnnotationPanels
-		console.log('kassenzeichen', kassenzeichen);
 		if (
 			kassenzeichen !== undefined &&
 			kassenzeichen.aenderungsanfrage !== undefined &&
 			kassenzeichen.aenderungsanfrage !== null
 		) {
 			const annos = kassenzeichen.aenderungsanfrage.geometrien;
-			console.log('annos', annos);
-
 			if (annos !== undefined) {
 				const annoArr = [];
 
@@ -121,7 +117,13 @@ const CR00 = ({
 					(a, b) => a.properties.numericId - b.properties.numericId
 				);
 				for (const a of sortedAnnoArr) {
-					const ap = <AnnotationPanel showEverything={true} annotationFeature={a} />;
+					const ap = (
+						<AnnotationPanel
+							key={'AnnotationPanel' + JSON.stringify(a)}
+							showEverything={true}
+							annotationFeature={a}
+						/>
+					);
 
 					annoPanels.push(ap);
 				}
@@ -132,7 +134,6 @@ const CR00 = ({
 				lastUserMessage = msg;
 			}
 		});
-		console.log('cloudStorageStatus', cloudStorageStatus);
 
 		return (
 			<Modal
@@ -198,8 +199,10 @@ const CR00 = ({
 								wenn Flächen nicht in den Kanal entwässern. Die nachfolgende
 								Kommunikation ist kein Chat. Eine Antwort wird nicht immer zeitnah
 								erfolgen.
-								<table style={{ marginTop: 15 }} width='100%' border='0'>
-									<tbody>
+							</p>
+							<table style={{ marginTop: 15 }} width='100%' border='0'>
+								<tbody>
+									<tr>
 										<td>
 											<Button
 												className='pull-left'
@@ -237,9 +240,9 @@ const CR00 = ({
 												/>
 											</div>
 										</td>
-									</tbody>
-								</table>
-							</p>
+									</tr>
+								</tbody>
+							</table>
 
 							{/* <div>
 								<Toggle
@@ -393,11 +396,7 @@ const CR00 = ({
 									eventKey={'sectionKey'}
 									bsStyle={'danger'}
 								>
-									<DocPanel
-										uploadCRDoc={uploadCRDoc}
-										setMsgAttachments={setMsgAttachments}
-										documents={documents}
-									/>
+									<DocPanel uploadCRDoc={uploadCRDoc} documents={documents} />
 								</Panel>
 							</Accordion>
 						</div>

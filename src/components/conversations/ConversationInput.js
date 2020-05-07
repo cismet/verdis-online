@@ -40,7 +40,8 @@ const Comp = ({
 
 	const onDrop = useCallback((acceptedFiles) => {
 		acceptedFiles.forEach((file) => {
-			file.nonce = btoa(JSON.stringify(file)) + new Date().getTime();
+			file.nonce =
+				btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
 			addAttachment({
 				name: file.name,
 				nonce: file.nonce,

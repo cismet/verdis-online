@@ -18,13 +18,13 @@ const ModalHelpAndInfo = ({
 	applicationMenuVisible,
 	selectedBackgroundIndex,
 	backgrounds,
-	setBackgroundIndex,
+	setBackgroundIndex
 }) => {
 	const showModalMenu = (section) => {
 		showApplicationMenu(true);
 		setApplicationMenuActiveKey(section);
 	};
-	return (		
+	return (
 		<GenericModalApplicationMenu
 			showApplicationMenu={showApplicationMenu}
 			applicationMenuActiveKey={applicationMenuActiveKey}
@@ -32,23 +32,23 @@ const ModalHelpAndInfo = ({
 			height={height}
 			applicationMenuVisible={applicationMenuVisible}
 			menuIntroduction={<Introduction />}
-			menuIcon="info"
-			menuTitle="Kompaktanleitung und Hintergrundinformationen"
+			menuIcon='info'
+			menuTitle='Kompaktanleitung und Hintergrundinformationen'
 			menuSections={[
 				<Datengrundlage
-					key="Datengrundlage"
+					key='Datengrundlage'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}
 				/>,
 				<MeinKassenzeichen
-					key="MeinKassenzeichen"
+					key='MeinKassenzeichen'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}
 				/>,
 				<Kartenhintergruende
-					key="Kartenhintergruende"
+					key='Kartenhintergruende'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}
@@ -57,19 +57,19 @@ const ModalHelpAndInfo = ({
 					setBackgroundIndex={setBackgroundIndex}
 				/>,
 				<Anleitung
-					key="Anleitung"
+					key='Anleitung'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}
 				/>,
 				<FAQs
-					key="FAQs"
+					key='FAQs'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}
 				/>,
 				<Datenschutz
-					key="Datenschutz"
+					key='Datenschutz'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}

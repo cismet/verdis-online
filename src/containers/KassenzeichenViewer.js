@@ -547,7 +547,6 @@ export class KassenzeichenViewer_ extends React.Component {
 					submit={this.props.kassenzeichenActions.submitCR}
 					cloudStorageStatus={this.props.uiState.cloudStorageStatus}
 					documents={documents}
-					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
 					showModalMenu={(activekey) => {
 						if (activekey !== undefined) {
 							this.props.uiStateActions.setApplicationMenuActiveKey(activekey);
@@ -576,8 +575,17 @@ export class KassenzeichenViewer_ extends React.Component {
 						);
 					}}
 					uploadCRDoc={this.props.kassenzeichenActions.addCRDoc}
-					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
 					documents={documents}
+					addFiles={(attachments) => {
+						const msg = {
+							typ: 'CITIZEN',
+							timestamp: Date.now(),
+							draft: true,
+							anhang: attachments
+						};
+
+						this.props.kassenzeichenActions.addChangeRequestMessage(msg);
+					}}
 				/>
 				<AnnotationEditView
 					height={mapHeight + 10}
