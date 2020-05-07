@@ -530,7 +530,10 @@ export class KassenzeichenViewer_ extends React.Component {
 					setBackgroundIndex={this.props.mappingActions.setSelectedBackgroundIndex}
 				/>
 				<ChangeRequests
-					visible={this.props.uiState.changeRequestsMenuVisible}
+					visible={
+						this.props.uiState.changeRequestsMenuVisible === true &&
+						this.props.uiState.applicationMenuVisible === false
+					}
 					showChangeRequestMenu={this.props.uiStateActions.showChangeRequestsMenu}
 					height={mapHeight + 10}
 					kassenzeichen={this.props.kassenzeichen}
@@ -545,6 +548,12 @@ export class KassenzeichenViewer_ extends React.Component {
 					cloudStorageStatus={this.props.uiState.cloudStorageStatus}
 					documents={documents}
 					setMsgAttachments={this.props.kassenzeichenActions.setMsgAttachments}
+					showModalMenu={(activekey) => {
+						if (activekey !== undefined) {
+							this.props.uiStateActions.setApplicationMenuActiveKey(activekey);
+						}
+						this.props.uiStateActions.showApplicationMenu(true);
+					}}
 				/>
 				<ChangeRequestEditView
 					height={mapHeight + 10}

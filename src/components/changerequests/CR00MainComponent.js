@@ -36,7 +36,8 @@ const CR00 = ({
 	},
 	cloudStorageStatus,
 	documents,
-	setMsgAttachments = () => {}
+	setMsgAttachments = () => {},
+	showModalMenu = () => {}
 }) => {
 	const scrollDivRef = useRef(null);
 	const [ locked, setLocked ] = useState(true);
@@ -131,6 +132,7 @@ const CR00 = ({
 				lastUserMessage = msg;
 			}
 		});
+		console.log('cloudStorageStatus', cloudStorageStatus);
 
 		return (
 			<Modal
@@ -152,6 +154,17 @@ const CR00 = ({
 							<CloudLoadingAttributeIcon value={cloudStorageStatus} />
 						</div>
 					</Modal.Title>
+					{/* <Modal.Title>
+						<div className='pull-left'>
+							{cloudStorageStatus === undefined && <Icon name={'edit'} />}{' '}
+							{cloudStorageStatus !== undefined && (
+								<CloudLoadingAttributeIcon value={cloudStorageStatus} />
+							)}{' '}
+							{'Änderungswünsche und Kommentare'}
+						</div>
+						{/* <div className='pull-right'>
+							<CloudLoadingAttributeIcon value={cloudStorageStatus} />
+						</div> */}
 				</Modal.Header>
 				<Modal.Body style={modalBodyStyle} id='myMenu' key={'applicationMenuActiveKey'}>
 					<p>
@@ -185,22 +198,47 @@ const CR00 = ({
 								wenn Flächen nicht in den Kanal entwässern. Die nachfolgende
 								Kommunikation ist kein Chat. Eine Antwort wird nicht immer zeitnah
 								erfolgen.
-								<div style={{ textAlign: 'right' }}>
-									<br />
-									Systemnachrichten einblenden: {' '}
-									<Toggle
-										onClick={() => {
-											setHideSystemMessages(!hideSystemMessages);
-										}}
-										on={'Ein'}
-										off={'Aus'}
-										offstyle='danger'
-										onstyle='success'
-										size={'xs'}
-										active={!hideSystemMessages}
-										style={{ padding: 10 }}
-									/>
-								</div>
+								<table style={{ marginTop: 15 }} width='100%' border='0'>
+									<tbody>
+										<td>
+											<Button
+												className='pull-left'
+												id='cmdCloseModalApplicationMenu'
+												bsStyle='success'
+												type='submit'
+												onClick={() => {
+													showModalMenu('anleitung');
+												}}
+												//hier gehts weiter
+												style={{ margin: 5 }}
+											>
+												Hilfe
+											</Button>
+										</td>
+										<td>
+											<div
+												style={{
+													verticalAlign: 'middle',
+													textAlign: 'right'
+												}}
+											>
+												Systemnachrichten einblenden: {' '}
+												<Toggle
+													onClick={() => {
+														setHideSystemMessages(!hideSystemMessages);
+													}}
+													on={'Ein'}
+													off={'Aus'}
+													offstyle='danger'
+													onstyle='success'
+													size={'xs'}
+													active={!hideSystemMessages}
+													style={{ padding: 10 }}
+												/>
+											</div>
+										</td>
+									</tbody>
+								</table>
 							</p>
 
 							{/* <div>
@@ -455,6 +493,17 @@ const CR00 = ({
 								die Steuerelemente mit denen Sie dann Ihre Ändeurngen anlegen
 								können.
 							</p>
+							<Button
+								className='pull-left'
+								id='cmdCloseModalApplicationMenu'
+								bsStyle='success'
+								type='submit'
+								onClick={() => {
+									showModalMenu('anleitung');
+								}}
+							>
+								Hilfe
+							</Button>
 							<Button
 								id='cmdCloseModalApplicationMenu'
 								bsStyle='primary'
