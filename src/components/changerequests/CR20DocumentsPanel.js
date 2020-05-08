@@ -3,9 +3,12 @@ import { useDropzone } from 'react-dropzone';
 import Document from '../conversations/Document';
 import { Icon } from 'react-fa';
 
-const Comp = ({ documents = [], uploadCRDoc = () => {}, addFiles = () => {} }) => {
-	const [ msgAttachments, setMsgAttachments ] = useState([]);
-
+const Comp = ({
+	documents = [],
+	uploadCRDoc = () => {},
+	tmpAttachments = [],
+	setTmpAttachments = () => {}
+}) => {
 	const onDrop = useCallback((acceptedFiles) => {
 		acceptedFiles.forEach((file) => {
 			file.nonce =
@@ -19,17 +22,35 @@ const Comp = ({ documents = [], uploadCRDoc = () => {}, addFiles = () => {} }) =
 				const returnedFO = JSON.parse(returnedFOString);
 				returnedFO.nonce = file.nonce;
 				returnedFO.inProgress = false;
-				addFiles([ returnedFO ]);
-				setMsgAttachments([]);
+				updateAttachment(returnedFO);
 			});
 		});
 	}, []);
 
 	const addAttachment = (fileO) => {
-		setMsgAttachments((msga) => {
+		setTmpAttachments((msga) => {
 			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
 			newMsgAttachments.push(fileO);
 			return newMsgAttachments;
+		});
+	};
+	const updateAttachment = (fileO) => {
+		setTmpAttachments((msga) => {
+			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+			newMsgAttachments.forEach((fo, index) => {
+				if (fo.nonce === fileO.nonce) {
+					newMsgAttachments[index] = fileO;
+					return;
+				}
+			});
+
+			return newMsgAttachments;
+		});
+	};
+	const removeAttachment = (fileO) => {
+		setTmpAttachments((msga) => {
+			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+			return newMsgAttachments.filter((value) => value.nonce !== fileO.nonce);
 		});
 	};
 
@@ -38,8 +59,6 @@ const Comp = ({ documents = [], uploadCRDoc = () => {}, addFiles = () => {} }) =
 		noClick: true,
 		noKeyboard: true
 	});
-
-	const allDocs = [ ...documents, ...msgAttachments ];
 
 	return (
 		<div {...getRootProps()}>
@@ -59,8 +78,8 @@ const Comp = ({ documents = [], uploadCRDoc = () => {}, addFiles = () => {} }) =
 				</button>
 			</div>
 			<input style={{ height: 0 }} {...getInputProps()} />
-			{allDocs.length > 0 &&
-				allDocs.map((doc, index) => {
+			{documents.length > 0 &&
+				documents.map((doc, index) => {
 					return (
 						<div
 							key={'Documents.div.' + index}
@@ -70,7 +89,27 @@ const Comp = ({ documents = [], uploadCRDoc = () => {}, addFiles = () => {} }) =
 						</div>
 					);
 				})}
-			{allDocs.length === 0 && <div style={{ color: 'grey' }}>keine Datei vorhanden</div>}
+			{tmpAttachments.length > 0 &&
+				tmpAttachments.map((doc, index) => {
+					return (
+						<div
+							key={'msgAttachments.div.' + index}
+							style={{ margin: 10, fontSize: '110%' }}
+						>
+							<Document
+								fileObject={doc}
+								remove={() => {
+									removeAttachment(doc);
+								}}
+								background='#dddddd'
+							/>
+						</div>
+					);
+				})}
+			{documents.length === 0 &&
+			tmpAttachments.length === 0 && (
+				<div style={{ color: 'grey' }}>keine Datei vorhanden</div>
+			)}
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
 import Color from 'color';
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Accordion,
 	Button,
@@ -33,12 +33,17 @@ const CR00 = ({
 	uploadCRDoc = () => {},
 	addFiles = () => {}
 }) => {
+	const [ tmpAttachments, setTmpAttachments ] = useState([]);
 	const modalBodyStyle = {
 		overflowY: 'auto',
 		overflowX: 'hidden',
 		maxHeight: height - 200
 	};
 	const close = () => {
+		if (tmpAttachments.length > 0) {
+			addFiles(tmpAttachments);
+			setTmpAttachments([]);
+		}
 		if (JSON.stringify(flaechenCR) !== '{}') {
 			showChangeRequestMenu(true);
 		} else {
@@ -46,6 +51,7 @@ const CR00 = ({
 		}
 	};
 	const cancel = () => {
+		setTmpAttachments([]);
 		showChangeRequestMenu(false);
 	};
 
@@ -306,6 +312,8 @@ const CR00 = ({
 								uploadCRDoc={uploadCRDoc}
 								addFiles={addFiles}
 								documents={documents}
+								tmpAttachments={tmpAttachments}
+								setTmpAttachments={setTmpAttachments}
 							/>
 						</Panel>
 					</Accordion>
