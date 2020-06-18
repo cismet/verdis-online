@@ -13,9 +13,8 @@ import {
 	getAnnotationFeatureCollection
 } from '../../utils/kassenzeichenMappingTools';
 import { changeKassenzeichenInLocation } from '../../utils/routingHelper';
-import { mockchangerequests } from './mockData';
 
-import { toArabic, toRoman } from 'roman-numerals';
+import { toRoman } from 'roman-numerals';
 
 ///TYPES
 export const types = {
@@ -90,9 +89,14 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
 							)
 						);
 						switch (state.uiState.mode) {
-							case APP_MODES.VERSIEGELTE_FLAECHEN:
-								createFeatureCollectionForFlaechen(dispatch, kassenzeichenData);
+							case APP_MODES.VERSIEGELTE_FLAECHEN: {
+								createFeatureCollectionForFlaechen({
+									dispatch,
+									kassenzeichenData,
+									changeRequestsEditMode: state.uiState.changeRequestsEditMode
+								});
 								break;
+							}
 							case APP_MODES.ESW:
 								dispatch(
 									MappingActions.setFeatureCollection(
@@ -147,7 +151,12 @@ function searchByKassenzeichenId(kassenzeichenId, fitBounds) {
 	};
 }
 
-function createFeatureCollectionForFlaechen(dispatch, kassenzeichenData, selectedIndex = null) {
+function createFeatureCollectionForFlaechen({
+	dispatch,
+	kassenzeichenData,
+	selectedIndex = null,
+	changeRequestsEditMode = false
+}) {
 	const flaechenFC = getFlaechenFeatureCollection(kassenzeichenData);
 	//kassenzeichenData
 	//state.kassenzeichen
@@ -844,7 +853,8 @@ export function getNumberOfPendingChanges(cr) {
 
 function addAnnotation(annotationFeature) {
 	return function(dispatch, getState) {
-		const kassenzeichen = getState().kassenzeichen;
+		const state = getState();
+		const kassenzeichen = state.kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 		const feature = JSON.parse(JSON.stringify(annotationFeature));
 
@@ -885,11 +895,12 @@ function addAnnotation(annotationFeature) {
 		}
 		newKassz.aenderungsanfrage.geometrien[annotationName] = feature;
 		dispatch(setKassenzeichenObject(newKassz));
-		createFeatureCollectionForFlaechen(
+		createFeatureCollectionForFlaechen({
 			dispatch,
-			newKassz,
-			getState().mapping.featureCollection.length
-		);
+			kassenzeichenData: newKassz,
+			selectedIndex: getState().mapping.featureCollection.length,
+			changeRequestsEditMode: state.uiState.changeRequestsEditMode
+		});
 		dispatch(storeCR(newKassz.aenderungsanfrage));
 	};
 }
@@ -901,7 +912,8 @@ function changeAnnotation(annotation) {
 	delete anno.selected;
 	delete anno.inEditMode;
 	return function(dispatch, getState) {
-		const kassenzeichen = getState().kassenzeichen;
+		const state = getState();
+		const kassenzeichen = state.kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 		if (newKassz.aenderungsanfrage.geometrien !== undefined) {
 			newKassz.aenderungsanfrage.geometrien[annotation.properties.name] = anno;
@@ -911,20 +923,31 @@ function changeAnnotation(annotation) {
 		newKassz.aenderungsanfrage.geometrien[annotation.properties.name].selected = selected;
 		newKassz.aenderungsanfrage.geometrien[annotation.properties.name].inEditMode = inEditMode;
 		dispatch(setKassenzeichenObject(newKassz));
-		createFeatureCollectionForFlaechen(dispatch, newKassz, getState().mapping.selectedIndex);
+		createFeatureCollectionForFlaechen({
+			dispatch,
+			kassenzeichenData: newKassz,
+			selectedIndex: getState().mapping.selectedIndex,
+			changeRequestsEditMode: state.uiState.changeRequestsEditMode
+		});
 	};
 }
 
 function removeAnnotation(annotation) {
 	return function(dispatch, getState) {
-		const kassenzeichen = getState().kassenzeichen;
+		const state = getState();
+		const kassenzeichen = state.kassenzeichen;
+
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 		if (newKassz.aenderungsanfrage.geometrien !== undefined) {
 			delete newKassz.aenderungsanfrage.geometrien[annotation.properties.name];
 		}
 		dispatch(storeCR(newKassz.aenderungsanfrage));
 		dispatch(setKassenzeichenObject(newKassz));
-		createFeatureCollectionForFlaechen(dispatch, newKassz);
+		createFeatureCollectionForFlaechen({
+			dispatch,
+			kassenzeichenData: newKassz,
+			changeRequestsEditMode: state.uiState.changeRequestsEditMode
+		});
 	};
 }
 

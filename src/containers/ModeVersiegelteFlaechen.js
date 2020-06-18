@@ -11,7 +11,10 @@ import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen'
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { appModes as APP_MODES } from '../constants/uiConstants';
-import { flaechenStyle, getFlaechenFeatureCollection } from '../utils/kassenzeichenMappingTools';
+import {
+	createFlaechenStyler,
+	getFlaechenFeatureCollection
+} from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/Verdis2GoAppNavbar';
 
 function mapStateToProps(state) {
@@ -266,7 +269,10 @@ export class VersiegelteFlaechen_ extends React.Component {
 						}}
 						height={mapHeight - horizontalPanelHeight - 25}
 						featureClickHandler={this.flaechenMapClick}
-						featureCollectionStyle={flaechenStyle}
+						featureCollectionStyle={createFlaechenStyler(
+							this.props.uiState.changeRequestsEditMode,
+							this.props.kassenzeichen
+						)}
 					/>
 					<Flexbox flexDirection='row' style={detailsStyle}>
 						<Flexbox
@@ -320,7 +326,10 @@ export class VersiegelteFlaechen_ extends React.Component {
 						}}
 						height={mapHeight}
 						featureClickHandler={this.flaechenMapClick}
-						featureCollectionStyle={flaechenStyle}
+						featureCollectionStyle={createFlaechenStyler(
+							this.props.uiState.changeRequestsEditMode,
+							this.props.kassenzeichen
+						)}
 					/>
 				</div>
 			);

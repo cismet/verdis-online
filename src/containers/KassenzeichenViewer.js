@@ -17,13 +17,14 @@ import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions, getLayerForFeatureId } from '../redux/modules/mapping';
 import { actions as AuthActions } from '../redux/modules/auth';
 import { appModes as APP_MODES } from '../constants/uiConstants';
-import { flaechenStyle } from '../utils/kassenzeichenMappingTools';
+import { createFlaechenStyler } from '../utils/kassenzeichenMappingTools';
 import AppNavbar from '../containers/VerdisOnlineAppNavbar';
 import HelpAndSettings from '../components/helpandsettings/Menu00MainComponent';
 import ChangeRequests from '../components/changerequests/CR00MainComponent';
 import {
 	kassenzeichenFlaechenSorter,
-	getOverlayTextForFlaeche
+	getOverlayTextForFlaeche,
+	getCRsForFlaeche
 } from '../utils/kassenzeichenHelper';
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
 import ChangeRequestEditView from '../components/changerequests/CR50Flaechendialog';
@@ -67,7 +68,6 @@ export class KassenzeichenViewer_ extends React.Component {
 		this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
 		this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
 		this.flaechenMapClick = this.flaechenMapClick.bind(this);
-		this.getCRsForFlaeche = this.getCRsForFlaeche.bind(this);
 		this.flaechenPanelRefs = {};
 	}
 
@@ -93,23 +93,6 @@ export class KassenzeichenViewer_ extends React.Component {
 			);
 		} else {
 			this.props.mappingActions.fitAll();
-		}
-	}
-
-	getCRsForFlaeche(flaeche) {
-		if (
-			this.props.kassenzeichen.aenderungsanfrage !== undefined &&
-			this.props.kassenzeichen.aenderungsanfrage !== null &&
-			this.props.kassenzeichen.aenderungsanfrage.flaechen !== undefined &&
-			this.props.kassenzeichen.aenderungsanfrage.flaechen[flaeche.flaechenbezeichnung] !==
-				undefined
-		) {
-			const ret = this.props.kassenzeichen.aenderungsanfrage.flaechen[
-				flaeche.flaechenbezeichnung
-			];
-			return ret;
-		} else {
-			return undefined;
 		}
 	}
 
@@ -314,7 +297,7 @@ export class KassenzeichenViewer_ extends React.Component {
 								selected={sel}
 								flaechenPanelClickHandler={that.flaechenPanelClick}
 								flaeche={flaeche}
-								changerequest={that.getCRsForFlaeche(flaeche)}
+								changerequest={getCRsForFlaeche(that.props.kassenzeichen, flaeche)}
 								editmode={that.props.uiState.changeRequestsEditMode}
 								display={
 									that.props.uiState.changeRequestsEditMode === true ? (
@@ -337,7 +320,10 @@ export class KassenzeichenViewer_ extends React.Component {
 						authMode={APP_MODES.STAC}
 						height={mapHeight - horizontalPanelHeight - 25}
 						featureClickHandler={this.flaechenMapClick}
-						featureCollectionStyle={flaechenStyle}
+						featureCollectionStyle={createFlaechenStyler(
+							this.props.uiState.changeRequestsEditMode,
+							this.props.kassenzeichen
+						)}
 						backgroundlayers={this.props.match.params.layers}
 						changeRequestsEditMode={this.props.uiState.changeRequestsEditMode}
 					/>
@@ -418,7 +404,7 @@ export class KassenzeichenViewer_ extends React.Component {
 				}
 				const comps = flaechen.map(function(flaeche) {
 					const sel = that.isFlaecheSelected(flaeche);
-					const cr = that.getCRsForFlaeche(flaeche);
+					const cr = getCRsForFlaeche(that.props.kassenzeichen, flaeche);
 					return (
 						<FlaechenPanel
 							ref={(c) => {
@@ -467,7 +453,10 @@ export class KassenzeichenViewer_ extends React.Component {
 						authMode={APP_MODES.STAC}
 						height={mapHeight}
 						featureClickHandler={this.flaechenMapClick}
-						featureCollectionStyle={flaechenStyle}
+						featureCollectionStyle={createFlaechenStyler(
+							this.props.uiState.changeRequestsEditMode,
+							this.props.kassenzeichen
+						)}
 						changeRequestsEditMode={this.props.uiState.changeRequestsEditMode}
 						backgroundlayers={this.props.match.params.layers}
 					/>
@@ -496,7 +485,15 @@ export class KassenzeichenViewer_ extends React.Component {
 								this.props.uiStateActions.toggleInfoElements();
 							}}
 						>
-							{getOverlayTextForFlaeche(selectedFlaeche.properties)}
+							{//set cr (second param) to undefined if not in edit mode
+							getOverlayTextForFlaeche(
+								selectedFlaeche.properties,
+								this.props.uiState.changeRequestsEditMode === true
+									? getCRsForFlaeche(this.props.kassenzeichen, {
+											flaechenbezeichnung: selectedFlaeche.properties.bez
+										})
+									: undefined
+							)}
 						</Alert>
 					</div>
 				);

@@ -168,7 +168,9 @@ export class VerdisMap_ extends React.Component {
 						'fc' +
 						JSON.stringify(this.props.mapping.featureCollection) +
 						'+' +
-						this.props.mapping.selectedIndex
+						this.props.mapping.selectedIndex +
+						'+editEnabled:' +
+						this.props.uiState.changeRequestsEditMode
 					}
 					featureCollection={this.props.mapping.featureCollection.filter(
 						(feature) => annotationEditable || feature.properties.type !== 'annotation'

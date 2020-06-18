@@ -14,8 +14,10 @@ import FlexView from 'react-flexview';
 import {
 	anschlussgrade,
 	flaechenarten,
-	getProcessedFlaechenCR
+	getProcessedFlaechenCR,
+	getOverlayTextForFlaeche
 } from '../../utils/kassenzeichenHelper';
+
 import FlaechenPanel from '../FlaechenPanel';
 import Document from '../conversations/Document';
 import DocPanel from './CR20DocumentsPanel';
@@ -285,6 +287,28 @@ const CR00 = ({
 							</form>
 						</Panel>
 					</Accordion>
+					<Accordion
+						key={'info'}
+						name={'info'}
+						style={{ marginBottom: 6 }}
+						defaultActiveKey={''}
+						onSelect={() => {
+							// if (applicationMenuActiveKey === sectionKey) {
+							//   setApplicationMenuActiveKey("none");
+							// } else {
+							//   setApplicationMenuActiveKey(sectionKey);
+							// }
+						}}
+					>
+						<Panel
+							header={<div>Hinweise zur Gebührenerhebung</div>}
+							eventKey={'sectionKey'}
+							bsStyle={'info'}
+						>
+							{getOverlayTextForFlaeche(flaeche, flaechenCR)}
+						</Panel>
+					</Accordion>
+
 					<Accordion
 						key={'sectionKey'}
 						name={'sectionKey'}

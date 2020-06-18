@@ -6,7 +6,7 @@ import { get } from 'lodash';
 import React from 'react';
 import getArea from '@turf/area';
 import { reproject } from 'reproject';
-
+import { getMergedFlaeche, getCRsForFeature } from './kassenzeichenHelper';
 export const projectionData = {
 	'25832': {
 		def: '+proj=utm +zone=32 +ellps=GRS80 +units=m +no_defs',
@@ -46,24 +46,24 @@ export const getArea25832 = (geoJSON) => {
 	}
 };
 
+export const getFlaecheFeaturePropertiesFromCidsFlaeche = (flaeche) => {
+	return {
+		id: flaeche.id,
+		bez: flaeche.flaechenbezeichnung,
+		art_abk: flaeche.flaecheninfo.flaechenart.art_abkuerzung,
+		flaechenart: flaeche.flaecheninfo.flaechenart.art,
+		anschlussgrad: flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung,
+		groesse: flaeche.flaecheninfo.groesse_aus_grafik,
+		groesse_korrektur: flaeche.flaecheninfo.groesse_korrektur
+	};
+};
+
 export const getFlaechenFeatureCollection = (kassenzeichen) => {
 	const geojson = getGeoJsonFeatureFromCidsObject(
 		kassenzeichen.flaechen,
 		'flaecheninfo.geometrie',
-		(flaeche) => {
-			return {
-				id: flaeche.id,
-				bez: flaeche.flaechenbezeichnung,
-				art_abk: flaeche.flaecheninfo.flaechenart.art_abkuerzung,
-				flaechenart: flaeche.flaecheninfo.flaechenart.art,
-				anschlussgrad: flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung,
-				groesse: flaeche.flaecheninfo.groesse_aus_grafik,
-				groesse_korrektur: flaeche.flaecheninfo.groesse_korrektur
-			};
-		}
+		getFlaecheFeaturePropertiesFromCidsFlaeche
 	);
-	// console.log('geojson', geojson, JSON.stringify(geojson));
-
 	return geojson;
 };
 
@@ -182,68 +182,77 @@ export const getColorForKassenzeichenGeometry = (geo_field) => {
 	return colorHash.hex('' + geo_field);
 };
 
-export const flaechenStyle = (feature) => {
-	if (feature.properties.type === 'annotation') {
-		const currentColor = '#ffff00';
+export const createFlaechenStyler = (changeRequestsEditMode, kassenzeichen) => {
+	return (feature) => {
+		if (feature.properties.type === 'annotation') {
+			const currentColor = '#ffff00';
 
-		let opacity,
-			lineColor,
-			fillColor = '#B90504',
-			markerColor,
-			weight = 2,
-			fillOpacity;
-
-		if (feature.selected === true) {
-			opacity = 0.9;
-			lineColor = '#0C7D9D';
-			fillOpacity = 0.8;
-			markerColor = 'blue';
-		} else {
-			opacity = 1;
-			fillOpacity = 0.6;
-			lineColor = '#990100';
-			markerColor = 'red';
-		}
-
-		return {
-			color: lineColor,
-			radius: 8,
-			weight,
-			opacity,
-			fillColor,
-			fillOpacity,
-			className: 'annotation-' + feature.id,
-			defaultMarker: true,
-
-			customMarker: L.ExtraMarkers.icon({
-				icon: feature.inEditMode === true ? 'fa-square' : undefined,
+			let opacity,
+				lineColor,
+				fillColor = '#B90504',
 				markerColor,
-				shape: 'circle',
-				prefix: 'fa',
-				number: 'X'
-			})
-		};
-	} else {
-		let color = getColorFromFlaechenArt(feature.properties.art_abk);
-		let opacity = 0.6;
-		let linecolor = '#000000';
-		let weight = 1;
+				weight = 2,
+				fillOpacity;
 
-		if (feature.selected === true) {
-			opacity = 0.9;
-			linecolor = '#0C7D9D';
-			weight = '2';
+			if (feature.selected === true) {
+				opacity = 0.9;
+				lineColor = '#0C7D9D';
+				fillOpacity = 0.8;
+				markerColor = 'blue';
+			} else {
+				opacity = 1;
+				fillOpacity = 0.6;
+				lineColor = '#990100';
+				markerColor = 'red';
+			}
+
+			return {
+				color: lineColor,
+				radius: 8,
+				weight,
+				opacity,
+				fillColor,
+				fillOpacity,
+				className: 'annotation-' + feature.id,
+				defaultMarker: true,
+
+				customMarker: L.ExtraMarkers.icon({
+					icon: feature.inEditMode === true ? 'fa-square' : undefined,
+					markerColor,
+					shape: 'circle',
+					prefix: 'fa',
+					number: 'X'
+				})
+			};
+		} else {
+			let color;
+			if (changeRequestsEditMode === false) {
+				color = getColorFromFlaechenArt(feature.properties.art_abk);
+			} else {
+				let cr = getCRsForFeature(kassenzeichen, feature.properties);
+				let mergedFlaeche = getMergedFlaeche(feature.properties, cr);
+				color = getColorFromFlaechenArt(mergedFlaeche.art_abk);
+			}
+			let opacity = 0.6;
+			let linecolor = '#000000';
+			let weight = 1;
+
+			if (feature.selected === true) {
+				opacity = 0.9;
+				linecolor = '#0C7D9D';
+				weight = '2';
+			}
+			const style = {
+				color: linecolor,
+				weight: weight,
+				opacity: 1.0,
+				fillColor: color,
+				fillOpacity: opacity,
+				className: 'verdis-flaeche-' + feature.properties.bez
+			};
+			return style;
 		}
-		const style = {
-			color: linecolor,
-			weight: weight,
-			opacity: 1.0,
-			fillColor: color,
-			fillOpacity: opacity,
-			className: 'verdis-flaeche-' + feature.properties.bez
-		};
-		return style;
-	}
+	};
 };
 
 export const kassenzeichenGeometrienStyle = (feature) => {
