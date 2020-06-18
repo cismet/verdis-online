@@ -10,6 +10,7 @@ import FlaechenPanel from '../FlaechenPanel';
 import AnnotationPanel from '../AnnotationPanel';
 import DocPanel from './CR20DocumentsPanel';
 import CloudLoadingAttributeIcon from '../commons/CloudLoadingAttributeIcon';
+import { getNumberOfPendingChanges } from '../../redux/modules/kassenzeichen';
 
 const scrollToVisible = (ref) => {
 	// console.log('scroll ref', ref.current);
@@ -46,7 +47,9 @@ const CR00 = ({
 		overflowX: 'hidden',
 		maxHeight: height - 250
 	};
-
+	const { crDraftCounter, crCounter } = getNumberOfPendingChanges(
+		kassenzeichen.aenderungsanfrage
+	);
 	const close = () => {
 		setLocked(true);
 		showChangeRequestMenu(false);
@@ -58,10 +61,13 @@ const CR00 = ({
 		} else {
 			//submit
 			submit();
+			setLocked(true);
 			//then
 			//close();
 		}
 	};
+
+	console.log('crDraftCounter', crDraftCounter);
 
 	const changerequests = kassenzeichen.aenderungsanfrage;
 
@@ -468,11 +474,14 @@ const CR00 = ({
 												bsStyle={locked === true ? 'warning' : 'success'}
 												className='fillButton'
 												onClick={unlockOrSubmit}
+												disabled={crDraftCounter === 0}
 											>
 												<Icon
 													name={locked === true ? 'lock' : 'unlock'}
 												/>{' '}
-												{locked === true ? (
+												{crDraftCounter === 0 ? (
+													'Keine aktuelle Änderung'
+												) : locked === true ? (
 													'Entsperren zum Einreichen'
 												) : (
 													'Einreichen der Änderungswünsche'
