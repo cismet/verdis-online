@@ -147,9 +147,17 @@ const systemmessage = (sysMsgConf) => {
 		switch (sysMsgConf.type) {
 			case 'CHANGED':
 				return `Ihr Sachbearbeiter hat die Fläche ${sysMsgConf.flaeche} geändert.`;
-
 			case 'REJECTED':
 				return `Ihr Sachbearbeiter hat Änderungen an der Fläche ${sysMsgConf.flaeche} abgelehnt.`;
+			case 'STATUS': {
+				switch (sysMsgConf.status) {
+					case 'NONE':
+					case 'FINISHED':
+						return 'Ihr Sachbearbeiter hat die Bearbeitung abgeschlossen.';
+					case 'PROCESSING':
+						return 'Ihr Sachbearbeiter hat die Bearbeitung aufgenommen.';
+				}
+			}
 		}
 	}
 
