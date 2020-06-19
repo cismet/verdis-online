@@ -51,8 +51,6 @@ export const getInfoTextForFlaechenart = (flaeche) => {
 		switcher = flaeche.flaechenart;
 	} else {
 		// raw cids object is comming
-		console.log('flaeche', flaeche);
-
 		switcher = flaeche.flaecheninfo.flaechenart.art;
 	}
 
@@ -343,6 +341,17 @@ export const getLinkForDoc = (doc) => {
 	);
 };
 
+// select '['||array_to_string(array(
+// select
+// 		   '{"flaechenart":'||flaechenart
+// 		  ||',"anschlussgrad":'||anschlussgrad
+// 		||',"veranlagungsschluessel":'||veranlagungsschluessel
+// 		|| ',"bezeichner":"' ||bezeichner||'"'
+// 		||'}'
+// from (
+// 	select flaechenart,anschlussgrad, veranlagungsschluessel, bezeichner from veranlagungsgrundlage order by veranlagungsschluessel
+// ) as x
+// ), ',\n')||']' as json
 export const veranlagungsgrundlage = [
 	{
 		flaechenart: 6,
@@ -555,3 +564,32 @@ export const veranlagungsgrundlage = [
 		bezeichner: '710-DF'
 	}
 ];
+
+// select 'export const flaechenartLookupById={'||array_to_string(array(
+// select '"'||art_abkuerzung||'":'||id
+// from (
+// select id, art, art_abkuerzung from flaechenart
+// ) as x
+// ), ',\n')||'}' as json
+export const flaechenartLookupByAbk = {
+	DF: 1,
+	GDF: 2,
+	VF: 3,
+	VFS: 5,
+	VSÖ: 6,
+	VFÖ: 4,
+	VV: 7
+};
+// select 'export const anschlussgradLookupById={'||array_to_string(array(
+// select '"'||grad_abkuerzung||'":'||id
+// from (
+// select id, grad_abkuerzung from anschlussgrad
+// ) as x
+// ), ',\n')||'}' as json
+export const anschlussgradLookupByAbk = {
+	'angeschl.': 1,
+	'vers.': 2,
+	'direkt OG': 3,
+	'Va-Über': 4,
+	'Bach verrohrt': 5
+};

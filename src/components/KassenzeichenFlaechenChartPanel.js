@@ -6,6 +6,8 @@ import { getColorFromFlaechenArt } from '../utils/kassenzeichenMappingTools';
 //const FontAwesome = require('react-fontawesome');
 import {
 	veranlagungsgrundlage,
+	flaechenartLookupByAbk,
+	anschlussgradLookupByAbk,
 	getMergedFlaeche,
 	getCRsForFlaeche
 } from '../utils/kassenzeichenHelper';
@@ -38,8 +40,12 @@ const KassenzeichenFlaechenChartPanel = ({
 			} else {
 				flaeche = flaeche_;
 			}
-			const flaechenartId = flaeche.flaecheninfo.flaechenart.id;
-			const anschlussgradId = flaeche.flaecheninfo.anschlussgrad.id;
+			const flaechenartId =
+				flaeche.flaecheninfo.flaechenart.id ||
+				flaechenartLookupByAbk[flaeche.flaecheninfo.flaechenart.art_abkuerzung];
+			const anschlussgradId =
+				flaeche.flaecheninfo.anschlussgrad.id ||
+				anschlussgradLookupByAbk[flaeche.flaecheninfo.anschlussgrad.grad_abkuerzung];
 			// console.log('flaeche', flaeche.flaecheninfo.anschlussgrad);
 			let factor;
 			for (const rule of veranlagungsgrundlage) {

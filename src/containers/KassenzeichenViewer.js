@@ -243,6 +243,7 @@ export class KassenzeichenViewer_ extends React.Component {
 				<KassenzeichenFlaechenChartPanel
 					kassenzeichen={this.props.kassenzeichen}
 					orientation='vertical'
+					changeRequestsEditMode={this.props.uiState.changeRequestsEditMode}
 				/>
 			);
 			kassenzeichenVerticalFlaechenChartsPanel = (
