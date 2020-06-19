@@ -4,9 +4,17 @@ import { Well } from 'react-bootstrap';
 import { PieChart, Pie, Legend, Cell, Tooltip } from 'recharts';
 import { getColorFromFlaechenArt } from '../utils/kassenzeichenMappingTools';
 //const FontAwesome = require('react-fontawesome');
-import { veranlagungsgrundlage } from '../utils/kassenzeichenHelper';
+import {
+	veranlagungsgrundlage,
+	getMergedFlaeche,
+	getCRsForFlaeche
+} from '../utils/kassenzeichenHelper';
 
-const KassenzeichenFlaechenChartPanel = ({ kassenzeichen, orientation }) => {
+const KassenzeichenFlaechenChartPanel = ({
+	kassenzeichen,
+	orientation,
+	changeRequestsEditMode = false
+}) => {
 	const styleOverride = {
 		marginBottom: '5px',
 		width: '100%'
@@ -23,7 +31,13 @@ const KassenzeichenFlaechenChartPanel = ({ kassenzeichen, orientation }) => {
 	const statsFA = new Map();
 	let total = 0;
 	if (kassenzeichen.flaechen) {
-		kassenzeichen.flaechen.forEach((flaeche) => {
+		kassenzeichen.flaechen.forEach((flaeche_) => {
+			let flaeche;
+			if (changeRequestsEditMode === true) {
+				flaeche = getMergedFlaeche(flaeche_, getCRsForFlaeche(kassenzeichen, flaeche_));
+			} else {
+				flaeche = flaeche_;
+			}
 			const flaechenartId = flaeche.flaecheninfo.flaechenart.id;
 			const anschlussgradId = flaeche.flaecheninfo.anschlussgrad.id;
 			// console.log('flaeche', flaeche.flaecheninfo.anschlussgrad);

@@ -51,6 +51,8 @@ export const getInfoTextForFlaechenart = (flaeche) => {
 		switcher = flaeche.flaechenart;
 	} else {
 		// raw cids object is comming
+		console.log('flaeche', flaeche);
+
 		switcher = flaeche.flaecheninfo.flaechenart.art;
 	}
 
@@ -135,8 +137,8 @@ const getMergedFlaechenObject = (flaeche, flaechenCR) => {
 	let ret = JSON.parse(JSON.stringify(flaeche));
 
 	ret.flaecheninfo.groesse_korrektur = flaechenCR.groesse || ret.flaecheninfo.groesse_korrektur;
-	ret.flaecheninfo.anschlussgrad = flaechenCR.anschlussgrad || ret.anschlussgrad;
-	ret.flaecheninfo.flaechenart = flaechenCR.flaechenart || ret.flaechenart;
+	ret.flaecheninfo.anschlussgrad = flaechenCR.anschlussgrad || ret.flaecheninfo.anschlussgrad;
+	ret.flaecheninfo.flaechenart = flaechenCR.flaechenart || ret.flaecheninfo.flaechenart;
 	return ret;
 };
 export const getMergedFlaeche = (flaecheOrFlaechenfeature, flaechenCR) => {
