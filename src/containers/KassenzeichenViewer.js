@@ -30,6 +30,7 @@ import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
 import ChangeRequestEditView from '../components/changerequests/CR50Flaechendialog';
 import AnnotationEditView from '../components/changerequests/CR60AnnotationDialog';
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -99,7 +100,7 @@ export class KassenzeichenViewer_ extends React.Component {
 	kassenZeichenPanelClick() {
 		// this.props.mappingActions.fitAll();
 		// or
-		this.verdisMap.getWrappedInstance().fitBounds();
+		this.verdisMap.getWrappedInstance().fitBoundsX();
 	}
 
 	kassenZeichenPanelD3Click() {
@@ -149,6 +150,7 @@ export class KassenzeichenViewer_ extends React.Component {
 	}
 
 	render() {
+		throw new Error('artificial error to demo the new errorpage');
 		let flaechenInfoOverlay;
 		let verdisMapWithAdditionalComponents;
 		let mapHeight;
@@ -501,6 +503,16 @@ export class KassenzeichenViewer_ extends React.Component {
 			}
 		}
 
+		const ErrorFallback = ({ error, componentStack, resetErrorBoundary }) => {
+			return (
+				<div role='alert'>
+					<p>Something went wrong:</p>
+					<pre>{error.message}</pre>
+					<pre>{componentStack}</pre>
+					<button onClick={resetErrorBoundary}>Try again</button>
+				</div>
+			);
+		};
 		return (
 			<div>
 				<AppNavbar />

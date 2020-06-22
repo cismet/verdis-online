@@ -7,17 +7,27 @@ import store, { history } from './redux/store';
 import App from './App';
 
 import './index.css';
+// import { ErrorBoundary } from 'react-error-boundary';
+import ErrorBoundary from './ErrorBoundary';
+import ErrorFallback from './ErrorFallbackComponent';
 
 const target = document.querySelector('#root');
 
 render(
-	<Provider store={store}>
-		<ConnectedRouter history={history}>
-			<div>
-				<App />
-			</div>
-		</ConnectedRouter>
-	</Provider>,
+	<ErrorBoundary
+		FallbackComponent={ErrorFallback}
+		onReset={() => {
+			// reset the state of your app so the error doesn't happen again
+		}}
+	>
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<div>
+					<App />
+				</div>
+			</ConnectedRouter>
+		</Provider>
+	</ErrorBoundary>,
 	target
 );
 

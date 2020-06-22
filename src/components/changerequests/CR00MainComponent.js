@@ -289,7 +289,6 @@ const CR00 = ({
 
 									<ConversationInput
 										setDraft={(draftText, attachments) => {
-											console.log('draftText', draftText);
 											const msg = {
 												typ: 'CITIZEN',
 												timestamp: Date.now(),

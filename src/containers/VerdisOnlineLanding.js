@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactDOM from 'react-dom';
 import { DOMAIN, STAC_SERVICE } from '../constants/cids';
-
 import { Panel, Form, FormGroup, Grid, Row, Col } from 'react-bootstrap';
 import Loadable from 'react-loading-overlay';
-
 import { routerActions as RoutingActions } from 'react-router-redux';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
@@ -17,16 +15,6 @@ import MaskedFormControl from 'react-bootstrap-maskedinput';
 import queryString from 'query-string';
 import { Alert, AlertContainer } from 'react-bs-notifier';
 import { getVersion } from '../constants/versions';
-// import 'leaflet';
-import L from 'leaflet';
-// import 'leaflet-extra-markers/dist/css/leaflet.extra-markers.min.css';
-// import 'leaflet-extra-markers';
-// import 'leaflet-editable';
-// import 'proj4';
-// import 'proj4leaflet';
-// import 'leaflet.path.drag';
-
-// import { RoutedMap } from 'react-cismap';
 
 function mapStateToProps(state) {
 	return {
