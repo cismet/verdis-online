@@ -150,7 +150,6 @@ export class KassenzeichenViewer_ extends React.Component {
 	}
 
 	render() {
-		throw new Error('artificial error to demo the new errorpage');
 		let flaechenInfoOverlay;
 		let verdisMapWithAdditionalComponents;
 		let mapHeight;
