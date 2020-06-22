@@ -770,19 +770,18 @@ function submitCR() {
 
 		const state = getState();
 		const stac = state.auth.stac;
-		if (
-			newKassz.aenderungsanfrage !== undefined &&
-			newKassz.aenderungsanfrage !== null &&
-			newKassz.aenderungsanfrage.flaechen !== undefined
-		) {
+		if (newKassz.aenderungsanfrage !== undefined && newKassz.aenderungsanfrage !== null) {
 			if (newKassz.aenderungsanfrage.nachrichten === undefined) {
 				newKassz.aenderungsanfrage.nachrichten = [];
 			}
-			const changerequestBezeichnungsArray = Object.keys(newKassz.aenderungsanfrage.flaechen);
-			changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
-				newKassz.aenderungsanfrage.flaechen[flaechenbezeichnung].draft = false;
-			});
-
+			if (newKassz.aenderungsanfrage.flaechen !== undefined) {
+				const changerequestBezeichnungsArray = Object.keys(
+					newKassz.aenderungsanfrage.flaechen
+				);
+				changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+					newKassz.aenderungsanfrage.flaechen[flaechenbezeichnung].draft = false;
+				});
+			}
 			const changerequestMessagesArray = newKassz.aenderungsanfrage.nachrichten;
 			changerequestMessagesArray.map((msg) => {
 				if (msg.draft === true) {

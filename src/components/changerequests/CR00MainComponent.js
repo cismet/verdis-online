@@ -67,8 +67,6 @@ const CR00 = ({
 		}
 	};
 
-	console.log('crDraftCounter', crDraftCounter);
-
 	const changerequests = kassenzeichen.aenderungsanfrage;
 
 	if (visible === true) {

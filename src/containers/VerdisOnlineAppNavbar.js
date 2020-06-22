@@ -321,21 +321,21 @@ export class AppNavbar_ extends React.Component {
 							</OverlayTrigger>
 							{this.props.uiState.cloudStorageStatus ===
 								CLOUDSTORAGESTATES.CLOUD_STORAGE_UP && (
-								<NavItem id='navitem_cloud' eventKey={4} href='/#/'>
+								<NavItem id='navitem_cloud' eventKey={4}>
 									<FontAwesomeIcon icon={faCloudUploadAlt} />
 									{menuIsHidden ? '   ' + lblExit : ''}
 								</NavItem>
 							)}
 							{this.props.uiState.cloudStorageStatus ===
 								CLOUDSTORAGESTATES.CLOUD_STORAGE_DOWN && (
-								<NavItem id='navitem_cloud' eventKey={4} href='/#/'>
+								<NavItem id='navitem_cloud' eventKey={4}>
 									<FontAwesomeIcon icon={faCloudDownloadAlt} />
 									{menuIsHidden ? '   ' + lblExit : ''}
 								</NavItem>
 							)}
 							{this.props.uiState.cloudStorageStatus ===
 								CLOUDSTORAGESTATES.CLOUD_STORAGE_ERROR && (
-								<NavItem id='navitem_cloud' eventKey={4} href='/#/'>
+								<NavItem id='navitem_cloud' eventKey={4}>
 									<FontAwesomeIcon icon={faCloudRain} />
 									{menuIsHidden ? '   ' + lblExit : ''}
 								</NavItem>
