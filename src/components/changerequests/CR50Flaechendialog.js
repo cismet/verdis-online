@@ -334,7 +334,6 @@ const CR00 = ({
 						>
 							<DocPanel
 								uploadCRDoc={uploadCRDoc}
-								addFiles={addFiles}
 								documents={documents}
 								tmpAttachments={tmpAttachments}
 								setTmpAttachments={setTmpAttachments}

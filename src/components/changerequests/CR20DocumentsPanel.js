@@ -3,12 +3,12 @@ import { useDropzone } from 'react-dropzone';
 import Document from '../conversations/Document';
 import { Icon } from 'react-fa';
 
-const Comp = ({
-	documents = [],
-	uploadCRDoc = () => {},
-	tmpAttachments = [],
-	setTmpAttachments = () => {}
-}) => {
+const Comp = ({ documents = [], uploadCRDoc, tmpAttachments = [], setTmpAttachments }) => {
+	let readOnly = false;
+	if (uploadCRDoc === undefined) {
+		readOnly = true;
+	}
+
 	const onDrop = useCallback((acceptedFiles) => {
 		acceptedFiles.forEach((file) => {
 			file.nonce =
@@ -60,24 +60,34 @@ const Comp = ({
 		noKeyboard: true
 	});
 
+	let dndInputProps = {};
+	let dndRootProps = {};
+
+	if (readOnly === false) {
+		dndInputProps = getInputProps();
+		dndRootProps = getRootProps();
+	}
+
 	return (
-		<div {...getRootProps()}>
-			<div onClick={open} className='pull-right'>
-				<button
-					style={{
-						border: 0,
-						padding: 0,
-						wordWrap: 'break-word',
-						color: 'black',
-						textAlign: 'left',
-						outline: 'none' //
-					}}
-					class='btn-link'
-				>
-					<Icon style={{ marginBottom: 3 }} name='paperclip' />
-				</button>
-			</div>
-			<input style={{ height: 0 }} {...getInputProps()} />
+		<div {...dndRootProps}>
+			{readOnly === false && (
+				<div onClick={open} className='pull-right'>
+					<button
+						style={{
+							border: 0,
+							padding: 0,
+							wordWrap: 'break-word',
+							color: 'black',
+							textAlign: 'left',
+							outline: 'none' //
+						}}
+						class='btn-link'
+					>
+						<Icon style={{ marginBottom: 3 }} name='paperclip' />
+					</button>
+				</div>
+			)}
+			{readOnly === false && <input style={{ height: 0 }} {...dndInputProps} />}
 			{documents.length > 0 &&
 				documents.map((doc, index) => {
 					return (

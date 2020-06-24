@@ -399,7 +399,7 @@ const CR00 = ({
 									eventKey={'sectionKey'}
 									bsStyle={'danger'}
 								>
-									<DocPanel uploadCRDoc={uploadCRDoc} documents={documents} />
+									<DocPanel documents={documents} />
 								</Panel>
 							</Accordion>
 						</div>
