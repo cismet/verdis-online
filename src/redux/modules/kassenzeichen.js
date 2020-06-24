@@ -846,7 +846,18 @@ export function getNumberOfPendingChanges(cr) {
 				}
 			});
 		}
+
+		if (cr.geometrien !== undefined && cr.geometrien !== null) {
+			Object.keys(cr.geometrien).map((geomKey) => {
+				const geom = cr.geometrien[geomKey];
+
+				if (geom.properties.draft === true) {
+					crDraftCounter++;
+				}
+			});
+		}
 	}
+
 	return { crDraftCounter, crCounter };
 }
 
