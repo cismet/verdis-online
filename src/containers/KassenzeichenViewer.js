@@ -94,7 +94,7 @@ export class KassenzeichenViewer_ extends React.Component {
 				}
 			);
 		} else {
-			this.props.routingActions.push('/');
+			//this.props.routingActions.push('/');
 		}
 	}
 
