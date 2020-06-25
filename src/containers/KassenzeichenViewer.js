@@ -79,25 +79,28 @@ export class KassenzeichenViewer_ extends React.Component {
 	//   }
 
 	componentDidMount() {
-		if (this.props.auth.stac && this.props.auth.succesfullLogin === false) {
-			this.props.authActions.setLoginInProgress();
-			this.props.uiStateActions.showInfo('Kassenzeichen wird wieder geladen');
-			this.props.kassenzeichenActions.getKassenzeichenbySTAC(
-				this.props.auth.stac,
-				(success) => {
-					if (success === true) {
-						setTimeout(() => {
-							this.props.uiStateActions.showWaiting(false);
-							this.props.mappingActions.fitAll();
-						}, 300);
+		if (this.props.auth.stac) {
+			if (this.props.auth.succesfullLogin === false) {
+				this.props.authActions.setLoginInProgress();
+				this.props.uiStateActions.showInfo('Kassenzeichen wird wieder geladen');
+				this.props.kassenzeichenActions.getKassenzeichenbySTAC(
+					this.props.auth.stac,
+					(success) => {
+						if (success === true) {
+							setTimeout(() => {
+								this.props.uiStateActions.showWaiting(false);
+								this.props.mappingActions.fitAll();
+							}, 300);
+						}
 					}
-				}
-			);
+				);
+			} else {
+				this.props.mappingActions.fitAll();
+			}
 		} else {
-			//this.props.routingActions.push('/');
+			this.props.routingActions.push('/');
 		}
 	}
-
 	kassenZeichenPanelClick() {
 		// this.props.mappingActions.fitAll();
 		// or
