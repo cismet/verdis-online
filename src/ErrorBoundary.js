@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import StackTrace from 'stacktrace-js';
 import { getVersion } from './constants/versions';
 import { Panel, Form, FormGroup, Grid, Row, Col } from 'react-bootstrap';
-
+import store from './redux/store';
 window.onerror = function(msg, file, line, col, error) {
 	StackTrace.fromError(error).then((err) => {
 		// StackTrace.report(
@@ -54,7 +54,55 @@ class ErrorBoundary extends Component {
 					return sf.toString();
 				})
 				.join('\n');
-			console.log('ErrorBoundary.this.state', this.state);
+
+			const br = '\n';
+			const globalState = store.getState();
+
+			let mailToHref =
+				'mailto:regengeld@stadt.wuppertal.de?subject=Fehler%20in%20VerDIS-online' +
+				'&body=' +
+				encodeURI(
+					`Sehr geehrte Damen und Herren,${br}${br}` +
+						`während der Bearbeitung des Kassenzeichen ${this.state
+							.kassenzeichenkassenzeichennummer} ist der untenstehende Fehler passiert: ` +
+						`${br}${br}` +
+						`[Tragen Sie hier bitte ein, was Sie gemacht haben oder was Ihnen aufgefallen ist.]${br}` +
+						`${br}${br}` +
+						`Mit freundlichen Grüßen${br}` +
+						`${br}${br}${br}` +
+						`[Bitte überschreiben Sie den nachfolgenden Block mit Ihren Kontaktinformationen, damit wir ggf mit Ihnen Kontakt aufnehmen können]` +
+						`${br}${br}` +
+						`Vor- und Nachname${br}` +
+						`ggf E-Mail-Adresse${br}` +
+						`ggf. Telefonnummer${br}${br}` +
+						`!! Mit Absenden dieser E-Mail erkläre ich mein Einverständnis mit der zweckgebundenen Verarbeitung meiner personenbezogenen Daten gemäß der Information nach Artikel 13 bzw. Art. 14 Datenschutz-Grundverordnung (DS-GVO).` +
+						`${br}${br}` +
+						`----------------------${br}` +
+						`${this.state.error.message}${br}` +
+						`----------------------${br}` +
+						`${stringifiedStack}${br}` +
+						`----------------------${br}`
+				);
+
+			let attachmentText =
+				`----------------------${br}` +
+				`${this.state.error.message}${br}` +
+				`----------------------${br}` +
+				`${stringifiedStack}${br}` +
+				`----------------------${br}` +
+				`${br}${br}` +
+				`----------------------${br}` +
+				`DATA STATE${br}` +
+				`----------------------${br}` +
+				`${JSON.stringify(globalState.kassenzeichen, null, 2)}${br}` +
+				`----------------------${br}` +
+				`UI STATE${br}` +
+				`----------------------${br}` +
+				`${JSON.stringify(globalState.uiState, null, 2)}${br}` +
+				`----------------------${br}` +
+				`MAPPING STATE${br}` +
+				`----------------------${br}` +
+				`${JSON.stringify(globalState.mapping, null, 2)}${br}`;
 
 			//render fallback UI
 			return (
@@ -147,6 +195,31 @@ class ErrorBoundary extends Component {
 						<h4 style={{ color: 'white' }}>
 							Sie können die Entwickler unterstützen, indem Sie den Fehler an uns
 							melden.
+						</h4>
+						<h4 style={{ color: 'white' }}>
+							Bitte schicken Sie uns dazu eine <a href={mailToHref}>Mail</a> und fügen
+							sie optional noch den Report als Anhang hinzu.
+							<br />
+							<br />
+							<button
+								style={{ backgroundColor: 'orange' }}
+								onClick={() => {
+									var dataStr =
+										'data:text/plain;charset=utf-8,' +
+										encodeURIComponent(attachmentText);
+									var downloadAnchorNode = document.createElement('a');
+									downloadAnchorNode.setAttribute('href', dataStr);
+									downloadAnchorNode.setAttribute(
+										'download',
+										'problemReport.verdis-online.txt'
+									);
+									window.document.body.appendChild(downloadAnchorNode); // required for firefox
+									downloadAnchorNode.click();
+									downloadAnchorNode.remove();
+								}}
+							>
+								Problemreport erzeugen
+							</button>
 						</h4>
 						<pre style={{ backgroundColor: '#fff4', color: 'white' }}>
 							{this.state.error.message}
