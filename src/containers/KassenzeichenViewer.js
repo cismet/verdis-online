@@ -29,7 +29,7 @@ import {
 import CONTACTS_MAP, { defaultContact } from '../constants/contacts';
 import ChangeRequestEditView from '../components/changerequests/CR50Flaechendialog';
 import AnnotationEditView from '../components/changerequests/CR60AnnotationDialog';
-import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
+import { routerActions as RoutingActions } from 'react-router-redux';
 
 function mapStateToProps(state) {
 	return {
@@ -44,6 +44,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
 	return {
 		kassenzeichenActions: bindActionCreators(KassenzeichenActions, dispatch),
+		routingActions: bindActionCreators(RoutingActions, dispatch),
 		uiStateActions: bindActionCreators(UiStateActions, dispatch),
 		mappingActions: bindActionCreators(MappingActions, dispatch),
 		authActions: bindActionCreators(AuthActions, dispatch)
@@ -93,7 +94,7 @@ export class KassenzeichenViewer_ extends React.Component {
 				}
 			);
 		} else {
-			this.props.mappingActions.fitAll();
+			this.props.routingActions.push('/');
 		}
 	}
 
@@ -150,6 +151,13 @@ export class KassenzeichenViewer_ extends React.Component {
 	}
 
 	render() {
+		// if (this.props.kassenzeichen.kassenzeichennummer8 == 60432515) {
+		// 	throw new Error('Artificial Error');
+		// }
+		if (new URLSearchParams(window.location.href).get('produceError')) {
+			throw new Error('Artificial Error');
+		}
+
 		let flaechenInfoOverlay;
 		let verdisMapWithAdditionalComponents;
 		let mapHeight;

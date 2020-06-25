@@ -269,7 +269,15 @@ function fitFeatureBounds(feature, mode) {
 function fitAll() {
 	return function(dispatch, getState) {
 		const currentState = getState();
-		dispatch(fitFeatureCollection(currentState.mapping.featureCollection));
+		if (
+			currentState !== undefined &&
+			currentState.mapping !== undefined &&
+			currentState.mapping.featureCollection !== undefined &&
+			currentState.mapping.featureCollection.length !== undefined &&
+			currentState.mapping.featureCollection.length > 0
+		) {
+			dispatch(fitFeatureCollection(currentState.mapping.featureCollection));
+		}
 	};
 }
 function fitFeatureCollection(features) {
