@@ -67,7 +67,7 @@ const Component = ({
 					</p>
 					<p>
 						Die topographische Karte verschafft Ihnen den besten Überblick über die
-						Geländesituation, da sie auch Böschungen und andere Geländeformen darstellt.
+						Geländesituation, da sie bedeutende Böschungen und Geländeformen darstellt.
 						Der Stadtplan ist die am einfachsten lesbare Hintergrundkarte. Er eignet
 						sich für die schnelle Orientierung in der Karte, da hier die Hausnummern
 						aller Gebäude gut lesbar dargestellt werden. Die Luftbildkarte ist die

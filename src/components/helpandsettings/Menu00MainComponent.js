@@ -4,6 +4,7 @@ import Datengrundlage from './Menu10Datengrundlagen';
 import MeinKassenzeichen from './Menu20MeinKassenzeichen';
 import Kartenhintergruende from './Menu30Kartenhintergruende';
 import Anleitung from './Menu40Anleitung';
+import Aenderungen from './Menu42Aenderungen';
 import FAQs from './Menu50FAQ';
 import Datenschutz from './Menu60Datenschutz';
 
@@ -58,6 +59,12 @@ const ModalHelpAndInfo = ({
 				/>,
 				<Anleitung
 					key='Anleitung'
+					applicationMenuActiveKey={applicationMenuActiveKey}
+					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
+					showModalMenu={showModalMenu}
+				/>,
+				<Aenderungen
+					key='Aenderungen'
 					applicationMenuActiveKey={applicationMenuActiveKey}
 					setApplicationMenuActiveKey={setApplicationMenuActiveKey}
 					showModalMenu={showModalMenu}

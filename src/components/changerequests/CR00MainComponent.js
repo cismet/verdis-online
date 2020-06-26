@@ -173,10 +173,10 @@ const CR00 = ({
 				</Modal.Header>
 				<Modal.Body style={modalBodyStyle} id='myMenu' key={'applicationMenuActiveKey'}>
 					<p>
-						Wenn Sie Änderungswünsche haben, aktivieren Sie hier den Änderungsmodus.
-						Danach können Sie in der Applikation mit dem Sachbearbeiter in Kontakt
-						treten sowie konkrete Änderungsvorschläge an den einzelnen Flächen selbt
-						hinterlegen.
+						Sollten Sie Änderungswünsche zu den angezeigten Flächen haben, aktivieren
+						Sie hier bitte den Änderungsmodus. Im Änderungsmodus haben Sie die
+						Möglichkeit, mit Ihrem Ansprechpartner in Kontakt zu treten, Flächen zu
+						verändern oder anzulegen.
 					</p>
 					<div style={{ textAlign: 'center', marginTop: '20px' }}>
 						<div style={{ fontSize: '20px' }}>
