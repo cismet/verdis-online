@@ -73,6 +73,7 @@
     "reproject": "1.2.5",
     "roman-numerals": "0.3.2",
     "scroll-into-view-if-needed": "1.2.1",
+    "slugify": "1.4.2",
     "stacktrace-gps": "3.0.4",
     "stacktrace-js": "2.0.2",
     "svg-path-parser": "1.1.0",
