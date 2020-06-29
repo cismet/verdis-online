@@ -12,11 +12,15 @@ const Comp = ({ id, title, containerId = 'myMenu', linkToKey = 'help', content }
 			</div>
 			<h4 id={id}>
 				{title}{' '}
-				<Link to={linkToKey} containerId={containerId} style={{ color: '#00000044' }}>
+				<Link
+					to={linkToKey}
+					containerId={containerId}
+					style={{ cursor: 'pointer', color: '#00000044' }}
+				>
 					<Icon name={'arrow-circle-up'} />
 				</Link>
 			</h4>
-			<p>{content}</p>
+			{content}
 		</div>
 	);
 };

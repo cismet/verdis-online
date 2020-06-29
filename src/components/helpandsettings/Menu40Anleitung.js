@@ -2,7 +2,11 @@ import React from 'react';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 import { Icon } from 'react-fa';
 
-const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) => {
+const Component = ({
+	applicationMenuActiveKey,
+	setApplicationMenuActiveKey,
+	showOnSeperatePage
+}) => {
 	return (
 		<GenericModalMenuSection
 			applicationMenuActiveKey={applicationMenuActiveKey}
@@ -10,6 +14,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			sectionKey='anleitung'
 			sectionTitle='Kurzanleitung'
 			sectionBsStyle='success'
+			showOnSeperatePage={showOnSeperatePage}
 			sectionContent={
 				<div>
 					<p>
@@ -17,10 +22,10 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					</p>
 
 					<p>
-						Das Fenster von VerDIS-online hat 3 Bereiche. Die Kopfzeile mit
+						Das Fenster von VerDIS-online hat 3 Bereiche: Die Kopfzeile mit
 						grundsätzlichen Funktionen, den Kartenbereich und den Informationsbereich.
 						Können im Informationsbereich nicht alle Informationen abgebildet werden,
-						erscheinen die üblichen Scroll Bereiche, die eine Verschiebung des
+						erscheinen die üblichen Scrollbereiche, die eine Verschiebung des
 						Informationsbereichs ermöglichen.
 					</p>
 
@@ -42,11 +47,11 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 						dargestellt. Die Nummern und Buchstaben werden ab einem bestimmten Maßstab
 						aus- bzw. eingeblendet, um die Übersicht nicht zu verlieren. Vergrößern oder
 						verkleinern kann man die Ansicht durch die Nutzung der Symbole + und - im
-						Kartenfenster oder durch Nutzung des Mausrades. Verschieben des Fensters ist
-						durch Anklicken und Halten der linken Maustaste und gleichzeitigem Bewegen
-						der Maus möglich. Um zur Gesamtansicht zurückzukehren, klicken Sie auf die
-						Kopfzeile „VerDIS-online (Kassenzeichen: xxxxxxxx) oder in das Feld
-						„Kassenzeichen“.
+						Kartenfenster oder durch die Nutzung des Mausrades. Das Verschieben des
+						Fensters ist durch Anklicken und Halten der linken Maustaste und
+						gleichzeitigem Bewegen der Maus möglich. Um zur Gesamtansicht
+						zurückzukehren, klicken Sie auf die Kopfzeile "VerDIS-online (Kassenzeichen:
+						xxxxxxxx) oder in das Feld "Kassenzeichen".
 					</p>
 
 					<p>
@@ -54,17 +59,17 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					</p>
 
 					<p>
-						In der Grundeinstellung wird hier der Ansprechpartner mit
+						In der Grundeinstellung werden hier der Ansprechpartner mit
 						Kontaktinformationen, das Kassenzeichen mit dem Datum der ersten Erfassung,
 						eine Statistik (Tortendiagramm) und eine Aufstellung der Flächen angezeigt.
 						In der Statistik sehen Sie die Summen aller Flächen, die nach dem
-						dargestellten Stand zur Gebührenerhebung herangezogen würden ? und den
-						Anteil der einzelnen Flächenarten. Beim Bewegen der Maus über das
-						Tortendiagramm werden die m² der einzelnen Flächenarten angezeigt. In der
-						Aufstellung der Flächen wird Ihnen zu jeder einzelnen Fläche neben der
-						Flächenart und -bezeichnung auch die Größe der Fläche, ob sie angeschlossen
-						ist oder versickert und manchmal auch eine Kurzbeschreibung (z.B.:
-						Gartenweg) angezeigt.
+						dargestellten Stand zur Gebührenerhebung herangezogen würden und den Anteil
+						der einzelnen Flächenarten. Beim Bewegen der Maus über das Tortendiagramm
+						werden die m² der einzelnen Flächenarten angezeigt. In der Aufstellung der
+						Flächen wird Ihnen zu jeder einzelnen Fläche neben der Flächenart und
+						-bezeichnung auch die Größe der Fläche, ob sie angeschlossen ist oder
+						versickert und manchmal auch eine Kurzbeschreibung (z.B.: Gartenweg)
+						angezeigt.
 					</p>
 
 					<p>
@@ -73,9 +78,9 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 
 					<p>
 						Neben dem Namen der Oberfläche mit dem derzeit aufgerufenen Kassenzeichen
-						haben Sie die Möglichkeit „Hilfe &amp; Einstellungen“ (hier finden Sie auch
+						haben Sie die Möglichkeit "Hilfe &amp; Einstellungen" (hier finden Sie auch
 						diese Kurzanleitung) aufzurufen, über das Feld &quot;Änderungswünsche&quot;
-						den Bereich aufzurufen in dem Sie Änderungswünsche mitteilen können, einen
+						den Bereich aufzurufen, in dem Sie Änderungswünsche mitteilen können, einen
 						ausdruckbaren Flächenerfassungsbogen zu erzeugen und Bestandteile des
 						Fensters ein- bzw. auszublenden.
 					</p>
@@ -94,8 +99,8 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 						die Informationen Art der Fläche (z.B.: Dachfläche), die Flächengröße und
 						der Anschlussgrad angezeigt. In manchen Fällen gibt es noch eine
 						Kurzbeschreibung (z.B.: Gartenweg). Um zur Gesamtansicht zurückzukehren,
-						klicken Sie auf die Kopfzeile „VerDIS-online (Kassenzeichen: xxxxxxxx) oder
-						in das Feld „Kassenzeichen“.
+						klicken Sie auf die Kopfzeile "VerDIS-online (Kassenzeichen: xxxxxxxx) oder
+						in das Feld "Kassenzeichen".
 					</p>
 
 					<p>
@@ -103,12 +108,12 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					</p>
 
 					<p>
-						Über „Hilfe &amp; Einstellungen“ haben Sie die Möglichkeit, neben dieser
+						Über "Hilfe &amp; Einstellungen" haben Sie die Möglichkeit, neben dieser
 						Kurzanleitung weitere Informationen zu erhalten und unterschiedliche
 						Kartenhintergründe auszuwählen.
 					</p>
 					<p>
-						Durch anklicken des Felds &quot;Änderungswünsche&quot; gelangen Sie auf ein
+						Durch Anklicken des Felds &quot;Änderungswünsche&quot; gelangen Sie auf ein
 						Fenster, in dem Sie die Möglichkeit haben, den Änderungsmodus ein- und
 						auszuschalten. Wurden dort Änderungen eingetragen, erscheint hinter dem Feld
 						Änderungswünsche die Zahl der von Ihnen angegebenen Änderungen. Eine Hilfe
@@ -119,7 +124,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					<p>
 						<Icon name='info-circle' /> Wurde eine Fläche ausgewählt, erscheint ein gelb
 						hinterlegter Bereich mit näheren Informationen zur ausgewählten Fläche. Mit
-						der Funktion „Flächeninfo ausblenden/einblenden“ können Sie diesen Bereich
+						der Funktion "Flächeninfo ausblenden/einblenden" können Sie diesen Bereich
 						aktivieren oder deaktivieren, um eine bessere Sicht auf das Kartenfenster zu
 						erhalten.
 					</p>

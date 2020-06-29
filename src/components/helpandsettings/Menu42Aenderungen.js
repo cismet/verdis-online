@@ -2,7 +2,11 @@ import React from 'react';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 import { Icon } from 'react-fa';
 
-const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) => {
+const Component = ({
+	applicationMenuActiveKey,
+	setApplicationMenuActiveKey,
+	showOnSeperatePage
+}) => {
 	return (
 		<GenericModalMenuSection
 			applicationMenuActiveKey={applicationMenuActiveKey}
@@ -10,6 +14,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			sectionKey='aenderungen'
 			sectionTitle='Änderungen vornehmen und übermitteln'
 			sectionBsStyle='success'
+			showOnSeperatePage={showOnSeperatePage}
 			sectionContent={
 				<div>
 					<p>
@@ -20,26 +25,26 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					</p>
 					<ul>
 						<li>
-							Der Bereich „Ihre Kommunikation“ (blaue Kopfzeile und blau umrandet)
+							Der Bereich "Ihre Kommunikation" (blaue Kopfzeile und blau umrandet)
 							bietet Ihnen die Möglichkeit, mit uns in Kontakt zu treten und
 							Informationen weiterzugeben. Es handelt sich hier nicht um die
 							Möglichkeit eines Chats. Eingänge werden nach ihrer Reihenfolge
 							bearbeitet. Auf Grund des Arbeitsvolumens ist nicht immer eine zeitnahe
-							Antwort möglich. Siehe "Ihre Kommunikation“
+							Antwort möglich. (Siehe "Ihre Kommunikation")
 						</li>
 						<li>
-							Mit einer gelben Kopfzeile bzw. gelb umrandet ist der Bereich „Ihre
-							Änderungsvorschläge“. Hier erscheinen erst dann Eintragungen, wenn an
-							bestehenden Flächen Änderungen vorgenommen wurden. Siehe „Änderungen an
-							bestehenden Flächen“.
+							Mit einer gelben Kopfzeile bzw. gelb umrandet ist der Bereich "Ihre
+							Änderungsvorschläge". Hier erscheinen erst dann Eintragungen, wenn an
+							bestehenden Flächen Änderungen vorgenommen wurden. (Siehe "Änderungen an
+							bestehenden Flächen")
 						</li>
 						<li>
 							Die Farbe Grün kennzeichnet den Bereich &quot;Ihre Anmerkungen in der
 							Karte&quot;. Hier sind die grafischen Änderungen aufgelistet, die Sie in
-							der Karte vorgenommen haben. Siehe &quot;Grafische Änderung&quot;
+							der Karte vorgenommen haben. (Siehe &quot;Grafische Änderung&quot;)
 						</li>
 						<li>
-							Mit roter Kennzeichnung ist der Bereich „Ihre Dokumente“ versehen. Hier
+							Mit roter Kennzeichnung ist der Bereich "Ihre Dokumente" versehen. Hier
 							werden Dokumente aufgeführt, die Sie entweder im Bereich der
 							Kommunikation oder bei der Änderung einer Fläche hochgeladen haben.
 						</li>
@@ -56,12 +61,12 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 						Alle Änderungen, Eintragungen oder Dokumente, die Sie hochladen, bleiben
 						erhalten, auch wenn Sie den Änderungsmodus verlassen. Alle Informationen
 						werden erst dann zur Bearbeitung an uns weitergegeben, wenn Sie von Ihnen
-						eingereicht werden. Zum Einreichen klicken Sie bitte im Fenster
+						eingereicht wurden. Zum Einreichen klicken Sie bitte im Fenster
 						&quot;Änderungswünsche und Kommentare&quot; am unteren Rand auf die orange
-						Schaltfläche „Entsperren zum Einreichen“. Hierdurch werden Ihre Änderungen
+						Schaltfläche "Entsperren zum Einreichen". Hierdurch werden Ihre Änderungen
 						freigegeben Die Schaltfläche färbt sich grün, wenn die Angaben einer ersten
-						Prüfung standgehalten haben, und der Text ändert sich in „Einreichen der
-						Änderungswünsche“. Durch Betätigung dieser Schaltfläche werden Ihre Angaben
+						Prüfung standgehalten haben, und der Text ändert sich in "Einreichen der
+						Änderungswünsche". Durch Betätigung dieser Schaltfläche werden Ihre Angaben
 						und Dokument an uns übermittelt.
 					</p>
 
@@ -116,15 +121,15 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					</p>
 					<p>
 						Um Änderungen an einer Fläche vorzunehmen, klicken Sie bitte auf den
-						Hintergrund neben dem Fenster „Änderungswünsche und Kommentare“. Der
+						Hintergrund neben dem Fenster "Änderungswünsche und Kommentare". Der
 						Hintergrund rückt nach vorne. Wählen Sie eine Fläche durch Anklicken in der
 						Karte oder in der Auflistung auf der rechten Seite aus. Die ausgewählte
 						Fläche wird sowohl in der Karte wie auch in der Auflistung blau umrandet
 						dargestellt. Klicken Sie nun auf den Bleistift in der rechten oberen Ecke
 						des blau umrandeten Felds der Auflistung. Es öffnet sich ein neues Fenster
-						„Änderung der …….fläche …“. In diesem Fenster haben Sie die Möglichkeit, die
-						Flächenart (z.B.: Dachfläche in Gründach), den Anschlussgrad (z.B.: von „An
-						den Kanal angeschlossen“ auf „versickernd“) oder die Flächengröße zu ändern.
+						"Änderung der …….fläche …". In diesem Fenster haben Sie die Möglichkeit, die
+						Flächenart (z.B.: Dachfläche in Gründach), den Anschlussgrad (z.B.: von "An
+						den Kanal angeschlossen" auf "versickernd") oder die Flächengröße zu ändern.
 					</p>
 					<p>
 						ACHTUNG!!! Änderungen können grundsätzlich nur dann angenommen werden, wenn
@@ -133,13 +138,13 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 						durch eine neuerliche Messung korrigiert werden.
 					</p>
 					<p>
-						Unter dem Punkt „Ihre Dokumente“ (rot hinterlegt) haben Sie die Möglichkeit,
+						Unter dem Punkt "Ihre Dokumente" (rot hinterlegt) haben Sie die Möglichkeit,
 						Nachweise wie Fotos oder Rechnungen durch Ziehen und Fallenlassen (drag and
 						drop) hochzuladen oder sehen ggf. Dokumente, die schon hochgeladen wurden.
 						Wurde hier ein Nachweis neu abgelegt, erscheint er grau hinterlegt. In dem
-						grauen Bereich befindet sich rechts ein „X&quot;, mit dem dieser Upload
+						grauen Bereich befindet sich rechts ein "X&quot;, mit dem dieser Upload
 						wieder gelöscht werden kann. Sind alle Änderungen an dieser Fläche
-						vollzogen, wählen Sie bitte die Schaltfläche „Übernehmen“ aus. Die
+						vollzogen, wählen Sie bitte die Schaltfläche "Übernehmen" aus. Die
 						Änderungen werden in die Übersicht übernommen und das Fenster geschlossen.
 						Durch Auswählen der Schaltfläche &quot;Abbrechen&quot; werden alle
 						Änderungen verworfen und das Fenster geschlossen. Auf diese Art können Sie
@@ -166,7 +171,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					</p>
 					<p>
 						An den vorgegebenen Flächen können keine direkten Veränderungen vorgenommen
-						werden. Es ist immer erforderlich eine neue Fläche, anzulegen und mit einem
+						werden. Es ist immer erforderlich, eine neue Fläche anzulegen und mit einem
 						entsprechenden Kommentar zu versehen. Soll eine bestehende Fläche verändert
 						werden, müssen Sie eine oder mehrere neue Flächen über der bestehenden
 						erzeugen. Neue grafische Änderungen/Hinweise werden als Anmerkungen in der
@@ -183,9 +188,9 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 						Fläche nachträglich zu verändern.
 					</p>
 					<p>
-						Bewegen Sie sich mit dem Mauszeiger in die Nähe einer bestehenden Fläche,
-						werden dort die Eckpunkte und Linien eingefangen. Es erscheint ein kleines
-						Quadrat. Durch Anklicken wird an diesen Stellen ein Punkt erzeugt.
+						Bewegen Sie den Mauszeiger in die Nähe einer bestehenden Fläche, werden dort
+						die Eckpunkte und Linien eingefangen. Es erscheint ein kleines Quadrat.
+						Durch Anklicken wird an diesen Stellen ein Punkt erzeugt.
 					</p>
 					<p>
 						Wenn Punkte verschoben werden sollen, können die Quadrate durch Anklicken

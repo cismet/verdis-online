@@ -2,7 +2,11 @@ import React from 'react';
 import { Link } from 'react-scroll';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 
-const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) => {
+const Component = ({
+	applicationMenuActiveKey,
+	setApplicationMenuActiveKey,
+	showOnSeperatePage
+}) => {
 	return (
 		<GenericModalMenuSection
 			applicationMenuActiveKey={applicationMenuActiveKey}
@@ -10,14 +14,15 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			sectionKey='meinKassenzeichen'
 			sectionTitle='Mein Kassenzeichen'
 			sectionBsStyle='warning'
+			showOnSeperatePage={showOnSeperatePage}
 			sectionContent={
 				<div>
 					<p>
 						Sie können hier die Flächen sehen, die für dieses Kassenzeichen erfasst und
 						Ihnen ggf. auch schriftlich mitgeteilt wurden. Es werden alle Flächen
 						dargestellt, unabhängig davon, ob sie zur Gebührenerhebung herangezogen
-						werden oder nicht. Die Flächenart und ob die Flächen an den Kanal
-						angeschlossen sind, erfolgte nach einer ersten Einschätzung.
+						werden oder nicht. Die Flächenart und die Art des Kanalanschluss, wurde vom
+						jeweiligen Sachbearbeiter nach einer ersten Einschätzung festgelegt.
 					</p>
 					<p>
 						Der Zugriff ist zeitlich begrenzt. Sollten Sie Eigentümer*in von mehr als

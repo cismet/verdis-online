@@ -13,7 +13,8 @@ const Component = ({
 	setBackgroundIndex = () => {},
 	mapRef,
 	width = 20,
-	urlSearch
+	urlSearch,
+	showOnSeperatePage
 }) => {
 	let namedMapStyle = new URLSearchParams(urlSearch).get('mapStyle') || 'default';
 	let zoom = 13;
@@ -58,6 +59,7 @@ const Component = ({
 			sectionKey='kartenhintergruende'
 			sectionTitle='Hintergrundkarten'
 			sectionBsStyle='info'
+			showOnSeperatePage={showOnSeperatePage}
 			sectionContent={
 				<div>
 					<p>

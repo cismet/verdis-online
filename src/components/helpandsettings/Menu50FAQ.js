@@ -1,8 +1,5 @@
 import React from 'react';
-import { Link } from 'react-scroll';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
-import { Label } from 'react-bootstrap';
-import { Icon } from 'react-fa';
 import FAQLink from './Menu50FAQEntryLink';
 import FAQEntry from './Menu50FAQEntry';
 import slugify from 'slugify';
@@ -14,13 +11,19 @@ const faqEntriesFactory = (entryDescriptionArray = []) => {
 		if (entryDescription.id === undefined) {
 			entryDescription.id = slugify(entryDescription.title);
 		}
-		linkArray.push(<FAQLink {...entryDescription} />);
-		entryArray.push(<FAQEntry {...entryDescription} />);
+		linkArray.push(<FAQLink key={'FAQLink.' + entryDescription.id} {...entryDescription} />);
+		entryArray.push(
+			<FAQEntry key={'FAQEntryLink.' + entryDescription.id} {...entryDescription} />
+		);
 	}
 	return { linkArray, entryArray };
 };
 
-const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) => {
+const Component = ({
+	applicationMenuActiveKey,
+	setApplicationMenuActiveKey,
+	showOnSeperatePage
+}) => {
 	const { linkArray, entryArray } = faqEntriesFactory([
 		{
 			title: 'Hintergrund',
@@ -32,11 +35,11 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					Tätigkeiten entstehen. Rechtliche Bedenken bei der Gebührengerechtigkeit machten
 					2003 eine Umstellung von der Heranziehung ausschließlich bebauter Flächen auf
 					die Heranziehung von Dach- und versiegelten Flächen erforderlich. Auf Grund der
-					topographischen Lage Wuppertal, des alten Kanalsystems und des erforderlichen
+					topographischen Lage Wuppertals, des alten Kanalsystems und des erforderlichen
 					Trennsystems (Trennung von Schmutz- und Niederschlagswasser) ist ein erheblicher
-					Aufwand zu betreiben um eine geregelte Abwasserentsorgung zu gewährleisten und
+					Aufwand zu betreiben, um eine geregelte Abwasserentsorgung zu gewährleisten und
 					Überschwemmungen in Wuppertal zu vermeiden. Die durchschnittliche jährliche
-					Niederschlagsmenge beträgt ca. 1200 Liter/m2. Von dem anfallenden
+					Niederschlagsmenge beträgt ca. 1200 Liter/m². Von dem anfallenden
 					Niederschlagswasser müssen 60 Mio. m³ Regenwasser behandelt werden. Maßgebend
 					ist die Satzung über die Abwasserbeseitigung in der Stadt Wuppertal.
 				</p>
@@ -48,10 +51,10 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			content: (
 				<p>
 					Art der Fläche, ihre Beschaffenheit und Abgrenzung. Ist ein Kanal, verrohrter
-					Bach oder Privatkanal der in einen öffentlichen Kanal gelangt vorhanden und
+					Bach oder Privatkanal der in einen öffentlichen Kanal gelangt, vorhanden und
 					liegt eine Anschluss- und Benutzungspflicht vor? Wie entwässert die Fläche bei
 					Starkregen (so genannter Jahrhundertregen)? Gelangt Wasser von dieser Fläche
-					direkt oder indirekt in die Kanalisation (nicht die Menge ist entscheidend
+					direkt oder indirekt in die Kanalisation (nicht die Menge ist entscheidend,
 					sondern die Tatsache an sich)? Liegt eine Befreiung von der Anschluss- und
 					Benutzungspflicht vor oder gibt es eine Entwässerungserlaubnis zur Versickerung
 					bzw. Einleitung in ein offenes Gewässer? Die Flächen werden aus dem neuesten,
@@ -98,7 +101,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			bsStyle: 'primary',
 			content: (
 				<p>
-					Alle Flächen, die keine natürliche Oberfläche aufweisen gelten als versiegelt.
+					Alle Flächen, die keine natürliche Oberfläche aufweisen, gelten als versiegelt.
 					Auch Flächen mit Kies, Split, Rasengittersteinen, Holzterrassen usw. sind
 					versiegelte Flächen. Sie werden nach ihrer Art und durch ihre Abflusswirksamkeit
 					unterschieden.
@@ -110,7 +113,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			bsStyle: 'primary',
 			content: (
 				<p>
-					Als „in den Kanal entwässernd“ werden Flächen eingestuft, von denen bei einem
+					Als "in den Kanal entwässernd" werden Flächen eingestuft, von denen bei einem
 					Starkregen (Jahrhundertregen) Wasser in einen vorhandenen Kanal gelangen kann.
 					Hierbei spielt es keine Rolle, ob die Fläche eine eigene Entwässerung hat oder
 					ob das Regenwasser über eine benachbarte Fläche in einen Kanal abläuft.
@@ -126,17 +129,20 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					Wenn von ihr kein Regenwasser in den Kanal gelangen kann. Entweder wird das
 					Wasser auf angrenzenden, unversiegelten Flächen oder in einer speziellen Anlage
 					zur Versickerung gebracht. Bei größeren Flächen ist eine wasserrechtliche
-					Erlaubnis erforderlich. Ansprechpartner ist hier die untere Wasserbehörde.
-					https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-infos Liegt ein
-					Regenwasserkanal in der Straße und Flächen sollen versickern, wird eine
-					Befreiung vom Anschluss- und Benutzungszwang benötigt, die formlos beim
-					Eigenbetrieb Wasser und Abwasser Wuppertal beantragt werden kann.
-					https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos
+					Erlaubnis erforderlich. Ansprechpartner ist hier die untere Wasserbehörde
+					<a href='https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-infos'>
+						(weiterführende Information)
+					</a>. Liegt ein Regenwasserkanal in der Straße und Flächen sollen versickern,
+					wird eine Befreiung vom Anschluss- und Benutzungszwang benötigt, die formlos
+					beim Eigenbetrieb Wasser und Abwasser Wuppertal beantragt werden kann{' '}
+					<a href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'>
+						(weiterführende Information)
+					</a>.
 				</p>
 			)
 		},
 		{
-			title: 'Was ist eine „Direkteinleitung in Gewässer“?',
+			title: 'Was ist eine "Direkteinleitung in Gewässer"?',
 			bsStyle: 'primary',
 			content: (
 				<p>
@@ -161,9 +167,9 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					Benutzungszwang. In Ausnahmefällen, wenn die Kosten einer Anschlussherstellung
 					unzumutbar sind, kann eine Befreiung von dieser Pflicht ausgesprochen werden.
 					Hierfür ist ein Antrag erforderlich, der formlos beim Eigenbetrieb Wasser und
-					Abwasser Wuppertal.
-					https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos gestellt
-					werden kann (gebührenpflichtig).
+					Abwasser Wuppertal (<a href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'>
+						(weiterführende Information)
+					</a>) gestellt werden kann (gebührenpflichtig).
 				</p>
 			)
 		},
@@ -181,9 +187,9 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					Versickerungsanlage entwässern, ebenfalls mit 50 %. Unversiegelte Fläche
 					(naturbelassen und kein Fels) werden als vollständig versickernd betrachtet. In
 					gleichem Maße werden die Flächen bei der Gebührenerhebung berücksichtigt, wenn
-					sie in den Kanal entwässern. Hier werden Werte nicht miteinander aufgerechnet
+					sie in den Kanal entwässern. Hier werden Werte nicht miteinander aufgerechnet,
 					sondern immer der für den Gebührenzahler günstigere Wert berücksichtigt. Bei der
-					Festlegung dieser Werte spielten 2 Gesichtspunkte eine wichtige Rolle. Zum einen
+					Festlegung dieser Werte spielten 2 Gesichtspunkte eine wichtige Rolle: Zum einen
 					galt es den Aufwand für die Feststellung von Abflusswirksamkeiten in einem
 					vertretbaren Rahmen zu halten, da dieser Aufwand auf den Gebührenzahler umgelegt
 					werden muss. Zum anderen wurde die Dauerhaftigkeit betrachtet. Beispiel:
@@ -204,7 +210,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					bei unterirdischen Gebäuden handelt es sich um Dachflächen. Hier ist aber die
 					Überdeckung maßgebend. Ist über dem Gebäude eine Grünfläche, wird sie als
 					Gründach angesehen. Bei der Größenbestimmung von Dachflächen wird immer die
-					horizontale Fläche(Ansicht von oben) berechnet und nicht die schräg liegende
+					horizontale Fläche (Ansicht von oben) berechnet und nicht die schräg liegende
 					Fläche.
 				</p>
 			)
@@ -215,14 +221,22 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			content: (
 				<p>
 					Um Gründächer handelt es sich, wenn Dächer aktiv mit exzessiver Begrünung
-					versehen wurden. Bei einer Kiesbedeckung aus der Unkraut hervorgeht handelt es
-					sich „nicht“ um eine Dachbegrünung. Da auch Gründächer mit einer Drainage
+					versehen wurden. Bei einer Kiesbedeckung aus der Unkraut hervorgeht, handelt es
+					sich "nicht" um eine Dachbegrünung. Da auch Gründächer mit einer Drainage
 					versehen werden und bei Starkregen Teile des Regenwassers in den Kanal
 					entwässern, wird die Fläche für die Gebührenerhebung um 50% reduziert.
 					Tiefgaragen werden wie Gründächer betrachtet, wenn sich auf ihnen keine
-					versiegelt Fläche befindet. Für die Anerkennung von Gründächern sind
-					entsprechende Nachweise erforderlich. Was ist eine versiegelte Fläche? Jede
-					ebenerdige nicht naturbelassene Fläche ist eine versiegelte Fläche. Als
+					versiegelte Fläche befindet. Für die Anerkennung von Gründächern sind
+					entsprechende Nachweise erforderlich.
+				</p>
+			)
+		},
+		{
+			title: ' Was ist eine versiegelte Fläche?',
+			bsStyle: 'primary',
+			content: (
+				<p>
+					Jede ebenerdige nicht naturbelassene Fläche ist eine versiegelte Fläche. Als
 					vollständig versiegelt gelten Flächen, die asphaltiert, betoniert, mit Platten
 					oder mit Pflastersteinen versehen sind.
 				</p>
@@ -238,7 +252,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					mehr als 2 cm breiten Fugen versehen sind. Zu Ökopflaster zählen z.B.:
 					Rasengittersteine, offenporige Pflastersteine, Schotter, Kies u.ä.. Kein
 					Ökopflaster sind z.B.: brüchige Asphalt- und Betonflächen, brüchige
-					Plattenbeläge u.a.. Soll Ökopflaster gelten gemacht werden ist immer ein
+					Plattenbeläge u.a.. Soll Ökopflaster gelten gemacht werden, ist immer ein
 					Nachweis erforderlich.
 				</p>
 			)
@@ -252,7 +266,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					ein Gutachten oder Fotos, welche die Örtlichkeit entsprechend wiedergeben,
 					anerkannt. Rechnungsbelege aus Baumärkten werden anerkannt, wenn sie auf den
 					Namen des Grundstückseigentümers ausgestellt sind. Bei der Verwendung von Fotos
-					als Nachweis, sollte darauf geachtet werden, dass immer eine Gesamtansicht der
+					als Nachweis sollte darauf geachtet werden, dass immer eine Gesamtansicht der
 					Fläche und wenn nötig eine Nahaufnahme eingereicht wird. Es sollte erkennbar
 					sein, dass Regenwasser keine Möglichkeit hat in den Kanal zu entwässern bzw.
 					welche Struktur die Oberfläche hat.
@@ -266,18 +280,27 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 				<p>
 					Nachweise werden immer dann benötigt, wenn Flächen nicht vollständig in den
 					Kanal einleiten bzw. mit einer Oberfläche versehen sind, bei der die Gebühr nur
-					teilweise abgerechnet wird. (Gründächer 50% der Fläche, Ökopflaster usw,). Auch
-					wenn eine Fläche im Flächenerfassungsbogen abgebildet aber tatsächlich nicht
-					vorhanden ist, sollte das belegt werden. Was ist eine Versickerungsanlage?
+					teilweise abgerechnet wird (Gründächer 50% der Fläche, Ökopflaster usw,). Auch
+					wenn eine Fläche im Flächenerfassungsbogen abgebildet, aber tatsächlich nicht
+					vorhanden ist, sollte das belegt werden.
+				</p>
+			)
+		},
+		{
+			title: 'Was ist eine Versickerungsanlage?',
+			bsStyle: 'primary',
+			content: (
+				<p>
 					Einrichtungen, die der Versickerung von Wasser dienen. Hierzu gehören Rigolen,
 					Mulden, Sickerschächte usw. . Sollen Flächen neu zur Versickerung gebracht
 					werden, ist vorher eine Befreiung vom Anschluss- und Benutzungszwang bzw. eine
-					wasserrechtliche Erlaubnis erforderlich. Genauere Informationen:
-					http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen
-					Versickerungsanlagen werden unterschieden zwischen vollständiger Versickerung
-					und einer Versickerung mit Notüberlauf. Notüberläufe werden bei
+					wasserrechtliche Erlaubnis erforderlich{' '}
+					<a href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen'>
+						(weiterführende Information)
+					</a>). Versickerungsanlagen werden unterschieden zwischen vollständiger
+					Versickerung und einer Versickerung mit Notüberlauf. Notüberläufe werden bei
 					Versickerungsanlagen benötigt, wenn die Versickerungsfähigkeit des Bodens nicht
-					ausreicht um das Regenwasser bei Starkregen vollständig aufzunehmen und das
+					ausreicht, um das Regenwasser bei Starkregen vollständig aufzunehmen und das
 					überschüssige Wasser in den Kanal abgeleitet wird. Bei Notüberläufen werden 50%
 					der Fläche zur Gebührenerhebung herangezogen.
 					<strong>
@@ -345,9 +368,10 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					ggf. mit Hilfe einer Versickerungsanlage zur Versickerung gebracht werden, ist
 					für sie eine wasserrechtliche Erlaubnis (Versickerungsgenehmigung) erforderlich.
 					Grundvoraussetzung ist, dass das Wasser unbelastet ist und ohne Beeinträchtigung
-					der Natur und anderer Nachbarn versickern kann.
-					http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links .
-					(gebührenpflichtig).
+					der Natur und anderer Nachbarn versickern kann{' '}
+					<a href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links'>
+						(weiterführende Information)
+					</a>) (gebührenpflichtig).
 				</p>
 			)
 		},
@@ -370,7 +394,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					Solidargemeinschaft und ist deshalb nicht möglich. Dem Anschluss- und
 					Benutzungszwang unterliegen alle Grundstücke, die an einer Straße liegen in der
 					ein Kanal anschlussfähig verlegt ist. Liegen größere Flächen nicht an einer
-					Straße in der ein Kanal verlegt ist, wird eine wasserrechtliche Erlaubnis
+					Straße, in der ein Kanal verlegt ist, wird eine wasserrechtliche Erlaubnis
 					benötigt.
 				</p>
 			)
@@ -411,6 +435,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			sectionKey='faq'
 			sectionTitle='Häufig gestellte Fragen'
 			sectionBsStyle='success'
+			showOnSeperatePage={showOnSeperatePage}
 			sectionContent={
 				<div name='help'>
 					<font size='3'>{linkArray}</font>

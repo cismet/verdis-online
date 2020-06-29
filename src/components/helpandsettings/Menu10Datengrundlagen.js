@@ -2,7 +2,11 @@ import React from 'react';
 import { Link } from 'react-scroll';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 
-const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) => {
+const Component = ({
+	applicationMenuActiveKey,
+	setApplicationMenuActiveKey,
+	showOnSeperatePage
+}) => {
 	return (
 		<GenericModalMenuSection
 			applicationMenuActiveKey={applicationMenuActiveKey}
@@ -10,6 +14,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			sectionKey='datengrundlage'
 			sectionTitle='Grundlagen der Datenerhebung'
 			sectionBsStyle='warning'
+			showOnSeperatePage={showOnSeperatePage}
 			sectionContent={
 				<div>
 					<p>
@@ -45,8 +50,8 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 					<p>
 						Da aus den Luftbildern nicht immer eine eindeutige Festlegung der Flächen
 						erfolgen kann, wurde bei der Einführung des derzeitigen Gebührenmaßstabs in
-						der Satzung die Pflicht der Eigentümer*innen Änderungen mitzuteilen
-						festgelegt und beschlossen, die Eigentümer*innen bei einer Erfassung zu
+						der Satzung die Pflicht der Eigentümer*innen, Änderungen mitzuteilen
+						festgelegt, und beschlossen, die Eigentümer*innen bei einer Erfassung zu
 						beteiligen.
 					</p>
 					<p>
