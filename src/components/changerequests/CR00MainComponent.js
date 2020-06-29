@@ -424,19 +424,21 @@ const CR00 = ({
 											}}
 										>
 											<p>
-												Bitte beachten Sie, dass die Änderungswünsche und
-												Ihre Anmerkungen und Ihre hochgeladenen Dokumente
-												erst für den Sachbearbeiter sichtbar sind wenn sie
-												die Änderungen eingereicht haben.
+												Bitte beachten Sie, dass Änderungswünsche,
+												Anmerkungen und Ihre hochgeladenen Dokumente erst
+												für den Sachbearbeiter sichtbar werden, wenn sie die
+												Änderungen freigegeben/entsperrt und eingereicht
+												haben.
 											</p>
 											<p>
 												Sollten sich nach Abschluss der Bearbeitung
 												Änderungen gegenüber der bisherigen Gebührenerhebung
 												ergeben, erhalten Sie einen Änderungsbescheid durch
 												das Steueramt. Eine Veranlagung findet ggf.
-												rückwirkend ab dem Datum an dem die Änderung
-												feststellbar ist, aber längsten das laufende und die
-												4 vorhergehenden Jahre, statt.
+												rückwirkend statt. Maßgebend ist das Datum des
+												Luftbilds, in dem die Änderung feststellbar ist,
+												aber längsten das laufende und die 4
+												vorhergegangenen Jahre.
 											</p>
 										</td>
 										<td />
@@ -495,8 +497,8 @@ const CR00 = ({
 						<div>
 							<p style={{ textAlign: 'left' }}>
 								Wenn Sie den Änderungsmodus aktivieren, erscheinen in diesem Dialog
-								die Steuerelemente mit denen Sie dann Ihre Ändeurngen anlegen
-								können.
+								die Steuerelemente mit denen Sie Ihre Änderungen anlegen können und
+								weitere Hilfsinformationen erhalten.
 							</p>
 							<Button
 								className='pull-left'

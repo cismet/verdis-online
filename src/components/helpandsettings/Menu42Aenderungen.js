@@ -25,8 +25,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 							Informationen weiterzugeben. Es handelt sich hier nicht um die
 							Möglichkeit eines Chats. Eingänge werden nach ihrer Reihenfolge
 							bearbeitet. Auf Grund des Arbeitsvolumens ist nicht immer eine zeitnahe
-							Antwort möglich. Siehe &quot;Ihre Kommunikation“ das ist kein Satz
-							(s.u.)
+							Antwort möglich. Siehe "Ihre Kommunikation“
 						</li>
 						<li>
 							Mit einer gelben Kopfzeile bzw. gelb umrandet ist der Bereich „Ihre

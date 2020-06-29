@@ -303,7 +303,7 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			)
 		},
 		{
-			title: 'Wie kann ich Einwände gegen die Flächenerhebung vorbringen',
+			title: 'Wie kann ich Einwände gegen die Flächenerhebung vorbringe?',
 			bsStyle: 'primary',
 			content: (
 				<p>
@@ -393,11 +393,12 @@ const Component = ({ applicationMenuActiveKey, setApplicationMenuActiveKey }) =>
 			bsStyle: 'danger',
 			content: (
 				<p>
-					Änderungen können nur erneut bearbeitet oder zurückgenommen werden, wenn Sie
-					noch nicht entsperrt und eingereicht wurden. Um Änderungen im Bereich "Ihre
-					Kommunikation" vorzunehmen, klicken sie in das grau gekennzeichnete Eingabefeld
-					und drücken die "Pfeil nach oben" Taste. Sie können dann Texte bearbeiten oder
-					Uploads löschen. Um eine Fläche zu ändern, rufen sie diese Fläche erneut auf.
+					Änderungen in der Kommunikation können nur erneut bearbeitet oder zurückgenommen
+					werden, wenn Sie noch nicht entsperrt und eingereicht wurden. Um Änderungen im
+					Bereich "Ihre Kommunikation" vorzunehmen, klicken sie in das grau
+					gekennzeichnete Eingabefeld und drücken die "Pfeil nach oben" Taste. Sie können
+					dann Texte bearbeiten oder Uploads löschen. Um eine Fläche zu ändern, rufen sie
+					diese Fläche erneut auf.
 				</p>
 			)
 		}
