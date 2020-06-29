@@ -4,7 +4,14 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-scroll';
 import { Icon } from 'react-fa';
 
-const Comp = ({ id, title, containerId = 'myMenu', linkToKey = 'help', content }) => {
+const Comp = ({
+	id,
+	title,
+	containerId = 'myMenu',
+	linkToKey = 'help',
+	content,
+	showOnSeperatePage
+}) => {
 	return (
 		<div>
 			<div name={id}>
@@ -14,7 +21,7 @@ const Comp = ({ id, title, containerId = 'myMenu', linkToKey = 'help', content }
 				{title}{' '}
 				<Link
 					to={linkToKey}
-					containerId={containerId}
+					containerId={showOnSeperatePage === false ? containerId : undefined}
 					style={{ cursor: 'pointer', color: '#00000044' }}
 				>
 					<Icon name={'arrow-circle-up'} />

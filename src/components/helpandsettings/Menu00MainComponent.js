@@ -116,7 +116,16 @@ const ModalHelpAndInfo = ({
 						<Icon name={'info'} /> {'Kompaktanleitung und Hintergrundinformationen'}
 					</Modal.Title>
 				</Modal.Header>
-				<Modal.Body id='myMenu'>{menuSections}</Modal.Body>
+				<Modal.Body
+					id='myMenu'
+					name='myMenu'
+					style={{
+						overflowY: 'auto',
+						overflowX: 'hidden'
+					}}
+				>
+					{menuSections}
+				</Modal.Body>
 				<br />
 				<Footer showModalMenu={showModalMenu} />
 			</div>

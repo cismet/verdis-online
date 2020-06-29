@@ -4,10 +4,11 @@ import FAQLink from './Menu50FAQEntryLink';
 import FAQEntry from './Menu50FAQEntry';
 import slugify from 'slugify';
 
-const faqEntriesFactory = (entryDescriptionArray = []) => {
+const faqEntriesFactory = (showOnSeperatePage, entryDescriptionArray = []) => {
 	let linkArray = [];
 	let entryArray = [];
 	for (const entryDescription of entryDescriptionArray) {
+		entryDescription.showOnSeperatePage = showOnSeperatePage;
 		if (entryDescription.id === undefined) {
 			entryDescription.id = slugify(entryDescription.title);
 		}
@@ -24,7 +25,7 @@ const Component = ({
 	setApplicationMenuActiveKey,
 	showOnSeperatePage
 }) => {
-	const { linkArray, entryArray } = faqEntriesFactory([
+	const { linkArray, entryArray } = faqEntriesFactory(showOnSeperatePage, [
 		{
 			title: 'Hintergrund',
 			bsStyle: 'default',
@@ -130,12 +131,18 @@ const Component = ({
 					Wasser auf angrenzenden, unversiegelten Flächen oder in einer speziellen Anlage
 					zur Versickerung gebracht. Bei größeren Flächen ist eine wasserrechtliche
 					Erlaubnis erforderlich. Ansprechpartner ist hier die untere Wasserbehörde{' '}
-					<a href='https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-infos'>
+					<a
+						target='_more'
+						href='https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-infos'
+					>
 						(weiterführende Information)
 					</a>. Liegt ein Regenwasserkanal in der Straße und Flächen sollen versickern,
 					wird eine Befreiung vom Anschluss- und Benutzungszwang benötigt, die formlos
 					beim Eigenbetrieb Wasser und Abwasser Wuppertal beantragt werden kann{' '}
-					<a href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'>
+					<a
+						target='_more'
+						href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'
+					>
 						(weiterführende Information)
 					</a>.
 				</p>
@@ -168,7 +175,10 @@ const Component = ({
 					unzumutbar sind, kann eine Befreiung von dieser Pflicht ausgesprochen werden.
 					Hierfür ist ein Antrag erforderlich, der formlos beim Eigenbetrieb Wasser und
 					Abwasser Wuppertal{' '}
-					<a href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'>
+					<a
+						target='_more'
+						href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'
+					>
 						(weiterführende Information)
 					</a>{' '}
 					gestellt werden kann (gebührenpflichtig).
@@ -297,7 +307,10 @@ const Component = ({
 					Mulden, Sickerschächte usw. . Sollen Flächen neu zur Versickerung gebracht
 					werden, ist vorher eine Befreiung vom Anschluss- und Benutzungszwang bzw. eine
 					wasserrechtliche Erlaubnis erforderlich{' '}
-					<a href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen'>
+					<a
+						target='_more'
+						href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen'
+					>
 						(weiterführende Information)
 					</a>. Versickerungsanlagen werden unterschieden zwischen vollständiger
 					Versickerung und einer Versickerung mit Notüberlauf. Notüberläufe werden bei
@@ -371,7 +384,10 @@ const Component = ({
 					für sie eine wasserrechtliche Erlaubnis (Versickerungsgenehmigung) erforderlich.
 					Grundvoraussetzung ist, dass das Wasser unbelastet ist und ohne Beeinträchtigung
 					der Natur und anderer Nachbarn versickern kann{' '}
-					<a href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links'>
+					<a
+						target='_more'
+						href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links'
+					>
 						(weiterführende Information)
 					</a>{' '}
 					(gebührenpflichtig).
