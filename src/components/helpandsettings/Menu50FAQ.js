@@ -129,7 +129,7 @@ const Component = ({
 					Wenn von ihr kein Regenwasser in den Kanal gelangen kann. Entweder wird das
 					Wasser auf angrenzenden, unversiegelten Flächen oder in einer speziellen Anlage
 					zur Versickerung gebracht. Bei größeren Flächen ist eine wasserrechtliche
-					Erlaubnis erforderlich. Ansprechpartner ist hier die untere Wasserbehörde
+					Erlaubnis erforderlich. Ansprechpartner ist hier die untere Wasserbehörde{' '}
 					<a href='https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-infos'>
 						(weiterführende Information)
 					</a>. Liegt ein Regenwasserkanal in der Straße und Flächen sollen versickern,
@@ -167,9 +167,11 @@ const Component = ({
 					Benutzungszwang. In Ausnahmefällen, wenn die Kosten einer Anschlussherstellung
 					unzumutbar sind, kann eine Befreiung von dieser Pflicht ausgesprochen werden.
 					Hierfür ist ein Antrag erforderlich, der formlos beim Eigenbetrieb Wasser und
-					Abwasser Wuppertal (<a href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'>
+					Abwasser Wuppertal{' '}
+					<a href='https://www.wuppertal.de/vv/oe/waw/102370100000497495.php#tab-infos'>
 						(weiterführende Information)
-					</a>) gestellt werden kann (gebührenpflichtig).
+					</a>{' '}
+					gestellt werden kann (gebührenpflichtig).
 				</p>
 			)
 		},
@@ -297,7 +299,7 @@ const Component = ({
 					wasserrechtliche Erlaubnis erforderlich{' '}
 					<a href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen'>
 						(weiterführende Information)
-					</a>). Versickerungsanlagen werden unterschieden zwischen vollständiger
+					</a>. Versickerungsanlagen werden unterschieden zwischen vollständiger
 					Versickerung und einer Versickerung mit Notüberlauf. Notüberläufe werden bei
 					Versickerungsanlagen benötigt, wenn die Versickerungsfähigkeit des Bodens nicht
 					ausreicht, um das Regenwasser bei Starkregen vollständig aufzunehmen und das
@@ -371,7 +373,8 @@ const Component = ({
 					der Natur und anderer Nachbarn versickern kann{' '}
 					<a href='http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links'>
 						(weiterführende Information)
-					</a>) (gebührenpflichtig).
+					</a>{' '}
+					(gebührenpflichtig).
 				</p>
 			)
 		},
