@@ -1,15 +1,14 @@
+import {
+	faFile,
+	faFileAlt,
+	faFileArchive,
+	faFileExcel,
+	faFileImage,
+	faFilePdf,
+	faFileWord
+} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import IconForAttribute from '../commons/IconForAttribute';
-import {
-	faSpinner,
-	faFilePdf,
-	faFileWord,
-	faFile,
-	faFileImage,
-	faFileExcel,
-	faFileArchive,
-	faFileAlt
-} from '@fortawesome/free-solid-svg-icons';
 
 const iconAttributeMap = {
 	default: faFile,

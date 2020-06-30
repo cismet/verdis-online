@@ -1,14 +1,7 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
-import { storiesOf } from '@storybook/react';
+import Documents from './Documents';
 import Message from './InternalMessage';
 import SystemMessage from './SystemMessage';
-import DateTimeMessage from './DateTimeMessage';
-import ClerkMessage from './InternalMessage';
-import { withInfo } from '@storybook/addon-info';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
-import Documents from './Documents';
 // Since this component is simple and static, there's no parent container for it.
 const Comp = ({
 	messages = [],
@@ -63,7 +56,7 @@ const Comp = ({
 						}
 						return (
 							<div key={'CITIZEN.div.' + index}>
-								{msg.nachricht != undefined &&
+								{msg.nachricht !== undefined &&
 								msg.nachricht.trim() !== '' && (
 									<Message
 										key={'CITIZEN.Message.' + index}
@@ -95,29 +88,6 @@ const Comp = ({
 										width={'fit-content'}
 									/>
 								)}
-								{/* {msg.anhang !== undefined &&
-									msg.anhang.length !== undefined &&
-									msg.anhang.length > 0 &&
-									msg.anhang.map((anhang, index) => {
-										return (
-											<Message
-												key={'Message.' + anhang.uuid}
-												msg={
-													<div>
-														<a style={{ color: 'black' }} href=''>
-															<FontAwesomeIcon icon={faFilePdf} />
-															<span> {anhang.name}</span>
-														</a>
-													</div>
-												}
-												background={background}
-												alignment='right'
-												margin={-1}
-												padding={5}
-												width={'fit-content'}
-											/>
-										);
-									})} */}
 							</div>
 						);
 					}
@@ -156,12 +126,15 @@ const systemmessage = (sysMsgConf) => {
 						return 'Ihr Sachbearbeiter hat die Bearbeitung abgeschlossen.';
 					case 'PROCESSING':
 						return 'Ihr Sachbearbeiter hat die Bearbeitung aufgenommen.';
+					default:
+						return 'unbekannter Status' + sysMsgConf.status;
 				}
+			}
+			default: {
+				return 'Fehlerhafte Systemnachricht:' + JSON.stringify(sysMsgConf);
 			}
 		}
 	}
-
-	return 'Fehlerhafte Systemnachricht:' + JSON.stringify(sysMsgConf);
 };
 
 export default Comp;

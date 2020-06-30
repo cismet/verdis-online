@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-scroll';
 import GenericModalMenuSection from '../commons/GenericModalMenuSection';
 
 const Component = ({

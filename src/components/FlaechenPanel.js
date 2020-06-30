@@ -5,7 +5,6 @@ import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import optional from '../utils/optionalHelper';
 import { colorDraft } from '../utils/kassenzeichenHelper';
 import { getProcessedFlaechenCR, colorUnchanged, colorChanged } from '../utils/kassenzeichenHelper';
 //const FontAwesome = require('react-fontawesome');
@@ -81,6 +80,7 @@ export default class FlaechenPanel extends React.Component {
 			flaechenart = this.props.flaeche.flaecheninfo.flaechenart.art;
 		}
 
+		// eslint-disable-next-line
 		if (crInfo.edited == true) {
 			editButtonColor = colorChanged;
 		} else {

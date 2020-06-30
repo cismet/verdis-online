@@ -172,7 +172,6 @@ function getKassenzeichenbySTAC(stac, callback) {
 				STAC: stac
 			}
 		};
-		const state = getState();
 		let fd = new FormData();
 		fd.append(
 			'taskparams',
@@ -604,8 +603,8 @@ function addChangeRequestMessage(msg) {
 				//1. Messagetext
 				if (msg.nachricht !== undefined && msg.nachricht !== '') {
 					if (
-						sMsgs[sMsgs.length - 1].nachricht != undefined &&
-						sMsgs[sMsgs.length - 1].nachricht.trim() != ''
+						sMsgs[sMsgs.length - 1].nachricht !== undefined &&
+						sMsgs[sMsgs.length - 1].nachricht.trim() !== ''
 					) {
 						sMsgs[sMsgs.length - 1].nachricht =
 							sMsgs[sMsgs.length - 1].nachricht + '\n' + msg.nachricht;
@@ -616,7 +615,7 @@ function addChangeRequestMessage(msg) {
 
 				//2. Messageatachments
 				if (msg.anhang !== undefined) {
-					if (sMsgs[sMsgs.length - 1].anhang != undefined) {
+					if (sMsgs[sMsgs.length - 1].anhang !== undefined) {
 						msg.anhang.forEach((doc) => sMsgs[sMsgs.length - 1].anhang.push(doc));
 					} else {
 						sMsgs[sMsgs.length - 1].anhang = msg.anhang;
@@ -656,15 +655,12 @@ function removeLastChangeRequestMessage() {
 function addCRDoc(file, callback) {
 	return function(dispatch, getState) {
 		const stac = getState().auth.stac;
-		console.log('addCRDoc file', file);
-		console.log('addCRDoc callback', callback);
 		let taskParameters = {
 			parameters: {
 				fileName: file.name,
 				stac
 			}
 		};
-		console.log('taskParameters', taskParameters);
 
 		let fd = new FormData();
 		fd.append('file', new Blob([ file ]));
@@ -676,7 +672,7 @@ function addCRDoc(file, callback) {
 			})
 		);
 
-		const STAC_SERVICE_ = 'https://eneywvj94f7b6.x.pipedream.net/';
+		// const STAC_SERVICE_ = 'https://eneywvj94f7b6.x.pipedream.net/';
 		const url =
 			STAC_SERVICE +
 			'/actions/' +
@@ -688,8 +684,6 @@ function addCRDoc(file, callback) {
 			body: fd
 		})
 			.then(function(response) {
-				console.log('addCRDoc response.status', response.status);
-
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(result) {
 						callback(result.res);
@@ -699,7 +693,7 @@ function addCRDoc(file, callback) {
 			.catch(function(err) {
 				// dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
 				// dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));
-				console.log('Error in action' + err);
+				console.err('Error in action' + err);
 				dispatch(AuthActions.logout());
 				if (typeof callback === 'function') {
 					//callback(false);
@@ -728,7 +722,7 @@ function storeCR(cr, callback = (payload) => {}) {
 				type: 'application/json'
 			})
 		);
-		const STAC_SERVICE_ = 'https://eneywvj94f7b6.x.pipedream.net/';
+		// const STAC_SERVICE_ = 'https://eneywvj94f7b6.x.pipedream.net/';
 
 		const url =
 			STAC_SERVICE +
@@ -768,8 +762,6 @@ function submitCR() {
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 
-		const state = getState();
-		const stac = state.auth.stac;
 		if (newKassz.aenderungsanfrage !== undefined && newKassz.aenderungsanfrage !== null) {
 			if (newKassz.aenderungsanfrage.nachrichten === undefined) {
 				newKassz.aenderungsanfrage.nachrichten = [];
@@ -778,12 +770,12 @@ function submitCR() {
 				const changerequestBezeichnungsArray = Object.keys(
 					newKassz.aenderungsanfrage.flaechen
 				);
-				changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+				changerequestBezeichnungsArray.forEach((flaechenbezeichnung, index) => {
 					newKassz.aenderungsanfrage.flaechen[flaechenbezeichnung].draft = false;
 				});
 			}
 			const changerequestMessagesArray = newKassz.aenderungsanfrage.nachrichten;
-			changerequestMessagesArray.map((msg) => {
+			changerequestMessagesArray.forEach((msg) => {
 				if (msg.draft === true) {
 					msg.draft = false;
 				}
@@ -808,26 +800,26 @@ export function getNumberOfPendingChanges(cr) {
 	if (cr !== undefined && cr !== null) {
 		if (cr.flaechen !== undefined && cr.flaechen != null) {
 			const changerequestBezeichnungsArray = Object.keys(cr.flaechen);
-			changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+			changerequestBezeichnungsArray.forEach((flaechenbezeichnung, index) => {
 				const crf = cr.flaechen[flaechenbezeichnung];
 				if (crf.draft === true) {
-					if (crf.groesse != undefined) {
+					if (crf.groesse !== undefined) {
 						crDraftCounter++;
 					}
-					if (crf.flaechenart != undefined) {
+					if (crf.flaechenart !== undefined) {
 						crDraftCounter++;
 					}
-					if (crf.anschlussgrad != undefined) {
+					if (crf.anschlussgrad !== undefined) {
 						crDraftCounter++;
 					}
 				} else {
-					if (crf.groesse != undefined) {
+					if (crf.groesse !== undefined) {
 						crCounter++;
 					}
-					if (crf.flaechenart != undefined) {
+					if (crf.flaechenart !== undefined) {
 						crCounter++;
 					}
-					if (crf.anschlussgrad != undefined) {
+					if (crf.anschlussgrad !== undefined) {
 						crCounter++;
 					}
 				}
@@ -835,7 +827,7 @@ export function getNumberOfPendingChanges(cr) {
 		}
 		if (cr.nachrichten !== undefined && cr.nachrichten !== null) {
 			const changerequestMessagesArray = cr.nachrichten;
-			changerequestMessagesArray.map((msg) => {
+			changerequestMessagesArray.forEach((msg) => {
 				if (msg.draft === true) {
 					if (msg.nachricht !== undefined && msg.nachricht.trim() !== '') {
 						crDraftCounter++;
@@ -848,7 +840,7 @@ export function getNumberOfPendingChanges(cr) {
 		}
 
 		if (cr.geometrien !== undefined && cr.geometrien !== null) {
-			Object.keys(cr.geometrien).map((geomKey) => {
+			Object.keys(cr.geometrien).forEach((geomKey) => {
 				const geom = cr.geometrien[geomKey];
 
 				if (geom.properties.draft === true) {

@@ -14,14 +14,11 @@ import FlexView from 'react-flexview';
 import {
 	anschlussgrade,
 	flaechenarten,
-	getProcessedFlaechenCR,
-	getOverlayTextForFlaeche
+	getOverlayTextForFlaeche,
+	getProcessedFlaechenCR
 } from '../../utils/kassenzeichenHelper';
-
 import FlaechenPanel from '../FlaechenPanel';
-import Document from '../conversations/Document';
 import DocPanel from './CR20DocumentsPanel';
-
 import './style.css';
 
 const CR00 = ({

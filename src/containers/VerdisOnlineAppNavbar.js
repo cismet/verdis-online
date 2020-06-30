@@ -14,7 +14,6 @@ import Waiting from './Waiting';
 import { Icon } from 'react-fa';
 
 import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';
-import Toggle from 'react-bootstrap-toggle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faCloudUploadAlt,
@@ -23,6 +22,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { colorDraft } from '../utils/kassenzeichenHelper';
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 function mapStateToProps(state) {
 	return {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Col, Grid, Row } from 'react-bootstrap';
 import StackTrace from 'stacktrace-js';
 import { getVersion } from './constants/versions';
-import { Panel, Form, FormGroup, Grid, Row, Col } from 'react-bootstrap';
 import store from './redux/store';
 window.onerror = function(msg, file, line, col, error) {
 	StackTrace.fromError(error).then((err) => {

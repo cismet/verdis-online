@@ -5,13 +5,7 @@ import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
 import { Well } from 'react-bootstrap';
 import { colorUnchanged, colorChanged, colorDraft } from '../utils/kassenzeichenHelper';
 import { getArea25832 } from '../utils/kassenzeichenMappingTools';
-import {
-	faEdit,
-	faDrawPolygon,
-	faMapMarker,
-	faTrashAlt,
-	faCircle
-} from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faDrawPolygon, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 
 // Switched fomr func comp to class again because of the external ref
@@ -46,15 +40,11 @@ export default class Comp extends React.Component {
 		const selected = this.props.selected;
 		const showEditAnnoMenu = this.props.showEditAnnoMenu;
 		const clickHandler = this.props.clickHandler || (() => {});
-		const togglePolyEditMode = this.props.togglePolyEditMode || (() => {});
-		const inPolyEditMode = this.props.inPolyEditMode || false;
-		const layer = this.props.layer;
-		const map = this.props.map;
 
 		const editButtonColor = colorChanged;
 		const color = colorChanged;
 		const anmerkungsTitleColor = colorUnchanged;
-		const title = annotationFeature.properties.title || 'neue Anmerkung';
+
 		const showEverything = this.props.showEverything || false;
 		let background;
 		// if (selected === true) {

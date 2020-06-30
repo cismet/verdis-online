@@ -32,31 +32,37 @@ const Comp = ({
 			textarea.current.selectionEnd = position;
 		}
 	});
-	useEffect(() => {
-		setTimeout(() => {
-			scrollToInput();
-		}, 500);
-	}, []);
+	useEffect(
+		() => {
+			setTimeout(() => {
+				scrollToInput();
+			}, 500);
+		},
+		[ scrollToInput ]
+	);
 
-	const onDrop = useCallback((acceptedFiles) => {
-		acceptedFiles.forEach((file) => {
-			file.nonce =
-				btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
-			addAttachment({
-				name: file.name,
-				nonce: file.nonce,
-				inProgress: true
-			});
-			return uploadCRDoc(file, (returnedFOString) => {
-				const returnedFO = JSON.parse(returnedFOString);
-				returnedFO.nonce = file.nonce;
-				returnedFO.inProgress = false;
-				console.log('updateAttachment', returnedFO);
+	const onDrop = useCallback(
+		(acceptedFiles) => {
+			acceptedFiles.forEach((file) => {
+				file.nonce =
+					btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
+				addAttachment({
+					name: file.name,
+					nonce: file.nonce,
+					inProgress: true
+				});
+				return uploadCRDoc(file, (returnedFOString) => {
+					const returnedFO = JSON.parse(returnedFOString);
+					returnedFO.nonce = file.nonce;
+					returnedFO.inProgress = false;
+					console.log('updateAttachment', returnedFO);
 
-				updateAttachment(returnedFO);
+					updateAttachment(returnedFO);
+				});
 			});
-		});
-	}, []);
+		},
+		[ uploadCRDoc ]
+	);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
 	const addAttachment = (fileO) => {

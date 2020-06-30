@@ -1,9 +1,7 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Accordion, PanelGroup, Label, Panel } from 'react-bootstrap';
+import React from 'react';
+import { Button, Modal } from 'react-bootstrap';
 import { Icon } from 'react-fa';
-import { Link } from 'react-scroll';
-
 //import "react-bootstrap-switch/dist/css/bootstrap3/react-bootstrap-switch.min.css";
 import GenericRVRStadtplanwerkMenuFooter from './GenericRVRStadtplanwerkMenuFooter';
 
@@ -91,7 +89,7 @@ const GenericModalApplicationMenu = ({
 export default GenericModalApplicationMenu;
 GenericModalApplicationMenu.propTypes = {
 	menuIcon: PropTypes.string,
-	menuTitle: PropTypes.string,
+	menuTitle: PropTypes.object,
 	menuIntroduction: PropTypes.object,
 	menuSections: PropTypes.array,
 	menuFooter: PropTypes.object,

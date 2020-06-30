@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Well, Button } from 'react-bootstrap';
-import { Icon } from 'react-fa';
-
+import { Button, Well } from 'react-bootstrap';
 import 'react-bootstrap-toggle/dist/bootstrap2-toggle.css';
-import Toggle from 'react-bootstrap-toggle';
+import { Icon } from 'react-fa';
 
 const KassenzeichenPanel = ({ kassenzeichen, onClick, d3Click, d3Enabled }) => {
 	const styleOverride = {

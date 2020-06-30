@@ -81,7 +81,7 @@ export const getAnnotationFeatureCollection = (aenderungsanfrage) => {
 			const feature = JSON.parse(JSON.stringify(aenderungsanfrage.geometrien[key]));
 			feature.properties.type = 'annotation';
 			feature.crs = { type: 'name', properties: { name: 'urn:ogc:def:crs:EPSG::25832' } };
-			feature.properties.id = feature.properties.id;
+			// feature.properties.id = feature.properties.id;
 			geojson.push(feature);
 		}
 	}
@@ -185,7 +185,7 @@ export const getColorForKassenzeichenGeometry = (geo_field) => {
 export const createFlaechenStyler = (changeRequestsEditMode, kassenzeichen) => {
 	return (feature) => {
 		if (feature.properties.type === 'annotation') {
-			const currentColor = '#ffff00';
+			// const currentColor = '#ffff00';
 
 			let opacity,
 				lineColor,

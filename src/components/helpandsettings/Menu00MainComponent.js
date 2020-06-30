@@ -10,7 +10,7 @@ import Datenschutz from './Menu60Datenschutz';
 import { Icon } from 'react-fa';
 import GenericModalApplicationMenu from '../commons/GenericModalApplicationMenu';
 import Footer from './Menu99Footer';
-import { Modal, Button, Accordion, PanelGroup, Label, Panel } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
 
 const ModalHelpAndInfo = ({
 	showApplicationMenu,

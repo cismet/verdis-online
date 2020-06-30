@@ -47,9 +47,7 @@ const CR00 = ({
 		overflowX: 'hidden',
 		maxHeight: height - 250
 	};
-	const { crDraftCounter, crCounter } = getNumberOfPendingChanges(
-		kassenzeichen.aenderungsanfrage
-	);
+	const { crDraftCounter } = getNumberOfPendingChanges(kassenzeichen.aenderungsanfrage);
 	const close = () => {
 		setLocked(true);
 		showChangeRequestMenu(false);
@@ -80,7 +78,7 @@ const CR00 = ({
 		let lastUserMessage = undefined;
 		const sMsgs = changerequestMessagesArray.sort((a, b) => a.timestamp - b.timestamp);
 
-		changerequestBezeichnungsArray.map((flaechenbezeichnung, index) => {
+		changerequestBezeichnungsArray.forEach((flaechenbezeichnung, index) => {
 			//find flaeche
 			const flaeche = kassenzeichen.flaechen.find(
 				(fCand) => fCand.flaechenbezeichnung === flaechenbezeichnung
@@ -133,7 +131,7 @@ const CR00 = ({
 				}
 			}
 		}
-		sMsgs.map((msg) => {
+		sMsgs.forEach((msg) => {
 			if (msg.typ === 'CITIZEN' && msg.draft === true) {
 				lastUserMessage = msg;
 			}

@@ -14,7 +14,7 @@ import { Alert } from 'react-bootstrap';
 import Flexbox from 'flexbox-react';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
-import { actions as MappingActions, getLayerForFeatureId } from '../redux/modules/mapping';
+import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as AuthActions } from '../redux/modules/auth';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { createFlaechenStyler } from '../utils/kassenzeichenMappingTools';
@@ -104,7 +104,7 @@ export class KassenzeichenViewer_ extends React.Component {
 	kassenZeichenPanelClick() {
 		// this.props.mappingActions.fitAll();
 		// or
-		this.verdisMap.getWrappedInstance().fitBoundsX();
+		this.verdisMap.getWrappedInstance().fitBounds();
 	}
 
 	kassenZeichenPanelD3Click() {
@@ -131,8 +131,6 @@ export class KassenzeichenViewer_ extends React.Component {
 			// 	// event.sourceTarget.toggleEdit();
 			// }
 		} else {
-			console.log('feature that should be selected', feature);
-
 			this.props.mappingActions.setSelectedFeatureIndexWithSelector((testfeature) => {
 				return testfeature.properties.id === feature.properties.id;
 			});
@@ -175,10 +173,10 @@ export class KassenzeichenViewer_ extends React.Component {
 		const sMsgs = changerequestMessagesArray.sort((a, b) => a.timestamp - b.timestamp);
 		const documents = [];
 
-		sMsgs.map((msg) => {
+		sMsgs.forEach((msg) => {
 			//if a document exists, add it to the documents array
 			if (msg.anhang !== undefined && msg.anhang.length > 0) {
-				msg.anhang.map((anhang) => {
+				msg.anhang.forEach((anhang) => {
 					documents.push(anhang);
 				});
 			}
@@ -513,16 +511,6 @@ export class KassenzeichenViewer_ extends React.Component {
 			}
 		}
 
-		const ErrorFallback = ({ error, componentStack, resetErrorBoundary }) => {
-			return (
-				<div role='alert'>
-					<p>Something went wrong:</p>
-					<pre>{error.message}</pre>
-					<pre>{componentStack}</pre>
-					<button onClick={resetErrorBoundary}>Try again</button>
-				</div>
-			);
-		};
 		return (
 			<div>
 				<AppNavbar />

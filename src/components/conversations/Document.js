@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { getLinkForDoc } from '../../utils/kassenzeichenHelper';
 import DocIcon from './DocIcon';
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 // Since this component is simple and static, there's no parent container for it.
 const Comp = ({ fileObject, remove, background = '#eeeeee', addComma }) => {
 	const [ verifiedState, setVerifiedState ] = useState('unverified');

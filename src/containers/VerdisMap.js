@@ -1,32 +1,27 @@
+import L from 'leaflet';
+import 'leaflet-editable';
+import proj4 from 'proj4';
+import 'proj4leaflet';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {
+	FeatureCollectionDisplay,
+	MappingConstants,
+	NewMarkerControl,
+	NewPolyControl,
+	RoutedMap
+} from 'react-cismap';
 import { connect } from 'react-redux';
-import 'proj4leaflet';
-import proj4 from 'proj4';
+import { routerActions as RoutingActions } from 'react-router-redux';
+import { bindActionCreators } from 'redux';
+import EditModeControlButton from '../components/commons/EditModeControlButton';
+import CyclingBackgroundButton from '../components/CyclingBackgroundButton';
 import { appModes as APP_MODES } from '../constants/uiConstants';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
 import { actions as MappingActions } from '../redux/modules/mapping';
-import { bindActionCreators } from 'redux';
-import {
-	RoutedMap,
-	MappingConstants,
-	FeatureCollectionDisplay,
-	NewPolyControl,
-	NewMarkerControl
-} from 'react-cismap';
-import { routerActions as RoutingActions } from 'react-router-redux';
+import { getMarkerStyleFromFeatureConsideringSelection } from '../utils/kassenzeichenMappingTools';
 import { modifyQueryPart } from '../utils/routingHelper';
 
-import { getMarkerStyleFromFeatureConsideringSelection } from '../utils/kassenzeichenMappingTools';
-import { Alert } from 'react-bootstrap';
-
-import L from 'leaflet';
-import 'leaflet-editable';
-
-import CyclingBackgroundButton from '../components/CyclingBackgroundButton';
-import EditModeControlButton from '../components/commons/EditModeControlButton';
-
-const position = [ 51.272399, 7.199712 ];
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -61,7 +56,6 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	mapDblClick(event) {
-		console.log('mapDblClick event', event);
 		if (this.props.authMode === APP_MODES.USER_PW) {
 			const skipFitBounds = true; //event.originalEvent.shiftKey;
 			const latlon = event.latlng;
@@ -71,8 +65,6 @@ export class VerdisMap_ extends React.Component {
 	}
 
 	featureClick(event, feature, layer) {
-		console.log('event', event);
-
 		L.DomEvent.stopPropagation(event.originalEvent);
 		event.originalEvent.preventDefault();
 

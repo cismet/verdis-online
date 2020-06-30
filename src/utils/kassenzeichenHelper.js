@@ -73,6 +73,8 @@ export const getInfoTextForFlaechenart = (flaeche) => {
 		case 'Ökopflaster':
 			flaechenart = <Oekopflaster />;
 			break;
+		default:
+			throw new Error('unbekannte Flächenart: ' + switcher);
 	}
 
 	return flaechenart;
@@ -102,6 +104,9 @@ export const getInfoTextForAnschlussgrad = (flaeche) => {
 			break;
 		case 'Bach verrohrt':
 			anschlussgrad = <DirekteinleitungInVerrohrtesGewaesser />;
+			break;
+		default:
+			throw new Error('unbekannte Anschlussgrad: ' + switcher);
 	}
 
 	return anschlussgrad;

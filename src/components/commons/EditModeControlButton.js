@@ -5,9 +5,9 @@ import L from 'leaflet';
 
 export default class Control extends MapControl {
 	createLeafletElement(props) {
-		const { map } = this.context;
+		// const { map } = this.context;
 		const { featuresInEditmode = true, onChange = () => {} } = props;
-		console.log('featuresInEditmode in Control', featuresInEditmode);
+		// console.log('featuresInEditmode in Control', featuresInEditmode);
 
 		const ControlClass = L.Control.extend({
 			options: {
@@ -16,9 +16,8 @@ export default class Control extends MapControl {
 				kind: 'xxx',
 				html: '<i class="fas fa-edit"></i>'
 			},
-
 			onAdd: function(map) {
-				var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+				let container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
 					link = L.DomUtil.create('a', '', container);
 
 				link.href = '#';

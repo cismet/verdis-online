@@ -1,4 +1,3 @@
-import Color from 'color';
 import React from 'react';
 import {
 	Accordion,

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import Document from '../conversations/Document';
 import { Icon } from 'react-fa';
@@ -8,51 +8,52 @@ const Comp = ({ documents = [], uploadCRDoc, tmpAttachments = [], setTmpAttachme
 	if (uploadCRDoc === undefined) {
 		readOnly = true;
 	}
-
-	const onDrop = useCallback((acceptedFiles) => {
-		acceptedFiles.forEach((file) => {
-			file.nonce =
-				btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
-			addAttachment({
-				name: file.name,
-				nonce: file.nonce,
-				inProgress: true
-			});
-			return uploadCRDoc(file, (returnedFOString) => {
-				const returnedFO = JSON.parse(returnedFOString);
-				returnedFO.nonce = file.nonce;
-				returnedFO.inProgress = false;
-				updateAttachment(returnedFO);
-			});
-		});
-	}, []);
-
-	const addAttachment = (fileO) => {
-		setTmpAttachments((msga) => {
-			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
-			newMsgAttachments.push(fileO);
-			return newMsgAttachments;
-		});
-	};
-	const updateAttachment = (fileO) => {
-		setTmpAttachments((msga) => {
-			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
-			newMsgAttachments.forEach((fo, index) => {
-				if (fo.nonce === fileO.nonce) {
-					newMsgAttachments[index] = fileO;
-					return;
-				}
-			});
-
-			return newMsgAttachments;
-		});
-	};
 	const removeAttachment = (fileO) => {
 		setTmpAttachments((msga) => {
 			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
 			return newMsgAttachments.filter((value) => value.nonce !== fileO.nonce);
 		});
 	};
+	const onDrop = useCallback(
+		(acceptedFiles) => {
+			const addAttachment = (fileO) => {
+				setTmpAttachments((msga) => {
+					const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+					newMsgAttachments.push(fileO);
+					return newMsgAttachments;
+				});
+			};
+			const updateAttachment = (fileO) => {
+				setTmpAttachments((msga) => {
+					const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+					newMsgAttachments.forEach((fo, index) => {
+						if (fo.nonce === fileO.nonce) {
+							newMsgAttachments[index] = fileO;
+							return;
+						}
+					});
+
+					return newMsgAttachments;
+				});
+			};
+			acceptedFiles.forEach((file) => {
+				file.nonce =
+					btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
+				addAttachment({
+					name: file.name,
+					nonce: file.nonce,
+					inProgress: true
+				});
+				return uploadCRDoc(file, (returnedFOString) => {
+					const returnedFO = JSON.parse(returnedFOString);
+					returnedFO.nonce = file.nonce;
+					returnedFO.inProgress = false;
+					updateAttachment(returnedFO);
+				});
+			});
+		},
+		[ setTmpAttachments, uploadCRDoc ]
+	);
 
 	const { getRootProps, getInputProps, open } = useDropzone({
 		onDrop,
@@ -81,7 +82,7 @@ const Comp = ({ documents = [], uploadCRDoc, tmpAttachments = [], setTmpAttachme
 							textAlign: 'left',
 							outline: 'none' //
 						}}
-						class='btn-link'
+						className='btn-link'
 					>
 						<Icon style={{ marginBottom: 3 }} name='paperclip' />
 					</button>
