@@ -39,7 +39,8 @@ export const types = {
 
 	SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI: 'UI_STATE/SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI',
 	SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR:
-		'UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR'
+		'UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR',
+	SET_ERROR: 'UI_STATE/SET_ERROR'
 };
 
 export const CLOUDSTORAGESTATES = {
@@ -112,7 +113,9 @@ const initialState = {
 	waitForFEB: false,
 
 	cloudStorageStatus: undefined, //CLOUDSTORAGESTATES.CLOUD_STORAGE_UP,
-	cloudStorageStatusMessages: []
+	cloudStorageStatusMessages: [],
+	catchedError: undefined,
+	catchedErrorCause: undefined
 };
 
 ///REDUCER
@@ -123,6 +126,12 @@ export default function uiStateReducer(state = initialState, action) {
 			newState = objectAssign({}, state);
 			newState.width = action.width;
 			newState.height = action.height;
+			return newState;
+		}
+		case types.SET_ERROR: {
+			newState = objectAssign({}, state);
+			newState.catchedError = action.catchedError;
+			newState.catchedErrorCause = action.catchedErrorCause;
 			return newState;
 		}
 		case types.TOGGLE_INFO_ELEMENTS: {
@@ -446,6 +455,13 @@ function setMode(mode) {
 		mode: mode
 	};
 }
+function setError(catchedError, catchedErrorCause) {
+	return {
+		type: types.SET_ERROR,
+		catchedError,
+		catchedErrorCause
+	};
+}
 function setD3Availability(available) {
 	return {
 		type: types.SET_D3_AVAILABILITY,
@@ -543,5 +559,6 @@ export const actions = {
 	setCloudStorageStatus,
 	showChangeRequestsAnnotationEditView,
 	setChangeRequestsAnnotationEditViewAnnotationAndCR,
-	showCRAnnotationEditUI
+	showCRAnnotationEditUI,
+	setError
 };

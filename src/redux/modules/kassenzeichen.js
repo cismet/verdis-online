@@ -634,8 +634,6 @@ function addChangeRequestMessage(msg) {
 }
 function removeLastChangeRequestMessage() {
 	return function(dispatch, getState) {
-		console.log('removeLastChangeRequestMessage');
-
 		const kassenzeichen = getState().kassenzeichen;
 		const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
 		const sMsgs = newKassz.aenderungsanfrage.nachrichten.sort(
@@ -710,7 +708,7 @@ function storeCR(cr, callback = (payload) => {}) {
 		let taskParameters = {
 			parameters: {
 				changerequestJson: cr,
-				stac,
+				stac: stac,
 				email: 'max.mustermann@cismet.de'
 			}
 		};
@@ -748,7 +746,13 @@ function storeCR(cr, callback = (payload) => {}) {
 							newKassz.aenderungsanfrage = resultObject.aenderungsanfrage;
 							dispatch(setKassenzeichenObject(newKassz));
 						} else {
-							throw new Error('Fehler beim Speichern der Änderungsanfrage');
+							dispatch(
+								UiStateActions.setError(
+									'Fehler beim Speichern der Änderungsanfrage: ' +
+										resultObject.errorMessage
+								),
+								new Error()
+							);
 						}
 					});
 				}

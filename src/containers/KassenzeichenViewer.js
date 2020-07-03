@@ -159,6 +159,10 @@ export class KassenzeichenViewer_ extends React.Component {
 			throw new Error('Artificial Error');
 		}
 
+		if (this.props.uiState.catchedError !== undefined) {
+			throw new Error('UI State Error: ' + this.props.uiState.catchedError);
+		}
+
 		let flaechenInfoOverlay;
 		let verdisMapWithAdditionalComponents;
 		let mapHeight;
