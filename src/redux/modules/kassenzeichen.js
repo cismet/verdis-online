@@ -706,6 +706,7 @@ function storeCR(cr, callback = (payload) => {}) {
 	return function(dispatch, getState) {
 		dispatch(UiStateActions.setCloudStorageStatus(CLOUDSTORAGESTATES.CLOUD_STORAGE_UP));
 		const stac = getState().auth.stac;
+		const kassenzeichen = getState().kassenzeichen;
 		let taskParameters = {
 			parameters: {
 				changerequestJson: cr,
@@ -737,10 +738,18 @@ function storeCR(cr, callback = (payload) => {}) {
 			.then(function(response) {
 				if (response.status >= 200 && response.status < 300) {
 					response.json().then(function(result) {
-						callback(result.res);
-						setTimeout(() => {
-							dispatch(UiStateActions.setCloudStorageStatus(undefined));
-						}, 100);
+						const resultObject = JSON.parse(result.res);
+						if (resultObject.resultStatus === 'SUCCESS') {
+							callback(resultObject);
+							setTimeout(() => {
+								dispatch(UiStateActions.setCloudStorageStatus(undefined));
+							}, 100);
+							const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+							newKassz.aenderungsanfrage = resultObject.aenderungsanfrage;
+							dispatch(setKassenzeichenObject(newKassz));
+						} else {
+							throw new Error('Fehler beim Speichern der Änderungsanfrage');
+						}
 					});
 				}
 			})
