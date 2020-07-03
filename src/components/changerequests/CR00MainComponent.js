@@ -282,7 +282,7 @@ const CR00 = ({
 											(kassenzeichen.aenderungsanfrage || { nachrichten: [] })
 												.nachrichten
 										}
-										hiseSystemMessages={hideSystemMessages}
+										hideSystemMessages={hideSystemMessages}
 									/>
 
 									<ConversationInput
