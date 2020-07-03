@@ -13,7 +13,7 @@ const Comp = ({
 	},
 	width,
 	background,
-	hiseSystemMessages = false
+	hideSystemMessages = false
 }) => {
 	const sMsgs = messages.sort((a, b) => a.timestamp - b.timestamp);
 
@@ -93,7 +93,10 @@ const Comp = ({
 					}
 
 					case 'SYSTEM':
-						if (hiseSystemMessages === false) {
+						if (
+							hideSystemMessages === false &&
+							systemmessage(msg.nachrichtenParameter) !== undefined
+						) {
 							return (
 								<SystemMessage
 									key={'SYSTEM.SystemMessage.' + index}
@@ -126,6 +129,8 @@ const systemmessage = (sysMsgConf) => {
 						return 'Ihr Sachbearbeiter hat die Bearbeitung abgeschlossen.';
 					case 'PROCESSING':
 						return 'Ihr Sachbearbeiter hat die Bearbeitung aufgenommen.';
+					case 'PENDING':
+						return undefined;
 					default:
 						return 'unbekannter Status' + sysMsgConf.status;
 				}
