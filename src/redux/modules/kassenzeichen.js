@@ -783,12 +783,12 @@ function submitCR() {
 				const changerequestBezeichnungsArray = Object.keys(
 					newKassz.aenderungsanfrage.flaechen
 				);
-				changerequestBezeichnungsArray.forEach((flaechenbezeichnung, index) => {
+				(changerequestBezeichnungsArray || []).forEach((flaechenbezeichnung, index) => {
 					newKassz.aenderungsanfrage.flaechen[flaechenbezeichnung].draft = false;
 				});
 			}
 			const changerequestMessagesArray = newKassz.aenderungsanfrage.nachrichten;
-			changerequestMessagesArray.forEach((msg) => {
+			(changerequestMessagesArray || []).forEach((msg) => {
 				if (msg.draft === true) {
 					msg.draft = false;
 				}
@@ -813,7 +813,7 @@ export function getNumberOfPendingChanges(cr) {
 	if (cr !== undefined && cr !== null) {
 		if (cr.flaechen !== undefined && cr.flaechen != null) {
 			const changerequestBezeichnungsArray = Object.keys(cr.flaechen);
-			changerequestBezeichnungsArray.forEach((flaechenbezeichnung, index) => {
+			(changerequestBezeichnungsArray || []).forEach((flaechenbezeichnung, index) => {
 				const crf = cr.flaechen[flaechenbezeichnung];
 				if (crf.draft === true) {
 					if (crf.groesse !== undefined) {
@@ -840,7 +840,7 @@ export function getNumberOfPendingChanges(cr) {
 		}
 		if (cr.nachrichten !== undefined && cr.nachrichten !== null) {
 			const changerequestMessagesArray = cr.nachrichten;
-			changerequestMessagesArray.forEach((msg) => {
+			(changerequestMessagesArray || []).forEach((msg) => {
 				if (msg.draft === true) {
 					if (msg.nachricht !== undefined && msg.nachricht.trim() !== '') {
 						crDraftCounter++;
@@ -853,7 +853,7 @@ export function getNumberOfPendingChanges(cr) {
 		}
 
 		if (cr.geometrien !== undefined && cr.geometrien !== null) {
-			Object.keys(cr.geometrien).forEach((geomKey) => {
+			(Object.keys(cr.geometrien) || []).forEach((geomKey) => {
 				const geom = cr.geometrien[geomKey];
 
 				if (geom.properties.draft === true) {

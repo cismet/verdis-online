@@ -78,7 +78,7 @@ const CR00 = ({
 		let lastUserMessage = undefined;
 		const sMsgs = changerequestMessagesArray.sort((a, b) => a.timestamp - b.timestamp);
 
-		changerequestBezeichnungsArray.forEach((flaechenbezeichnung, index) => {
+		(changerequestBezeichnungsArray || []).forEach((flaechenbezeichnung, index) => {
 			//find flaeche
 			const flaeche = kassenzeichen.flaechen.find(
 				(fCand) => fCand.flaechenbezeichnung === flaechenbezeichnung
@@ -131,7 +131,7 @@ const CR00 = ({
 				}
 			}
 		}
-		sMsgs.forEach((msg) => {
+		(sMsgs || []).forEach((msg) => {
 			if (msg.typ === 'CITIZEN' && msg.draft === true) {
 				lastUserMessage = msg;
 			}

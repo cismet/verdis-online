@@ -43,7 +43,7 @@ const Comp = ({
 
 	const onDrop = useCallback(
 		(acceptedFiles) => {
-			acceptedFiles.forEach((file) => {
+			(acceptedFiles || []).forEach((file) => {
 				file.nonce =
 					btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
 				addAttachment({
@@ -78,7 +78,7 @@ const Comp = ({
 	const updateAttachment = (fileO) => {
 		setMsgAttachments((msga) => {
 			const newMsgAttachments = JSON.parse(JSON.stringify(msga));
-			newMsgAttachments.forEach((fo, index) => {
+			(newMsgAttachments || []).forEach((fo, index) => {
 				if (fo.nonce === fileO.nonce) {
 					newMsgAttachments[index] = fileO;
 					return;
@@ -145,7 +145,7 @@ const Comp = ({
 									const draft = e.target.value;
 									setMsgTextValue('');
 									//TODO keine Code Duplication
-									msgAttachments.forEach((fo, index) => {
+									(msgAttachments || []).forEach((fo, index) => {
 										fo.nonce = undefined;
 										fo.inProgress = undefined;
 									});
@@ -189,7 +189,7 @@ const Comp = ({
 							if (textarea && textarea.current) {
 								const draft = textarea.current.value;
 								setMsgTextValue('');
-								msgAttachments.forEach((fo, index) => {
+								(msgAttachments || []).forEach((fo, index) => {
 									fo.nonce = undefined;
 									fo.inProgress = undefined;
 								});

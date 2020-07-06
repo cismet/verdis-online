@@ -26,7 +26,7 @@ const Comp = ({ documents = [], uploadCRDoc, tmpAttachments = [], setTmpAttachme
 			const updateAttachment = (fileO) => {
 				setTmpAttachments((msga) => {
 					const newMsgAttachments = JSON.parse(JSON.stringify(msga));
-					newMsgAttachments.forEach((fo, index) => {
+					(newMsgAttachments || []).forEach((fo, index) => {
 						if (fo.nonce === fileO.nonce) {
 							newMsgAttachments[index] = fileO;
 							return;
@@ -36,7 +36,7 @@ const Comp = ({ documents = [], uploadCRDoc, tmpAttachments = [], setTmpAttachme
 					return newMsgAttachments;
 				});
 			};
-			acceptedFiles.forEach((file) => {
+			(acceptedFiles || []).forEach((file) => {
 				file.nonce =
 					btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
 				addAttachment({
