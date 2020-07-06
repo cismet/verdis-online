@@ -1,6 +1,6 @@
 {
   "name": "verdis-online",
-  "version": "2.0.0-SNAPSHOT.48",
+  "version": "2.0.0-SNAPSHOT.49",
   "config": {
     "dockerRegistryPath": "cismet"
   },
