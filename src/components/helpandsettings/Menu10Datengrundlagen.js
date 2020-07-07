@@ -30,7 +30,7 @@ const Component = ({
 						und die{' '}
 						<a
 							target='_satzung'
-							href='https://www.wuppertal.de/rathaus-buergerservice/verwaltung/politik/stadtrecht-dokumente/7-11.pdf`'
+							href='https://www.wuppertal.de/rathaus-buergerservice/verwaltung/politik/stadtrecht-dokumente/7-11.pdf'
 						>
 							Satzung zur Erhebung von Anschlussbeiträgen, Abwassergebühren
 						</a>.
