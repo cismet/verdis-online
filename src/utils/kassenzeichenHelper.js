@@ -339,7 +339,8 @@ const setColorForAttr = (colorStates, attr, flaechenCR, colorProcessed, colorUnp
 
 export const getLinkForDoc = (doc) => {
 	return (
-		'http://cids-blau.s10222.wuppertal-intra.de/files/grundis/aenderungsanfrage_anhang/' +
+		//'http://cids-blau.s10222.wuppertal-intra.de/files/grundis/aenderungsanfrage_anhang/' +
+		'https://dateien.regengeld.de/wuppertal/aenderungsanfrage-anhang/' +
 		doc.uuid +
 		'_' +
 		doc.name
