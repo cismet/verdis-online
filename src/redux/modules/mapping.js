@@ -1,7 +1,6 @@
 import objectAssign from 'object-assign';
 
 import L from 'leaflet';
-import 'proj4leaflet';
 
 ///TYPES
 export const types = {
@@ -13,7 +12,8 @@ export const types = {
 	FEATURE_SELECTION_INDEX_CHANGED: 'MAPPING/FEATURE_SELECTION_INDEX_CHANGED',
 	SET_AUTO_FIT: 'MAPPING/SET_AUTO_FIT',
 	GAZETTEER_HIT: 'MAPPING/GAZETTEER_HIT',
-	SET_BACKGROUND_INDEX: 'MAPPING/SET_BACKGROUND_INDEX'
+	SET_BACKGROUND_INDEX: 'MAPPING/SET_BACKGROUND_INDEX',
+	SET_IDS_IN_EDIT: 'MAPPING/SET_IDS_IN_EDIT'
 };
 export const constants = {
 	AUTO_FIT_MODE_STRICT: 'MAPPING/AUTO_FIT_MODE_STRICT',
@@ -29,6 +29,7 @@ export const constants = {
 
 const initialState = {
 	featureCollection: [],
+	idsInEdit: [],
 	selectedIndex: null,
 	boundingBox: null,
 	autoFitBoundsTarget: null,
@@ -41,15 +42,19 @@ const initialState = {
 	backgrounds: [
 		{
 			layerkey: 'bplan_abkg@30|wupp-plan-live@20',
-			src: '/images/rain-hazard-map-bg/topo.png',
+			src: '/images/mapPreviewABK.png',
 			title: 'Top. Karte'
 		},
 		{
 			layerkey: 'trueOrtho2018@50|rvrSchrift@100|wupp-plan-live@20',
-			src: '/images/rain-hazard-map-bg/ortho.png',
+			src: '/images/mapPreviewOrtho.png',
 			title: 'Luftbildkarte'
 		},
-		{ layerkey: 'wupp-plan-live@40', src: '/images/rain-hazard-map-bg/citymap.png', title: 'Stadtplan' }
+		{
+			layerkey: 'wupp-plan-live@40',
+			src: '/images/mapPreviewCitymap.png',
+			title: 'Stadtplan'
+		}
 	]
 };
 
@@ -126,6 +131,11 @@ export default function mappingReducer(state = initialState, action) {
 		case types.SET_BACKGROUND_INDEX: {
 			newState = objectAssign({}, state);
 			newState.selectedBackgroundIndex = action.selectedBackgroundIndex;
+			return newState;
+		}
+		case types.SET_IDS_IN_EDIT: {
+			newState = objectAssign({}, state);
+			newState.idsInEdit = action.idsInEdit;
 			return newState;
 		}
 
@@ -214,6 +224,12 @@ function setSelectedBackgroundIndex(selectedBackgroundIndex) {
 	};
 }
 
+function setIdsInEdit(idsInEdit) {
+	return {
+		type: types.SET_IDS_IN_EDIT,
+		idsInEdit
+	};
+}
 //COMPLEXACTIONS
 
 // function showKassenzeichenObject(kassenzeichenObject, skipFitBounds) {
@@ -233,7 +249,12 @@ function setSelectedBackgroundIndex(selectedBackgroundIndex) {
 function fitSelectedFeatureBounds(mode) {
 	return function(dispatch, getState) {
 		const currentState = getState();
-		dispatch(fitFeatureBounds(currentState.mapping.featureCollection[currentState.mapping.selectedIndex], mode));
+		dispatch(
+			fitFeatureBounds(
+				currentState.mapping.featureCollection[currentState.mapping.selectedIndex],
+				mode
+			)
+		);
 	};
 }
 
@@ -241,25 +262,51 @@ function fitFeatureBounds(feature, mode) {
 	return function(dispatch) {
 		const projectedF = L.Proj.geoJson(feature);
 		const bounds = projectedF.getBounds();
-		dispatch(setAutoFit(true, bounds, mode));
+		dispatch(setAutoFit(true, getSimpleBounds(bounds), mode));
 	};
 }
 
 function fitAll() {
 	return function(dispatch, getState) {
 		const currentState = getState();
-		dispatch(fitFeatureCollection(currentState.mapping.featureCollection));
+		if (
+			currentState !== undefined &&
+			currentState.mapping !== undefined &&
+			currentState.mapping.featureCollection !== undefined &&
+			currentState.mapping.featureCollection.length !== undefined &&
+			currentState.mapping.featureCollection.length > 0
+		) {
+			dispatch(fitFeatureCollection(currentState.mapping.featureCollection));
+		}
 	};
 }
-
 function fitFeatureCollection(features) {
-	return function(dispatch) {
-		const projectedFC = L.Proj.geoJson(features);
-		const bounds = projectedFC.getBounds();
-		dispatch(setAutoFit(true, bounds, constants.AUTO_FIT_MODE_STRICT));
-	};
+	if (Array.isArray(features) === true && features.length > 0) {
+		return function(dispatch) {
+			const projectedFC = L.Proj.geoJson(features);
+			const bounds = projectedFC.getBounds();
+			dispatch(setAutoFit(true, getSimpleBounds(bounds), constants.AUTO_FIT_MODE_STRICT));
+		};
+	}
 }
 
+function getSimpleBounds(latLngBounds) {
+	return [
+		[ latLngBounds._northEast.lat, latLngBounds._northEast.lng ],
+		[ latLngBounds._southWest.lat, latLngBounds._southWest.lng ]
+	];
+}
+
+export function getLayerForFeatureId(routedmap, featureId) {
+	let l = undefined;
+	routedmap.leafletMap.leafletElement.eachLayer(function(layer) {
+		if (layer.feature !== undefined && layer.feature.id === featureId) {
+			l = layer;
+		}
+	});
+
+	return l;
+}
 //EXPORT ACTIONS
 
 // internalShowKassenzeichenObject,
@@ -278,5 +325,6 @@ export const actions = {
 	fitFeatureBounds,
 	fitAll,
 	fitFeatureCollection,
-	setSelectedBackgroundIndex
+	setSelectedBackgroundIndex,
+	setIdsInEdit
 };

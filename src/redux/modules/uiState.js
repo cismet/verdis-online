@@ -18,6 +18,12 @@ export const types = {
 	CHANGE_LAYER_OPACITY: 'UI_STATE/CHANGE_LAYER_OPACITY',
 	CHANGE_LAYER_ENABLED: 'UI_STATE/CHANGE_LAYER_ENABLED',
 	SHOW_SETTINGS: 'UI_STATE/SHOW_SETTINGS',
+	SHOW_CHANGE_REQUESTS: 'UI_STATE/SHOW_CHANGE_REQUESTS',
+	SHOW_CHANGE_REQUESTS_EDIT_UI: 'UI_STATE/SHOW_CHANGE_REQUESTS_EDIT_UI',
+	SET_CHANGE_REQUESTS_EDIT_MODE: 'SET_CHANGE_REQUESTS_EDIT_MODE',
+	SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR:
+		'UI_STATE/SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR',
+
 	SHOW_WAITING: 'UI_STATE/SHOW_WAITING',
 	SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: 'UI_STATE/SET_KASSENZEICHEN_SEARCH_IN_PROGRESS',
 	SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE: 'UI_STATE/SET_KASSENZEICHEN_TEXTSEARCH_VISIBLE',
@@ -28,7 +34,19 @@ export const types = {
 	SET_STAC_INPUT: 'UI_STATE/SET_STAC_INPUT',
 	SET_FEB_BLOB: 'UI_STATE/SET_FEB_BLOB',
 	SET_WAIT4FEB: 'UI_STATE/SET_WAIT4FEB',
-	SET_APPLICATION_MENU_ACTIVE_KEY: 'UISTATE/SET_APPLICATION_MENU_ACTIVE_KEY'
+	SET_APPLICATION_MENU_ACTIVE_KEY: 'UISTATE/SET_APPLICATION_MENU_ACTIVE_KEY',
+	SET_CLOUD_STORAGE_STATUS: 'UISTATE/SET_CLOUD_STORAGE_STATUS',
+
+	SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI: 'UI_STATE/SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI',
+	SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR:
+		'UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR',
+	SET_ERROR: 'UI_STATE/SET_ERROR'
+};
+
+export const CLOUDSTORAGESTATES = {
+	CLOUD_STORAGE_UP: 'CLOUD_STORAGE_UP',
+	CLOUD_STORAGE_DOWN: 'CLOUD_STORAGE_DOWN',
+	CLOUD_STORAGE_ERROR: 'CLOUD_STORAGE_ERROR'
 };
 
 ///INITIAL STATE
@@ -45,8 +63,20 @@ const initialState = {
 	contactElementEnabled: true,
 
 	settingsVisible: false,
+	changeRequestsMenuVisible: false,
+	changeRequestsEditMode: false,
+	changeRequestDisplayMode: 'cr',
+
+	changeRequestEditViewVisible: false,
+	changeRequestEditViewFlaeche: {},
+	changeRequestEditViewCR: {},
+
+	changeRequestAnnotationEditViewVisible: false,
+	changeRequestAnnotationEditViewAnnotation: {},
+	changeRequestAnnotationEditViewCR: {},
+
 	applicationMenuVisible: false,
-	applicationMenuActiveKey: "none",
+	applicationMenuActiveKey: 'none',
 
 	searchForKassenzeichenVisible: false,
 
@@ -80,7 +110,12 @@ const initialState = {
 	stacInput: '',
 
 	febBlob: null,
-	waitForFEB: false
+	waitForFEB: false,
+
+	cloudStorageStatus: undefined, //CLOUDSTORAGESTATES.CLOUD_STORAGE_UP,
+	cloudStorageStatusMessages: [],
+	catchedError: undefined,
+	catchedErrorCause: undefined
 };
 
 ///REDUCER
@@ -91,6 +126,12 @@ export default function uiStateReducer(state = initialState, action) {
 			newState = objectAssign({}, state);
 			newState.width = action.width;
 			newState.height = action.height;
+			return newState;
+		}
+		case types.SET_ERROR: {
+			newState = objectAssign({}, state);
+			newState.catchedError = action.catchedError;
+			newState.catchedErrorCause = action.catchedErrorCause;
 			return newState;
 		}
 		case types.TOGGLE_INFO_ELEMENTS: {
@@ -129,6 +170,39 @@ export default function uiStateReducer(state = initialState, action) {
 			newState = objectAssign({}, state);
 			newState.settingsVisible = action.visible;
 			newState.applicationMenuVisible = action.visible;
+			return newState;
+		}
+		case types.SHOW_CHANGE_REQUESTS: {
+			newState = objectAssign({}, state);
+			newState.changeRequestsMenuVisible = action.visible;
+			return newState;
+		}
+
+		case types.SHOW_CHANGE_REQUESTS_EDIT_UI: {
+			newState = objectAssign({}, state);
+			newState.changeRequestEditViewVisible = action.visible;
+			return newState;
+		}
+		case types.SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR: {
+			newState = objectAssign({}, state);
+			newState.changeRequestEditViewFlaeche = action.flaeche;
+			newState.changeRequestEditViewCR = action.cr;
+			return newState;
+		}
+		case types.SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI: {
+			newState = objectAssign({}, state);
+			newState.changeRequestAnnotationEditViewVisible = action.visible;
+			return newState;
+		}
+		case types.SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR: {
+			newState = objectAssign({}, state);
+			newState.changeRequestAnnotationEditViewAnnotation = action.annotation;
+			newState.changeRequestAnnotationEditViewCR = action.cr;
+			return newState;
+		}
+		case types.SET_CHANGE_REQUESTS_EDIT_MODE: {
+			newState = objectAssign({}, state);
+			newState.changeRequestsEditMode = action.inEditMode;
 			return newState;
 		}
 		case types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS: {
@@ -210,6 +284,15 @@ export default function uiStateReducer(state = initialState, action) {
 			newState.applicationMenuActiveKey = action.key;
 			return newState;
 		}
+		case types.SET_CLOUD_STORAGE_STATUS: {
+			newState = objectAssign({}, state);
+			newState.cloudStorageStatus = action.status;
+			if (action.message !== undefined) {
+				newState.cloudStorageStatusMessages.push(action.message);
+			}
+			return newState;
+		}
+
 		default:
 			return state;
 	}
@@ -265,6 +348,38 @@ function showSettings(visible) {
 	};
 }
 
+function showChangeRequestsMenu(visible) {
+	return {
+		type: types.SHOW_CHANGE_REQUESTS,
+		visible
+	};
+}
+function showChangeRequestsEditView(visible) {
+	return {
+		type: types.SHOW_CHANGE_REQUESTS_EDIT_UI,
+		visible
+	};
+}
+function setChangeRequestsEditViewFlaecheAndCR(flaeche, cr) {
+	return {
+		type: types.SET_CHANGE_REQUESTS_EDIT_UI_FLAECHE_AND_CR,
+		flaeche,
+		cr
+	};
+}
+function showChangeRequestsAnnotationEditView(visible) {
+	return {
+		type: types.SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI,
+		visible
+	};
+}
+function setChangeRequestsAnnotationEditViewAnnotationAndCR(annotation, cr) {
+	return {
+		type: types.SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR,
+		annotation,
+		cr
+	};
+}
 function setKassenzeichenSearchInProgress(progress) {
 	return {
 		type: types.SET_KASSENZEICHEN_SEARCH_IN_PROGRESS,
@@ -340,6 +455,13 @@ function setMode(mode) {
 		mode: mode
 	};
 }
+function setError(catchedError, catchedErrorCause) {
+	return {
+		type: types.SET_ERROR,
+		catchedError,
+		catchedErrorCause
+	};
+}
 function setD3Availability(available) {
 	return {
 		type: types.SET_D3_AVAILABILITY,
@@ -373,7 +495,35 @@ function setApplicationMenuActiveKey(key) {
 	};
 }
 
+function setChangeRequestInEditMode(inEditMode) {
+	return {
+		type: types.SET_CHANGE_REQUESTS_EDIT_MODE,
+		inEditMode
+	};
+}
+
+function setCloudStorageStatus(status, msg) {
+	return {
+		type: types.SET_CLOUD_STORAGE_STATUS,
+		status,
+		msg
+	};
+}
+
 //COMPLEXACTIONS
+
+function showCREditUI(flaeche, cr) {
+	return function(dispatch, getState) {
+		dispatch(setChangeRequestsEditViewFlaecheAndCR(flaeche, cr));
+		dispatch(showChangeRequestsEditView(true));
+	};
+}
+function showCRAnnotationEditUI(annotation, cr) {
+	return function(dispatch, getState) {
+		dispatch(setChangeRequestsAnnotationEditViewAnnotationAndCR(annotation, cr));
+		dispatch(showChangeRequestsAnnotationEditView(true));
+	};
+}
 
 //EXPORT ACTIONS
 
@@ -385,6 +535,9 @@ export const actions = {
 	toggleDetailsElements,
 	toggleContactElement,
 	showSettings,
+	showChangeRequestsMenu,
+	showChangeRequestsEditView,
+	setChangeRequestsEditViewFlaecheAndCR,
 	setKassenzeichenSearchInProgress,
 	setKassenzeichenTextSearchVisible,
 	setKassenzeichenToSearchFor,
@@ -400,5 +553,12 @@ export const actions = {
 	setFebBlob,
 	setWaitForFEB,
 	showApplicationMenu,
-	setApplicationMenuActiveKey
+	setApplicationMenuActiveKey,
+	showCREditUI,
+	setChangeRequestInEditMode,
+	setCloudStorageStatus,
+	showChangeRequestsAnnotationEditView,
+	setChangeRequestsAnnotationEditViewAnnotationAndCR,
+	showCRAnnotationEditUI,
+	setError
 };

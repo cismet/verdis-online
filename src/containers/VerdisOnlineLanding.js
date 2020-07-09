@@ -4,10 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ReactDOM from 'react-dom';
 import { DOMAIN, STAC_SERVICE } from '../constants/cids';
-
 import { Panel, Form, FormGroup, Grid, Row, Col } from 'react-bootstrap';
 import Loadable from 'react-loading-overlay';
-
 import { routerActions as RoutingActions } from 'react-router-redux';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
@@ -17,6 +15,7 @@ import MaskedFormControl from 'react-bootstrap-maskedinput';
 import queryString from 'query-string';
 import { Alert, AlertContainer } from 'react-bs-notifier';
 import { getVersion } from '../constants/versions';
+
 function mapStateToProps(state) {
 	return {
 		uiState: state.uiState,
@@ -174,35 +173,44 @@ export class Landing_ extends React.Component {
 						backgroundColor: 'rgba(0,0,0,0)'
 					}}
 				>
-					<div style={{ fontSize: '9px', textAlign: 'right', color: 'rgba(256,256,256,0.5)', margin: 4 }}>
+					<div
+						style={{
+							fontSize: '9px',
+							textAlign: 'right',
+							color: 'rgba(256,256,256,0.5)',
+							margin: 4
+						}}
+					>
 						{getVersion()}
 					</div>
 				</div>
 				<div style={{ width: '100%', height: '100%', position: 'absolute' }}>
-					<AlertContainer position="top-right">
+					<AlertContainer position='top-right'>
 						<div>
 							{this.state.connectionProblem && (
 								<Alert
-									type="danger"
-									headline="Verbindungsprobleme."
+									type='danger'
+									headline='Verbindungsprobleme.'
 									onDismiss={() => {
 										this.setState({ connectionAlertVisible: false });
 									}}
 								>
-									Im Moment können wir keine Verbindung zu unseren Diensten aufbauen.
+									Im Moment können wir keine Verbindung zu unseren Diensten
+									aufbauen.
 								</Alert>
 							)}
 							{this.state.loginAlertVisible && (
 								<Alert
-									type="danger"
+									type='danger'
 									timeout={10000}
-									headline="Anmeldeinformationen fehlerhaft oder abgelaufen."
+									headline='Anmeldeinformationen fehlerhaft oder abgelaufen.'
 									onDismiss={() => {
 										this.setState({ loginAlertVisible: false });
 									}}
 								>
-									Bitte überprüfen Sie den eingegeben Code und dessen Gültigkeitsdauer. Bei Problemen
-									mit der Anmeldung, wenden Sie sich bitte an den untenstehende Kontakt.
+									Bitte überprüfen Sie den eingegeben Code und dessen
+									Gültigkeitsdauer. Bei Problemen mit der Anmeldung, wenden Sie
+									sich bitte an den untenstehende Kontakt.
 								</Alert>
 							)}
 						</div>
@@ -210,19 +218,33 @@ export class Landing_ extends React.Component {
 				</div>
 				<div style={landingStyle}>
 					<Grid>
-						<Row className="show-grid">
+						<Row
+							onClick={() => {
+								if (getVersion() === 'dev-hot-reload') {
+									this.handleSTAC('STACSTACSTAC');
+								}
+							}}
+							className='show-grid'
+						>
 							<Col xs={12} md={12}>
 								<h1 style={{ color: 'white' }}>
-									<img alt="" width={180} src="/images/wuppertal-white.svg" />
+									<img alt='' width={180} src='/images/wuppertal-white.svg' />
 								</h1>
 								<h2 style={{ color: 'white' }}>VerDIS - online</h2>
-								<h3 style={{ color: 'white' }}>Versiegelungsdaten | Flächenentwässerung</h3>
+								<h3 style={{ color: 'white' }}>
+									Versiegelungsdaten | Flächenentwässerung
+								</h3>
 							</Col>
 						</Row>
 
-						<Row className="show-grid">
+						<Row className='show-grid'>
 							<Col xs={6} md={6}>
-								<div style={{ position: 'fixed', top: this.props.uiState.height - 200 }}>
+								<div
+									style={{
+										position: 'fixed',
+										top: this.props.uiState.height - 200
+									}}
+								>
 									<Loadable
 										active={this.props.auth.loginInProgress}
 										spinner
@@ -232,13 +254,13 @@ export class Landing_ extends React.Component {
 											<h3>Zugangscode:</h3>
 											<Form
 												horizontal
-												className="LoginForm"
-												id="loginForm"
+												className='LoginForm'
+												id='loginForm'
 												onSubmit={(e) => {
 													e.preventDefault();
 												}}
 											>
-												<FormGroup controlId="stacInput">
+												<FormGroup controlId='stacInput'>
 													<MaskedFormControl
 														key={'MaskedFormControl.with' + this.stac}
 														style={{
@@ -251,10 +273,10 @@ export class Landing_ extends React.Component {
 														ref={(input) => {
 															this.stacInput = input;
 														}}
-														placeholderChar=" "
-														type="text"
-														name="stac"
-														mask="AAAA-AAAA-AAAA"
+														placeholderChar=' '
+														type='text'
+														name='stac'
+														mask='AAAA-AAAA-AAAA'
 														value={this.props.uiState.stacInput}
 														onChange={this.handleSTACInput}
 														disabled={this.state.connectionProblem}
@@ -276,12 +298,24 @@ export class Landing_ extends React.Component {
 							<Col xs={1} md={1} />
 
 							<Col xs={5} md={5}>
-								<div style={{ position: 'fixed', top: this.props.uiState.height - 200 }}>
+								<div
+									style={{
+										position: 'fixed',
+										top: this.props.uiState.height - 200
+									}}
+								>
 									<h4 style={{ color: 'white' }}>Stadt Wuppertal</h4>
-									<h4 style={{ color: 'white' }}>Vermessung, Katasteramt und Geodaten</h4>
-									<h4 style={{ color: 'white' }}>102.23 Kommunalservice Liegenschaftskataster</h4>
 									<h4 style={{ color: 'white' }}>
-										<a style={{ color: 'white' }} href="mailto:regengeld@stadt.wuppertal.de">
+										Vermessung, Katasteramt und Geodaten
+									</h4>
+									<h4 style={{ color: 'white' }}>
+										102.23 Kommunalservice Liegenschaftskataster
+									</h4>
+									<h4 style={{ color: 'white' }}>
+										<a
+											style={{ color: 'white' }}
+											href='mailto:regengeld@stadt.wuppertal.de'
+										>
 											regengeld@stadt.wuppertal.de
 										</a>
 									</h4>
