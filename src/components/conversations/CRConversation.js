@@ -32,6 +32,9 @@ const Comp = ({
 			{sMsgsWithWelcomeMessage.map((msg, index) => {
 				switch (msg.typ) {
 					case 'CLERK': {
+						if (msg.draft === true) {
+							return undefined;
+						}
 						let sender;
 						const mappedSender = userMap[msg.name];
 						if (mappedSender !== undefined) {
