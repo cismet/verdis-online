@@ -12,7 +12,10 @@ import AnnotationPanel from '../components/AnnotationPanel';
 import Waiting from './Waiting';
 import { Alert } from 'react-bootstrap';
 import Flexbox from 'flexbox-react';
-import { actions as KassenzeichenActions } from '../redux/modules/kassenzeichen';
+import {
+	actions as KassenzeichenActions,
+	getNumberOfPendingChanges
+} from '../redux/modules/kassenzeichen';
 import { actions as UiStateActions } from '../redux/modules/uiState';
 import { actions as MappingActions } from '../redux/modules/mapping';
 import { actions as AuthActions } from '../redux/modules/auth';
@@ -152,6 +155,39 @@ export class KassenzeichenViewer_ extends React.Component {
 	}
 
 	render() {
+		const { crDraftCounter } = getNumberOfPendingChanges(
+			this.props.kassenzeichen.aenderungsanfrage
+		);
+		let draftAlert;
+		if (crDraftCounter > 0) {
+			draftAlert = (
+				<div
+					style={{
+						position: 'absolute',
+						top: 60,
+						right: 285,
+						zIndex: 500,
+						width: 500,
+						opacity: 0.9
+					}}
+				>
+					<Alert
+						bsStyle='danger'
+						onDismiss={() => {
+							this.props.uiStateActions.showChangeRequestsMenu(true);
+						}}
+					>
+						<h5>
+							<b>Sie haben momentan 2 nicht eingereichte Änderungen.</b> Bitte
+							beachten Sie, dass Änderungswünsche, Anmerkungen und Ihre hochgeladenen
+							Dokumente erst für den Sachbearbeiter sichtbar werden, wenn sie die
+							Änderungen freigegeben/entsperrt und eingereicht haben.
+						</h5>
+					</Alert>
+				</div>
+			);
+		}
+
 		// if (this.props.kassenzeichen.kassenzeichennummer8 == 60432515) {
 		// 	throw new Error('Artificial Error');
 		// }
@@ -621,6 +657,7 @@ export class KassenzeichenViewer_ extends React.Component {
 
 				{verdisMapWithAdditionalComponents}
 				{flaechenInfoOverlay}
+				{draftAlert}
 			</div>
 		);
 	}

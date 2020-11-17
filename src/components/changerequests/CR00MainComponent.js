@@ -12,6 +12,12 @@ import DocPanel from './CR20DocumentsPanel';
 import CloudLoadingAttributeIcon from '../commons/CloudLoadingAttributeIcon';
 import { getNumberOfPendingChanges } from '../../redux/modules/kassenzeichen';
 
+const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
+	Anmerkungen und Ihre hochgeladenen Dokumente
+	erst für den Sachbearbeiter sichtbar werden,
+	wenn sie die Änderungen freigegeben/entsperrt
+	und eingereicht haben.`;
+
 const scrollToVisible = (ref) => {
 	// console.log('scroll ref', ref.current);
 	if (ref && ref.current) {
@@ -422,11 +428,8 @@ const CR00 = ({
 											}}
 										>
 											<p>
-												Bitte beachten Sie, dass Änderungswünsche,
-												Anmerkungen und Ihre hochgeladenen Dokumente erst
-												für den Sachbearbeiter sichtbar werden, wenn sie die
-												Änderungen freigegeben/entsperrt und eingereicht
-												haben.
+												{crDraftCounter > 0 && <b>{draftHint}</b>}
+												{!(crDraftCounter > 0) && <span>{draftHint}</span>}
 											</p>
 											<p>
 												Sollten sich nach Abschluss der Bearbeitung

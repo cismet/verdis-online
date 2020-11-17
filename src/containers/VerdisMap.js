@@ -326,6 +326,7 @@ export class VerdisMap_ extends React.Component {
 						}}
 					/>
 				)}
+				{this.props.children}
 			</RoutedMap>
 		);
 	}
