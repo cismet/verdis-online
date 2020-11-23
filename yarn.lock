@@ -12264,10 +12264,10 @@ react-bs-notifier@5.0.0:
     react-transition-group "2.x"
     toetag "3.x"
 
-react-cismap@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/react-cismap/-/react-cismap-0.5.0.tgz#af51a2655977f7478bccf46540def96176badf3d"
-  integrity sha512-DTDbRMgzp6mgk1J0nWiJRp5fwcRU4V2o0yJy6uErF5naVcALAf/ofu+U/7xiVY1nj2GaZpu0qPVNyhRfZqB9Ww==
+react-cismap@0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/react-cismap/-/react-cismap-0.5.5.tgz#e2836db18fb08c8926a66f6a08cc26eacaa53128"
+  integrity sha512-r/cAwUQilWBLBBtzhkQWaE3QNjrJyHZxX0MV7m4Vd/hJNA5fiZLx2ZqTFiZzmBGF+ZuEklM+RzmjxtWCDMA3mg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.26"
     "@fortawesome/free-brands-svg-icons" "^5.12.0"

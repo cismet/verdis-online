@@ -46,7 +46,7 @@ const initialState = {
 			title: 'Top. Karte'
 		},
 		{
-			layerkey: 'trueOrtho2018@50|rvrSchrift@100|wupp-plan-live@20',
+			layerkey: 'trueOrtho2020@50|rvrSchrift@100|wupp-plan-live@20',
 			src: '/images/mapPreviewOrtho.png',
 			title: 'Luftbildkarte'
 		},
