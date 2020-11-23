@@ -6,7 +6,7 @@ const Comp = ({ showModalMenu }) => {
 	return (
 		<div>
 			<span style={{ fontSize: '11px' }}>
-				<b>Hintergrundkarten</b>: True Orthophoto 2018, Amtliche Basiskarte (ABK) © Stadt
+				<b>Hintergrundkarten</b>: True Orthophoto 2020, Amtliche Basiskarte (ABK) © Stadt
 				Wuppertal | Stadtplanwerk 2.0 (Beta) © RVR | WebAtlasDE © BKG{' '}
 				<a onClick={() => showModalMenu('datengrundlage')}>
 					(Details und Nutzungsbedingungen)
