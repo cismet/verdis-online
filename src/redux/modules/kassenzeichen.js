@@ -15,6 +15,7 @@ import {
 import { changeKassenzeichenInLocation } from '../../utils/routingHelper';
 
 import { toRoman } from 'roman-numerals';
+import slugify from 'slugify';
 
 ///TYPES
 export const types = {
@@ -655,7 +656,7 @@ function addCRDoc(file, callback) {
 		const stac = getState().auth.stac;
 		let taskParameters = {
 			parameters: {
-				fileName: file.name,
+				fileName: slugify(file.name),
 				stac
 			}
 		};

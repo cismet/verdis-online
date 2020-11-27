@@ -7,6 +7,8 @@ import Documents from './Documents';
 import './style.css';
 import iconv from 'iconv-lite';
 import { onlyEmoji, split } from 'emoji-aware';
+import slugify from 'slugify';
+
 const Comp = ({
 	setDraft = () => {},
 	maxRows = 4,
@@ -51,7 +53,7 @@ const Comp = ({
 				file.nonce =
 					btoa(unescape(encodeURIComponent(JSON.stringify(file)))) + new Date().getTime();
 				addAttachment({
-					name: file.name,
+					name: slugify(file.name),
 					nonce: file.nonce,
 					inProgress: true
 				});
