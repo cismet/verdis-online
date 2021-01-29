@@ -341,7 +341,7 @@ const Component = ({
 			)
 		},
 		{
-			title: 'Wie kann ich Einwände gegen die Flächenerhebung vorbringe?',
+			title: 'Wie kann ich Einwände gegen die Flächenerhebung vorbringen?',
 			bsStyle: 'primary',
 			content: (
 				<p>
