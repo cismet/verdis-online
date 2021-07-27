@@ -586,6 +586,8 @@ export class KassenzeichenViewer_ extends React.Component {
 					height={mapHeight + 10}
 					kassenzeichen={this.props.kassenzeichen}
 					addMessage={this.props.kassenzeichenActions.addChangeRequestMessage}
+					changeEmail={this.props.kassenzeichenActions.requestEmailChange}
+					confirmEmail={this.props.kassenzeichenActions.completeEmailChange}
 					removeLastUserMessage={
 						this.props.kassenzeichenActions.removeLastChangeRequestMessage
 					}

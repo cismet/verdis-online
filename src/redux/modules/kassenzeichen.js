@@ -633,6 +633,40 @@ function addChangeRequestMessage(msg) {
         dispatch(storeCR(newKassz.aenderungsanfrage));
     };
 }
+function requestEmailChange(email) {
+    return function(dispatch, getState) {
+        const kassenzeichen = getState().kassenzeichen;
+        const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+
+        if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
+            newKassz.aenderungsanfrage = {
+                kassenzeichen: newKassz.kassenzeichennummer8,
+                emailAdresse: email,
+                flaechen: [],
+                nachrichten: [],
+                geometrien: {}
+            };
+        } else {
+            newKassz.aenderungsanfrage.emailAdresse = email;
+        }
+        dispatch(setKassenzeichenObject(newKassz));
+        dispatch(storeCR(newKassz.aenderungsanfrage));
+    };
+}
+function completeEmailChange(code) {
+    return function(dispatch, getState) {
+        const kassenzeichen = getState().kassenzeichen;
+        const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+
+        if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
+            // kann/darf nie passieren. Woher soll die email kommen, wenn nicht aus einer vorherigen Änderungsanfrage ?!
+        } else {
+            newKassz.aenderungsanfrage.emailVerifikation = code;
+        }
+        dispatch(setKassenzeichenObject(newKassz));
+        dispatch(storeCR(newKassz.aenderungsanfrage));
+    };
+}
 function removeLastChangeRequestMessage() {
     return function(dispatch, getState) {
         const kassenzeichen = getState().kassenzeichen;
@@ -993,6 +1027,8 @@ export const actions = {
     setChangeRequests,
     setChangeRequestsForFlaeche,
     addChangeRequestMessage,
+    requestEmailChange,
+    completeEmailChange,
     removeLastChangeRequestMessage,
     addCRDoc,
     storeCR,
