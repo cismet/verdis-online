@@ -648,6 +648,7 @@ function requestEmailChange(email) {
             };
         } else {
             newKassz.aenderungsanfrage.emailAdresse = email;
+            newKassz.aenderungsanfrage.emailVerifiziert = null;
         }
         dispatch(setKassenzeichenObject(newKassz));
         dispatch(storeCR(newKassz.aenderungsanfrage));
