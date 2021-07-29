@@ -480,43 +480,51 @@ const CR00 = ({
                                 >
                                     <Panel
                                         header={
-                                            "eMail Benachrichtigungen aktivieren / eMail Benachrichtigungen Verifikationscode eingeben / eMail Benachrichtigungen verwalten"
+                                            ( kassenzeichen.aenderungsanfrage.emailAdresse === undefined && 
+                                                "eMail Benachrichtigungen aktivieren"
+                                            ) || ( !kassenzeichen.aenderungsanfrage.emailVerifiziert &&
+                                                "eMail Benachrichtigungen Verifikationscode eingeben"
+                                            ) || ( 
+                                                "eMail Benachrichtigungen verwalten" 
+                                            )
                                         }
                                         bsStyle={"info"}
-                                    >
-                                        {kassenzeichen.aenderungsanfrage.emailAdresse == undefined && <div>
-                                            <p>
-                                                Um Benachrichtigungen bei Statusänderungen zu erhalten
-                                                können Sie hier eine eMail-Adresse hinterlegen.
-                                            </p>
-                                            <Form inline>
-                                                <FormGroup controlId="formInlineEmail">
-                                                    <ControlLabel>eMail-Adresse</ControlLabel>{" "}
-                                                    <FormControl
-                                                        style={{ width: "300px" }}
-                                                        type="email"
-                                                        placeholder="ihre@email.de"
-                                                        onChange={e =>
-                                                            setContactemailInput(e.target.value)
-                                                        }
-                                                    />{" "}
-                                                </FormGroup>
-                                                <Button
-                                                    onClick={() => {
-                                                        changeEmail(contactemailInput);
-                                                    }}
-                                                >
-                                                    Senden
-                                                </Button>
-                                            </Form>
-                                            <p style={{ paddingTop: 15 }}>
-                                                Nach der Übermittlung Ihrer eMail Adresse schicken wir
-                                                Ihnen eine eMail mit einem Verifizierungscode. Nachdem
-                                                Sie den Code hier eingetragen haben, ist Ihre
-                                                eMail-Adresse für weiter Benachrichtigungen an diesem
-                                                Kassenzeichen hinterlegt.
-                                            </p>
-                                        </div> || !kassenzeichen.aenderungsanfrage.emailVerifiziert &&
+                                    >{
+                                        ( kassenzeichen.aenderungsanfrage.emailAdresse === undefined && 
+                                            <div>
+                                                <p>
+                                                    Um Benachrichtigungen bei Statusänderungen zu erhalten
+                                                    können Sie hier eine eMail-Adresse hinterlegen.
+                                                </p>
+                                                <Form inline>
+                                                    <FormGroup controlId="formInlineEmail">
+                                                        <ControlLabel>eMail-Adresse</ControlLabel>{" "}
+                                                        <FormControl
+                                                            style={{ width: "300px" }}
+                                                            type="email"
+                                                            placeholder="ihre@email.de"
+                                                            onChange={e =>
+                                                                setContactemailInput(e.target.value)
+                                                            }
+                                                        />{" "}
+                                                    </FormGroup>
+                                                    <Button
+                                                        onClick={() => {
+                                                            changeEmail(contactemailInput);
+                                                        }}
+                                                    >
+                                                        Senden
+                                                    </Button>
+                                                </Form>
+                                                <p style={{ paddingTop: 15 }}>
+                                                    Nach der Übermittlung Ihrer eMail Adresse schicken wir
+                                                    Ihnen eine eMail mit einem Verifizierungscode. Nachdem
+                                                    Sie den Code hier eingetragen haben, ist Ihre
+                                                    eMail-Adresse für weiter Benachrichtigungen an diesem
+                                                    Kassenzeichen hinterlegt.
+                                                </p>
+                                            </div> 
+                                        ) || ( !kassenzeichen.aenderungsanfrage.emailVerifiziert &&
                                             <div>
                                                 <p>
                                                     Bitte geben Sie hier den Code aus der Verifikationsmail
@@ -568,27 +576,29 @@ const CR00 = ({
                                                     Ihre eMail-Adresse ist für weiter Benachrichtigungen an
                                                     diesem Kassenzeichen hinterlegt.
                                                 </p>
-                                            </div> || <div>
-                                            <span style={{ marginBottom: 15 }}>
-                                                <b>{contactemail}</b>
-                                                <Button
-                                                    bsStyle="danger"
-                                                    onClick={() => {
-                                                        changeEmail(null);
-                                                    }}
-                                                    style={{ marginLeft: 20 }}
-                                                >
-                                                    <Icon name={"trash"} />
-                                                </Button>
-                                            </span>
-                                            <p style={{ paddingTop: 15 }}>
-                                                Durch das Entfernen Ihrer eMail-Adresse erhalten Sie
-                                                keine weiteren Benachrichtigungen für dieses
-                                                Kassenzeichen.
-                                            </p>
-                                        </div>
-                                        }
-                                    </Panel>
+                                            </div>
+                                        ) || (
+                                            <div>
+                                                <span style={{ marginBottom: 15 }}>
+                                                    <b>{contactemail}</b>
+                                                    <Button
+                                                        bsStyle="danger"
+                                                        onClick={() => {
+                                                            changeEmail(null);
+                                                        }}
+                                                        style={{ marginLeft: 20 }}
+                                                    >
+                                                        <Icon name={"trash"} />
+                                                    </Button>
+                                                </span>
+                                                <p style={{ paddingTop: 15 }}>
+                                                    Durch das Entfernen Ihrer eMail-Adresse erhalten Sie
+                                                    keine weiteren Benachrichtigungen für dieses
+                                                    Kassenzeichen.
+                                                </p>
+                                            </div>
+                                        )
+                                    }</Panel>
                                 </Accordion>
                             </div>
                             <table
