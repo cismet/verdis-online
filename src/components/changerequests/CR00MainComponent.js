@@ -28,7 +28,6 @@ const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
 	und eingereicht haben.`;
 
 const scrollToVisible = ref => {
-    console.log("scroll ref", ref.current);
     if (ref && ref.current) {
         ref.current.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
     }
@@ -60,6 +59,7 @@ const CR00 = ({
     const [contactemailVerificationCodeInput, setContactemailVerificationCodeInput] = useState("");
     const scrollDivRef = useRef(null);
     const [locked, setLocked] = useState(true);
+    const [emailSettingsShown, setEmailSettingsShown] = useState(false);
     const [hideSystemMessages, setHideSystemMessages] = useState(false);
 
     //either get this 2 vars out of the kassenzeichenobject or through parsing the messages
@@ -71,7 +71,7 @@ const CR00 = ({
     const modalBodyStyle = {
         overflowY: "auto",
         overflowX: "hidden",
-        maxHeight: height - 350
+        maxHeight: height - (emailSettingsShown ? 480 : 350)
     };
     const { crDraftCounter } = getNumberOfPendingChanges(kassenzeichen.aenderungsanfrage);
     const close = () => {
@@ -324,9 +324,11 @@ const CR00 = ({
                                             addMessage(msg);
                                         }}
                                         scrollToInput={() => {
-                                            setTimeout(() => {
-                                                scrollToVisible(scrollDivRef);
-                                            }, 10);
+                                            if (!emailSettingsShown) {
+                                                setTimeout(() => {
+                                                    scrollToVisible(scrollDivRef);
+                                                }, 10);
+                                            }
                                         }}
                                         lastUserMessage={lastUserMessage}
                                         removeLastUserMessage={removeLastUserMessage}
@@ -473,6 +475,7 @@ const CR00 = ({
                                     style={{ marginBottom: 6 }}
                                     defaultActiveKey={"none"}
                                     onSelect={() => {
+                                        setEmailSettingsShown(!emailSettingsShown);
                                         // if (applicationMenuActiveKey === sectionKey) {
                                         //   setApplicationMenuActiveKey("none");
                                         // } else {
