@@ -62,8 +62,6 @@ const CR00 = ({
     const [emailSettingsShown, setEmailSettingsShown] = useState(false);
     const [hideSystemMessages, setHideSystemMessages] = useState(false);
 
-    console.log("emailSettingsShown", emailSettingsShown);
-
     //either get this 2 vars out of the kassenzeichenobject or through parsing the messages
 
     const contactemail = kassenzeichen.aenderungsanfrage
