@@ -654,7 +654,7 @@ function requestEmailChange(email) {
         dispatch(storeCR(newKassz.aenderungsanfrage));
     };
 }
-function completeEmailChange(code) {
+function completeEmailChange(code, callback = payload => {}) {
     return function(dispatch, getState) {
         const kassenzeichen = getState().kassenzeichen;
         const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
@@ -665,7 +665,7 @@ function completeEmailChange(code) {
             newKassz.aenderungsanfrage.emailVerifikation = code;
         }
         dispatch(setKassenzeichenObject(newKassz));
-        dispatch(storeCR(newKassz.aenderungsanfrage));
+        dispatch(storeCR(newKassz.aenderungsanfrage, callback));
     };
 }
 function removeLastChangeRequestMessage() {

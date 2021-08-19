@@ -61,7 +61,9 @@ const CR00 = ({
     const [locked, setLocked] = useState(true);
     const [emailSettingsShown, setEmailSettingsShown] = useState(false);
     const [hideSystemMessages, setHideSystemMessages] = useState(false);
-
+    const [codeVerificationInProgress, setCodeVerificationInProgress] = useState(false);
+    const [codeVerificationMessage, setCodeVerificationMessage] = useState("");
+    const [codeVerificationStatus, setCodeVerificationStatus] = useState("");
     //either get this 2 vars out of the kassenzeichenobject or through parsing the messages
 
     const contactemail = kassenzeichen.aenderungsanfrage
@@ -553,25 +555,65 @@ const CR00 = ({
                                                             <Icon name={"trash"} />
                                                         </Button>
                                                     </span>
-                                                    <br></br>
-                                                    <Form inline>
+
+                                                    <Form style={{ paddingTop: 10 }} inline>
                                                         <FormGroup controlId="formInlineEmail">
                                                             <ControlLabel>Code</ControlLabel>{" "}
                                                             <FormControl
                                                                 type="text"
+                                                                value={
+                                                                    contactemailVerificationCodeInput
+                                                                }
+                                                                disabled={
+                                                                    codeVerificationInProgress
+                                                                }
                                                                 placeholder="Code eingeben"
                                                                 onChange={e =>
                                                                     setContactemailVerificationCodeInput(
                                                                         e.target.value
                                                                     )
                                                                 }
-                                                            />{" "}
+                                                            />
                                                         </FormGroup>
+                                                        <span style={{ marginLeft: 5 }} />
                                                         <Button
                                                             bsStyle="success"
+                                                            disabled={
+                                                                codeVerificationInProgress ||
+                                                                contactemailVerificationCodeInput.length ===
+                                                                    0
+                                                            }
                                                             onClick={() => {
+                                                                setCodeVerificationInProgress(true);
                                                                 confirmEmail(
-                                                                    contactemailVerificationCodeInput
+                                                                    contactemailVerificationCodeInput,
+                                                                    result => {
+                                                                        setContactemailVerificationCodeInput(
+                                                                            ""
+                                                                        );
+                                                                        setCodeVerificationInProgress(
+                                                                            false
+                                                                        );
+                                                                        if (
+                                                                            (
+                                                                                result.aenderungsanfrage ||
+                                                                                {}
+                                                                            ).emailVerifiziert
+                                                                        ) {
+                                                                            setCodeVerificationMessage(
+                                                                                "Verifikation erfolgreich"
+                                                                            );
+                                                                        } else {
+                                                                            setCodeVerificationMessage(
+                                                                                "Verifikation fehlgeschlagen"
+                                                                            );
+                                                                        }
+                                                                        setTimeout(() => {
+                                                                            setCodeVerificationMessage(
+                                                                                ""
+                                                                            );
+                                                                        }, 2500);
+                                                                    }
                                                                 );
                                                             }}
                                                         >
@@ -584,6 +626,19 @@ const CR00 = ({
                                                         >
                                                             Verifikationsmail erneut anfordern
                                                         </Button>
+                                                        <span
+                                                            style={{
+                                                                paddingLeft: 10,
+                                                                color:
+                                                                    codeVerificationMessage.indexOf(
+                                                                        "erfolgreich"
+                                                                    ) > -1
+                                                                        ? "#70AE60"
+                                                                        : "#B8473F"
+                                                            }}
+                                                        >
+                                                            {codeVerificationMessage}
+                                                        </span>
                                                     </Form>
                                                     <p style={{ paddingTop: 15 }}>
                                                         Ihre eMail-Adresse ist für weiter
@@ -604,6 +659,19 @@ const CR00 = ({
                                                         >
                                                             <Icon name={"trash"} />
                                                         </Button>
+                                                        <span
+                                                            style={{
+                                                                paddingLeft: 10,
+                                                                color:
+                                                                    codeVerificationMessage.indexOf(
+                                                                        "erfolgreich"
+                                                                    ) > -1
+                                                                        ? "#70AE60"
+                                                                        : "#B8473F"
+                                                            }}
+                                                        >
+                                                            {codeVerificationMessage}
+                                                        </span>
                                                     </span>
                                                     <p style={{ paddingTop: 15 }}>
                                                         Durch das Entfernen Ihrer eMail-Adresse
