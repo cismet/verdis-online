@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     Accordion,
     Button,
@@ -20,6 +20,7 @@ import AnnotationPanel from "../AnnotationPanel";
 import DocPanel from "./CR20DocumentsPanel";
 import CloudLoadingAttributeIcon from "../commons/CloudLoadingAttributeIcon";
 import { getNumberOfPendingChanges } from "../../redux/modules/kassenzeichen";
+import sysend from "sysend";
 
 const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
 	Anmerkungen und Ihre hochgeladenen Dokumente
@@ -63,7 +64,6 @@ const CR00 = ({
     const [hideSystemMessages, setHideSystemMessages] = useState(false);
     const [codeVerificationInProgress, setCodeVerificationInProgress] = useState(false);
     const [codeVerificationMessage, setCodeVerificationMessage] = useState("");
-    const [codeVerificationStatus, setCodeVerificationStatus] = useState("");
     //either get this 2 vars out of the kassenzeichenobject or through parsing the messages
 
     const contactemail = kassenzeichen.aenderungsanfrage
