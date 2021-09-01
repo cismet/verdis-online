@@ -297,12 +297,15 @@ export class KassenzeichenViewer_ extends React.Component {
         try {
             creator = this.props.kassenzeichen.stac_options.creatorUserName;
         } catch (e) {}
-        if (CONTACTS_MAP.has(creator)) {
-            contact = CONTACTS_MAP.get(creator);
+        if (this.props.kassenzeichen.contactinfo === undefined) {
+            if (CONTACTS_MAP.has(creator)) {
+                contact = CONTACTS_MAP.get(creator);
+            } else {
+                contact = CONTACTS_MAP.get(defaultContact);
+            }
         } else {
-            contact = CONTACTS_MAP.get(defaultContact);
+            contact = this.props.kassenzeichen.contactinfo;
         }
-
         let contactPanel = <div />;
         if (this.props.uiState.contactElementEnabled && this.props.kassenzeichen.id !== -1) {
             contactPanel = <ContactPanel contact={contact} />;
