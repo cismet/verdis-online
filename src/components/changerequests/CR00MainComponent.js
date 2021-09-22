@@ -74,8 +74,9 @@ const CR00 = ({
     };
 
     const changerequests = kassenzeichen.aenderungsanfrage;
-    const crMessages = (kassenzeichen.aenderungsanfrage || { nachrichten: [] }).nachrichten;
-    const messages = [...crMessages, ...localErrorMessages];
+    const crMessages = (kassenzeichen.aenderungsanfrage || { nachrichten: [] }).nachrichten || [];
+
+    const messages = [...(crMessages || []), ...(localErrorMessages || [])];
 
     if (visible === true) {
         const changerequestBezeichnungsArray =
