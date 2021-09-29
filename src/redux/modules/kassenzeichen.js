@@ -727,8 +727,8 @@ function storeCR(cr, callback = payload => {}) {
         let taskParameters = {
             parameters: {
                 changerequestJson: cr,
-                stac: stac,
-                email: "max.mustermann@cismet.de"
+                stac: stac
+                // email: "max.mustermann@cismet.de"
             }
         };
 
