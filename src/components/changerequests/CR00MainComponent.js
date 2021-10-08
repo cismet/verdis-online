@@ -20,7 +20,6 @@ import AnnotationPanel from "../AnnotationPanel";
 import DocPanel from "./CR20DocumentsPanel";
 import CloudLoadingAttributeIcon from "../commons/CloudLoadingAttributeIcon";
 import { getNumberOfPendingChanges } from "../../redux/modules/kassenzeichen";
-import sysend from "sysend";
 
 const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
 	Anmerkungen und Ihre hochgeladenen Dokumente
@@ -54,7 +53,9 @@ const CR00 = ({
     },
     cloudStorageStatus,
     documents,
-    showModalMenu = () => {}
+    showModalMenu = () => {},
+    localErrorMessages = [],
+    addLocalErrorMessage = () => {}
 }) => {
     const [contactemailInput, setContactemailInput] = useState("");
     const [contactemailVerificationCodeInput, setContactemailVerificationCodeInput] = useState("");
@@ -95,6 +96,9 @@ const CR00 = ({
     };
 
     const changerequests = kassenzeichen.aenderungsanfrage;
+    const crMessages = (kassenzeichen.aenderungsanfrage || { nachrichten: [] }).nachrichten || [];
+
+    const messages = [...(crMessages || []), ...(localErrorMessages || [])];
 
     if (visible === true) {
         const changerequestBezeichnungsArray =
