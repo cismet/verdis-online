@@ -644,6 +644,8 @@ export class KassenzeichenViewer_ extends React.Component {
                         }
                         this.props.uiStateActions.showApplicationMenu(true);
                     }}
+                    localErrorMessages={this.props.uiState.localErrorMessages}
+                    addLocalErrorMessage={this.props.uiStateActions.addLocalErrorMessage}
                 />
                 <ChangeRequestEditView
                     height={mapHeight + 10}
@@ -677,6 +679,8 @@ export class KassenzeichenViewer_ extends React.Component {
 
                         this.props.kassenzeichenActions.addChangeRequestMessage(msg);
                     }}
+                    localErrorMessages={this.props.uiState.localErrorMessages}
+                    addLocalErrorMessage={this.props.uiStateActions.addLocalErrorMessage}
                 />
                 <AnnotationEditView
                     height={mapHeight + 10}
@@ -701,22 +705,6 @@ export class KassenzeichenViewer_ extends React.Component {
                 {verdisMapWithAdditionalComponents}
                 {flaechenInfoOverlay}
                 {draftAlert}
-                {/* <div
-                    style={{
-                        position: "absolute",
-                        top: 60,
-                        left: 65,
-                        zIndex: 500,
-                        width: 300,
-                        opacity: 0.9
-                    }}
-                >
-                    <Alert bsStyle="success" onDismiss={() => {}}>
-                        <h5>
-                            <b>Ihre eMail wurde verifiziert.</b>
-                        </h5>
-                    </Alert>
-                </div> */}
             </div>
         );
     }

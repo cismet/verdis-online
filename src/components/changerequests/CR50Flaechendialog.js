@@ -30,7 +30,9 @@ const CR00 = ({
     setFlaechenCR = () => {},
     documents = [],
     uploadCRDoc = () => {},
-    addFiles = () => {}
+    addFiles = () => {},
+    localErrorMessages = [],
+    addLocalErrorMessage = () => {}
 }) => {
     const [tmpAttachments, setTmpAttachments] = useState([]);
     const modalBodyStyle = {
@@ -333,6 +335,8 @@ const CR00 = ({
                                 documents={documents}
                                 tmpAttachments={tmpAttachments}
                                 setTmpAttachments={setTmpAttachments}
+                                localErrorMessages={localErrorMessages}
+                                addLocalErrorMessage={addLocalErrorMessage}
                             />
                         </Panel>
                     </Accordion>

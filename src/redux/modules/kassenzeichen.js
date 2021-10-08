@@ -722,16 +722,32 @@ function addCRDoc(file, callback) {
                     response.json().then(function(result) {
                         callback(result.res);
                     });
+                } else {
+                    dispatch(
+                        UiStateActions.addLocalErrorMessage({
+                            typ: "LOCALERROR",
+                            nachricht:
+                                "Der Server hat einen unerwarteten Status Code beim Hochladen der Datei geliefert (" +
+                                response.status +
+                                "). Bitte versuchen Sie es später noch einmal. Sollte der Fehler weiter bestehen bleiben, bitten wir Sie Ihren Ansprechpartner in der Stadtverwaltung per Mail zu kontaktieren.",
+                            draft: true
+                        })
+                    );
+                    callback();
                 }
             })
             .catch(function(err) {
-                // dispatch(UiStateActions.showError("Bei der Suche nach dem Kassenzeichen " + kassenzeichen + " ist ein Fehler aufgetreten. (" + err + ")"));
-                // dispatch(UiStateActions.setKassenzeichenSearchInProgress(false));
-                console.err("Error in action" + err);
-                dispatch(AuthActions.logout());
-                if (typeof callback === "function") {
-                    //callback(false);
-                }
+                dispatch(
+                    UiStateActions.addLocalErrorMessage({
+                        typ: "LOCALERROR",
+                        nachricht:
+                            "Der Server hat einen unerwarteten Fehler beim Hochladen der Datei geliefert (" +
+                            err +
+                            "). Bitte versuchen Sie es später noch einmal. Sollte der Fehler weiter bestehen bleiben, bitten wir Sie Ihren Ansprechpartner in der Stadtverwaltung per Mail zu kontaktieren.",
+                        draft: true
+                    })
+                );
+                callback();
             });
     };
 }
@@ -744,8 +760,8 @@ function storeCR(cr, callback = payload => {}) {
         let taskParameters = {
             parameters: {
                 changerequestJson: cr,
-                stac: stac,
-                email: "max.mustermann@cismet.de"
+                stac: stac
+                // email: "max.mustermann@cismet.de"
             }
         };
 

@@ -23,7 +23,8 @@ const Comp = ({
     removeLastUserMessage = () => {
         console.log("remove last user message");
     },
-    uploadCRDoc = () => {}
+    uploadCRDoc = () => {},
+    addLocalErrorMessage = () => {}
 }) => {
     const textarea = useRef();
     const [position, setPosition] = useState(0);
@@ -55,12 +56,42 @@ const Comp = ({
                     inProgress: true
                 });
                 return uploadCRDoc(file, returnedFOString => {
-                    const returnedFO = JSON.parse(returnedFOString);
-                    returnedFO.nonce = file.nonce;
-                    returnedFO.inProgress = false;
-                    console.log("updateAttachment", returnedFO);
-
-                    updateAttachment(returnedFO);
+                    if (returnedFOString) {
+                        try {
+                            const returnedFO = JSON.parse(returnedFOString);
+                            // returnedFO.status = 412;
+                            // returnedFO.message = "Parameter FILENAME nicht gesetzt";
+                            if (returnedFO.status === 201) {
+                                returnedFO.nonce = file.nonce;
+                                returnedFO.inProgress = false;
+                                updateAttachment(returnedFO);
+                            } else {
+                                addLocalErrorMessage({
+                                    typ: "LOCALERROR",
+                                    nachricht:
+                                        "Beim Hochladen der Datei hat der Server mit dem unerwarteten Status " +
+                                        returnedFO.status +
+                                        " geantwortet. (" +
+                                        returnedFO.message +
+                                        "). Bitte versuchen Sie es später noch einmal. Sollte der Fehler weiter bestehen bleiben, bitten wir Sie Ihren Ansprechpartner in der Stadtverwaltung per Mail zu kontaktieren.",
+                                    draft: true
+                                });
+                                removeAttachment(file);
+                            }
+                        } catch (err) {
+                            addLocalErrorMessage({
+                                typ: "LOCALERROR",
+                                nachricht:
+                                    "Beim Hochladen der Datei ist ein unerwarteter Fehler passiert: (" +
+                                    err +
+                                    ")",
+                                draft: true
+                            });
+                            removeAttachment(file);
+                        }
+                    } else {
+                        removeAttachment(file);
+                    }
                 });
             });
         },
@@ -69,12 +100,20 @@ const Comp = ({
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     const addAttachment = fileO => {
-        console.log("addAttachment", fileO);
-
         setMsgAttachments(msga => {
             const newMsgAttachments = JSON.parse(JSON.stringify(msga));
             newMsgAttachments.push(fileO);
             return newMsgAttachments;
+        });
+    };
+
+    const removeAttachment = file0 => {
+        setMsgAttachments(msga => {
+            const newMsgAttachments = JSON.parse(JSON.stringify(msga));
+            const without = (newMsgAttachments || []).filter(fo => {
+                return fo.nonce !== file0.nonce;
+            });
+            return without;
         });
     };
 

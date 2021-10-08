@@ -40,7 +40,8 @@ export const types = {
     SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI: "UI_STATE/SHOW_CHANGE_REQUESTS_ANNOTATION_EDIT_UI",
     SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR:
         "UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR",
-    SET_ERROR: "UI_STATE/SET_ERROR"
+    SET_ERROR: "UI_STATE/SET_ERROR",
+    SET_ERROR_MESSAGES: "UI_STATE/SET_ERROR_MESSAGES"
 };
 
 export const CLOUDSTORAGESTATES = {
@@ -115,7 +116,8 @@ const initialState = {
     cloudStorageStatus: undefined, //CLOUDSTORAGESTATES.CLOUD_STORAGE_UP,
     cloudStorageStatusMessages: [],
     catchedError: undefined,
-    catchedErrorCause: undefined
+    catchedErrorCause: undefined,
+    localErrorMessages: []
 };
 
 ///REDUCER
@@ -290,6 +292,11 @@ export default function uiStateReducer(state = initialState, action) {
             if (action.message !== undefined) {
                 newState.cloudStorageStatusMessages.push(action.message);
             }
+            return newState;
+        }
+        case types.SET_ERROR_MESSAGES: {
+            newState = objectAssign({}, state);
+            newState.localErrorMessages = action.errorMessages;
             return newState;
         }
 
@@ -515,9 +522,22 @@ function setCloudStorageStatus(status, msg) {
         msg
     };
 }
+function setErrorMessages(errorMessages) {
+    return {
+        type: types.SET_ERROR_MESSAGES,
+        errorMessages
+    };
+}
 
 //COMPLEXACTIONS
-
+function addLocalErrorMessage(message) {
+    return function(dispatch, getState) {
+        const state = getState();
+        const errorMessages = JSON.parse(JSON.stringify(state.uiState.localErrorMessages));
+        errorMessages.push(message);
+        dispatch(setErrorMessages(errorMessages));
+    };
+}
 function showCREditUI(flaeche, cr) {
     return function(dispatch, getState) {
         dispatch(setChangeRequestsEditViewFlaecheAndCR(flaeche, cr));
@@ -567,5 +587,7 @@ export const actions = {
     showChangeRequestsAnnotationEditView,
     setChangeRequestsAnnotationEditViewAnnotationAndCR,
     showCRAnnotationEditUI,
-    setError
+    setError,
+    setErrorMessages,
+    addLocalErrorMessage
 };

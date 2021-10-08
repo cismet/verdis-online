@@ -307,10 +307,7 @@ const CR00 = ({
                                     bsStyle={"info"}
                                 >
                                     <CRConversation
-                                        messages={
-                                            (kassenzeichen.aenderungsanfrage || { nachrichten: [] })
-                                                .nachrichten
-                                        }
+                                        messages={messages}
                                         hideSystemMessages={hideSystemMessages}
                                     />
 
@@ -336,6 +333,7 @@ const CR00 = ({
                                         lastUserMessage={lastUserMessage}
                                         removeLastUserMessage={removeLastUserMessage}
                                         uploadCRDoc={uploadCRDoc}
+                                        addLocalErrorMessage={addLocalErrorMessage}
                                     />
 
                                     {/* <div style={{ marginTop: '20px', textAlign: 'end' }}>
