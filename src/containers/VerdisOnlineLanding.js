@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import ReactDOM from "react-dom";
 import { DOMAIN, STAC_SERVICE } from "../constants/cids";
-import { Panel, Form, FormGroup, Grid, Row, Col } from "react-bootstrap";
+import { Panel, Form, FormGroup, Grid, Row, Col, Button } from "react-bootstrap";
 import Loadable from "react-loading-overlay";
 import { routerActions as RoutingActions } from "react-router-redux";
 import { actions as MappingActions } from "../redux/modules/mapping";
@@ -237,18 +237,40 @@ export class Landing_ extends React.Component {
                 </div>
                 <div style={landingStyle}>
                     <Grid>
-                        <Row
-                            onClick={() => {
-                                if (getVersion() === "dev-hot-reload") {
-                                    this.handleSTAC("STACSTACSTAC");
-                                }
-                            }}
-                            className="show-grid"
-                        >
+                        <Row className="show-grid">
                             <Col xs={12} md={12}>
                                 <h1 style={{ color: "white" }}>
                                     <img alt="" width={180} src="/images/wuppertal-white.svg" />
                                 </h1>
+                                {getVersion() === "dev-hot-reload" &&
+                                    process.env.NODE_ENV === "development" && (
+                                        <span>
+                                            <Button
+                                                style={{ margin: 5 }}
+                                                onClick={() => {
+                                                    this.handleSTAC("STACSTACSTAC");
+                                                }}
+                                            >
+                                                Rathaus
+                                            </Button>
+                                            <Button
+                                                style={{ margin: 5 }}
+                                                onClick={() => {
+                                                    this.handleSTAC("SUNC-ZWSO-PEWR");
+                                                }}
+                                            >
+                                                Test 1
+                                            </Button>
+                                            <Button
+                                                style={{ margin: 5 }}
+                                                onClick={() => {
+                                                    this.handleSTAC("TKNM-GBOF-XHTN");
+                                                }}
+                                            >
+                                                Test 2
+                                            </Button>
+                                        </span>
+                                    )}
                                 <h2 style={{ color: "white" }}>VerDIS - online</h2>
                                 <h3 style={{ color: "white" }}>
                                     Versiegelungsdaten | Flächenentwässerung
