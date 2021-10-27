@@ -854,7 +854,7 @@ function submitCR() {
             }
 
             dispatch(setKassenzeichenObject(newKassz));
-            dispatch(storeCR(newKassz.aenderungsanfrage));
+            dispatch(storeCR({ ...newKassz.aenderungsanfrage, submission: true }));
         }
     };
 }
