@@ -33,6 +33,9 @@ import CONTACTS_MAP, { defaultContact } from "../constants/contacts";
 import ChangeRequestEditView from "../components/changerequests/CR50Flaechendialog";
 import AnnotationEditView from "../components/changerequests/CR60AnnotationDialog";
 import { routerActions as RoutingActions } from "react-router-redux";
+import sysend from "sysend";
+import queryString from "query-string";
+import { removeQueryPart } from "../utils/routingHelper";
 
 function mapStateToProps(state) {
     return {
@@ -73,15 +76,42 @@ export class KassenzeichenViewer_ extends React.Component {
         this.isFlaecheSelected = this.isFlaecheSelected.bind(this);
         this.flaechenPanelClick = this.flaechenPanelClick.bind(this);
         this.flaechenMapClick = this.flaechenMapClick.bind(this);
+        this.reloadOnEmailVerification = this.reloadOnEmailVerification.bind(this);
         this.flaechenPanelRefs = {};
     }
 
-    //   componentWillMount() {
-    //   }
-    //   componentDidUpdate() {
-    //   }
-
     componentDidMount() {
+        sysend.on("reloadOnEmailVerification", this.reloadOnEmailVerification);
+        const crOpen = queryString.parse(this.props.routing.location.search).crOpen;
+        if (crOpen !== undefined) {
+            this.props.uiStateActions.showChangeRequestsMenu(true);
+            this.props.routingActions.push(
+                this.props.routing.location.pathname +
+                    removeQueryPart(this.props.routing.location.search, "crOpen")
+            );
+        }
+        const verificationCode = queryString.parse(this.props.routing.location.search)
+            .emailVerificationCode;
+        if (verificationCode !== undefined) {
+            this.props.kassenzeichenActions.completeEmailChange(verificationCode, result => {
+                if ((result.aenderungsanfrage || {}).emailVerifiziert) {
+                    sysend.broadcast("reloadOnEmailVerification");
+                    this.props.uiStateActions.showInfo("Verifizierung erfolgreich");
+                    setTimeout(() => {
+                        this.props.uiStateActions.hideInfo();
+                    }, 1500);
+                } else {
+                    this.props.uiStateActions.showError("Verifizierung fehlgeschlagen");
+                    setTimeout(() => {
+                        this.props.uiStateActions.hideInfo();
+                    }, 2500);
+                }
+            });
+            this.props.routingActions.push(
+                this.props.routing.location.pathname +
+                    removeQueryPart(this.props.routing.location.search, "emailVerificationCode")
+            );
+        }
         if (this.props.auth.stac) {
             if (this.props.auth.succesfullLogin === false) {
                 this.props.authActions.setLoginInProgress();
@@ -104,6 +134,18 @@ export class KassenzeichenViewer_ extends React.Component {
             this.props.routingActions.push("/");
         }
     }
+
+    reloadOnEmailVerification() {
+        const changeRequestMenuVisible =
+            this.props.uiState.changeRequestsMenuVisible === true &&
+            this.props.uiState.applicationMenuVisible === false;
+
+        if (changeRequestMenuVisible) {
+            this.props.routingActions.push(this.props.routing.location.pathname + "?crOpen");
+        }
+        window.location.reload();
+    }
+
     kassenZeichenPanelClick() {
         // this.props.mappingActions.fitAll();
         // or
@@ -178,10 +220,10 @@ export class KassenzeichenViewer_ extends React.Component {
                         }}
                     >
                         <h5>
-                            <b>Sie haben momentan 2 nicht eingereichte Änderungen.</b> Bitte
-                            beachten Sie, dass Änderungswünsche, Anmerkungen und Ihre hochgeladenen
-                            Dokumente erst für den Sachbearbeiter sichtbar werden, wenn sie die
-                            Änderungen freigegeben/entsperrt und eingereicht haben.
+                            <b>Sie haben momentan nicht eingereichte Änderungen.</b> Bitte beachten
+                            Sie, dass Änderungswünsche, Anmerkungen und Ihre hochgeladenen Dokumente
+                            erst für den Sachbearbeiter sichtbar werden, wenn sie die Änderungen
+                            freigegeben/entsperrt und eingereicht haben.
                         </h5>
                     </Alert>
                 </div>
@@ -255,12 +297,15 @@ export class KassenzeichenViewer_ extends React.Component {
         try {
             creator = this.props.kassenzeichen.stac_options.creatorUserName;
         } catch (e) {}
-        if (CONTACTS_MAP.has(creator)) {
-            contact = CONTACTS_MAP.get(creator);
+        if (this.props.kassenzeichen.contactinfo === undefined) {
+            if (CONTACTS_MAP.has(creator)) {
+                contact = CONTACTS_MAP.get(creator);
+            } else {
+                contact = CONTACTS_MAP.get(defaultContact);
+            }
         } else {
-            contact = CONTACTS_MAP.get(defaultContact);
+            contact = this.props.kassenzeichen.contactinfo;
         }
-
         let contactPanel = <div />;
         if (this.props.uiState.contactElementEnabled && this.props.kassenzeichen.id !== -1) {
             contactPanel = <ContactPanel contact={contact} />;
@@ -582,6 +627,8 @@ export class KassenzeichenViewer_ extends React.Component {
                     height={mapHeight + 10}
                     kassenzeichen={this.props.kassenzeichen}
                     addMessage={this.props.kassenzeichenActions.addChangeRequestMessage}
+                    changeEmail={this.props.kassenzeichenActions.requestEmailChange}
+                    confirmEmail={this.props.kassenzeichenActions.completeEmailChange}
                     removeLastUserMessage={
                         this.props.kassenzeichenActions.removeLastChangeRequestMessage
                     }

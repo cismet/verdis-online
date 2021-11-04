@@ -415,6 +415,12 @@ function showWaiting(visible, message, waitingtype) {
         waitingtype
     };
 }
+function hideInfo() {
+    return {
+        type: types.SHOW_WAITING,
+        visible: false
+    };
+}
 
 function showInfo(message) {
     return {
@@ -563,6 +569,7 @@ export const actions = {
     setKassenzeichenToSearchFor,
     showWaiting,
     showInfo,
+    hideInfo,
     showError,
     changeLayerOpacitySetting,
     changeLayerEnabledSetting,

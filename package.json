@@ -1,8 +1,10 @@
 {
   "name": "verdis-online",
-  "version": "2.0.16",
+  "version": "2.1.0-SNAPSHOT.14",
   "config": {
-    "dockerRegistryPath": "cismet"
+    "dockerRegistryPath": "cismet",
+    "alphaFolder": "~/2212-wuppertal.regengeld.de-alpha",
+    "alphaHost": "boxy.cismet.de"
   },
   "private": true,
   "dependencies": {
@@ -79,6 +81,7 @@
     "stacktrace-gps": "3.0.4",
     "stacktrace-js": "2.0.2",
     "svg-path-parser": "1.1.0",
+    "sysend": "1.5.0",
     "url-search-params-polyfill": "^2.0.0",
     "wellknown": "^0.5.0",
     "whatwg-fetch": "^2.0.3"
@@ -93,8 +96,9 @@
     "postversion": "sed '/^.*\"version\":.*$/d' package.json > .package.json.without.version && echo $npm_package_version > .version && git rev-parse HEAD > .githash",
     "newSnapshot": "npm version preminor --preid=SNAPSHOT",
     "bumpSnapshot": "npm version prerelease --preid=SNAPSHOT",
-    "bumpAlpha": "npm run bumpSnapshot &&  npm run publish:docker && say 'Image veröffentlicht' && /usr/bin/ssh -t cismet@s10222 'cd ~/docker/407-regengeld-alpha/; docker-compose pull && docker-compose down && docker-compose up -d' && say 'Alpha-Version aktualisiert' && npm run getVersion",
-    "build:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker build  -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
+    "updateAlpha": "ssh -t docker@$npm_package_config_alphaHost \"cd $npm_package_config_alphaFolder ; docker-compose pull && docker-compose down && docker-compose up -d\" && say 'Alpha-Version updated' ",
+    "bumpAlpha": "npm run bumpSnapshot &&  npm run publish:docker && say 'Image published' && npm run getVersion && npm run updateAlpha",
+    "build:docker": "npm run postversion; VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker build  -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
     "publish:docker": "yarn run build:docker; VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker tag cismet/$npm_package_name:$VERSION $npm_package_config_dockerRegistryPath/$npm_package_name:$VERSION && docker push $npm_package_config_dockerRegistryPath/$npm_package_name:$VERSION",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",

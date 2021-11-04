@@ -16,7 +16,6 @@ import { changeKassenzeichenInLocation } from "../../utils/routingHelper";
 
 import { toRoman } from "roman-numerals";
 import slugify from "slugify";
-import { nonEmptyString } from "check-types";
 
 ///TYPES
 export const types = {
@@ -631,8 +630,42 @@ function addChangeRequestMessage(msg) {
             }
         }
         dispatch(setKassenzeichenObject(newKassz));
-
         dispatch(storeCR(newKassz.aenderungsanfrage));
+    };
+}
+function requestEmailChange(email) {
+    return function(dispatch, getState) {
+        const kassenzeichen = getState().kassenzeichen;
+        const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+
+        if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
+            newKassz.aenderungsanfrage = {
+                kassenzeichen: newKassz.kassenzeichennummer8,
+                emailAdresse: email,
+                flaechen: [],
+                nachrichten: [],
+                geometrien: {}
+            };
+        } else {
+            newKassz.aenderungsanfrage.emailAdresse = email;
+            newKassz.aenderungsanfrage.emailVerifiziert = null;
+        }
+        dispatch(setKassenzeichenObject(newKassz));
+        dispatch(storeCR(newKassz.aenderungsanfrage));
+    };
+}
+function completeEmailChange(code, callback = payload => {}) {
+    return function(dispatch, getState) {
+        const kassenzeichen = getState().kassenzeichen;
+        const newKassz = JSON.parse(JSON.stringify(kassenzeichen));
+
+        if (newKassz.aenderungsanfrage === undefined || newKassz.aenderungsanfrage === null) {
+            // kann/darf nie passieren. Woher soll die email kommen, wenn nicht aus einer vorherigen Änderungsanfrage ?!
+        } else {
+            newKassz.aenderungsanfrage.emailVerifikation = code;
+        }
+        dispatch(setKassenzeichenObject(newKassz));
+        dispatch(storeCR(newKassz.aenderungsanfrage, callback));
     };
 }
 function removeLastChangeRequestMessage() {
@@ -821,7 +854,7 @@ function submitCR() {
             }
 
             dispatch(setKassenzeichenObject(newKassz));
-            dispatch(storeCR(newKassz.aenderungsanfrage));
+            dispatch(storeCR({ ...newKassz.aenderungsanfrage, submission: true }));
         }
     };
 }
@@ -1011,6 +1044,8 @@ export const actions = {
     setChangeRequests,
     setChangeRequestsForFlaeche,
     addChangeRequestMessage,
+    requestEmailChange,
+    completeEmailChange,
     removeLastChangeRequestMessage,
     addCRDoc,
     storeCR,
