@@ -14694,10 +14694,10 @@ symbol.prototype.description@^1.0.0:
     es-abstract "^1.17.0-next.1"
     has-symbols "^1.0.1"
 
-sysend@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/sysend/-/sysend-1.5.0.tgz#de51187a3bde60ced5037b5be1575651feefd5fe"
-  integrity sha512-60sSe2I6uef1nTOPLcKAcNDciRD2VwjFkQcXXsGUyNfC5IHKui8WrAdfmc2pSPdgTw8xG9ZNLhfi4b6oyoRsag==
+sysend@1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/sysend/-/sysend-1.10.0.tgz#af5f7d52b00947563fc9f4e2fbeb6db52912dd41"
+  integrity sha512-kQDpqW60fvgbNLnWnTRaJ2KGX3aW5fThu9St8T4h+j8XC1YIDXhWVqS8Ho+WYgasmtrP7RvcRRhs+SVCb9o7wA==
 
 table@^5.2.3:
   version "5.4.6"
