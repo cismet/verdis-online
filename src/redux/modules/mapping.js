@@ -46,7 +46,7 @@ const initialState = {
             title: "Top. Karte"
         },
         {
-            layerkey: "rvrGrundriss@100|trueOrtho2020@60xw|rvrSchriftNT@100",
+            layerkey: "rvrGrundriss@100|trueOrtho2020@60|rvrSchriftNT@100",
             src: "/images/mapPreviewOrtho.png",
             title: "Luftbildkarte"
         },
