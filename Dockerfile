@@ -13,6 +13,7 @@ ENV NODE_ENV $NODE_ENV
 ENV API_URL $API_URL
 
 WORKDIR /app
+RUN apk add git
 
 # Install dependencies
 COPY yarn.lock ./
