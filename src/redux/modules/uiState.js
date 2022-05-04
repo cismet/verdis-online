@@ -41,7 +41,8 @@ export const types = {
     SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR:
         "UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR",
     SET_ERROR: "UI_STATE/SET_ERROR",
-    SET_ERROR_MESSAGES: "UI_STATE/SET_ERROR_MESSAGES"
+    SET_ERROR_MESSAGES: "UI_STATE/SET_ERROR_MESSAGES",
+    SET_CONF_DATA: "UI_STATE/SET_CONF_DATA"
 };
 
 export const CLOUDSTORAGESTATES = {
@@ -117,7 +118,8 @@ const initialState = {
     cloudStorageStatusMessages: [],
     catchedError: undefined,
     catchedErrorCause: undefined,
-    localErrorMessages: []
+    localErrorMessages: [],
+    confData: undefined
 };
 
 ///REDUCER
@@ -297,6 +299,11 @@ export default function uiStateReducer(state = initialState, action) {
         case types.SET_ERROR_MESSAGES: {
             newState = objectAssign({}, state);
             newState.localErrorMessages = action.errorMessages;
+            return newState;
+        }
+        case types.SET_CONF_DATA: {
+            newState = objectAssign({}, state);
+            newState.confData = action.confData;
             return newState;
         }
 

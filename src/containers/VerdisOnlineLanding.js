@@ -232,9 +232,28 @@ export class Landing_ extends React.Component {
                                     sich bitte an den untenstehende Kontakt.
                                 </Alert>
                             )}
+                            {this.props.uiState.confData &&
+                                this.props.uiState.confData.messages &&
+                                this.props.uiState.confData.messages.map((message, index) => {
+                                    return (
+                                        <div key={message.key}>
+                                            {
+                                                <Alert
+                                                    key={"alert" + message.key}
+                                                    type={message.type}
+                                                    timeout={message.timeout}
+                                                    headline={message.headline}
+                                                >
+                                                    {message.content}
+                                                </Alert>
+                                            }
+                                        </div>
+                                    );
+                                })}
                         </div>
                     </AlertContainer>
                 </div>
+
                 <div style={landingStyle}>
                     <Grid>
                         <Row className="show-grid">
