@@ -65,7 +65,7 @@ class ErrorBoundary extends Component {
                 encodeURI(
                     `Sehr geehrte Damen und Herren,${br}${br}` +
                         `während der Bearbeitung des Kassenzeichen ${globalState?.kassenzeichen
-                            ?.kassenzeichennummer ||
+                            ?.kassenzeichennummer8 ||
                             globalState?.kassenzeichen?.id ||
                             " das nicht ermittelt werden kann"} (CODE: ${(
                             globalState?.auth.stac || "????????????"
