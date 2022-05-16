@@ -96,6 +96,7 @@ class ErrorBoundary extends Component {
                 `----------------------${br}` +
                 `${stringifiedStack}${br}` +
                 `----------------------${br}` +
+                `${navigator.userAgent}${br}` +
                 `${br}${br}` +
                 `----------------------${br}` +
                 `DATA STATE${br}` +
