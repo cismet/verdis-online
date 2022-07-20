@@ -76,7 +76,7 @@ contacts.set("PytlikS102", {
     anrede: "Frau",
     vorname: "Sabine",
     nachname: "Pytlik",
-    telefon: "+49-202-563 5638",
+    telefon: "+49-202-563 5986",
     mail: "sabine.pytlik@stadt.wuppertal.de"
 });
 
