@@ -7,12 +7,12 @@ contacts.set("BeckerB102", {
     telefon: "+49-202-563 5964",
     mail: "bettina.becker@stadt.wuppertal.de"
 });
-contacts.set("KampenK102a", {
+contacts.set("MetzKK102", {
     anrede: "Frau",
     vorname: "Kira Kristin",
-    nachname: "van Kampen",
+    nachname: "Metz",
     telefon: "+49-202-563 4274",
-    mail: "kira.vanKampen@stadt.wuppertal.de"
+    mail: "kira.metz@stadt.wuppertal.de"
 });
 contacts.set("AckermannS102", {
     anrede: "Frau",
