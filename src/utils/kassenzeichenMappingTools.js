@@ -145,12 +145,12 @@ export const getColorFromFlaechenArt = art_abk => {
         case "städtische Straßenfläche":
             color = "#8a8684";
             break;
-        case "VSÖ":
-        case "städtische Straßenfläche (Ökopflaster)":
+        case "LVS":
+        case "städtische Straßenfläche (leicht versiegelt)":
             color = "#7e5b47";
             break;
-        case "VFÖ":
-        case "Ökopflaster":
+        case "LVF":
+        case "leicht versiegelte Fläche":
             color = "#9f9b6c";
             break;
         case "VV":

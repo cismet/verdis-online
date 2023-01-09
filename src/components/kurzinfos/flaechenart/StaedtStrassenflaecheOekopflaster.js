@@ -2,11 +2,13 @@ import React from "react";
 const StaedtStrassenflaecheOekopflaster = () => {
     return (
         <div>
-            <strong>Städtische Straßenfläche:</strong>
+            <strong>leicht versiegelte Straßenfläche:</strong>
             <br />
-            Städtische Straßenfläche mit Ökopflaster (Spezialpflaster, Rasengittersteine, Kies,
-            Split usw.): Eine mit Ökopflaster versehene öffentliche Straßenfläche die der Stadt
-            Wuppertal gehört. Bei der Entwässerung sind 70% der Fläche zu berücksichtigen.
+            Städtische Straßenfläche die mit Spezialpflaster (Ökopflaster), Rasengittersteinen,
+            Kies, versehen ist oder eine andere wassergebundene Decke aufweist. 70 % dieser Flächen
+            sind bei der Entwässerung zu berücksichtige. Hintergrund ist die, im Laufe der Jahre,
+            zunehmende Verdichtung und das Zusetzen vorhandener Öffnungen durch Schmutz und
+            Pflanzen.
             <br />
         </div>
     );

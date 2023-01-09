@@ -67,10 +67,10 @@ export const getInfoTextForFlaechenart = flaeche => {
         case "städtische Straßenfläche":
             flaechenart = <StaedtStrassenflaeche />;
             break;
-        case "städtische Straßenfläche (Ökopflaster)":
+        case "städtische Straßenfläche (leicht versiegelt)":
             flaechenart = <StaedtStrassenflaecheOekopflaster />;
             break;
-        case "Ökopflaster":
+        case "leicht versiegelte Fläche":
             flaechenart = <Oekopflaster />;
             break;
         default:
@@ -117,8 +117,8 @@ export const flaechenarten = [
     { art_abkuerzung: "GDF", art: "Gründach" },
     { art_abkuerzung: "VF", art: "versiegelte Fläche" },
     { art_abkuerzung: "VFS", art: "städtische Straßenfläche" },
-    { art_abkuerzung: "VSÖ", art: "städtische Straßenfläche (Ökopflaster)" },
-    { art_abkuerzung: "VFÖ", art: "Ökopflaster" }
+    { art_abkuerzung: "LVS", art: "städtische Straßenfläche (leicht versiegelt)" },
+    { art_abkuerzung: "LVF", art: "leicht versiegelte Flächen" }
     // { art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
 ];
 
@@ -429,18 +429,18 @@ export const veranlagungsgrundlage = [
         veranlagungsschluessel: 0,
         bezeichner: "999-Rest"
     },
-    {
-        flaechenart: 2,
-        anschlussgrad: 4,
-        veranlagungsschluessel: 0.25,
-        bezeichner: "730-Va-über"
-    },
-    {
-        flaechenart: 4,
-        anschlussgrad: 4,
-        veranlagungsschluessel: 0.35,
-        bezeichner: "730-Va-über"
-    },
+    // {
+    //     flaechenart: 2,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.25,
+    //     bezeichner: "730-Va-über"
+    // },
+    // {
+    //     flaechenart: 4,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.35,
+    //     bezeichner: "730-Va-über"
+    // },
     {
         flaechenart: 6,
         anschlussgrad: 4,
@@ -453,17 +453,35 @@ export const veranlagungsgrundlage = [
         veranlagungsschluessel: 0.5,
         bezeichner: "715-GDF"
     },
+    // {
+    //     flaechenart: 1,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.5,
+    //     bezeichner: "730-Va-über"
+    // },
+    // {
+    //     flaechenart: 3,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.5,
+    //     bezeichner: "730-Va-über"
+    // },
     {
         flaechenart: 1,
         anschlussgrad: 4,
-        veranlagungsschluessel: 0.5,
-        bezeichner: "730-Va-über"
+        veranlagungsschluessel: 0.4,
+        bezeichner: "731-Va-über"
     },
     {
         flaechenart: 3,
         anschlussgrad: 4,
-        veranlagungsschluessel: 0.5,
-        bezeichner: "730-Va-über"
+        veranlagungsschluessel: 0.4,
+        bezeichner: "731-Va-über"
+    },
+    {
+        flaechenart: 4,
+        anschlussgrad: 4,
+        veranlagungsschluessel: 0.4,
+        bezeichner: "731-Va-über"
     },
     {
         flaechenart: 2,
@@ -481,7 +499,7 @@ export const veranlagungsgrundlage = [
         flaechenart: 4,
         anschlussgrad: 5,
         veranlagungsschluessel: 0.7,
-        bezeichner: "725-VFÖ"
+        bezeichner: "725-LVF"
     },
     {
         flaechenart: 6,
@@ -493,7 +511,7 @@ export const veranlagungsgrundlage = [
         flaechenart: 4,
         anschlussgrad: 1,
         veranlagungsschluessel: 0.7,
-        bezeichner: "725-VFÖ"
+        bezeichner: "725-LVF"
     },
     {
         flaechenart: 6,
@@ -566,6 +584,12 @@ export const veranlagungsgrundlage = [
         anschlussgrad: 1,
         veranlagungsschluessel: 1,
         bezeichner: "710-DF"
+    },
+    {
+        flaechenart: 2,
+        anschlussgrad: 4,
+        veranlagungsschluessel: 0.3,
+        bezeichner: "735-GDF-V"
     }
 ];
 
@@ -580,8 +604,8 @@ export const flaechenartLookupByAbk = {
     GDF: 2,
     VF: 3,
     VFS: 5,
-    VSÖ: 6,
-    VFÖ: 4,
+    LVS: 6,
+    LVF: 4,
     VV: 7
 };
 // select 'export const anschlussgradLookupById={'||array_to_string(array(
