@@ -429,18 +429,18 @@ export const veranlagungsgrundlage = [
         veranlagungsschluessel: 0,
         bezeichner: "999-Rest"
     },
-    {
-        flaechenart: 2,
-        anschlussgrad: 4,
-        veranlagungsschluessel: 0.25,
-        bezeichner: "730-Va-über"
-    },
-    {
-        flaechenart: 4,
-        anschlussgrad: 4,
-        veranlagungsschluessel: 0.35,
-        bezeichner: "730-Va-über"
-    },
+    // {
+    //     flaechenart: 2,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.25,
+    //     bezeichner: "730-Va-über"
+    // },
+    // {
+    //     flaechenart: 4,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.35,
+    //     bezeichner: "730-Va-über"
+    // },
     {
         flaechenart: 6,
         anschlussgrad: 4,
@@ -453,17 +453,35 @@ export const veranlagungsgrundlage = [
         veranlagungsschluessel: 0.5,
         bezeichner: "715-GDF"
     },
+    // {
+    //     flaechenart: 1,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.5,
+    //     bezeichner: "730-Va-über"
+    // },
+    // {
+    //     flaechenart: 3,
+    //     anschlussgrad: 4,
+    //     veranlagungsschluessel: 0.5,
+    //     bezeichner: "730-Va-über"
+    // },
     {
         flaechenart: 1,
         anschlussgrad: 4,
-        veranlagungsschluessel: 0.5,
-        bezeichner: "730-Va-über"
+        veranlagungsschluessel: 0.4,
+        bezeichner: "731-Va-über"
     },
     {
         flaechenart: 3,
         anschlussgrad: 4,
-        veranlagungsschluessel: 0.5,
-        bezeichner: "730-Va-über"
+        veranlagungsschluessel: 0.4,
+        bezeichner: "731-Va-über"
+    },
+    {
+        flaechenart: 4,
+        anschlussgrad: 4,
+        veranlagungsschluessel: 0.4,
+        bezeichner: "731-Va-über"
     },
     {
         flaechenart: 2,
@@ -481,7 +499,7 @@ export const veranlagungsgrundlage = [
         flaechenart: 4,
         anschlussgrad: 5,
         veranlagungsschluessel: 0.7,
-        bezeichner: "725-VFÖ"
+        bezeichner: "725-LVF"
     },
     {
         flaechenart: 6,
@@ -493,7 +511,7 @@ export const veranlagungsgrundlage = [
         flaechenart: 4,
         anschlussgrad: 1,
         veranlagungsschluessel: 0.7,
-        bezeichner: "725-VFÖ"
+        bezeichner: "725-LVF"
     },
     {
         flaechenart: 6,
@@ -566,6 +584,12 @@ export const veranlagungsgrundlage = [
         anschlussgrad: 1,
         veranlagungsschluessel: 1,
         bezeichner: "710-DF"
+    },
+    {
+        flaechenart: 2,
+        anschlussgrad: 4,
+        veranlagungsschluessel: 0.3,
+        bezeichner: "735-GDF-V"
     }
 ];
 
