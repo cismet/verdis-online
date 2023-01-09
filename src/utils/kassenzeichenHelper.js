@@ -67,7 +67,7 @@ export const getInfoTextForFlaechenart = flaeche => {
         case "städtische Straßenfläche":
             flaechenart = <StaedtStrassenflaeche />;
             break;
-        case "städtische Straßenfläche (leicht versiegelt)":
+        case "leicht versiegelte Straßenfläche":
             flaechenart = <StaedtStrassenflaecheOekopflaster />;
             break;
         case "leicht versiegelte Fläche":
@@ -117,7 +117,7 @@ export const flaechenarten = [
     { art_abkuerzung: "GDF", art: "Gründach" },
     { art_abkuerzung: "VF", art: "versiegelte Fläche" },
     { art_abkuerzung: "VFS", art: "städtische Straßenfläche" },
-    { art_abkuerzung: "LVS", art: "städtische Straßenfläche (leicht versiegelt)" },
+    { art_abkuerzung: "LVS", art: "leicht versiegelte Straßenfläche" },
     { art_abkuerzung: "LVF", art: "leicht versiegelte Flächen" }
     // { art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
 ];

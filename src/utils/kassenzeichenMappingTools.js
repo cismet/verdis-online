@@ -146,7 +146,7 @@ export const getColorFromFlaechenArt = art_abk => {
             color = "#8a8684";
             break;
         case "LVS":
-        case "städtische Straßenfläche (leicht versiegelt)":
+        case "leicht versiegelte Straßenfläche":
             color = "#7e5b47";
             break;
         case "LVF":
