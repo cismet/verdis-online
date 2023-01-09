@@ -67,10 +67,10 @@ export const getInfoTextForFlaechenart = flaeche => {
         case "städtische Straßenfläche":
             flaechenart = <StaedtStrassenflaeche />;
             break;
-        case "städtische Straßenfläche (Ökopflaster)":
+        case "städtische Straßenfläche (leicht versiegelt)":
             flaechenart = <StaedtStrassenflaecheOekopflaster />;
             break;
-        case "Ökopflaster":
+        case "leicht versiegelte Fläche":
             flaechenart = <Oekopflaster />;
             break;
         default:
@@ -117,8 +117,8 @@ export const flaechenarten = [
     { art_abkuerzung: "GDF", art: "Gründach" },
     { art_abkuerzung: "VF", art: "versiegelte Fläche" },
     { art_abkuerzung: "VFS", art: "städtische Straßenfläche" },
-    { art_abkuerzung: "VSÖ", art: "städtische Straßenfläche (Ökopflaster)" },
-    { art_abkuerzung: "VFÖ", art: "Ökopflaster" }
+    { art_abkuerzung: "LVS", art: "städtische Straßenfläche (leicht versiegelt)" },
+    { art_abkuerzung: "LVF", art: "leicht versiegelte Flächen" }
     // { art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
 ];
 
@@ -604,8 +604,8 @@ export const flaechenartLookupByAbk = {
     GDF: 2,
     VF: 3,
     VFS: 5,
-    VSÖ: 6,
-    VFÖ: 4,
+    LVS: 6,
+    LVF: 4,
     VV: 7
 };
 // select 'export const anschlussgradLookupById={'||array_to_string(array(

@@ -4,9 +4,7 @@ const StaedtStrassenflaeche = () => {
         <div>
             <strong>Städtische Straßenfläche:</strong>
             <br />
-            Städtische Straßenfläche mit Ökopflaster (Spezialpflaster, Rasengittersteine, Kies,
-            Split usw.): Eine mit Ökopflaster versehene öffentliche Straßenfläche die der Stadt
-            Wuppertal gehört. Bei der Entwässerung sind 70% der Fläche zu berücksichtigen.
+            Eine öffentliche Straßenfläche die der Stadt.
             <br />
         </div>
     );
