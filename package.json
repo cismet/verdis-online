@@ -98,9 +98,9 @@
     "bumpSnapshot": "npm version prerelease --preid=SNAPSHOT",
     "init:docker:multiplatform": "docker buildx create --use",
     "updateAlpha": "ssh -t docker@$npm_package_config_alphaHost \"cd $npm_package_config_alphaFolder ; docker-compose pull && docker-compose down && docker-compose up -d\" && say 'Alpha-Version updated' ",
-    "bumpAlpha": "npm run bumpSnapshot &&  npm run publish:docker && say 'Image published' && npm run getVersion && npm run updateAlpha",
-    "build:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker buildx build --platform=linux/amd64,linux/arm64 -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
-    "publish:docker": "VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker buildx build --push --platform=linux/amd64,linux/arm64 -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
+    "bumpAlpha": "npm run bumpSnapshot && npm run postversion && npm run publish:docker && say 'Image published' && npm run getVersion && npm run updateAlpha",
+    "build:docker": "npm run postversion && VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker buildx build --platform=linux/amd64,linux/arm64 -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
+    "publish:docker": "npm run postversion && VERSION=`echo $npm_package_version| sed 's/\\.[0-9]*-SNAPSHOT.*$/-SNAPSHOT/'`; docker buildx build --push --platform=linux/amd64,linux/arm64 -t cismet/$npm_package_name -t cismet/$npm_package_name:$VERSION .",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "getVersion": "echo '---------------' && echo ':ship: @ alpha in Version `'$npm_package_version'`' |pbcopy && echo '>>>> :ship: @ alpha in Version '$npm_package_version' (info copied to clipboard)'"
