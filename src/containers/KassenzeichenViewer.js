@@ -78,6 +78,7 @@ export class KassenzeichenViewer_ extends React.Component {
         this.flaechenMapClick = this.flaechenMapClick.bind(this);
         this.reloadOnEmailVerification = this.reloadOnEmailVerification.bind(this);
         this.flaechenPanelRefs = {};
+        this.globalClick = this.globalClick.bind(this);
     }
 
     componentDidMount() {
@@ -133,8 +134,22 @@ export class KassenzeichenViewer_ extends React.Component {
         } else {
             this.props.routingActions.push("/");
         }
+
+        setTimeout(() => {
+            this.props.uiStateActions.setHintVisible(false);
+        }, 10000);
+
+        document.addEventListener("click", this.globalClick);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("click", this.globalClick);
     }
 
+    globalClick() {
+        if (this.props.uiState.hintVisible) {
+            this.props.uiStateActions.setHintVisible(false);
+        }
+    }
     reloadOnEmailVerification() {
         const changeRequestMenuVisible =
             this.props.uiState.changeRequestsMenuVisible === true &&
@@ -168,6 +183,7 @@ export class KassenzeichenViewer_ extends React.Component {
     }
 
     flaechenMapClick(event, feature) {
+        this.globalClick();
         if (this.isFlaecheSelected(feature.properties) === true) {
             // if (feature.properties.type !== 'annotation') {
             this.props.mappingActions.fitSelectedFeatureBounds();
