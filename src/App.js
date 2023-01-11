@@ -13,6 +13,7 @@ import ReactLoading from "react-loading";
 import Landing from "./containers/VerdisOnlineLanding";
 import KassenzeichenViewer from "./containers/KassenzeichenViewer";
 import VerdisOnlineHelp from "./containers/VerdisOnlineHelp";
+import VerdisOnlineHelpFAQs from "./containers/VerdisOnlineHelpFAQs";
 export default class App extends React.Component {
     constructor() {
         super();
@@ -68,6 +69,11 @@ export default class App extends React.Component {
                                 component={KassenzeichenViewer}
                             />
                             <Route exact path="/verdisOnlineHilfe" component={VerdisOnlineHelp} />
+                            <Route
+                                exact
+                                path="/verdisOnlineHilfeFAQs"
+                                component={VerdisOnlineHelpFAQs}
+                            />
                             <Route exact path="/2go" component={RedirectVersiegelteFlaechen} />
                             <Route
                                 exact
