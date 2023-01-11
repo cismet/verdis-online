@@ -27,7 +27,10 @@ import ChangeRequests from "../components/changerequests/CR00MainComponent";
 import {
     kassenzeichenFlaechenSorter,
     getOverlayTextForFlaeche,
-    getCRsForFlaeche
+    getCRsForFlaeche,
+    needsProof,
+    nachweisPflicht,
+    nachweisPflichtText
 } from "../utils/kassenzeichenHelper";
 import CONTACTS_MAP, { defaultContact } from "../constants/contacts";
 import ChangeRequestEditView from "../components/changerequests/CR50Flaechendialog";
@@ -241,6 +244,32 @@ export class KassenzeichenViewer_ extends React.Component {
                             erst für den Sachbearbeiter sichtbar werden, wenn sie die Änderungen
                             freigegeben/entsperrt und eingereicht haben.
                         </h5>
+                    </Alert>
+                </div>
+            );
+        }
+
+        let proofAlert;
+
+        if (needsProof(this.props.kassenzeichen.aenderungsanfrage)) {
+            proofAlert = (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: crDraftCounter > 0 ? 195 : 60,
+                        right: 285,
+                        zIndex: 500,
+                        width: 500,
+                        opacity: 0.9
+                    }}
+                >
+                    <Alert
+                        bsStyle="danger"
+                        onDismiss={() => {
+                            this.props.uiStateActions.showChangeRequestsMenu(true);
+                        }}
+                    >
+                        <h5>{nachweisPflichtText()}</h5>
                     </Alert>
                 </div>
             );
@@ -721,6 +750,7 @@ export class KassenzeichenViewer_ extends React.Component {
                 {verdisMapWithAdditionalComponents}
                 {flaechenInfoOverlay}
                 {draftAlert}
+                {proofAlert}
             </div>
         );
     }

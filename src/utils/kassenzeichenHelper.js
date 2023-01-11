@@ -122,6 +122,18 @@ export const flaechenarten = [
     // { art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
 ];
 
+export const nachweisPflichtText = () => (
+    <span>
+        <b>Sie haben noch keinen Nachweis hinzugefügt.</b> Bitte beachten Sie, dass
+        Änderungswünsche, die nachweispflichtig sind, erst eingereicht werden können, wenn Sie einen
+        Nachweis als Dokument hinterlegt haben.
+    </span>
+);
+
+export const nachweispflicht = {
+    flaechenart: ["GDF", "LVS", "LVF"],
+    anschlussgrad: ["vers.", "direkt OG", "Va-Über", "Bach verrohrt"]
+};
 export const anschlussgrade = [
     { grad_abkuerzung: "angeschl.", grad: "Am Kanal angeschlossen" },
     { grad_abkuerzung: "vers.", grad: "versickernd", nachweis: true },
@@ -186,6 +198,54 @@ export const getMergedFlaeche = (flaecheOrFlaechenfeature, flaechenCR) => {
             return getMergedFlaechenObject(flaecheOrFlaechenfeature, flaechenCR);
         }
     }
+};
+
+//checks whether the flaechenCR has flaechen with flaechenart or anschlussgrad
+// that need a proof (nachweis===true)
+// and no document is attached
+export const needsProof = flaechenCR => {
+    if (flaechenCR === undefined) {
+        return false;
+    }
+    let needsProofValue = false;
+    for (const key in flaechenCR.flaechen) {
+        const flaechenCR_SingleFlaeche = flaechenCR.flaechen[key];
+        needsProofValue = needsProofSingleFlaeche(flaechenCR_SingleFlaeche);
+        if (needsProofValue === true) {
+            break;
+        }
+    }
+
+    if (needsProofValue === true && flaechenCR.nachrichten !== undefined) {
+        // now check whether in the messages array is a message that has a anhang property
+        for (const nachricht of flaechenCR.nachrichten) {
+            if (nachricht.anhang !== undefined) {
+                needsProofValue = false;
+                break;
+            }
+        }
+    }
+    return needsProofValue;
+};
+
+export const needsProofSingleFlaeche = flaechenCR_SingleFlaeche => {
+    let needsProofValue = false;
+    if (flaechenCR_SingleFlaeche.flaechenart !== undefined) {
+        const flaechenart_abkuerzung = flaechenCR_SingleFlaeche.flaechenart.art_abkuerzung;
+        //check whether flaechenart.art_abkuerzung is in nachweispflicht.flaechenart array
+        if (nachweispflicht.flaechenart.includes(flaechenart_abkuerzung)) {
+            needsProofValue = true;
+        }
+    }
+
+    if (flaechenCR_SingleFlaeche.anschlussgrad !== undefined) {
+        const anschlussgrad_abkuerzung = flaechenCR_SingleFlaeche.anschlussgrad.grad_abkuerzung;
+        //check whether flaechenart.art_abkuerzung is in nachweispflicht.flaechenart array
+        if (nachweispflicht.anschlussgrad.includes(anschlussgrad_abkuerzung)) {
+            needsProofValue = true;
+        }
+    }
+    return needsProofValue;
 };
 
 export const getCRsForFlaeche = (kassenzeichen, flaeche) => {

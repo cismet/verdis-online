@@ -20,6 +20,7 @@ import AnnotationPanel from "../AnnotationPanel";
 import DocPanel from "./CR20DocumentsPanel";
 import CloudLoadingAttributeIcon from "../commons/CloudLoadingAttributeIcon";
 import { getNumberOfPendingChanges } from "../../redux/modules/kassenzeichen";
+import { nachweispflicht, nachweisPflichtText, needsProof } from "../../utils/kassenzeichenHelper";
 
 const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
 	Anmerkungen und Ihre hochgeladenen Dokumente
@@ -169,7 +170,7 @@ const CR00 = ({
                 lastUserMessage = msg;
             }
         });
-
+        const needsProofResult = needsProof(kassenzeichen.aenderungsanfrage);
         return (
             <Modal
                 style={{
@@ -685,6 +686,19 @@ const CR00 = ({
                                     </Panel>
                                 </Accordion>
                             </div>
+
+                            {needsProofResult && (
+                                <div
+                                    style={{
+                                        textAlign: "left",
+
+                                        margin: 2,
+                                        marginBottom: 10
+                                    }}
+                                >
+                                    {nachweisPflichtText()}
+                                </div>
+                            )}
                             <table
                                 style={{
                                     width: "100%"
@@ -713,7 +727,7 @@ const CR00 = ({
                                                 bsStyle={locked === true ? "warning" : "success"}
                                                 className="fillButton"
                                                 onClick={unlockOrSubmit}
-                                                disabled={crDraftCounter === 0}
+                                                disabled={crDraftCounter === 0 || needsProofResult}
                                             >
                                                 <Icon name={locked === true ? "lock" : "unlock"} />{" "}
                                                 {crDraftCounter === 0
