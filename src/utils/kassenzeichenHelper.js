@@ -114,20 +114,28 @@ export const getInfoTextForAnschlussgrad = flaeche => {
 
 export const flaechenarten = [
     { art_abkuerzung: "DF", art: "Dachfläche" },
-    { art_abkuerzung: "GDF", art: "Gründach" },
+    { art_abkuerzung: "GDF", art: "Gründach", nachweis: true },
     { art_abkuerzung: "VF", art: "versiegelte Fläche" },
     { art_abkuerzung: "VFS", art: "städtische Straßenfläche" },
-    { art_abkuerzung: "LVS", art: "leicht versiegelte Straßenfläche" },
-    { art_abkuerzung: "LVF", art: "leicht versiegelte Flächen" }
+    { art_abkuerzung: "LVS", art: "leicht versiegelte Straßenfläche", nachweis: true },
+    { art_abkuerzung: "LVF", art: "leicht versiegelte Fläche", nachweis: true }
     // { art_abkuerzung: 'VV', art: 'vorläufige Veranlagung' }
 ];
 
 export const anschlussgrade = [
     { grad_abkuerzung: "angeschl.", grad: "Am Kanal angeschlossen" },
-    { grad_abkuerzung: "vers.", grad: "versickernd" },
-    { grad_abkuerzung: "direkt OG", grad: "Direkteinleitung in ein offenes Gewässer" },
-    { grad_abkuerzung: "Va-Über", grad: "Versickerungsanlage mit Notüberlauf" },
-    { grad_abkuerzung: "Bach verrohrt", grad: "Direkteinleitung in ein verrohrtes Gewässer" }
+    { grad_abkuerzung: "vers.", grad: "versickernd", nachweis: true },
+    {
+        grad_abkuerzung: "direkt OG",
+        grad: "Direkteinleitung in ein offenes Gewässer",
+        nachweis: true
+    },
+    { grad_abkuerzung: "Va-Über", grad: "Versickerungsanlage mit Notüberlauf", nachweis: true },
+    {
+        grad_abkuerzung: "Bach verrohrt",
+        grad: "Direkteinleitung in ein verrohrtes Gewässer",
+        nachweis: true
+    }
 ];
 
 export const colorUnchanged = "black";
