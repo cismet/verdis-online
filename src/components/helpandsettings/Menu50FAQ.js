@@ -241,10 +241,12 @@ const Component = ({
                     versehen wurden. Bei einer Kiesbedeckung aus der Unkraut hervorgeht, handelt es
                     sich "nicht" um eine Dachbegrünung. Da auch Gründächer mit einer Drainage
                     versehen werden und bei Starkregen Teile des Regenwassers in den Kanal
-                    entwässern, wird die Fläche für die Gebührenerhebung um 50% reduziert.
-                    Tiefgaragen werden wie Gründächer betrachtet, wenn sich auf ihnen keine
-                    versiegelte Fläche befindet. Für die Anerkennung von Gründächern sind
-                    entsprechende Nachweise erforderlich.
+                    entwässern, wird die Fläche für die Gebührenerhebung bis zum 31.12.2022 auf 50%
+                    und ab dem 01.01.2023 auf 40 % ihrer Größe reduziert. Entwässert ein Gründach
+                    zusätzlich über eine Versickerungsanlage mit Notüberlauf findet eine Reduzierung
+                    der Fläche auf 30 % ihrer Größe statt. Tiefgaragen werden wie Gründächer
+                    betrachtet, wenn sich auf ihnen keine versiegelte Fläche befindet. Für die
+                    Anerkennung von Gründächern sind entsprechende Nachweise erforderlich.
                 </p>
             )
         },
@@ -401,22 +403,26 @@ const Component = ({
             )
         },
         {
-            title: "Wasserrechtliche Erlaubnis/Anzeigen einer Flächenversickerung",
+            title: "Was ist eine wasserrechtliche Erlaubnis/Versickerungsgenehmigung?",
             bsStyle: "warning",
             content: (
                 <p>
-                    Unterliegen Flächen nicht dem Anschluss- und Benutzungszwang und sollen dennoch,
-                    ggf. mit Hilfe einer Versickerungsanlage zur Versickerung gebracht werden, ist
-                    für sie eine wasserrechtliche Erlaubnis (Versickerungsgenehmigung) erforderlich.
-                    Grundvoraussetzung ist, dass das Wasser unbelastet ist und ohne Beeinträchtigung
-                    der Natur und anderer Nachbarn versickern kann{" "}
+                    Unabhängig von der Tatsache ob ein Kanal verlegt ist oder nicht, wird für eine
+                    Entwässerung von Regenwasser über Versickerungsanlagen oder naturbelassene
+                    Flächen eine wasserrechtliche Erlaubnis benötigt. Umgangssprachlich wird hier
+                    auch von Versickerungsgenehmigung gesprochen. Anträge und weitere Informationen
+                    finden sie unter dem Link{" "}
                     <a
                         target="_more"
                         href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links"
                     >
                         (weiterführende Information)
                     </a>{" "}
-                    (gebührenpflichtig).
+                    . Durch dieses Verfahren soll die Umweltverträglichkeit der Entwässerung
+                    sichergestellt werden. Bei Kleinflächen (Gartenwege, kleine Gartenhäuser oder
+                    ähnliches) wird, bei der Flächenerhebung zur Erhebung der
+                    Niederschlagswassergebühr, von der Vorlage einer wasserrechtlichen Erlaubnis
+                    abgesehen.
                 </p>
             )
         },
