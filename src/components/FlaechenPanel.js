@@ -32,8 +32,6 @@ export default class FlaechenPanel extends React.Component {
     }
 
     render() {
-        // console.log("xxx globalCR", this.props.globalCR);
-
         const selected = this.props.selected;
         const proofNeeded = this.props.proofNeeded || false;
         const colorSelected = colorChanged;
