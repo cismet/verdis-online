@@ -204,7 +204,9 @@ export const getMergedFlaeche = (flaecheOrFlaechenfeature, flaechenCR) => {
 // that need a proof (nachweis===true)
 // and no document is attached
 export const needsProof = flaechenCR => {
-    if (flaechenCR === undefined) {
+    console.log("xxx flaechenCR", flaechenCR);
+
+    if (flaechenCR === undefined || flaechenCR === null) {
         return false;
     }
     let needsProofValue = false;
