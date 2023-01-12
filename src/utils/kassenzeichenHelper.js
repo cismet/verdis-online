@@ -152,6 +152,7 @@ export const anschlussgrade = [
 
 export const colorUnchanged = "black";
 export const colorChanged = "#436F8C";
+export const colorNeededProof = "#B55959";
 export const colorAccepted = "#3D7844";
 export const colorRejected = "#B11623";
 export const colorDraft = "#BD9546";
@@ -220,14 +221,21 @@ export const needsProof = flaechenCR => {
 
     if (needsProofValue === true && flaechenCR.nachrichten !== undefined) {
         // now check whether in the messages array is a message that has a anhang property
-        for (const nachricht of flaechenCR.nachrichten) {
-            if (nachricht.anhang !== undefined) {
-                needsProofValue = false;
-                break;
-            }
+        if (hasAttachment(flaechenCR) === true) {
+            needsProofValue = false;
         }
     }
     return needsProofValue;
+};
+
+export const hasAttachment = flaechenCR => {
+    if (flaechenCR.nachrichten !== undefined) {
+        for (const nachricht of flaechenCR.nachrichten) {
+            if (nachricht.anhang !== undefined) {
+                return true;
+            }
+        }
+    }
 };
 
 export const needsProofSingleFlaeche = flaechenCR_SingleFlaeche => {

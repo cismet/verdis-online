@@ -128,6 +128,7 @@ const CR00 = ({
                                         flaeche={flaeche}
                                         display={"cr"}
                                         changerequest={flaechenCR}
+                                        proofNeeded={proofNeeded}
                                     />
                                 </FlexView>
                             </FlexView>
@@ -365,7 +366,12 @@ const CR00 = ({
                                         paddingRight: "30px"
                                     }}
                                 >
-                                    <p style={{ fontWeight: proofNeeded ? "bold" : "normal" }}>
+                                    <p
+                                        style={{
+                                            fontWeight: proofNeeded ? "bold" : "normal",
+                                            color: proofNeeded ? "#B55959" : "black"
+                                        }}
+                                    >
                                         Um unnötige Verzögerungen zu vermeiden, achten Sie bitte
                                         darauf bei nachweispflichtigen Änderungen die entsprechenden
                                         Belege hinzuzufügen.

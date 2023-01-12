@@ -20,7 +20,14 @@ import AnnotationPanel from "../AnnotationPanel";
 import DocPanel from "./CR20DocumentsPanel";
 import CloudLoadingAttributeIcon from "../commons/CloudLoadingAttributeIcon";
 import { getNumberOfPendingChanges } from "../../redux/modules/kassenzeichen";
-import { nachweispflicht, nachweisPflichtText, needsProof } from "../../utils/kassenzeichenHelper";
+import {
+    colorNeededProof,
+    hasAttachment,
+    nachweispflicht,
+    nachweisPflichtText,
+    needsProof,
+    needsProofSingleFlaeche
+} from "../../utils/kassenzeichenHelper";
 
 const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
 	Anmerkungen und Ihre hochgeladenen Dokumente
@@ -130,6 +137,10 @@ const CR00 = ({
                         flaeche={flaeche}
                         display={"cr"}
                         changerequest={cr}
+                        proofNeeded={
+                            needsProofSingleFlaeche(cr) &&
+                            !hasAttachment(kassenzeichen.aenderungsanfrage)
+                        }
                     />
                 );
             }
@@ -379,14 +390,18 @@ const CR00 = ({
                                             <FlexView row="true">
                                                 <FlexView column grow>
                                                     <h4>aktueller Datenbestand</h4>
-                                                    {origPanels}
+                                                    {origPanels.map(panel => {
+                                                        return <div>{panel}</div>;
+                                                    })}
                                                 </FlexView>
                                                 <FlexView column grow />
 
                                                 <FlexView column grow />
                                                 <FlexView column grow>
                                                     <h4>Ihr Änderungswunsch</h4>
-                                                    {crPanels}
+                                                    {crPanels.map(panel => {
+                                                        return <div>{panel}</div>;
+                                                    })}
                                                 </FlexView>
                                             </FlexView>
                                         )}
@@ -691,7 +706,7 @@ const CR00 = ({
                                 <div
                                     style={{
                                         textAlign: "left",
-
+                                        color: colorNeededProof,
                                         margin: 2,
                                         marginBottom: 10
                                     }}
