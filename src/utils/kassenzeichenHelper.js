@@ -238,7 +238,7 @@ export const hasAttachment = flaechenCR => {
 
 export const needsProofSingleFlaeche = flaechenCR_SingleFlaeche => {
     let needsProofValue = false;
-    if (flaechenCR_SingleFlaeche.flaechenart !== undefined) {
+    if (flaechenCR_SingleFlaeche?.flaechenart !== undefined) {
         const flaechenart_abkuerzung = flaechenCR_SingleFlaeche.flaechenart.art_abkuerzung;
         //check whether flaechenart.art_abkuerzung is in nachweispflicht.flaechenart array
         if (nachweispflicht.flaechenart.includes(flaechenart_abkuerzung)) {
@@ -246,7 +246,7 @@ export const needsProofSingleFlaeche = flaechenCR_SingleFlaeche => {
         }
     }
 
-    if (flaechenCR_SingleFlaeche.anschlussgrad !== undefined) {
+    if (flaechenCR_SingleFlaeche?.anschlussgrad !== undefined) {
         const anschlussgrad_abkuerzung = flaechenCR_SingleFlaeche.anschlussgrad.grad_abkuerzung;
         //check whether flaechenart.art_abkuerzung is in nachweispflicht.flaechenart array
         if (nachweispflicht.anschlussgrad.includes(anschlussgrad_abkuerzung)) {
