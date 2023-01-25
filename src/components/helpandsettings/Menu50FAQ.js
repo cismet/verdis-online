@@ -71,27 +71,31 @@ const Component = ({
             content: (
                 <div>
                     <p>
-                        Der Anteil an Gemeinschaftsflächen wird im Grundbuch auf zwei
-                        unterschiedliche Arten geführt und wird dadurch bedingt auch bei der
-                        Gebührenerhebung unterschiedlich gehandhabt.
+                        Bei Grundbüchern, die nach dem Wohnungseigentumsgesetzt (WEG) gebildet
+                        wurden kann keine Aufteilung von Flächen vorgenommen werden. Eine Aufteilung
+                        muss hier durch eine/n Verwalterin oder eine/n Miteigentümerin vorgenommen
+                        werden.
                     </p>
                     <ol>
+                        <li>
+                            Der Anteil an Gemeinschaftsflächen, die nicht nach dem WEG gebildet
+                            wurden, wird im Grundbuch auf zwei unterschiedliche Arten geführt und
+                            wird dadurch bedingt auch bei der Gebührenerhebung unterschiedlich
+                            gehandhabt.
+                        </li>
                         <li>
                             Der Anteil der Gemeinschaftsfläche ist auf dem gleichen Grundbuchblatt
                             wie des Hausgrundstück eingetragen. In diesem Fall wird der jeweilige
                             Anteil dem Eigentümer des Hausgrundstückes unter dem gleichen
                             Kassenzeichen zugeteilt. Aufgeführt sind das Flächenmaß der Gesamtfläche
-                            und der jeweilige Anteil des Eigentümers.
-                        </li>
-                        <li>
-                            Die Gemeinschaftsfläche ist auf einem separaten Grundbuchblatt
-                            eingetragen. In diesem Fall wurden bisher die jeweiligen Flächenanteile
-                            durch die Verwaltung gemäß Grundbucheintrag auf die einzelnen Eigentümer
-                            aufgeteilt und für jeden mit einem separaten Kassenzeichen geführt. Ob
-                            diese Vorgehensweise für die Zukunft aufrechterhalten werden kann oder
-                            ob die Umlage der Gebühren von den Eigentümern selbst vorgenommen werden
-                            muss, ist zurzeit unklar. Aus rechtlicher Sicht ist jeder Eigentümer
-                            gesamtschuldnerisch haftbar.
+                            und der jeweilige Anteil des Eigentümers. Die Gemeinschaftsfläche ist
+                            auf einem separaten Grundbuchblatt eingetragen. In diesem Fall wurden
+                            bisher die jeweiligen Flächenanteile durch die Verwaltung gemäß
+                            Grundbucheintrag auf die einzelnen Eigentümer aufgeteilt und für jeden
+                            mit einem separaten Kassenzeichen geführt. Ob diese Vorgehensweise für
+                            die Zukunft aufrechterhalten werden kann oder ob die Umlage der Gebühren
+                            von den Eigentümern selbst vorgenommen werden muss, ist zurzeit unklar.
+                            Aus rechtlicher Sicht ist jeder Eigentümer gesamtschuldnerisch haftbar.
                         </li>
                     </ol>
                 </div>
@@ -403,27 +407,54 @@ const Component = ({
             )
         },
         {
-            title: "Was ist eine wasserrechtliche Erlaubnis/Versickerungsgenehmigung?",
+            title: "Wasserrechtliche Erlaubnis / Anzeigen einer Flächenversickerung",
             bsStyle: "warning",
             content: (
                 <p>
-                    Unabhängig von der Tatsache ob ein Kanal verlegt ist oder nicht, wird für eine
-                    Entwässerung von Regenwasser über Versickerungsanlagen oder naturbelassene
-                    Flächen eine wasserrechtliche Erlaubnis benötigt. Umgangssprachlich wird hier
-                    auch von Versickerungsgenehmigung gesprochen. Anträge und weitere Informationen
-                    finden sie unter dem Link{" "}
+                    Sollen Flächen, ggf. mit Hilfe einer Versickerungsanlage, zur Versickerung
+                    gebracht werden ist für sie eine wasserrechtliche Erlaubnis
+                    (Versickerungsgenehmigung) erforderlich. Eine Versickerung auf der eigenen
+                    Grundstücksfläche ist anzuzeigen. Grundvoraussetzung ist, dass das Wasser
+                    unbelastet ist und ohne Beeinträchtigung der Natur und anderer Nachbarn
+                    versickern kann{" "}
                     <a
                         target="_more"
                         href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links"
                     >
                         (weiterführende Information)
-                    </a>{" "}
-                    . Durch dieses Verfahren soll die Umweltverträglichkeit der Entwässerung
-                    sichergestellt werden. Bei Kleinflächen (Gartenwege, kleine Gartenhäuser oder
-                    ähnliches) wird, bei der Flächenerhebung zur Erhebung der
-                    Niederschlagswassergebühr, von der Vorlage einer wasserrechtlichen Erlaubnis
-                    abgesehen.
+                    </a>
+                    .
+                    <br />
+                    Die Erteilung einer wasserrechtlichen Erlaubnis ist gebührenpflichtig. Anträge
+                    können auch über das Serviceportal gestellt werden. Die Links zum Serviceportal
+                    und zum Download von Anträgen finden Sie{" "}
+                    <a
+                        target="_more"
+                        href="https://www.wuppertal.de/vv/produkte/106/versickerung.php"
+                    >
+                        hier
+                    </a>
+                    .
                 </p>
+                // <p>
+
+                //     Unabhängig von der Tatsache ob ein Kanal verlegt ist oder nicht, wird für eine
+                //     Entwässerung von Regenwasser über Versickerungsanlagen oder naturbelassene
+                //     Flächen eine wasserrechtliche Erlaubnis benötigt. Umgangssprachlich wird hier
+                //     auch von Versickerungsgenehmigung gesprochen. Anträge und weitere Informationen
+                //     finden sie unter dem Link{" "}
+                // <a
+                //     target="_more"
+                //     href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links"
+                // >
+                //     (weiterführende Information)
+                // </a>{" "}
+                //     . Durch dieses Verfahren soll die Umweltverträglichkeit der Entwässerung
+                //     sichergestellt werden. Bei Kleinflächen (Gartenwege, kleine Gartenhäuser oder
+                //     ähnliches) wird, bei der Flächenerhebung zur Erhebung der
+                //     Niederschlagswassergebühr, von der Vorlage einer wasserrechtlichen Erlaubnis
+                //     abgesehen.
+                // </p>
             )
         },
         {
