@@ -1,10 +1,6 @@
 {
   "name": "verdis-online",
-<<<<<<< HEAD
   "version": "2.3.0-SNAPSHOT.9",
-=======
-  "version": "2.3.0-SNAPSHOT.0",
->>>>>>> 2c46e158cc1d9f32cd062f9da276a55defa7bdda
   "config": {
     "dockerRegistryPath": "cismet",
     "alphaFolder": "~/2212-wuppertal.regengeld.de-alpha",
