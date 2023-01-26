@@ -27,7 +27,12 @@ import ChangeRequests from "../components/changerequests/CR00MainComponent";
 import {
     kassenzeichenFlaechenSorter,
     getOverlayTextForFlaeche,
-    getCRsForFlaeche
+    getCRsForFlaeche,
+    needsProof,
+    nachweisPflicht,
+    nachweisPflichtText,
+    needsProofSingleFlaeche,
+    hasAttachment
 } from "../utils/kassenzeichenHelper";
 import CONTACTS_MAP, { defaultContact } from "../constants/contacts";
 import ChangeRequestEditView from "../components/changerequests/CR50Flaechendialog";
@@ -78,6 +83,7 @@ export class KassenzeichenViewer_ extends React.Component {
         this.flaechenMapClick = this.flaechenMapClick.bind(this);
         this.reloadOnEmailVerification = this.reloadOnEmailVerification.bind(this);
         this.flaechenPanelRefs = {};
+        this.globalClick = this.globalClick.bind(this);
     }
 
     componentDidMount() {
@@ -133,8 +139,22 @@ export class KassenzeichenViewer_ extends React.Component {
         } else {
             this.props.routingActions.push("/");
         }
+
+        setTimeout(() => {
+            this.props.uiStateActions.setHintVisible(false);
+        }, 10000);
+
+        document.addEventListener("click", this.globalClick);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("click", this.globalClick);
     }
 
+    globalClick() {
+        if (this.props.uiState.hintVisible) {
+            this.props.uiStateActions.setHintVisible(false);
+        }
+    }
     reloadOnEmailVerification() {
         const changeRequestMenuVisible =
             this.props.uiState.changeRequestsMenuVisible === true &&
@@ -168,6 +188,7 @@ export class KassenzeichenViewer_ extends React.Component {
     }
 
     flaechenMapClick(event, feature) {
+        this.globalClick();
         if (this.isFlaecheSelected(feature.properties) === true) {
             // if (feature.properties.type !== 'annotation') {
             this.props.mappingActions.fitSelectedFeatureBounds();
@@ -225,6 +246,35 @@ export class KassenzeichenViewer_ extends React.Component {
                             erst für den Sachbearbeiter sichtbar werden, wenn sie die Änderungen
                             freigegeben/entsperrt und eingereicht haben.
                         </h5>
+                    </Alert>
+                </div>
+            );
+        }
+
+        let proofAlert;
+
+        if (
+            needsProof(this.props.kassenzeichen.aenderungsanfrage) &&
+            this.props.uiState.changeRequestsEditMode
+        ) {
+            proofAlert = (
+                <div
+                    style={{
+                        position: "absolute",
+                        top: crDraftCounter > 0 ? 195 : 60,
+                        right: 285,
+                        zIndex: 500,
+                        width: 500,
+                        opacity: 0.9
+                    }}
+                >
+                    <Alert
+                        bsStyle="danger"
+                        onDismiss={() => {
+                            this.props.uiStateActions.showChangeRequestsMenu(true);
+                        }}
+                    >
+                        <h5>{nachweisPflichtText()}</h5>
                     </Alert>
                 </div>
             );
@@ -379,6 +429,10 @@ export class KassenzeichenViewer_ extends React.Component {
                 flaechenPanelRefs = {};
                 flComps = flaechen.map(function(flaeche) {
                     const sel = that.isFlaecheSelected(flaeche);
+                    const flaechenCR = getCRsForFlaeche(that.props.kassenzeichen, flaeche);
+                    const hasAttachments = hasAttachment(
+                        that.props.kassenzeichen.aenderungsanfrage
+                    );
                     return (
                         <Flexbox
                             key={"flex" + i++ + "." + flaeche.id}
@@ -393,8 +447,9 @@ export class KassenzeichenViewer_ extends React.Component {
                                 selected={sel}
                                 flaechenPanelClickHandler={that.flaechenPanelClick}
                                 flaeche={flaeche}
-                                changerequest={getCRsForFlaeche(that.props.kassenzeichen, flaeche)}
+                                changerequest={flaechenCR}
                                 editmode={that.props.uiState.changeRequestsEditMode}
+                                proofNeeded={needsProofSingleFlaeche(flaechenCR) && !hasAttachments}
                                 display={
                                     that.props.uiState.changeRequestsEditMode === true
                                         ? "cr"
@@ -499,6 +554,9 @@ export class KassenzeichenViewer_ extends React.Component {
                 const comps = flaechen.map(function(flaeche) {
                     const sel = that.isFlaecheSelected(flaeche);
                     const cr = getCRsForFlaeche(that.props.kassenzeichen, flaeche);
+                    const hasAttachments = hasAttachment(
+                        that.props.kassenzeichen.aenderungsanfrage
+                    );
                     return (
                         <FlaechenPanel
                             ref={c => {
@@ -514,6 +572,7 @@ export class KassenzeichenViewer_ extends React.Component {
                                     : "original"
                             }
                             changerequest={cr}
+                            proofNeeded={needsProofSingleFlaeche(cr) && !hasAttachments}
                             editmode={that.props.uiState.changeRequestsEditMode}
                             showEditCRMenu={() => {
                                 that.props.uiStateActions.showCREditUI(flaeche, cr);
@@ -705,6 +764,7 @@ export class KassenzeichenViewer_ extends React.Component {
                 {verdisMapWithAdditionalComponents}
                 {flaechenInfoOverlay}
                 {draftAlert}
+                {proofAlert}
             </div>
         );
     }

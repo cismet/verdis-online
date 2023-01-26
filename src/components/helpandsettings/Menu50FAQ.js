@@ -71,27 +71,31 @@ const Component = ({
             content: (
                 <div>
                     <p>
-                        Der Anteil an Gemeinschaftsflächen wird im Grundbuch auf zwei
-                        unterschiedliche Arten geführt und wird dadurch bedingt auch bei der
-                        Gebührenerhebung unterschiedlich gehandhabt.
+                        Bei Grundbüchern, die nach dem Wohnungseigentumsgesetzt (WEG) gebildet
+                        wurden kann keine Aufteilung von Flächen vorgenommen werden. Eine Aufteilung
+                        muss hier durch eine/n Verwalter*in oder eine/n Miteigentümer*in vorgenommen
+                        werden.
                     </p>
                     <ol>
+                        <li>
+                            Der Anteil an Gemeinschaftsflächen, die nicht nach dem WEG gebildet
+                            wurden, wird im Grundbuch auf zwei unterschiedliche Arten geführt und
+                            wird dadurch bedingt auch bei der Gebührenerhebung unterschiedlich
+                            gehandhabt.
+                        </li>
                         <li>
                             Der Anteil der Gemeinschaftsfläche ist auf dem gleichen Grundbuchblatt
                             wie des Hausgrundstück eingetragen. In diesem Fall wird der jeweilige
                             Anteil dem Eigentümer des Hausgrundstückes unter dem gleichen
                             Kassenzeichen zugeteilt. Aufgeführt sind das Flächenmaß der Gesamtfläche
-                            und der jeweilige Anteil des Eigentümers.
-                        </li>
-                        <li>
-                            Die Gemeinschaftsfläche ist auf einem separaten Grundbuchblatt
-                            eingetragen. In diesem Fall wurden bisher die jeweiligen Flächenanteile
-                            durch die Verwaltung gemäß Grundbucheintrag auf die einzelnen Eigentümer
-                            aufgeteilt und für jeden mit einem separaten Kassenzeichen geführt. Ob
-                            diese Vorgehensweise für die Zukunft aufrechterhalten werden kann oder
-                            ob die Umlage der Gebühren von den Eigentümern selbst vorgenommen werden
-                            muss, ist zurzeit unklar. Aus rechtlicher Sicht ist jeder Eigentümer
-                            gesamtschuldnerisch haftbar.
+                            und der jeweilige Anteil des Eigentümers. Die Gemeinschaftsfläche ist
+                            auf einem separaten Grundbuchblatt eingetragen. In diesem Fall wurden
+                            bisher die jeweiligen Flächenanteile durch die Verwaltung gemäß
+                            Grundbucheintrag auf die einzelnen Eigentümer aufgeteilt und für jeden
+                            mit einem separaten Kassenzeichen geführt. Ob diese Vorgehensweise für
+                            die Zukunft aufrechterhalten werden kann oder ob die Umlage der Gebühren
+                            von den Eigentümern selbst vorgenommen werden muss, ist zurzeit unklar.
+                            Aus rechtlicher Sicht ist jeder Eigentümer gesamtschuldnerisch haftbar.
                         </li>
                     </ol>
                 </div>
@@ -241,10 +245,12 @@ const Component = ({
                     versehen wurden. Bei einer Kiesbedeckung aus der Unkraut hervorgeht, handelt es
                     sich "nicht" um eine Dachbegrünung. Da auch Gründächer mit einer Drainage
                     versehen werden und bei Starkregen Teile des Regenwassers in den Kanal
-                    entwässern, wird die Fläche für die Gebührenerhebung um 50% reduziert.
-                    Tiefgaragen werden wie Gründächer betrachtet, wenn sich auf ihnen keine
-                    versiegelte Fläche befindet. Für die Anerkennung von Gründächern sind
-                    entsprechende Nachweise erforderlich.
+                    entwässern, wird die Fläche für die Gebührenerhebung bis zum 31.12.2022 auf 50%
+                    und ab dem 01.01.2023 auf 40 % ihrer Größe reduziert. Entwässert ein Gründach
+                    zusätzlich über eine Versickerungsanlage mit Notüberlauf findet eine Reduzierung
+                    der Fläche auf 30 % ihrer Größe statt. Tiefgaragen werden wie Gründächer
+                    betrachtet, wenn sich auf ihnen keine versiegelte Fläche befindet. Für die
+                    Anerkennung von Gründächern sind entsprechende Nachweise erforderlich.
                 </p>
             )
         },
@@ -333,7 +339,7 @@ const Component = ({
                     wasserrechtliche Erlaubnis erforderlich{" "}
                     <a
                         target="_more"
-                        href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen"
+                        href="https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-unterlagen"
                     >
                         (weiterführende Information)
                     </a>
@@ -343,7 +349,7 @@ const Component = ({
                     ausreicht, um das Regenwasser bei Starkregen vollständig aufzunehmen und das
                     überschüssige Wasser in den Kanal abgeleitet wird. Bei Notüberläufen werden bis
                     zum 31.12.2022 50 % und ab dem 01.01.2023 40 % der Fläche zur Gebührenerhebung
-                    herangezogen.
+                    herangezogen.{" "}
                     <strong>
                         Soll eine Versickerungsanlage (mit oder ohne Notüberlauf) geltend gemacht
                         werden, ist ein entsprechender Nachweis erforderlich.
@@ -401,22 +407,34 @@ const Component = ({
             )
         },
         {
-            title: "Wasserrechtliche Erlaubnis/Anzeigen einer Flächenversickerung",
+            title: "Wasserrechtliche Erlaubnis / Anzeigen einer Flächenversickerung",
             bsStyle: "warning",
             content: (
                 <p>
-                    Unterliegen Flächen nicht dem Anschluss- und Benutzungszwang und sollen dennoch,
-                    ggf. mit Hilfe einer Versickerungsanlage zur Versickerung gebracht werden, ist
-                    für sie eine wasserrechtliche Erlaubnis (Versickerungsgenehmigung) erforderlich.
-                    Grundvoraussetzung ist, dass das Wasser unbelastet ist und ohne Beeinträchtigung
-                    der Natur und anderer Nachbarn versickern kann{" "}
+                    Sollen Flächen, ggf. mit Hilfe einer Versickerungsanlage, zur Versickerung
+                    gebracht werden ist für sie eine wasserrechtliche Erlaubnis
+                    (Versickerungsgenehmigung) erforderlich. Eine Versickerung auf der eigenen
+                    Grundstücksfläche ist anzuzeigen. Grundvoraussetzung ist, dass das Wasser
+                    unbelastet ist und ohne Beeinträchtigung der Natur und anderer Nachbarn
+                    versickern kann{" "}
                     <a
                         target="_more"
-                        href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links"
+                        href="https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-links"
                     >
                         (weiterführende Information)
-                    </a>{" "}
-                    (gebührenpflichtig).
+                    </a>
+                    .
+                    <br />
+                    Die Erteilung einer wasserrechtlichen Erlaubnis ist gebührenpflichtig. Anträge
+                    können auch über das Serviceportal gestellt werden. Die Links zum Serviceportal
+                    und zum Download von Anträgen finden Sie{" "}
+                    <a
+                        target="_more"
+                        href="https://www.wuppertal.de/vv/produkte/106/versickerung.php"
+                    >
+                        hier
+                    </a>
+                    .
                 </p>
             )
         },

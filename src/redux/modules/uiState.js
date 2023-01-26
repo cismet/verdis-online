@@ -42,7 +42,8 @@ export const types = {
         "UI_STATE/SET_CHANGE_REQUESTS_ANNOTATION_EDIT_UI_ANNOTATION_AND_CR",
     SET_ERROR: "UI_STATE/SET_ERROR",
     SET_ERROR_MESSAGES: "UI_STATE/SET_ERROR_MESSAGES",
-    SET_CONF_DATA: "UI_STATE/SET_CONF_DATA"
+    SET_CONF_DATA: "UI_STATE/SET_CONF_DATA",
+    SET_HINT_VISIBLE: "UI_STATE/SET_HINT_VISIBLE"
 };
 
 export const CLOUDSTORAGESTATES = {
@@ -119,7 +120,8 @@ const initialState = {
     catchedError: undefined,
     catchedErrorCause: undefined,
     localErrorMessages: [],
-    confData: undefined
+    confData: undefined,
+    hintVisible: true
 };
 
 ///REDUCER
@@ -304,6 +306,11 @@ export default function uiStateReducer(state = initialState, action) {
         case types.SET_CONF_DATA: {
             newState = objectAssign({}, state);
             newState.confData = action.confData;
+            return newState;
+        }
+        case types.SET_HINT_VISIBLE: {
+            newState = objectAssign({}, state);
+            newState.hintVisible = action.visible;
             return newState;
         }
 
@@ -535,6 +542,12 @@ function setErrorMessages(errorMessages) {
         errorMessages
     };
 }
+function setHintVisible(visible) {
+    return {
+        type: types.SET_HINT_VISIBLE,
+        visible
+    };
+}
 
 //COMPLEXACTIONS
 function addLocalErrorMessage(message) {
@@ -596,5 +609,6 @@ export const actions = {
     showCRAnnotationEditUI,
     setError,
     setErrorMessages,
-    addLocalErrorMessage
+    addLocalErrorMessage,
+    setHintVisible
 };

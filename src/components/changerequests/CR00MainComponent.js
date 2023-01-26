@@ -20,6 +20,14 @@ import AnnotationPanel from "../AnnotationPanel";
 import DocPanel from "./CR20DocumentsPanel";
 import CloudLoadingAttributeIcon from "../commons/CloudLoadingAttributeIcon";
 import { getNumberOfPendingChanges } from "../../redux/modules/kassenzeichen";
+import {
+    colorNeededProof,
+    hasAttachment,
+    nachweispflicht,
+    nachweisPflichtText,
+    needsProof,
+    needsProofSingleFlaeche
+} from "../../utils/kassenzeichenHelper";
 
 const draftHint = `Bitte beachten Sie, dass Änderungswünsche,
 	Anmerkungen und Ihre hochgeladenen Dokumente
@@ -129,6 +137,10 @@ const CR00 = ({
                         flaeche={flaeche}
                         display={"cr"}
                         changerequest={cr}
+                        proofNeeded={
+                            needsProofSingleFlaeche(cr) &&
+                            !hasAttachment(kassenzeichen.aenderungsanfrage)
+                        }
                     />
                 );
             }
@@ -169,7 +181,7 @@ const CR00 = ({
                 lastUserMessage = msg;
             }
         });
-
+        const needsProofResult = needsProof(kassenzeichen.aenderungsanfrage);
         return (
             <Modal
                 style={{
@@ -378,14 +390,18 @@ const CR00 = ({
                                             <FlexView row="true">
                                                 <FlexView column grow>
                                                     <h4>aktueller Datenbestand</h4>
-                                                    {origPanels}
+                                                    {origPanels.map(panel => {
+                                                        return <div>{panel}</div>;
+                                                    })}
                                                 </FlexView>
                                                 <FlexView column grow />
 
                                                 <FlexView column grow />
                                                 <FlexView column grow>
                                                     <h4>Ihr Änderungswunsch</h4>
-                                                    {crPanels}
+                                                    {crPanels.map(panel => {
+                                                        return <div>{panel}</div>;
+                                                    })}
                                                 </FlexView>
                                             </FlexView>
                                         )}
@@ -685,6 +701,19 @@ const CR00 = ({
                                     </Panel>
                                 </Accordion>
                             </div>
+
+                            {needsProofResult && (
+                                <div
+                                    style={{
+                                        textAlign: "left",
+                                        color: colorNeededProof,
+                                        margin: 2,
+                                        marginBottom: 10
+                                    }}
+                                >
+                                    {nachweisPflichtText()}
+                                </div>
+                            )}
                             <table
                                 style={{
                                     width: "100%"
@@ -713,7 +742,7 @@ const CR00 = ({
                                                 bsStyle={locked === true ? "warning" : "success"}
                                                 className="fillButton"
                                                 onClick={unlockOrSubmit}
-                                                disabled={crDraftCounter === 0}
+                                                disabled={crDraftCounter === 0 || needsProofResult}
                                             >
                                                 <Icon name={locked === true ? "lock" : "unlock"} />{" "}
                                                 {crDraftCounter === 0

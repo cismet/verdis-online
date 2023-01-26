@@ -15,7 +15,9 @@ import {
     anschlussgrade,
     flaechenarten,
     getOverlayTextForFlaeche,
-    getProcessedFlaechenCR
+    getProcessedFlaechenCR,
+    needsProof,
+    needsProofSingleFlaeche
 } from "../../utils/kassenzeichenHelper";
 import FlaechenPanel from "../FlaechenPanel";
 import DocPanel from "./CR20DocumentsPanel";
@@ -55,6 +57,11 @@ const CR00 = ({
         setTmpAttachments([]);
         showChangeRequestMenu(false);
     };
+
+    const proofNeeded =
+        needsProofSingleFlaeche(flaechenCR) &&
+        documents?.length === 0 &&
+        tmpAttachments.length === 0;
 
     const setNewFlaechenCR = cr => {
         cr.draft = true;
@@ -121,6 +128,7 @@ const CR00 = ({
                                         flaeche={flaeche}
                                         display={"cr"}
                                         changerequest={flaechenCR}
+                                        proofNeeded={proofNeeded}
                                     />
                                 </FlexView>
                             </FlexView>
@@ -358,7 +366,12 @@ const CR00 = ({
                                         paddingRight: "30px"
                                     }}
                                 >
-                                    <p>
+                                    <p
+                                        style={{
+                                            fontWeight: proofNeeded ? "bold" : "normal",
+                                            color: proofNeeded ? "#B55959" : "black"
+                                        }}
+                                    >
                                         Um unnötige Verzögerungen zu vermeiden, achten Sie bitte
                                         darauf bei nachweispflichtigen Änderungen die entsprechenden
                                         Belege hinzuzufügen.
