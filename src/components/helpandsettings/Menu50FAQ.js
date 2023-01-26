@@ -73,7 +73,7 @@ const Component = ({
                     <p>
                         Bei Grundbüchern, die nach dem Wohnungseigentumsgesetzt (WEG) gebildet
                         wurden kann keine Aufteilung von Flächen vorgenommen werden. Eine Aufteilung
-                        muss hier durch eine/n Verwalterin oder eine/n Miteigentümerin vorgenommen
+                        muss hier durch eine/n Verwalter*in oder eine/n Miteigentümer*in vorgenommen
                         werden.
                     </p>
                     <ol>
@@ -339,7 +339,7 @@ const Component = ({
                     wasserrechtliche Erlaubnis erforderlich{" "}
                     <a
                         target="_more"
-                        href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-unterlagen"
+                        href="https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-unterlagen"
                     >
                         (weiterführende Information)
                     </a>
@@ -419,7 +419,7 @@ const Component = ({
                     versickern kann{" "}
                     <a
                         target="_more"
-                        href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links"
+                        href="https://www.wuppertal.de/vv/produkte/106/versickerung.php#tab-links"
                     >
                         (weiterführende Information)
                     </a>
@@ -436,25 +436,6 @@ const Component = ({
                     </a>
                     .
                 </p>
-                // <p>
-
-                //     Unabhängig von der Tatsache ob ein Kanal verlegt ist oder nicht, wird für eine
-                //     Entwässerung von Regenwasser über Versickerungsanlagen oder naturbelassene
-                //     Flächen eine wasserrechtliche Erlaubnis benötigt. Umgangssprachlich wird hier
-                //     auch von Versickerungsgenehmigung gesprochen. Anträge und weitere Informationen
-                //     finden sie unter dem Link{" "}
-                // <a
-                //     target="_more"
-                //     href="http://www.wuppertal-intra.de/vv/produkte/106/versickerung.php#tab-links"
-                // >
-                //     (weiterführende Information)
-                // </a>{" "}
-                //     . Durch dieses Verfahren soll die Umweltverträglichkeit der Entwässerung
-                //     sichergestellt werden. Bei Kleinflächen (Gartenwege, kleine Gartenhäuser oder
-                //     ähnliches) wird, bei der Flächenerhebung zur Erhebung der
-                //     Niederschlagswassergebühr, von der Vorlage einer wasserrechtlichen Erlaubnis
-                //     abgesehen.
-                // </p>
             )
         },
         {
