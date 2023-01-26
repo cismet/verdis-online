@@ -349,7 +349,7 @@ const Component = ({
                     ausreicht, um das Regenwasser bei Starkregen vollständig aufzunehmen und das
                     überschüssige Wasser in den Kanal abgeleitet wird. Bei Notüberläufen werden bis
                     zum 31.12.2022 50 % und ab dem 01.01.2023 40 % der Fläche zur Gebührenerhebung
-                    herangezogen.
+                    herangezogen.{" "}
                     <strong>
                         Soll eine Versickerungsanlage (mit oder ohne Notüberlauf) geltend gemacht
                         werden, ist ein entsprechender Nachweis erforderlich.
