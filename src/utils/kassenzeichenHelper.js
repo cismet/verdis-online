@@ -227,7 +227,7 @@ export const needsProof = flaechenCR => {
 };
 
 export const hasAttachment = flaechenCR => {
-    if (flaechenCR.nachrichten !== undefined) {
+    if (flaechenCR?.nachrichten !== undefined) {
         for (const nachricht of flaechenCR.nachrichten) {
             if (nachricht.anhang !== undefined) {
                 return true;
