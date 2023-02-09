@@ -156,6 +156,9 @@ const systemmessage = sysMsgConf => {
                         return "unbekannter Status" + sysMsgConf.status;
                 }
             }
+            case "SEEN":
+                return undefined;
+
             default: {
                 return "Fehlerhafte Systemnachricht:" + JSON.stringify(sysMsgConf);
             }
