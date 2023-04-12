@@ -74,18 +74,18 @@ contacts.set("DavidOsbarB102", {
 });
 contacts.set("PytlikS102", {
     anrede: "Frau",
-    vorname: "Sabine",
+    vorname: "Sabina",
     nachname: "Pytlik",
     telefon: "+49-202-563 5986",
-    mail: "sabine.pytlik@stadt.wuppertal.de"
+    mail: "sabina.pytlik@stadt.wuppertal.de"
 });
 
 contacts.set("PytlikSa102", {
     anrede: "Frau",
-    vorname: "Sabine",
+    vorname: "Sabina",
     nachname: "Pytlik",
     telefon: "+49-202-563 5638",
-    mail: "sabine.pytlik@stadt.wuppertal.de"
+    mail: "sabina.pytlik@stadt.wuppertal.de"
 });
 
 export default contacts;
