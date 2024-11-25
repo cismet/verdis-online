@@ -36,7 +36,7 @@
     "leaflet.markercluster": "1.4.0",
     "leaflet.path.drag": "^0.0.6",
     "localforage": "1.7.2",
-    "lodash": "4.17.11",
+    "lodash": "4.17.21",
     "object-assign": "^4.1.1",
     "polylabel": "1.0.2",
     "proj4": "^2.5.0",
